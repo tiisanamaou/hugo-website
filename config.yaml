@@ -5,7 +5,7 @@ paginate: 3
 title: onodera memo
 copyright: onodera
 
-canonifyURLs: true
+relativeURLs: true
 
 module:
     hugoVersion:
