@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>onodera memo</title>
-        <link>https://blog.onodera.dev/</link>
+        <link>https://tiisanamaou.github.io/</link>
         <description>Recent content on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 28 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.onodera.dev/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 28 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>TrueNASの設定</title>
-        <link>https://blog.onodera.dev/post/truenas-setup/</link>
+        <link>https://tiisanamaou.github.io/post/truenas-setup/</link>
         <pubDate>Sun, 28 Apr 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://blog.onodera.dev/post/truenas-setup/</guid>
+        <guid>https://tiisanamaou.github.io/post/truenas-setup/</guid>
         <description>&lt;h1 id=&#34;タイトル&#34;&gt;タイトル&lt;/h1&gt;
 &lt;p&gt;記事の内容。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://blog.onodera.dev/post/truenas-setup/01.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://tiisanamaou.github.io/post/truenas-setup/01.png&#34;
 	width=&#34;1460&#34;
 	height=&#34;1014&#34;
-	srcset=&#34;https://blog.onodera.dev/post/truenas-setup/01_huf8e38631ff2438e9daced23bb72213f8_154309_480x0_resize_box_3.png 480w, https://blog.onodera.dev/post/truenas-setup/01_huf8e38631ff2438e9daced23bb72213f8_154309_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://tiisanamaou.github.io/post/truenas-setup/01_huf8e38631ff2438e9daced23bb72213f8_154309_480x0_resize_box_3.png 480w, https://tiisanamaou.github.io/post/truenas-setup/01_huf8e38631ff2438e9daced23bb72213f8_154309_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -33,18 +33,18 @@
         </item>
         <item>
         <title>Archives</title>
-        <link>https://blog.onodera.dev/page/archives/</link>
+        <link>https://tiisanamaou.github.io/page/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>https://blog.onodera.dev/page/archives/</guid>
+        <guid>https://tiisanamaou.github.io/page/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>About</title>
-        <link>https://blog.onodera.dev/page/about/</link>
+        <link>https://tiisanamaou.github.io/page/about/</link>
         <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
         
-        <guid>https://blog.onodera.dev/page/about/</guid>
+        <guid>https://tiisanamaou.github.io/page/about/</guid>
         <description>&lt;p&gt;Written in Go, Hugo is an open source static site generator available under the &lt;a class=&#34;link&#34; href=&#34;https://github.com/gohugoio/hugo/blob/master/LICENSE&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Apache Licence 2.0.&lt;/a&gt; Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.&lt;/p&gt;
 &lt;p&gt;Hugo makes use of a variety of open source projects including:&lt;/p&gt;
@@ -69,10 +69,10 @@
         </item>
         <item>
         <title>Search</title>
-        <link>https://blog.onodera.dev/page/search/</link>
+        <link>https://tiisanamaou.github.io/page/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://blog.onodera.dev/page/search/</guid>
+        <guid>https://tiisanamaou.github.io/page/search/</guid>
         <description></description>
         </item>
         
