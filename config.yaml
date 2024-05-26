@@ -5,7 +5,15 @@ paginate: 3
 title: onodera memo
 copyright: onodera
 
+# 以下の設定でビルドした後相対パスになる
 relativeURLs: true
+
+# GA Tracking ID
+googleAnalytics:
+
+# Theme i18n support
+# Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw
+DefaultContentLanguage: ja
 
 module:
     hugoVersion:
@@ -15,9 +23,11 @@ module:
 params:
     mainSections:
         - post
+        #- page
     featuredImageField: image
     rssFullContent: true
-    favicon:
+    #favicon:
+    favicon: img/favicon.ico
 
     footer:
         since:
@@ -25,7 +35,8 @@ params:
 
     dateFormat:
         published: Jan 02, 2006
-        lastUpdated: Jan 02, 2006 15:04 MST
+        lastUpdated: Jan 02, 2006 15:04 JST
+        #lastUpdated: Jan 02, 2006 15:04 MST
 
     sidebar:
         compact: false
@@ -120,8 +131,19 @@ params:
             id:
 
     widgets:
-        homepage: []
-        page: []
+        homepage:
+            - type: search
+            - type: archives
+              params:
+                  limit: 5
+            - type: categories
+              params:
+                  limit: 10
+            - type: tag-cloud
+              params:
+                  limit: 10
+        #page:
+            #- type: toc
 
     opengraph:
         twitter:
@@ -149,3 +171,51 @@ params:
             enabled: true
         content:
             enabled: true
+
+#
+#
+#
+menu:
+    main: []
+
+    social:
+        - identifier: github
+          name: GitHub
+          url: https://github.com/tiisanamaou
+          params:
+              icon: brand-github
+
+        #- identifier: twitter
+          #name: Twitter
+          #url: https://twitter.com
+          #params:
+              #icon: brand-twitter
+
+related:
+    includeNewer: true
+    threshold: 60
+    toLower: false
+    indices:
+        - name: tags
+          weight: 100
+
+        - name: categories
+          weight: 200
+
+markup:
+    goldmark:
+        renderer:
+            ## Set to true if you have HTML content inside Markdown
+            unsafe: true
+    tableOfContents:
+        endLevel: 4
+        ordered: true
+        startLevel: 2
+    highlight:
+        noClasses: false
+        codeFences: true
+        guessSyntax: true
+        lineNoStart: 1
+        lineNos: true
+        lineNumbersInTable: true
+        tabWidth: 4
