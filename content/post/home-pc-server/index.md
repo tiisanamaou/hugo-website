@@ -1,6 +1,6 @@
 ---
 title: 自宅の環境
-date: 2024-06-02
+date: 2024-07-02
 slug: home-pc-server
 categories:
     - Proxmox
