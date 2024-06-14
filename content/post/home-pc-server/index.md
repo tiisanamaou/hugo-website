@@ -25,7 +25,7 @@ categories:
     - Windows10（現在はほぼ使用していない）
         - CPU i7 3630QM
         - メモリ8GB
-    - MacOS（開発用）
+    - macOS Sonoma14.5（開発用）
         - CPU M1Pro
         - メモリ32GB
 

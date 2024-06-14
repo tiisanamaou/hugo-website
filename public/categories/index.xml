@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Categories on onodera memo</title>
+        <link>https://tiisanamaou.github.io/categories/</link>
+        <description>Recent content in Categories on onodera memo</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <copyright>onodera</copyright>
+        <lastBuildDate>Fri, 14 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hugo</title>
+        <link>https://tiisanamaou.github.io/categories/hugo/</link>
+        <pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/hugo/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Docker</title>
+        <link>https://tiisanamaou.github.io/categories/docker/</link>
+        <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/docker/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>MySQL</title>
+        <link>https://tiisanamaou.github.io/categories/mysql/</link>
+        <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/mysql/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>phpmyadmin</title>
+        <link>https://tiisanamaou.github.io/categories/phpmyadmin/</link>
+        <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/phpmyadmin/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Proxmox</title>
+        <link>https://tiisanamaou.github.io/categories/proxmox/</link>
+        <pubDate>Sun, 26 May 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/proxmox/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ブリッジネットワーク</title>
+        <link>https://tiisanamaou.github.io/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/</link>
+        <pubDate>Sun, 26 May 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Go</title>
+        <link>https://tiisanamaou.github.io/categories/go/</link>
+        <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/go/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

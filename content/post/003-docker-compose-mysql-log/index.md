@@ -1,6 +1,7 @@
 ---
 title: docker-composeで構築したMySQLのログをローカルに保存する
 date: 2024-06-02
+lastmod: 2024-06-14
 slug: docker-compose-mysql-log
 categories:
     - phpmyadmin
@@ -101,6 +102,6 @@ sudo docker compose up -d
 ```
 sudo docker compose down -v
 ```
-以下のURLにアクセスするとphpmyadminにアクセスし、少し作業をします
+以下のURLからphpmyadminにアクセスし、少し作業をします  
 するとログファイルを作成されます
 - http://localhost:3001/

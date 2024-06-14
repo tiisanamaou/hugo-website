@@ -45,6 +45,16 @@
                 </time>
             </div>
         {{ end }}
+        <!---->
+        {{- if ne .Lastmod .Date -}}
+        <div class="article-time--lastUpdated">
+            {{ partial "helper/icon" "clock" }}
+            <time>
+                {{ T "article.lastUpdatedOn" }} {{ .Lastmod.Format ( or .Site.Params.dateFormat.lastUpdated "Jan 02, 2006 15:04 MST" ) }}
+            </time>
+        </div>
+        {{- end -}}
+        <!---->
     </footer>
     {{ end }}
 
