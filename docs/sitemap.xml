@@ -3,18 +3,33 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://tiisanamaou.github.io/</loc>
-    <lastmod>2024-06-14T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/categories/</loc>
-    <lastmod>2024-06-14T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/categories/mysql/</loc>
+    <lastmod>2024-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/post/</loc>
+    <lastmod>2024-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/categories/proxmox/</loc>
+    <lastmod>2024-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</loc>
+    <lastmod>2024-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/categories/zbbix/</loc>
+    <lastmod>2024-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/post/zabbiz-install/</loc>
+    <lastmod>2024-06-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/categories/hugo/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/post/hugo-stack-custom-lastupdated/</loc>
-    <lastmod>2024-06-14T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://tiisanamaou.github.io/post/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/categories/docker/</loc>
@@ -23,16 +38,10 @@
     <loc>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/mysql/</loc>
-    <lastmod>2024-06-14T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://tiisanamaou.github.io/categories/phpmyadmin/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</loc>
-    <lastmod>2024-05-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://tiisanamaou.github.io/categories/proxmox/</loc>
     <lastmod>2024-05-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/</loc>
