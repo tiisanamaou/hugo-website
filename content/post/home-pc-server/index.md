@@ -1,6 +1,6 @@
 ---
 title: 自宅の環境
-date: 2024-07-02
+date: 2025-08-02
 slug: home-pc-server
 categories:
     - Proxmox
@@ -17,7 +17,7 @@ categories:
         - メモリ64GB
     - Proxmox 8.2.2（仮想マシン用）
         - CPU Ryzen7 5700G
-        - メモリ16GB
+        - メモリ16GB→64GB
 - ノートPC
     - Windows11（開発用）
         - CPU Ryzen5 4600H
