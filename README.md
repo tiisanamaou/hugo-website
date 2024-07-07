@@ -1,3 +1,4 @@
+### コマンド
 ローカルで確認するとき
 ```
 hugo server -D
@@ -13,3 +14,8 @@ hugo -D
 中身をコピーして"docs"フォルダに入れる
 
 その後pushをする
+
+Github Pagesで公開される
+
+### サイトURL
+- https://tiisanamaou.github.io/hugo-website/
