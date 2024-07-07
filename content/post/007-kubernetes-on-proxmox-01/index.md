@@ -24,7 +24,7 @@ Proxmox上に以下6つの仮想マシンを立てました
 - worker-node-02
 
 ## Control-Plane（Master-Node）とWorker-Node両方で実行する
-## setup
+### setup
 パッケージの更新をする
 ```
 sudo apt update
@@ -39,7 +39,7 @@ sudo apt install nano
 公式の手順にそって実行する
 - https://kubernetes.io/ja/docs/setup/production-environment/
 
-## Swapをオフにする
+### Swapをオフにする
 swapを止めます
 ```
 sudo swapoff -a
@@ -67,7 +67,7 @@ Mem:           7.8Gi       510Mi       7.2Gi       704Ki       248Mi       7.3Gi
 Swap:             0B          0B          0B
 ```
 
-## IPアドレスを固定IPアドレスにする
+### IPアドレスを固定IPアドレスにする
 ネットワークのデバイスを確認します
 ```
 ip address
@@ -119,7 +119,7 @@ sudo netplan apply
 sudo chmod 600 /etc/netplan/99-config.yaml
 ```
 
-## containerdをインストールする
+### containerdをインストールする
 公式手順に従ってインストール
 - https://github.com/containerd/containerd/blob/main/docs/getting-started.md
 - Option 1: From the official binaries
@@ -140,7 +140,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
 ```
 
-## runCをインストールする
+### runCをインストールする
 ```
 sudo wget https://github.com/opencontainers/runc/releases/download/v1.1.13/runc.amd64
 ```
@@ -148,7 +148,7 @@ sudo wget https://github.com/opencontainers/runc/releases/download/v1.1.13/runc.
 sudo install -m 755 runc.amd64 /usr/local/sbin/runc
 ```
 
-## CNI(Container Network Interface) pluginをインストールする
+### CNI(Container Network Interface) pluginをインストールする
 ```
 sudo wget https://github.com/containernetworking/plugins/releases/download/v1.5.1/cni-plugins-linux-amd64-v1.5.1.tgz
 ```
@@ -157,10 +157,10 @@ sudo mkdir -p /opt/cni/bin
 sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.5.1.tgz
 ```
 
-## IPv4フォワーディングの設定をする
+### IPv4フォワーディングの設定をする
 以下のコマンドを順に実行する
 
-### 1
+#### 1
 ```
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 ```
@@ -180,7 +180,7 @@ sudo modprobe overlay
 sudo modprobe br_netfilter
 ```
 
-### 2
+#### 2
 ```
 cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 ```
@@ -200,7 +200,7 @@ mao@k8s-control-plane-01:~$
 sudo sysctl --system
 ```
 
-### 3
+#### 3
 ```
 lsmod | grep br_netfilter
 lsmod | grep overlay
@@ -215,7 +215,7 @@ overlay               212992  0
 mao@k8s-control-plane-01:~$ 
 ```
 
-### 4
+#### 4
 ```
 sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward
 ```
@@ -228,7 +228,7 @@ net.ipv4.ip_forward = 1
 mao@k8s-control-plane-01:~$ 
 ```
 
-## systemd cgroup の設定をする
+### systemd cgroup の設定をする
 参考URL
 - https://kubernetes.io/ja/docs/concepts/architecture/cgroups/
 - https://kubernetes.io/ja/docs/concepts/architecture/cgroups/#check-cgroup-version
@@ -567,7 +567,7 @@ containerdを再起動する
 sudo systemctl restart containerd
 ```
 
-## kubeadm/kubelet/kubectl をインストールする
+### kubeadm/kubelet/kubectl をインストールする
 参考URL
 - https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
