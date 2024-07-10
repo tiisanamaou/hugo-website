@@ -1,7 +1,7 @@
 ---
-title: kubernetesをproxmox上に立ててみた（4）/HA構成
+title: kubernetesをproxmox上に立ててみた（5）/HA構成
 date: 2024-07-13
-slug: kubernetes-on-proxmox-04
+slug: kubernetes-on-proxmox-05
 categories:
     - Kubernetes
     - Proxmox
