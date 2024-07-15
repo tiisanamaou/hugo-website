@@ -1,6 +1,7 @@
 ---
 title: kubernetesをproxmox上に立ててみた（2）/Control-Plane・Worker-Nodeの設定
 date: 2024-07-06
+lastmod: 2024-07-13
 slug: kubernetes-on-proxmox-02
 categories:
     - Kubernetes
@@ -10,6 +11,7 @@ categories:
 ## 開発環境
 - Proxmox 8.2.4
 - Ubuntu Server 24.04 LTS
+- Kubernetes v1.30.2
 
 ## Control-Plane（Master-Node）の設定をする
 ### kubeadm init を実行する

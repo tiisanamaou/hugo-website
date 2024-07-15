@@ -1,6 +1,7 @@
 ---
 title: kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定
 date: 2024-07-07
+lastmod: 2024-07-13
 slug: kubernetes-on-proxmox-03
 categories:
     - Kubernetes
@@ -10,6 +11,7 @@ categories:
 ## 開発環境
 - Proxmox 8.2.4
 - Ubuntu Server 24.04 LTS
+- Kubernetes v1.30.2
 
 ## LoadBalancer（MetalLB）の設定をする
 - kubernetesのクラスターの外部からIPアドレスでアクセスするための設定をする
@@ -129,6 +131,52 @@ l2advertisement.metallb.io/default created
 ```
 
 ## マニフェストファイルを実行後、外部IPアドレスが設定されているか確認する
+マニフェストファイル
+- nginx-lb.yaml
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.27
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-deployment-lb
+spec:
+  type: LoadBalancer
+  #type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: nginx
+```
+- "type: LoadBalancer"にするとLoadBalancerからIPアドレスが払い出されてクラスタ外からアクセスできるようになる
+
+マニフェストファイルを実行してデプロイする
+```
+kubectl apply -f nginx-lb.yaml
+```
+
+
 確認するためのコマンド
 ```
 kubectl get svc

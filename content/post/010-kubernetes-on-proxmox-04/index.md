@@ -1,6 +1,7 @@
 ---
 title: kubernetesをproxmox上に立ててみた（4）/クラスターを壊す
 date: 2024-07-10
+lastmod: 2024-07-13
 slug: kubernetes-on-proxmox-04
 categories:
     - Kubernetes
@@ -10,6 +11,7 @@ categories:
 ## 開発環境
 - Proxmox 8.2.4
 - Ubuntu Server 24.04 LTS
+- Kubernetes v1.30.2
 
 ## Worker-Nodeをクラスターから外す
 ### 先にControl-Planeですること

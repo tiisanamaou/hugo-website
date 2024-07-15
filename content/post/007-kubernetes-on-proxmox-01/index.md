@@ -1,6 +1,7 @@
 ---
 title: kubernetesをproxmox上に立ててみた（1）
 date: 2024-07-03
+lastmod: 2024-07-13
 slug: kubernetes-on-proxmox-01
 categories:
     - Kubernetes
@@ -13,6 +14,7 @@ k8sを勉強してみようと思い、デプロイ等の操作は書籍で触�
 ## 開発環境
 - Proxmox 8.2.4
 - Ubuntu Server 24.04 LTS
+- Kubernetes v1.30.2
 
 ## 構成
 Proxmox上に以下6つの仮想マシンを立てました
