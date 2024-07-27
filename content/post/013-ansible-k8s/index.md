@@ -45,7 +45,6 @@ all:
       ansible_user: mao
       ansible_password: mao
       ansible_ssh_private_key_file: /home/mao/ansible-test/ansible-ssh
-      #ansible_python_interpreter: Python インタープリターの path
       ansible_port: 22
 ```
 
@@ -209,7 +208,7 @@ playbook_k8s.yaml
 
 ## 内容
 上記playbookの中にある"#####"は内容ごとに分割しています。
-ファイルを分けるのは後々やろうと思います。
+ファイルを分けるのは後々やりたいと思っています。
 - 1 containerdのインストール
 - 2 runCのインストール
 - 3 CNI pluginのインストール
@@ -218,5 +217,7 @@ playbook_k8s.yaml
 - 6 kubeadm等のインストール
 
 上記playbookとは別にIPアドレスの固定化、kubernetesクラスタへの参加は手動です。\
-こちらも近いうちに自動でできるようにしようと思います。\
+こちらも近いうちに自動化できるようにしようと思います。\
 そうすれば自動でクラスタが構築できるようになります！
+
+あとはリポジトリの追加等、Ansibleモジュールをちゃんと利用した方法へ置き換えていこうと思います。
