@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Ansible 2.16.9 Kubernetes 1.30.3 containerd 1.7.20 runC 1.1.13 cni-plugins 1.5.1 ファイル・ディレクトリ構成 1 2 3 4 5 6 . ├── ansible.cfg ├── host.yaml └── playbook_k8s.yaml 1 directory, 3 files ansible.cfg
+1 2 3 [defaults] # fingerprintを検証しない設定 host_key_checking = False host.yaml
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 # YAML は ”---&amp;#34; から開始する --- # &amp;#34;all&amp;#34; グループの宣言 all: # &amp;#34;all&amp;#34; グループに含まれるホストに関する情報を定義する宣言 hosts: # 管理対象ノードの情報を定義する宣言 ansible-test-server: ansible_host: 192.'>
+<title>Ansibleを使ってKubernetesの初期設定をしてみた</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/ansible-k8s/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Ansibleを使ってKubernetesの初期設定をしてみた'>
+<meta property='og:description' content='環境 Ansible 2.16.9 Kubernetes 1.30.3 containerd 1.7.20 runC 1.1.13 cni-plugins 1.5.1 ファイル・ディレクトリ構成 1 2 3 4 5 6 . ├── ansible.cfg ├── host.yaml └── playbook_k8s.yaml 1 directory, 3 files ansible.cfg
+1 2 3 [defaults] # fingerprintを検証しない設定 host_key_checking = False host.yaml
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 # YAML は ”---&amp;#34; から開始する --- # &amp;#34;all&amp;#34; グループの宣言 all: # &amp;#34;all&amp;#34; グループに含まれるホストに関する情報を定義する宣言 hosts: # 管理対象ノードの情報を定義する宣言 ansible-test-server: ansible_host: 192.'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/ansible-k8s/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-07-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-07-27T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Ansibleを使ってKubernetesの初期設定をしてみた">
+<meta name="twitter:description" content="環境 Ansible 2.16.9 Kubernetes 1.30.3 containerd 1.7.20 runC 1.1.13 cni-plugins 1.5.1 ファイル・ディレクトリ構成 1 2 3 4 5 6 . ├── ansible.cfg ├── host.yaml └── playbook_k8s.yaml 1 directory, 3 files ansible.cfg
+1 2 3 [defaults] # fingerprintを検証しない設定 host_key_checking = False host.yaml
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 # YAML は ”---&amp;#34; から開始する --- # &amp;#34;all&amp;#34; グループの宣言 all: # &amp;#34;all&amp;#34; グループに含まれるホストに関する情報を定義する宣言 hosts: # 管理対象ノードの情報を定義する宣言 ansible-test-server: ansible_host: 192.">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu1bdb19aa8531bcfe48c30a905f512bd4_28493_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/ansible/" >
+                Ansible
+            </a>
+        
+            <a href="../../categories/kubernetes/" >
+                Kubernetes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/ansible-k8s/">Ansibleを使ってKubernetesの初期設定をしてみた</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024/07/27</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="環境">環境</h2>
+<ul>
+<li>Ansible 2.16.9</li>
+<li>Kubernetes 1.30.3</li>
+<li>containerd 1.7.20</li>
+<li>runC 1.1.13</li>
+<li>cni-plugins 1.5.1</li>
+</ul>
+<h2 id="ファイルディレクトリ構成">ファイル・ディレクトリ構成</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── ansible.cfg
+</span></span><span class="line"><span class="cl">├── host.yaml
+</span></span><span class="line"><span class="cl">└── playbook_k8s.yaml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1 directory, 3 files
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ansible.cfg</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[defaults]
+</span></span><span class="line"><span class="cl"># fingerprintを検証しない設定
+</span></span><span class="line"><span class="cl">host_key_checking = False
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>host.yaml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># YAML は ”---&#34; から開始する
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl"># &#34;all&#34; グループの宣言
+</span></span><span class="line"><span class="cl">all:
+</span></span><span class="line"><span class="cl">  # &#34;all&#34; グループに含まれるホストに関する情報を定義する宣言
+</span></span><span class="line"><span class="cl">  hosts:
+</span></span><span class="line"><span class="cl">    # 管理対象ノードの情報を定義する宣言
+</span></span><span class="line"><span class="cl">    ansible-test-server: 
+</span></span><span class="line"><span class="cl">      ansible_host: 192.168.10.18
+</span></span><span class="line"><span class="cl">      ansible_user: mao
+</span></span><span class="line"><span class="cl">      ansible_password: mao
+</span></span><span class="line"><span class="cl">      ansible_ssh_private_key_file: /home/mao/ansible-test/ansible-ssh
+</span></span><span class="line"><span class="cl">      ansible_port: 22
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>playbook_k8s.yaml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># Ansible-playbook</span>
+</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">k8s</span> <span class="n">setup</span>
+</span></span><span class="line"><span class="cl">  <span class="n">hosts</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">all</span>
+</span></span><span class="line"><span class="cl">  <span class="n">become</span><span class="p">:</span> <span class="n">yes</span>
+</span></span><span class="line"><span class="cl">  <span class="n">tasks</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="c1">##### 1</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">get_url</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dest</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">containerd</span><span class="o">/</span><span class="n">containerd</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v1</span><span class="o">.</span><span class="mf">7.20</span><span class="o">/</span><span class="n">containerd</span><span class="o">-</span><span class="mf">1.7</span><span class="o">.</span><span class="mi">20</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">bin</span> <span class="n">containerd</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">unarchive</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">remote_src</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">        <span class="n">src</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span><span class="n">containerd</span><span class="o">-</span><span class="mf">1.7</span><span class="o">.</span><span class="mi">20</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dest</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">get_url</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dest</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">containerd</span><span class="o">/</span><span class="n">containerd</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">containerd</span><span class="o">.</span><span class="n">service</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">copy</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">remote_src</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">        <span class="n">src</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span><span class="n">containerd</span><span class="o">.</span><span class="n">service</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dest</span><span class="p">:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">containerd</span><span class="o">.</span><span class="n">service</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">daemon</span> <span class="n">reload</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">systemd_service</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">daemon_reload</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">containerd</span> <span class="n">enable</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">systemd_service</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">name</span><span class="p">:</span> <span class="n">containerd</span>
+</span></span><span class="line"><span class="cl">        <span class="n">enabled</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##### 2</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">runC</span> <span class="n">download</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">get_url</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dest</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">opencontainers</span><span class="o">/</span><span class="n">runc</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v1</span><span class="o">.</span><span class="mf">1.13</span><span class="o">/</span><span class="n">runc</span><span class="o">.</span><span class="n">amd64</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">runC</span> <span class="n">install</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">command</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="p">:</span> <span class="n">install</span> <span class="o">-</span><span class="n">m</span> <span class="mi">755</span> <span class="n">runc</span><span class="o">.</span><span class="n">amd64</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">runc</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##### 3</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">CNI</span><span class="p">(</span><span class="ne">Container</span> <span class="n">Network</span> <span class="n">Interface</span><span class="p">)</span> <span class="n">plugin</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">get_url</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dest</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">containernetworking</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v1</span><span class="o">.</span><span class="mf">5.1</span><span class="o">/</span><span class="n">cni</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">-</span><span class="n">v1</span><span class="o">.</span><span class="mf">5.1</span><span class="o">.</span><span class="n">tgz</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">make</span> <span class="n">directory</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">path</span><span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cni</span><span class="o">/</span><span class="n">bin</span>
+</span></span><span class="line"><span class="cl">        <span class="n">state</span><span class="p">:</span> <span class="n">directory</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">unarchive</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">remote_src</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">        <span class="n">src</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span><span class="n">cni</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">-</span><span class="n">v1</span><span class="o">.</span><span class="mf">5.1</span><span class="o">.</span><span class="n">tgz</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dest</span><span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">cni</span><span class="o">/</span><span class="n">bin</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##### 4</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="p">:</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl">          <span class="n">cat</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">modules</span><span class="o">-</span><span class="nb">load</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">k8s</span><span class="o">.</span><span class="n">conf</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span>
+</span></span><span class="line"><span class="cl">          <span class="n">overlay</span>
+</span></span><span class="line"><span class="cl">          <span class="n">br_netfilter</span>
+</span></span><span class="line"><span class="cl">          <span class="n">EOF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">command</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="p">:</span> <span class="n">modprobe</span> <span class="n">overlay</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">command</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="p">:</span> <span class="n">modprobe</span> <span class="n">br_netfilter</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="p">:</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl">          <span class="n">cat</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysctl</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">k8s</span><span class="o">.</span><span class="n">conf</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span>
+</span></span><span class="line"><span class="cl">          <span class="n">net</span><span class="o">.</span><span class="n">bridge</span><span class="o">.</span><span class="n">bridge</span><span class="o">-</span><span class="n">nf</span><span class="o">-</span><span class="n">call</span><span class="o">-</span><span class="n">iptables</span>  <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">          <span class="n">net</span><span class="o">.</span><span class="n">bridge</span><span class="o">.</span><span class="n">bridge</span><span class="o">-</span><span class="n">nf</span><span class="o">-</span><span class="n">call</span><span class="o">-</span><span class="n">ip6tables</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">          <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">ip_forward</span>                 <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">          <span class="n">EOF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">command</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="p">:</span> <span class="n">sysctl</span> <span class="o">--</span><span class="n">system</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##### 5</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">make</span> <span class="n">directory</span> <span class="n">containerd</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">path</span><span class="p">:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">containerd</span>
+</span></span><span class="line"><span class="cl">        <span class="n">state</span><span class="p">:</span> <span class="n">directory</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">cpoy</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="p">:</span> <span class="n">sudo</span> <span class="n">containerd</span> <span class="n">config</span> <span class="n">default</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">containerd</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">toml</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">lineinfile</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dest</span><span class="p">:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">containerd</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">toml</span>
+</span></span><span class="line"><span class="cl">        <span class="n">state</span><span class="p">:</span> <span class="n">present</span>
+</span></span><span class="line"><span class="cl">        <span class="n">backrefs</span><span class="p">:</span> <span class="n">yes</span>
+</span></span><span class="line"><span class="cl">        <span class="n">regexp</span><span class="p">:</span> <span class="n">sandbox_image</span> <span class="o">=</span> <span class="s2">&#34;registry.k8s.io/pause:3.8&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span><span class="p">:</span> <span class="s1">&#39;    sandbox_image = &#34;registry.k8s.io/pause:3.9&#34;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">lineinfile</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dest</span><span class="p">:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">containerd</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">toml</span>
+</span></span><span class="line"><span class="cl">        <span class="n">state</span><span class="p">:</span> <span class="n">present</span>
+</span></span><span class="line"><span class="cl">        <span class="n">backrefs</span><span class="p">:</span> <span class="n">yes</span>
+</span></span><span class="line"><span class="cl">        <span class="n">regexp</span><span class="p">:</span> <span class="n">SystemdCgroup</span> <span class="o">=</span> <span class="bp">false</span>
+</span></span><span class="line"><span class="cl">        <span class="n">line</span><span class="p">:</span> <span class="s1">&#39;            SystemdCgroup = true&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">service</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">name</span><span class="p">:</span> <span class="n">containerd</span>
+</span></span><span class="line"><span class="cl">        <span class="n">state</span><span class="p">:</span> <span class="n">restarted</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">##### 6</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span> <span class="n">install</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">apt</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pkg</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">          <span class="o">-</span> <span class="n">apt</span><span class="o">-</span><span class="n">transport</span><span class="o">-</span><span class="n">https</span>
+</span></span><span class="line"><span class="cl">          <span class="o">-</span> <span class="n">ca</span><span class="o">-</span><span class="n">certificates</span>
+</span></span><span class="line"><span class="cl">          <span class="o">-</span> <span class="n">curl</span>
+</span></span><span class="line"><span class="cl">          <span class="o">-</span> <span class="n">gpg</span>
+</span></span><span class="line"><span class="cl">        <span class="n">update_cache</span><span class="p">:</span> <span class="n">yes</span>
+</span></span><span class="line"><span class="cl">        <span class="n">state</span><span class="p">:</span> <span class="n">present</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="p">:</span> <span class="n">curl</span> <span class="o">-</span><span class="n">fsSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pkgs</span><span class="o">.</span><span class="n">k8s</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">core</span><span class="p">:</span><span class="o">/</span><span class="n">stable</span><span class="p">:</span><span class="o">/</span><span class="n">v1</span><span class="o">.</span><span class="mi">30</span><span class="o">/</span><span class="n">deb</span><span class="o">/</span><span class="n">Release</span><span class="o">.</span><span class="n">key</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">gpg</span> <span class="o">--</span><span class="n">dearmor</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">keyring</span><span class="o">.</span><span class="n">gpg</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">shell</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="p">:</span> <span class="n">echo</span> <span class="s1">&#39;deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /&#39;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">kubernetes</span><span class="o">.</span><span class="n">list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># kubeadm:1.30.3,kubectl:1.30.3,kubelet:1.30.3</span>
+</span></span><span class="line"><span class="cl">    <span class="o">-</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ansible</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">apt</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pkg</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">          <span class="o">-</span> <span class="n">kubelet</span>
+</span></span><span class="line"><span class="cl">          <span class="o">-</span> <span class="n">kubeadm</span>
+</span></span><span class="line"><span class="cl">          <span class="o">-</span> <span class="n">kubectl</span>
+</span></span><span class="line"><span class="cl">        <span class="n">update_cache</span><span class="p">:</span> <span class="n">yes</span>
+</span></span><span class="line"><span class="cl">        <span class="n">state</span><span class="p">:</span> <span class="n">present</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="内容">内容</h2>
+<p>上記playbookの中にある&quot;#####&ldquo;は内容ごとに分割しています。
+ファイルを分けるのは後々やりたいと思っています。</p>
+<ul>
+<li>1 containerdのインストール</li>
+<li>2 runCのインストール</li>
+<li>3 CNI pluginのインストール</li>
+<li>4 パラメータの設定</li>
+<li>5 containerdの追加設定</li>
+<li>6 kubeadm等のインストール</li>
+</ul>
+<p>上記playbookとは別にIPアドレスの固定化、kubernetesクラスタへの参加は手動です。<br>
+こちらも近いうちに自動化できるようにしようと思います。<br>
+そうすれば自動でクラスタが構築できるようになります！</p>
+<p>あとはリポジトリの追加等、Ansibleモジュールをちゃんと利用した方法へ置き換えていこうと思います。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/ansible-k8s/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Ansibleを使ってKubernetesの初期設定をしてみた</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/ansible/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Ansibleを少し触ってみた</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-05/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（5）/HA構成</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-04/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（4）/クラスターを壊す</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-03/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
