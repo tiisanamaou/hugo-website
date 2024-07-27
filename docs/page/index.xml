@@ -13,21 +13,26 @@
         <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
         
         <guid>https://tiisanamaou.github.io/page/about/</guid>
-        <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
+        <description>&lt;h2 id=&#34;about-me&#34;&gt;about me&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;製品開発とDX・ITの部署に所属&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;ノートPC
 &lt;ul&gt;
-&lt;li&gt;Windows10&lt;/li&gt;
+&lt;li&gt;Windows10 Home&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;自作PC
 &lt;ul&gt;
-&lt;li&gt;Windows11&lt;/li&gt;
+&lt;li&gt;Windows11 Home&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;ノートPC
 &lt;ul&gt;
-&lt;li&gt;Windows11&lt;/li&gt;
+&lt;li&gt;Windows11 Home&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;MacbookPro 14inch
@@ -37,18 +42,20 @@
 &lt;/li&gt;
 &lt;li&gt;自作PC
 &lt;ul&gt;
-&lt;li&gt;Ubuntu 23.10&lt;/li&gt;
+&lt;li&gt;Ubuntu 24.04&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;ミニPC
 &lt;ul&gt;
-&lt;li&gt;Proxmox 8.2.2&lt;/li&gt;
+&lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;やりたいこと&#34;&gt;やりたいこと&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;kubernetes上にopenstackを構築&lt;/li&gt;
+&lt;li&gt;GoとUnityでソシャゲのような通信&lt;/li&gt;
+&lt;li&gt;ラズパイ等を使用してマイコンとサーバーで通信&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         </item>
