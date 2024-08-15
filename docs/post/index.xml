@@ -7,7 +7,91 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Wed, 14 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>UbuntuにHugoをインストールする</title>
+        <link>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</link>
+        <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</guid>
+        <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
+&lt;p&gt;WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました&lt;br&gt;
+その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました&lt;/p&gt;
+&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Ubuntu 24.04 LTS&lt;/li&gt;
+&lt;li&gt;Intel Core i5-13500 (amd64)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;参考url&#34;&gt;参考URL&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://gohugo.io/installation/linux/#prebuilt-binaries&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://gohugo.io/installation/linux/#prebuilt-binaries&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/gohugoio/hugo/releases&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/gohugoio/hugo/releases&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;ダウンロード&#34;&gt;ダウンロード&lt;/h2&gt;
+&lt;p&gt;バイナリをダウンロードします&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;wget&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;https&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;github&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;gohugoio&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hugo&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;releases&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;download&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;v0&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;132.1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hugo_extended_0&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;132.1&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_linux&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;amd64&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tar&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;gz&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;展開解凍&#34;&gt;展開・解凍&lt;/h2&gt;
+&lt;p&gt;フォルダを作成して展開する&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir hugo_extended_0.132.1_linux-amd64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tar -zxvf hugo_extended_0.132.1_linux-amd64.tar.gz -C ./hugo_extended_0.132.1_linux-amd64
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;パスの通っている場所へ移動しバージョン確認&#34;&gt;パスの通っている場所へ移動し、バージョン確認&lt;/h2&gt;
+&lt;p&gt;バイナリファイルを&amp;quot;/usr/local/bin&amp;quot;へ移動します&lt;br&gt;
+その後バージョンの確認をします&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo mv hugo_extended_0.132.1_linux-amd64/hugo /usr/local/bin/hugo
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hugo version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mao@mao:~$ hugo version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hugo v0.132.1-1bde700dfc0770bb11eb8445aff1ab5abdccb46e+extended linux/amd64 BuildDate=2024-08-13T10:10:10Z VendorInfo=gohugoio
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mao@mao:~$ 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;アンインストール&#34;&gt;アンインストール&lt;/h2&gt;
+&lt;p&gt;アンインストールする際は下記のコマンドを実行し、バイナリの場所を確認して削除します&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mao@mao:~$ which hugo
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/usr/local/bin/hugo
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mao@mao:~$ sudo rm /usr/local/bin/hugo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
         <title>NFS-serverを構築してPV(PersistentVolume)を作成する</title>
         <link>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</link>
         <pubDate>Wed, 14 Aug 2024 00:00:00 +0000</pubDate>
@@ -3545,7 +3629,7 @@ Control-Planeで実行する&lt;/p&gt;
 &lt;img src=&#34;../post/kubernetes-dashboard/01.png&#34;
 	width=&#34;2232&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../post/kubernetes-dashboard/01_hu2d268ac5d224ad1e6e4e7857d80d4737_186120_480x0_resize_box_3.png 480w, ../post/kubernetes-dashboard/01_hu2d268ac5d224ad1e6e4e7857d80d4737_186120_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/kubernetes-dashboard/01_hu16175041694654104009.png 480w, ../post/kubernetes-dashboard/01_hu3444295497349472481.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4924,7 +5008,7 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
 &lt;p&gt;&lt;img src=&#34;../post/ansible/2024-07-15_141453.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;1013&#34;
-	srcset=&#34;../post/ansible/2024-07-15_141453_hub551f3237a9a14d9cbc63a2f2cca1240_88188_480x0_resize_box_3.png 480w, ../post/ansible/2024-07-15_141453_hub551f3237a9a14d9cbc63a2f2cca1240_88188_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/ansible/2024-07-15_141453_hu12930034088221878227.png 480w, ../post/ansible/2024-07-15_141453_hu7300550148481746709.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -7875,10 +7959,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Zbbix7.0LTSをUbuntuにインストールする</title>
-        <link>https://tiisanamaou.github.io/post/zabbiz-install/</link>
+        <link>https://tiisanamaou.github.io/post/zabbix-install/</link>
         <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/zabbiz-install/</guid>
+        <guid>https://tiisanamaou.github.io/post/zabbix-install/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 24.04&lt;/li&gt;
@@ -8031,10 +8115,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;/div&gt;&lt;p&gt;初期設定をします&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ブラウザの画面
-&lt;img src=&#34;../post/zabbiz-install/01.png&#34;
+&lt;img src=&#34;../post/zabbix-install/01.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;871&#34;
-	srcset=&#34;../post/zabbiz-install/01_hu84578c55eca3d75b0c17c4a43a09566a_52453_480x0_resize_box_3.png 480w, ../post/zabbiz-install/01_hu84578c55eca3d75b0c17c4a43a09566a_52453_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/01_hu343266485472931490.png 480w, ../post/zabbix-install/01_hu5121833886027354980.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8043,10 +8127,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;450px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/02.png&#34;
+&lt;img src=&#34;../post/zabbix-install/02.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;873&#34;
-	srcset=&#34;../post/zabbiz-install/02_hu9f875b1aea35e843b8cba96468b60f8f_72771_480x0_resize_box_3.png 480w, ../post/zabbiz-install/02_hu9f875b1aea35e843b8cba96468b60f8f_72771_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/02_hu10666836766311526.png 480w, ../post/zabbix-install/02_hu10375538763685858810.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8055,10 +8139,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;449px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/03.png&#34;
+&lt;img src=&#34;../post/zabbix-install/03.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;869&#34;
-	srcset=&#34;../post/zabbiz-install/03_hu2dd11489824ab8fc5464c4c92b9c4e67_52555_480x0_resize_box_3.png 480w, ../post/zabbiz-install/03_hu2dd11489824ab8fc5464c4c92b9c4e67_52555_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/03_hu18269163236536557831.png 480w, ../post/zabbix-install/03_hu15269692372595282966.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8067,10 +8151,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;451px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/04.png&#34;
+&lt;img src=&#34;../post/zabbix-install/04.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;872&#34;
-	srcset=&#34;../post/zabbiz-install/04_hu55e828f8ce60a2e86ff8e92bfcec50d7_68928_480x0_resize_box_3.png 480w, ../post/zabbiz-install/04_hu55e828f8ce60a2e86ff8e92bfcec50d7_68928_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/04_hu17179030422005907279.png 480w, ../post/zabbix-install/04_hu16515843148162553554.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8079,10 +8163,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;450px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/05.png&#34;
+&lt;img src=&#34;../post/zabbix-install/05.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;867&#34;
-	srcset=&#34;../post/zabbiz-install/05_huc8b278715916e0cddf530c9fcecd0e2e_60383_480x0_resize_box_3.png 480w, ../post/zabbiz-install/05_huc8b278715916e0cddf530c9fcecd0e2e_60383_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/05_hu9958553295460789890.png 480w, ../post/zabbix-install/05_hu487411830379726136.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8091,10 +8175,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;452px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/06.png&#34;
+&lt;img src=&#34;../post/zabbix-install/06.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;869&#34;
-	srcset=&#34;../post/zabbiz-install/06_hue0d44868108b196cd4f3319a7b8b1971_74222_480x0_resize_box_3.png 480w, ../post/zabbiz-install/06_hue0d44868108b196cd4f3319a7b8b1971_74222_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/06_hu13010207013419345098.png 480w, ../post/zabbix-install/06_hu917551996788464442.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8103,10 +8187,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;451px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/07.png&#34;
+&lt;img src=&#34;../post/zabbix-install/07.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;865&#34;
-	srcset=&#34;../post/zabbiz-install/07_hu8ebc2512b64eb7a5ec5b57ceaf88abba_74324_480x0_resize_box_3.png 480w, ../post/zabbiz-install/07_hu8ebc2512b64eb7a5ec5b57ceaf88abba_74324_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/07_hu9454290979891422738.png 480w, ../post/zabbix-install/07_hu15533925128882896873.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8115,10 +8199,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;453px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/08.png&#34;
+&lt;img src=&#34;../post/zabbix-install/08.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;862&#34;
-	srcset=&#34;../post/zabbiz-install/08_hu2c2d6dc23d5d3ff7e3e872c9d62ddb51_42054_480x0_resize_box_3.png 480w, ../post/zabbiz-install/08_hu2c2d6dc23d5d3ff7e3e872c9d62ddb51_42054_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/08_hu8271027365262809427.png 480w, ../post/zabbix-install/08_hu14179104953795987916.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8127,10 +8211,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;455px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/09.png&#34;
+&lt;img src=&#34;../post/zabbix-install/09.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;865&#34;
-	srcset=&#34;../post/zabbiz-install/09_huaa553fe0b8dd3678f5f0066a0478d2ed_42207_480x0_resize_box_3.png 480w, ../post/zabbiz-install/09_huaa553fe0b8dd3678f5f0066a0478d2ed_42207_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/09_hu9310590401101850340.png 480w, ../post/zabbix-install/09_hu12895722092073322958.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8139,10 +8223,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;453px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/10.png&#34;
+&lt;img src=&#34;../post/zabbix-install/10.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;863&#34;
-	srcset=&#34;../post/zabbiz-install/10_hu7196cdc5f21737572f93ed3882fb20f6_43042_480x0_resize_box_3.png 480w, ../post/zabbiz-install/10_hu7196cdc5f21737572f93ed3882fb20f6_43042_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/10_hu9156968716482468896.png 480w, ../post/zabbix-install/10_hu9775681582622124974.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8151,10 +8235,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;454px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/11.png&#34;
+&lt;img src=&#34;../post/zabbix-install/11.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;867&#34;
-	srcset=&#34;../post/zabbiz-install/11_hu2dcb8afbec7a4ad882e8c4e599a0e233_63391_480x0_resize_box_3.png 480w, ../post/zabbiz-install/11_hu2dcb8afbec7a4ad882e8c4e599a0e233_63391_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/11_hu14115536853693425487.png 480w, ../post/zabbix-install/11_hu16242963419528483436.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8163,10 +8247,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;452px&#34;
 	
 &gt;
-&lt;img src=&#34;../post/zabbiz-install/12.png&#34;
+&lt;img src=&#34;../post/zabbix-install/12.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;872&#34;
-	srcset=&#34;../post/zabbiz-install/12_hu8392134a06ff6dfb5029d48da2d58d70_55611_480x0_resize_box_3.png 480w, ../post/zabbiz-install/12_hu8392134a06ff6dfb5029d48da2d58d70_55611_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/12_hu12275565631899537804.png 480w, ../post/zabbix-install/12_hu4208988460715170478.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8181,10 +8265,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;li&gt;Username：Admin&lt;/li&gt;
 &lt;li&gt;Password：zabbix&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;../post/zabbiz-install/13.png&#34;
+&lt;p&gt;&lt;img src=&#34;../post/zabbix-install/13.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;869&#34;
-	srcset=&#34;../post/zabbiz-install/13_hu53f0ec1d7bea601bb502600d70cb156e_307378_480x0_resize_box_3.png 480w, ../post/zabbiz-install/13_hu53f0ec1d7bea601bb502600d70cb156e_307378_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/zabbix-install/13_hu17224606301935855281.png 480w, ../post/zabbix-install/13_hu8403113770331667886.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8392,7 +8476,7 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../post/hugo-stack-custom-lastupdated/01.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;821&#34;
-	srcset=&#34;../post/hugo-stack-custom-lastupdated/01_hu6ccf481231cfd18ec38839f4d292e1fd_97380_480x0_resize_box_3.png 480w, ../post/hugo-stack-custom-lastupdated/01_hu6ccf481231cfd18ec38839f4d292e1fd_97380_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/hugo-stack-custom-lastupdated/01_hu8716384922368734750.png 480w, ../post/hugo-stack-custom-lastupdated/01_hu13428729857795784562.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8619,7 +8703,7 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;img src=&#34;../post/proxmox-ssd-lan/01.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../post/proxmox-ssd-lan/01_hu3ae2ccb6dc0983756acca9fde82f4ccb_496902_480x0_resize_box_3.png 480w, ../post/proxmox-ssd-lan/01_hu3ae2ccb6dc0983756acca9fde82f4ccb_496902_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/proxmox-ssd-lan/01_hu496782049234564471.png 480w, ../post/proxmox-ssd-lan/01_hu5309739966525751733.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8632,7 +8716,7 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;img src=&#34;../post/proxmox-ssd-lan/02.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../post/proxmox-ssd-lan/02_hu3ae2ccb6dc0983756acca9fde82f4ccb_448492_480x0_resize_box_3.png 480w, ../post/proxmox-ssd-lan/02_hu3ae2ccb6dc0983756acca9fde82f4ccb_448492_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/proxmox-ssd-lan/02_hu11372885925747122544.png 480w, ../post/proxmox-ssd-lan/02_hu12415396578701522199.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8646,7 +8730,7 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;img src=&#34;../post/proxmox-ssd-lan/03.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../post/proxmox-ssd-lan/03_hu3ae2ccb6dc0983756acca9fde82f4ccb_495470_480x0_resize_box_3.png 480w, ../post/proxmox-ssd-lan/03_hu3ae2ccb6dc0983756acca9fde82f4ccb_495470_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/proxmox-ssd-lan/03_hu17608978437788127665.png 480w, ../post/proxmox-ssd-lan/03_hu281737308782487125.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8659,7 +8743,7 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;img src=&#34;../post/proxmox-ssd-lan/04.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../post/proxmox-ssd-lan/04_hu3ae2ccb6dc0983756acca9fde82f4ccb_460042_480x0_resize_box_3.png 480w, ../post/proxmox-ssd-lan/04_hu3ae2ccb6dc0983756acca9fde82f4ccb_460042_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;../post/proxmox-ssd-lan/04_hu1971104256836174357.png 480w, ../post/proxmox-ssd-lan/04_hu10968881571680934050.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	

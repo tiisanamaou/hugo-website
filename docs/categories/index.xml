@@ -7,7 +7,23 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Wed, 14 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 15 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hugo</title>
+        <link>https://tiisanamaou.github.io/categories/hugo/</link>
+        <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/hugo/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Ubuntu</title>
+        <link>https://tiisanamaou.github.io/categories/ubuntu/</link>
+        <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/ubuntu/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Kubernetes</title>
         <link>https://tiisanamaou.github.io/categories/kubernetes/</link>
         <pubDate>Wed, 14 Aug 2024 00:00:00 +0000</pubDate>
@@ -56,14 +72,6 @@
         <description></description>
         </item>
         <item>
-        <title>Hugo</title>
-        <link>https://tiisanamaou.github.io/categories/hugo/</link>
-        <pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://tiisanamaou.github.io/categories/hugo/</guid>
-        <description></description>
-        </item>
-        <item>
         <title>Docker</title>
         <link>https://tiisanamaou.github.io/categories/docker/</link>
         <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
@@ -72,7 +80,7 @@
         <description></description>
         </item>
         <item>
-        <title>phpmyadmin</title>
+        <title>Phpmyadmin</title>
         <link>https://tiisanamaou.github.io/categories/phpmyadmin/</link>
         <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
         

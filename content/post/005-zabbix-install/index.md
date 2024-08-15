@@ -1,7 +1,7 @@
 ---
 title: Zbbix7.0LTSをUbuntuにインストールする
 date: 2024-06-22
-slug: zabbiz-install
+slug: zabbix-install
 categories:
     - Zbbix
     - MySQL

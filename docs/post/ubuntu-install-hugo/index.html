@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='発生現象 Deskmini x300(CPU:Ryzen7 5700G) に元々SATA SSDを差していたがデータをM.2 SSDにクローンをして差し替えると、有線LANが繋がらなくなる
-結果、ProxmoxのWebGUIにアクセスできなくなる
-対処方法 WebGUIではなく本体からコマンドで、ブリッジネットワークにリンクしている物理LANを「enp1s0」から「enp2s0」へ変更する
-手順 SATA SSDのとき 元々は500GBのSATA SSDを使用していた ネットワークの設定 M.2 SSDのとき M.2 SSDに差し替えた 元々「enp1s0」だったが「enp2s0」にすると通信可能になった '>
-<title>Deskmini x300でSATA SSDからM.2 SSDに差し替えるとProxmoxのWebGUIにアクセスできなくなる</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=' WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました
+その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました
+環境 Ubuntu 24.04 LTS Intel Core i5-13500 (amd64) 参考URL https://gohugo.io/installation/linux/#prebuilt-binaries https://github.com/gohugoio/hugo/releases ダウンロード バイナリをダウンロードします
+1 wget https://github.com/gohugoio/hugo/releases/download/v0.132.1/hugo_extended_0.132.1_linux-amd64.tar.gz 展開・解凍 フォルダを作成して展開する
+1 2 mkdir hugo_extended_0.132.1_linux-amd64 tar -zxvf hugo_extended_0.132.1_linux-amd64.tar.gz -C ./hugo_extended_0.132.1_linux-amd64 パスの通っている場所へ移動し、バージョン確認 バイナリファイルを&quot;/usr/local/bin&quot;へ移動します
+その後バージョンの確認をします
+1 2 sudo mv hugo_extended_0.132.1_linux-amd64/hugo /usr/local/bin/hugo hugo version 1 2 3 mao@mao:~$ hugo version hugo v0.132.1-1bde700dfc0770bb11eb8445aff1ab5abdccb46e&#43;extended linux/amd64 BuildDate=2024-08-13T10:10:10Z VendorInfo=gohugoio mao@mao:~$ アンインストール アンインストールする際は下記のコマンドを実行し、バイナリの場所を確認して削除します
+1 2 3 mao@mao:~$ which hugo /usr/local/bin/hugo mao@mao:~$ sudo rm /usr/local/bin/hugo '>
+<title>UbuntuにHugoをインストールする</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/post/proxmox-ssd-lan/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/ubuntu-install-hugo/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Deskmini x300でSATA SSDからM.2 SSDに差し替えるとProxmoxのWebGUIにアクセスできなくなる'>
-<meta property='og:description' content='発生現象 Deskmini x300(CPU:Ryzen7 5700G) に元々SATA SSDを差していたがデータをM.2 SSDにクローンをして差し替えると、有線LANが繋がらなくなる
-結果、ProxmoxのWebGUIにアクセスできなくなる
-対処方法 WebGUIではなく本体からコマンドで、ブリッジネットワークにリンクしている物理LANを「enp1s0」から「enp2s0」へ変更する
-手順 SATA SSDのとき 元々は500GBのSATA SSDを使用していた ネットワークの設定 M.2 SSDのとき M.2 SSDに差し替えた 元々「enp1s0」だったが「enp2s0」にすると通信可能になった '>
-<meta property='og:url' content='https://tiisanamaou.github.io/post/proxmox-ssd-lan/'>
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='UbuntuにHugoをインストールする'>
+<meta property='og:description' content=' WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました
+その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました
+環境 Ubuntu 24.04 LTS Intel Core i5-13500 (amd64) 参考URL https://gohugo.io/installation/linux/#prebuilt-binaries https://github.com/gohugoio/hugo/releases ダウンロード バイナリをダウンロードします
+1 wget https://github.com/gohugoio/hugo/releases/download/v0.132.1/hugo_extended_0.132.1_linux-amd64.tar.gz 展開・解凍 フォルダを作成して展開する
+1 2 mkdir hugo_extended_0.132.1_linux-amd64 tar -zxvf hugo_extended_0.132.1_linux-amd64.tar.gz -C ./hugo_extended_0.132.1_linux-amd64 パスの通っている場所へ移動し、バージョン確認 バイナリファイルを&quot;/usr/local/bin&quot;へ移動します
+その後バージョンの確認をします
+1 2 sudo mv hugo_extended_0.132.1_linux-amd64/hugo /usr/local/bin/hugo hugo version 1 2 3 mao@mao:~$ hugo version hugo v0.132.1-1bde700dfc0770bb11eb8445aff1ab5abdccb46e&#43;extended linux/amd64 BuildDate=2024-08-13T10:10:10Z VendorInfo=gohugoio mao@mao:~$ アンインストール アンインストールする際は下記のコマンドを実行し、バイナリの場所を確認して削除します
+1 2 3 mao@mao:~$ which hugo /usr/local/bin/hugo mao@mao:~$ sudo rm /usr/local/bin/hugo '>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/ubuntu-install-hugo/'>
 <meta property='og:site_name' content='onodera memo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-05-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-05-26T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Deskmini x300でSATA SSDからM.2 SSDに差し替えるとProxmoxのWebGUIにアクセスできなくなる">
-<meta name="twitter:description" content="発生現象 Deskmini x300(CPU:Ryzen7 5700G) に元々SATA SSDを差していたがデータをM.2 SSDにクローンをして差し替えると、有線LANが繋がらなくなる
-結果、ProxmoxのWebGUIにアクセスできなくなる
-対処方法 WebGUIではなく本体からコマンドで、ブリッジネットワークにリンクしている物理LANを「enp1s0」から「enp2s0」へ変更する
-手順 SATA SSDのとき 元々は500GBのSATA SSDを使用していた ネットワークの設定 M.2 SSDのとき M.2 SSDに差し替えた 元々「enp1s0」だったが「enp2s0」にすると通信可能になった ">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-08-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-15T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="UbuntuにHugoをインストールする">
+<meta name="twitter:description" content=" WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました
+その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました
+環境 Ubuntu 24.04 LTS Intel Core i5-13500 (amd64) 参考URL https://gohugo.io/installation/linux/#prebuilt-binaries https://github.com/gohugoio/hugo/releases ダウンロード バイナリをダウンロードします
+1 wget https://github.com/gohugoio/hugo/releases/download/v0.132.1/hugo_extended_0.132.1_linux-amd64.tar.gz 展開・解凍 フォルダを作成して展開する
+1 2 mkdir hugo_extended_0.132.1_linux-amd64 tar -zxvf hugo_extended_0.132.1_linux-amd64.tar.gz -C ./hugo_extended_0.132.1_linux-amd64 パスの通っている場所へ移動し、バージョン確認 バイナリファイルを&quot;/usr/local/bin&quot;へ移動します
+その後バージョンの確認をします
+1 2 sudo mv hugo_extended_0.132.1_linux-amd64/hugo /usr/local/bin/hugo hugo version 1 2 3 mao@mao:~$ hugo version hugo v0.132.1-1bde700dfc0770bb11eb8445aff1ab5abdccb46e&#43;extended linux/amd64 BuildDate=2024-08-13T10:10:10Z VendorInfo=gohugoio mao@mao:~$ アンインストール アンインストールする際は下記のコマンドを実行し、バイナリの場所を確認して削除します
+1 2 3 mao@mao:~$ which hugo /usr/local/bin/hugo mao@mao:~$ sudo rm /usr/local/bin/hugo ">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
   
@@ -244,12 +256,12 @@
     
     <header class="article-category">
         
-            <a href="../../categories/proxmox/" >
-                Proxmox
+            <a href="../../categories/hugo/" >
+                Hugo
             </a>
         
-            <a href="../../categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/" >
-                ブリッジネットワーク
+            <a href="../../categories/ubuntu/" >
+                Ubuntu
             </a>
         
     </header>
@@ -257,7 +269,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../post/proxmox-ssd-lan/">Deskmini x300でSATA SSDからM.2 SSDに差し替えるとProxmoxのWebGUIにアクセスできなくなる</a>
+            <a href="../../post/ubuntu-install-hugo/">UbuntuにHugoをインストールする</a>
         </h2>
     
         
@@ -279,7 +291,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">2024/05/26</time>
+                <time class="article-time--published">2024/08/15</time>
             </div>
         
 
@@ -296,67 +308,83 @@
     <section class="article-content">
     
     
-    <h2 id="発生現象">発生現象</h2>
-<p>Deskmini x300(CPU:Ryzen7 5700G) に元々SATA SSDを差していたがデータをM.2 SSDにクローンをして差し替えると、有線LANが繋がらなくなる<br>
-結果、ProxmoxのWebGUIにアクセスできなくなる</p>
-<h2 id="対処方法">対処方法</h2>
-<p>WebGUIではなく本体からコマンドで、ブリッジネットワークにリンクしている物理LANを「enp1s0」から「enp2s0」へ変更する</p>
-<h2 id="手順">手順</h2>
-<h3 id="sata-ssdのとき">SATA SSDのとき</h3>
-<p>元々は500GBのSATA SSDを使用していた
-<img src="../../post/proxmox-ssd-lan/01.png"
-	width="3700"
-	height="2096"
-	srcset="../../post/proxmox-ssd-lan/01_hu496782049234564471.png 480w, ../../post/proxmox-ssd-lan/01_hu5309739966525751733.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="176"
-		data-flex-basis="423px"
-	
->
-ネットワークの設定
-<img src="../../post/proxmox-ssd-lan/02.png"
-	width="3700"
-	height="2096"
-	srcset="../../post/proxmox-ssd-lan/02_hu11372885925747122544.png 480w, ../../post/proxmox-ssd-lan/02_hu12415396578701522199.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="176"
-		data-flex-basis="423px"
-	
-></p>
-<h3 id="m2-ssdのとき">M.2 SSDのとき</h3>
-<p>M.2 SSDに差し替えた
-<img src="../../post/proxmox-ssd-lan/03.png"
-	width="3700"
-	height="2096"
-	srcset="../../post/proxmox-ssd-lan/03_hu17608978437788127665.png 480w, ../../post/proxmox-ssd-lan/03_hu281737308782487125.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="176"
-		data-flex-basis="423px"
-	
->
-元々「enp1s0」だったが「enp2s0」にすると通信可能になった
-<img src="../../post/proxmox-ssd-lan/04.png"
-	width="3700"
-	height="2096"
-	srcset="../../post/proxmox-ssd-lan/04_hu1971104256836174357.png 480w, ../../post/proxmox-ssd-lan/04_hu10968881571680934050.png 1024w"
-	loading="lazy"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="176"
-		data-flex-basis="423px"
-	
-></p>
-
+    <h2 id="heading"></h2>
+<p>WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました<br>
+その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 24.04 LTS</li>
+<li>Intel Core i5-13500 (amd64)</li>
+</ul>
+<h2 id="参考url">参考URL</h2>
+<ul>
+<li><a class="link" href="https://gohugo.io/installation/linux/#prebuilt-binaries"  target="_blank" rel="noopener"
+    >https://gohugo.io/installation/linux/#prebuilt-binaries</a></li>
+<li><a class="link" href="https://github.com/gohugoio/hugo/releases"  target="_blank" rel="noopener"
+    >https://github.com/gohugoio/hugo/releases</a></li>
+</ul>
+<h2 id="ダウンロード">ダウンロード</h2>
+<p>バイナリをダウンロードします</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gohugoio</span><span class="o">/</span><span class="n">hugo</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mf">132.1</span><span class="o">/</span><span class="n">hugo_extended_0</span><span class="o">.</span><span class="mf">132.1</span><span class="n">_linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="展開解凍">展開・解凍</h2>
+<p>フォルダを作成して展開する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mkdir hugo_extended_0.132.1_linux-amd64
+</span></span><span class="line"><span class="cl">tar -zxvf hugo_extended_0.132.1_linux-amd64.tar.gz -C ./hugo_extended_0.132.1_linux-amd64
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="パスの通っている場所へ移動しバージョン確認">パスの通っている場所へ移動し、バージョン確認</h2>
+<p>バイナリファイルを&quot;/usr/local/bin&quot;へ移動します<br>
+その後バージョンの確認をします</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo mv hugo_extended_0.132.1_linux-amd64/hugo /usr/local/bin/hugo
+</span></span><span class="line"><span class="cl">hugo version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@mao:~$ hugo version
+</span></span><span class="line"><span class="cl">hugo v0.132.1-1bde700dfc0770bb11eb8445aff1ab5abdccb46e+extended linux/amd64 BuildDate=2024-08-13T10:10:10Z VendorInfo=gohugoio
+</span></span><span class="line"><span class="cl">mao@mao:~$ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="アンインストール">アンインストール</h2>
+<p>アンインストールする際は下記のコマンドを実行し、バイナリの場所を確認して削除します</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@mao:~$ which hugo
+</span></span><span class="line"><span class="cl">/usr/local/bin/hugo
+</span></span><span class="line"><span class="cl">mao@mao:~$ sudo rm /usr/local/bin/hugo
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </section>
 
 
@@ -383,64 +411,12 @@
             
                 
 <article class="">
-    <a href="../../post/kubernetes-on-proxmox-05/">
+    <a href="../../post/hugo-stack-custom-lastupdated/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">kubernetesをproxmox上に立ててみた（5）/HA構成</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="../../post/kubernetes-on-proxmox-04/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">kubernetesをproxmox上に立ててみた（4）/クラスターを壊す</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="../../post/kubernetes-on-proxmox-03/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="../../post/kubernetes-on-proxmox-02/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">kubernetesをproxmox上に立ててみた（2）/Control-Plane・Worker-Nodeの設定</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="../../post/kubernetes-on-proxmox-01/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">kubernetesをproxmox上に立ててみた（1）</h2>
+            <h2 class="article-title">Hugoで作成日時の横に更新日時を表示できるようにする</h2>
         </div>
     </a>
 </article>
