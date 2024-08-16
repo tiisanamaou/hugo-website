@@ -649,8 +649,7 @@ mao@k8s-control-plane-02:~$
 - k8s-control-plane-03
 - "sudo kubeadm upgrade plan"と"sudo kubeadm upgrade apply v1.30.3"の変わりに"sudo kubeadm upgrade node"を実行する
 ```
-mao@k8s-control-plane-03:~$ kubectl drain --ignore-daemonsets k8s-control-plane-0
-3
+mao@k8s-control-plane-03:~$ kubectl drain --ignore-daemonsets k8s-control-plane-03
 node/k8s-control-plane-03 cordoned
 Warning: ignoring DaemonSet-managed Pods: calico-system/calico-node-g2ks8, calico-system/csi-node-driver-9w86p, kube-system/kube-proxy-4l8w6, metallb-system/speaker-gg452
 evicting pod tigera-operator/tigera-operator-76ff79f7fd-tc9t7

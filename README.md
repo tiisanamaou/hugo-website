@@ -9,12 +9,13 @@ hugo server -D
 hugo -D
 ```
 
-ビルドすると"public"フォルダにビルドされたファイルが生成される
-
+ビルドすると"public"フォルダにビルドされたファイルが生成される\
 中身をコピーして"docs"フォルダに入れる
+```
+cp -rf ./public/* ./docs/.
+```
 
-その後pushをする
-
+その後pushをする\
 Github Pagesで公開される
 
 ### サイトURL

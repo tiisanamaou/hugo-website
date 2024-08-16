@@ -1,0 +1,5 @@
+# 一時ファイル
+/resources/_gen/
+
+# /docsへ移動させるため
+/public/
