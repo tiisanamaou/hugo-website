@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='開発環境 Proxmox 8.2.4 Ubuntu Server 24.04 LTS Kubernetes v1.30.2 LoadBalancer（MetalLB）の設定をする kubernetesのクラスターの外部からIPアドレスでアクセスするための設定をする ロードバランサー（MetalLB）を使用して外部からアクセスできるようにする マニフェストファイルの&quot;type&quot;に&quot;LoadBalancer&quot;を指定できるようになる MetalLB を実行する 今回はMetalLBを使用する
-https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl get configmap kube-proxy -n kube-system -o yaml | \ sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \ kubectl diff -f - -n kube-system 2 1 2 3 kubectl get configmap kube-proxy -n kube-system -o yaml | \ sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \ kubectl apply -f - -n kube-system 実行結果 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 mao@k8s-control-plane-01:~$ kubectl get configmap kube-proxy -n kube-system -o yaml | \ sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \ kubectl diff -f - -n kube-system diff -u -N /tmp/LIVE-1007559117/v1.'>
-<title>kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Kubernetes 1.31.0 Helm v3.15.3 Traefik v3.1.2 HelmでTraefikのリポジトリを追加する リポジトリを追加してupdateする
+1 2 3 helm repo add traefik https://traefik.github.io/charts helm repo update helm repo list 1 2 3 4 5 6 7 8 9 10 11 12 mao@k8s-control-plane-01:~$ helm repo add traefik https://traefik.github.io/charts &#34;traefik&#34; has been added to your repositories mao@k8s-control-plane-01:~$ helm repo update Hang tight while we grab the latest from your chart repositories... ...Successfully got an update from the &#34;kubernetes-dashboard&#34; chart repository .'>
+<title>KubernetesでTraefikを使用してIngressを使えるようにする</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定'>
-<meta property='og:description' content='開発環境 Proxmox 8.2.4 Ubuntu Server 24.04 LTS Kubernetes v1.30.2 LoadBalancer（MetalLB）の設定をする kubernetesのクラスターの外部からIPアドレスでアクセスするための設定をする ロードバランサー（MetalLB）を使用して外部からアクセスできるようにする マニフェストファイルの&quot;type&quot;に&quot;LoadBalancer&quot;を指定できるようになる MetalLB を実行する 今回はMetalLBを使用する
-https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl get configmap kube-proxy -n kube-system -o yaml | \ sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \ kubectl diff -f - -n kube-system 2 1 2 3 kubectl get configmap kube-proxy -n kube-system -o yaml | \ sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \ kubectl apply -f - -n kube-system 実行結果 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 mao@k8s-control-plane-01:~$ kubectl get configmap kube-proxy -n kube-system -o yaml | \ sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \ kubectl diff -f - -n kube-system diff -u -N /tmp/LIVE-1007559117/v1.'>
-<meta property='og:url' content='https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/'>
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='KubernetesでTraefikを使用してIngressを使えるようにする'>
+<meta property='og:description' content='環境 Kubernetes 1.31.0 Helm v3.15.3 Traefik v3.1.2 HelmでTraefikのリポジトリを追加する リポジトリを追加してupdateする
+1 2 3 helm repo add traefik https://traefik.github.io/charts helm repo update helm repo list 1 2 3 4 5 6 7 8 9 10 11 12 mao@k8s-control-plane-01:~$ helm repo add traefik https://traefik.github.io/charts &#34;traefik&#34; has been added to your repositories mao@k8s-control-plane-01:~$ helm repo update Hang tight while we grab the latest from your chart repositories... ...Successfully got an update from the &#34;kubernetes-dashboard&#34; chart repository .'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/'>
 <meta property='og:site_name' content='onodera memo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-07-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-07-13T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定">
-<meta name="twitter:description" content="開発環境 Proxmox 8.2.4 Ubuntu Server 24.04 LTS Kubernetes v1.30.2 LoadBalancer（MetalLB）の設定をする kubernetesのクラスターの外部からIPアドレスでアクセスするための設定をする ロードバランサー（MetalLB）を使用して外部からアクセスできるようにする マニフェストファイルの&quot;type&quot;に&quot;LoadBalancer&quot;を指定できるようになる MetalLB を実行する 今回はMetalLBを使用する
-https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl get configmap kube-proxy -n kube-system -o yaml | \ sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \ kubectl diff -f - -n kube-system 2 1 2 3 kubectl get configmap kube-proxy -n kube-system -o yaml | \ sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \ kubectl apply -f - -n kube-system 実行結果 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 mao@k8s-control-plane-01:~$ kubectl get configmap kube-proxy -n kube-system -o yaml | \ sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \ kubectl diff -f - -n kube-system diff -u -N /tmp/LIVE-1007559117/v1.">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-08-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-21T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="KubernetesでTraefikを使用してIngressを使えるようにする">
+<meta name="twitter:description" content="環境 Kubernetes 1.31.0 Helm v3.15.3 Traefik v3.1.2 HelmでTraefikのリポジトリを追加する リポジトリを追加してupdateする
+1 2 3 helm repo add traefik https://traefik.github.io/charts helm repo update helm repo list 1 2 3 4 5 6 7 8 9 10 11 12 mao@k8s-control-plane-01:~$ helm repo add traefik https://traefik.github.io/charts &#34;traefik&#34; has been added to your repositories mao@k8s-control-plane-01:~$ helm repo update Hang tight while we grab the latest from your chart repositories... ...Successfully got an update from the &#34;kubernetes-dashboard&#34; chart repository .">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
   
@@ -242,8 +242,8 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
                 Kubernetes
             </a>
         
-            <a href="../../categories/proxmox/" >
-                Proxmox
+            <a href="../../categories/traefik/" >
+                Traefik
             </a>
         
     </header>
@@ -251,7 +251,7 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../post/kubernetes-on-proxmox-03/">kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</a>
+            <a href="../../post/kubernetes-ingress-traefik/">KubernetesでTraefikを使用してIngressを使えるようにする</a>
         </h2>
     
         
@@ -273,24 +273,12 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">2024/07/07</time>
+                <time class="article-time--published">2024/08/21</time>
             </div>
         
 
         
-        <div class="article-time--lastUpdated">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-            <time>
-                最終更新 2024/07/13
-            </time>
-        </div>
+        
     </footer>
     
 
@@ -302,28 +290,14 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
     <section class="article-content">
     
     
-    <h2 id="開発環境">開発環境</h2>
+    <h2 id="環境">環境</h2>
 <ul>
-<li>Proxmox 8.2.4</li>
-<li>Ubuntu Server 24.04 LTS</li>
-<li>Kubernetes v1.30.2</li>
+<li>Kubernetes 1.31.0</li>
+<li>Helm v3.15.3</li>
+<li>Traefik v3.1.2</li>
 </ul>
-<h2 id="loadbalancermetallbの設定をする">LoadBalancer（MetalLB）の設定をする</h2>
-<ul>
-<li>kubernetesのクラスターの外部からIPアドレスでアクセスするための設定をする</li>
-<li>ロードバランサー（MetalLB）を使用して外部からアクセスできるようにする</li>
-<li>マニフェストファイルの&quot;type&quot;に&quot;LoadBalancer&quot;を指定できるようになる</li>
-</ul>
-<h3 id="metallb-を実行する">MetalLB を実行する</h3>
-<p>今回はMetalLBを使用する</p>
-<ul>
-<li><a class="link" href="https://metallb.universe.tf/installation/"  target="_blank" rel="noopener"
-    >https://metallb.universe.tf/installation/</a></li>
-</ul>
-<h3 id="arpの設定をする">ARPの設定をする</h3>
-<ul>
-<li>1</li>
-</ul>
+<h2 id="helmでtraefikのリポジトリを追加する">HelmでTraefikのリポジトリを追加する</h2>
+<p>リポジトリを追加してupdateする</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -331,30 +305,55 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get configmap kube-proxy -n kube-system -o yaml | \
-</span></span><span class="line"><span class="cl">sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \
-</span></span><span class="line"><span class="cl">kubectl diff -f - -n kube-system
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">helm repo add traefik https://traefik.github.io/charts
+</span></span><span class="line"><span class="cl">helm repo update
+</span></span><span class="line"><span class="cl">helm repo list
 </span></span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>2</li>
-</ul>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ helm repo add traefik https://traefik.github.io/charts
+</span></span><span class="line"><span class="cl">&#34;traefik&#34; has been added to your repositories
+</span></span><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ helm repo update
+</span></span><span class="line"><span class="cl">Hang tight while we grab the latest from your chart repositories...
+</span></span><span class="line"><span class="cl">...Successfully got an update from the &#34;kubernetes-dashboard&#34; chart repository
+</span></span><span class="line"><span class="cl">...Successfully got an update from the &#34;traefik&#34; chart repository
+</span></span><span class="line"><span class="cl">Update Complete. ⎈Happy Helming!⎈
+</span></span><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ helm repo list
+</span></span><span class="line"><span class="cl">NAME                    URL                                    
+</span></span><span class="line"><span class="cl">kubernetes-dashboard    https://kubernetes.github.io/dashboard/
+</span></span><span class="line"><span class="cl">traefik                 https://traefik.github.io/charts       
+</span></span><span class="line"><span class="cl">mao@k8s-control-plane-01:~$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ingress-controllerをインストールする">Ingress-Controllerをインストールする</h2>
+<p>Ingress-Controllerを&quot;ns-traefik&quot;という&quot;namespace&quot;にインストールする<br>
+作成されているか確認する</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get configmap kube-proxy -n kube-system -o yaml | \
-</span></span><span class="line"><span class="cl">sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \
-</span></span><span class="line"><span class="cl">kubectl apply -f - -n kube-system
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">helm install traefik traefik/traefik --create-namespace --namespace ns-traefik
+</span></span><span class="line"><span class="cl">kubectl get services -A
 </span></span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>実行結果</li>
-</ul>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -376,178 +375,58 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
 </span><span class="lnt">18
 </span><span class="lnt">19
 </span><span class="lnt">20
-</span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ kubectl get configmap kube-proxy -n kube-system -o yaml | \
-</span></span><span class="line"><span class="cl">sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \
-</span></span><span class="line"><span class="cl">kubectl diff -f - -n kube-system
-</span></span><span class="line"><span class="cl">diff -u -N /tmp/LIVE-1007559117/v1.ConfigMap.kube-system.kube-proxy /tmp/MERGED-3311346621/v1.ConfigMap.kube-system.kube-proxy
-</span></span><span class="line"><span class="cl">--- /tmp/LIVE-1007559117/v1.ConfigMap.kube-system.kube-proxy    2024-06-26 12:33:11.717730136 +0000
-</span></span><span class="line"><span class="cl">+++ /tmp/MERGED-3311346621/v1.ConfigMap.kube-system.kube-proxy  2024-06-26 12:33:11.718730159 +0000
-</span></span><span class="line"><span class="cl">@@ -37,7 +37,7 @@
-</span></span><span class="line"><span class="cl">       excludeCIDRs: null
-</span></span><span class="line"><span class="cl">       minSyncPeriod: 0s
-</span></span><span class="line"><span class="cl">       scheduler: &#34;&#34;
-</span></span><span class="line"><span class="cl">-      strictARP: false
-</span></span><span class="line"><span class="cl">+      strictARP: true
-</span></span><span class="line"><span class="cl">       syncPeriod: 0s
-</span></span><span class="line"><span class="cl">       tcpFinTimeout: 0s
-</span></span><span class="line"><span class="cl">       tcpTimeout: 0s
-</span></span><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ kubectl get configmap kube-proxy -n kube-system -o yaml | \
-</span></span><span class="line"><span class="cl">sed -e &#34;s/strictARP: false/strictARP: true/&#34; | \
-</span></span><span class="line"><span class="cl">kubectl apply -f - -n kube-system
-</span></span><span class="line"><span class="cl">Warning: resource configmaps/kube-proxy is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
-</span></span><span class="line"><span class="cl">configmap/kube-proxy configured
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ helm install traefik traefik/traefik --create-namespace --namespace ns-traefik
+</span></span><span class="line"><span class="cl">NAME: traefik
+</span></span><span class="line"><span class="cl">LAST DEPLOYED: Tue Aug 20 11:51:28 2024
+</span></span><span class="line"><span class="cl">NAMESPACE: ns-traefik
+</span></span><span class="line"><span class="cl">STATUS: deployed
+</span></span><span class="line"><span class="cl">REVISION: 1
+</span></span><span class="line"><span class="cl">TEST SUITE: None
+</span></span><span class="line"><span class="cl">NOTES:
+</span></span><span class="line"><span class="cl">traefik with docker.io/traefik:v3.1.2 has been deployed successfully on ns-traefik namespace !
+</span></span><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ 
+</span></span><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ kubectl get services -A
+</span></span><span class="line"><span class="cl">NAMESPACE          NAME                              TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                      AGE
+</span></span><span class="line"><span class="cl">calico-apiserver   calico-api                        ClusterIP      10.100.15.33    &lt;none&gt;          443/TCP                      51d
+</span></span><span class="line"><span class="cl">calico-system      calico-kube-controllers-metrics   ClusterIP      None            &lt;none&gt;          9094/TCP                     51d
+</span></span><span class="line"><span class="cl">calico-system      calico-typha                      ClusterIP      10.111.65.20    &lt;none&gt;          5473/TCP                     51d
+</span></span><span class="line"><span class="cl">default            kubernetes                        ClusterIP      10.96.0.1       &lt;none&gt;          443/TCP                      51d
+</span></span><span class="line"><span class="cl">kube-system        kube-dns                          ClusterIP      10.96.0.10      &lt;none&gt;          53/UDP,53/TCP,9153/TCP       51d
+</span></span><span class="line"><span class="cl">metallb-system     metallb-webhook-service           ClusterIP      10.98.148.198   &lt;none&gt;          443/TCP                      51d
+</span></span><span class="line"><span class="cl">ns-traefik         traefik                           LoadBalancer   10.98.137.158   192.168.10.55   80:31371/TCP,443:31450/TCP   2m32s
 </span></span><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ 
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="metallbの実行をする">MetalLBの実行をする</h3>
-<p>参考URL</p>
-<ul>
-<li><a class="link" href="https://blog.ntnx.jp/entry/2024/02/14/025309"  target="_blank" rel="noopener"
-    >https://blog.ntnx.jp/entry/2024/02/14/025309</a></li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">wget https://raw.githubusercontent.com/metallb/metallb/v0.14.5/config/manifests/metallb-native.yaml
-</span></span><span class="line"><span class="cl">kubectl apply -f metallb-native.yaml
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>確認をする</p>
+</div><p>podが作成されていることを確認する</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get pod -n metallb-system
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get --namespace ns-traefik pod
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>実行結果</p>
-<div class="highlight"><div class="chroma">
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ kubectl get pod -n metallb-system
-</span></span><span class="line"><span class="cl">NAME                          READY   STATUS    RESTARTS   AGE
-</span></span><span class="line"><span class="cl">controller-86f5578878-dz5zm   1/1     Running   0          43s
-</span></span><span class="line"><span class="cl">speaker-mbvpk                 1/1     Running   0          43s
-</span></span><span class="line"><span class="cl">speaker-rx75f                 1/1     Running   0          43s
-</span></span><span class="line"><span class="cl">speaker-xwb66                 1/1     Running   0          43s
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ kubectl get --namespace ns-traefik pod
+</span></span><span class="line"><span class="cl">NAME                       READY   STATUS    RESTARTS   AGE
+</span></span><span class="line"><span class="cl">traefik-6996c86bfd-kb284   1/1     Running   0          4m45s
 </span></span><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ 
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>払い出せるIPアドレスの範囲を設定する</p>
+</div><h2 id="ingressserviceをデプロイする">Ingress,Serviceをデプロイする</h2>
+<p>マニフェストファイルを作成する</p>
 <ul>
-<li>下記の部分で範囲を設定する</li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">spec:
-</span></span><span class="line"><span class="cl">  addresses:
-</span></span><span class="line"><span class="cl">  - 192.168.10.55-192.168.10.60
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>1</li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cat &lt;&lt; EOF &gt; ippool.yaml
-</span></span><span class="line"><span class="cl">apiVersion: metallb.io/v1beta1
-</span></span><span class="line"><span class="cl">kind: IPAddressPool
-</span></span><span class="line"><span class="cl">metadata:
-</span></span><span class="line"><span class="cl">  name: default
-</span></span><span class="line"><span class="cl">  namespace: metallb-system
-</span></span><span class="line"><span class="cl">spec:
-</span></span><span class="line"><span class="cl">  addresses:
-</span></span><span class="line"><span class="cl">  - 192.168.10.55-192.168.10.60
-</span></span><span class="line"><span class="cl">EOF
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>2</li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cat &lt;&lt; EOF &gt; l2adv.yaml
-</span></span><span class="line"><span class="cl">apiVersion: metallb.io/v1beta1
-</span></span><span class="line"><span class="cl">kind: L2Advertisement
-</span></span><span class="line"><span class="cl">metadata:
-</span></span><span class="line"><span class="cl">  name: default
-</span></span><span class="line"><span class="cl">  namespace: metallb-system
-</span></span><span class="line"><span class="cl">spec:
-</span></span><span class="line"><span class="cl">  ipAddressPools:
-</span></span><span class="line"><span class="cl">  - default
-</span></span><span class="line"><span class="cl">EOF
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>設定を実行する</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl apply -f ippool.yaml -f l2adv.yaml
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>実行結果</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ kubectl apply -f ippool.yaml -f l2adv.yaml
-</span></span><span class="line"><span class="cl">ipaddresspool.metallb.io/default created
-</span></span><span class="line"><span class="cl">l2advertisement.metallb.io/default created
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="マニフェストファイルを実行後外部ipアドレスが設定されているか確認する">マニフェストファイルを実行後、外部IPアドレスが設定されているか確認する</h2>
-<p>マニフェストファイル</p>
-<ul>
-<li>nginx-lb.yaml</li>
+<li>traefik-ingress.yaml</li>
+<li>ingressとnginxのservice,podを一緒にデプロイする</li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -585,12 +464,96 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
 </span><span class="lnt">32
 </span><span class="lnt">33
 </span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: apps/v1
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">apiVersion: networking.k8s.io/v1
+</span></span><span class="line"><span class="cl">kind: Ingress
+</span></span><span class="line"><span class="cl">metadata:
+</span></span><span class="line"><span class="cl">  name: ingress-traefik-test
+</span></span><span class="line"><span class="cl">  # ingressのnamespaceとserviceのnamespaceは同じにする
+</span></span><span class="line"><span class="cl">  #namespace: ns-traefik
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">spec:
+</span></span><span class="line"><span class="cl">  rules:
+</span></span><span class="line"><span class="cl">    # hostを設定しないとIPアドレスでアクセスできる
+</span></span><span class="line"><span class="cl">    #- host: ingress1.internal
+</span></span><span class="line"><span class="cl">    - http:
+</span></span><span class="line"><span class="cl">        paths:
+</span></span><span class="line"><span class="cl">          - path: /
+</span></span><span class="line"><span class="cl">            pathType: Prefix
+</span></span><span class="line"><span class="cl">            backend:
+</span></span><span class="line"><span class="cl">              service:
+</span></span><span class="line"><span class="cl">                name: nginx-deployment-lb
+</span></span><span class="line"><span class="cl">                port:
+</span></span><span class="line"><span class="cl">                  number: 83
+</span></span><span class="line"><span class="cl">    - host: ingress1.internal
+</span></span><span class="line"><span class="cl">      http:
+</span></span><span class="line"><span class="cl">        paths:
+</span></span><span class="line"><span class="cl">          - path: /
+</span></span><span class="line"><span class="cl">            pathType: Prefix
+</span></span><span class="line"><span class="cl">            backend:
+</span></span><span class="line"><span class="cl">              service:
+</span></span><span class="line"><span class="cl">                name: nginx-deployment-lb
+</span></span><span class="line"><span class="cl">                port:
+</span></span><span class="line"><span class="cl">                  number: 83
+</span></span><span class="line"><span class="cl">    - host: ingress2.internal
+</span></span><span class="line"><span class="cl">      http:
+</span></span><span class="line"><span class="cl">        paths:
+</span></span><span class="line"><span class="cl">          - path: /
+</span></span><span class="line"><span class="cl">            pathType: Prefix
+</span></span><span class="line"><span class="cl">            backend:
+</span></span><span class="line"><span class="cl">              service:
+</span></span><span class="line"><span class="cl">                name: nginx-deployment-lb
+</span></span><span class="line"><span class="cl">                port:
+</span></span><span class="line"><span class="cl">                  number: 83
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">apiVersion: apps/v1
 </span></span><span class="line"><span class="cl">kind: Deployment
 </span></span><span class="line"><span class="cl">metadata:
 </span></span><span class="line"><span class="cl">  name: nginx-deployment
+</span></span><span class="line"><span class="cl">  #namespace: ns-traefik
 </span></span><span class="line"><span class="cl">  labels:
 </span></span><span class="line"><span class="cl">    app: nginx
 </span></span><span class="line"><span class="cl">spec:
@@ -613,60 +576,97 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
 </span></span><span class="line"><span class="cl">kind: Service
 </span></span><span class="line"><span class="cl">metadata:
 </span></span><span class="line"><span class="cl">  name: nginx-deployment-lb
+</span></span><span class="line"><span class="cl">  #namespace: ns-traefik
 </span></span><span class="line"><span class="cl">spec:
-</span></span><span class="line"><span class="cl">  type: LoadBalancer
-</span></span><span class="line"><span class="cl">  #type: ClusterIP
+</span></span><span class="line"><span class="cl">  type: NodePort
 </span></span><span class="line"><span class="cl">  ports:
-</span></span><span class="line"><span class="cl">  - port: 80
+</span></span><span class="line"><span class="cl">  - port: 83
 </span></span><span class="line"><span class="cl">    targetPort: 80
 </span></span><span class="line"><span class="cl">  selector:
 </span></span><span class="line"><span class="cl">    app: nginx
 </span></span></code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>&ldquo;type: LoadBalancer&quot;にするとLoadBalancerからIPアドレスが払い出されてクラスタ外からアクセスできるようになる</li>
+</div><p>デプロイする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl apply -f traefik-ingress.yaml
+</span></span><span class="line"><span class="cl">kubectl get ingress -A
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="アクセスできるか確認する">アクセスできるか確認する</h2>
+<p>IPアドレスとバーチャルホストでアクセスできるか確認する<br>
+結果が帰ってくればOK<br>
+アクセスできない場合はportがあっているかnamespaceが同じか等確認をする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">curl http://192.168.10.55
+</span></span><span class="line"><span class="cl">curl -H &#39;Host:ingress1.internal&#39; http://192.168.10.55
+</span></span><span class="line"><span class="cl">curl -H &#39;Host:ingress2.internal&#39; http://192.168.10.55
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="削除する">削除する</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl delete -f traefik-ingress.yaml
+</span></span><span class="line"><span class="cl">helm uninstall traefik -n ns-traefik
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get services -A
+</span></span><span class="line"><span class="cl">helm ls -A
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="参考url">参考URL</h2>
+<ul>
+<li>インストール（Helmを使用する）
+<ul>
+<li><a class="link" href="https://doc.traefik.io/traefik/getting-started/install-traefik/"  target="_blank" rel="noopener"
+    >https://doc.traefik.io/traefik/getting-started/install-traefik/</a></li>
 </ul>
-<p>マニフェストファイルを実行してデプロイする</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl apply -f nginx-lb.yaml
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>確認するためのコマンド</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get svc
-</span></span><span class="line"><span class="cl">or
-</span></span><span class="line"><span class="cl">kubectl get service
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>実行結果</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ kubectl get svc
-</span></span><span class="line"><span class="cl">NAME                  TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)        AGE
-</span></span><span class="line"><span class="cl">kubernetes            ClusterIP      10.96.0.1       &lt;none&gt;          443/TCP        25h
-</span></span><span class="line"><span class="cl">nginx-deployment-lb   LoadBalancer   10.98.208.100   192.168.10.45   80:32762/TCP   58s
-</span></span><span class="line"><span class="cl">mao@k8s-control-plane-01:~$ 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>&ldquo;nginx-deployment-lb&quot;の&quot;TYPE&quot;に&quot;LoadBalancer&quot;が指定されており&quot;EXTERNAL-IP&rdquo;（外部IPアドレス）が割り当てられている</p>
-<p>このIPアドレスにアクセスすると実際のコンテナにアクセスできる</p>
+</li>
+<li>Ingressのマニフェストファイル
+<ul>
+<li><a class="link" href="https://doc.traefik.io/traefik/providers/kubernetes-ingress/"  target="_blank" rel="noopener"
+    >https://doc.traefik.io/traefik/providers/kubernetes-ingress/</a></li>
+<li><a class="link" href="https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/"  target="_blank" rel="noopener"
+    >https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/</a></li>
+</ul>
+</li>
+<li>Kubernetes で Traefik proxy を使う
+<ul>
+<li><a class="link" href="https://zenn.dev/zenogawa/articles/k8s_traefik_ingress"  target="_blank" rel="noopener"
+    >https://zenn.dev/zenogawa/articles/k8s_traefik_ingress</a></li>
+</ul>
+</li>
+<li>自宅の kubernetes に ingress-nginx を入れてみる
+<ul>
+<li><a class="link" href="https://konchangakita.hatenablog.com/entry/2020/07/13/220000"  target="_blank" rel="noopener"
+    >https://konchangakita.hatenablog.com/entry/2020/07/13/220000</a></li>
+</ul>
+</li>
+<li><a class="link" href="https://y-ohgi.com/introduction-kubernetes/3_objects/ingress/"  target="_blank" rel="noopener"
+    >https://y-ohgi.com/introduction-kubernetes/3_objects/ingress/</a></li>
+<li><a class="link" href="https://qiita.com/dingtianhongjie/items/73980a3e9fbc8c7bc3cd"  target="_blank" rel="noopener"
+    >https://qiita.com/dingtianhongjie/items/73980a3e9fbc8c7bc3cd</a></li>
+</ul>
 
 </section>
 
@@ -694,12 +694,12 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
             
                 
 <article class="">
-    <a href="../../post/kubernetes-on-proxmox-05/">
+    <a href="../../post/kubernetes-upgrade-v1-31-0/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">kubernetesをproxmox上に立ててみた（5）/HA構成</h2>
+            <h2 class="article-title">Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</h2>
         </div>
     </a>
 </article>
@@ -707,12 +707,12 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
             
                 
 <article class="">
-    <a href="../../post/kubernetes-on-proxmox-04/">
+    <a href="../../post/kubernetes-pv-pvc/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">kubernetesをproxmox上に立ててみた（4）/クラスターを壊す</h2>
+            <h2 class="article-title">NFS-serverを構築してPV(PersistentVolume)を作成する</h2>
         </div>
     </a>
 </article>
@@ -720,12 +720,12 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
             
                 
 <article class="">
-    <a href="../../post/kubernetes-on-proxmox-02/">
+    <a href="../../post/kubernetes-upgrade-v1-30-3/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">kubernetesをproxmox上に立ててみた（2）/Control-Plane・Worker-Nodeの設定</h2>
+            <h2 class="article-title">Kubernetesのクラスタをv1.30.2からv1.30.3へアップグレードをする</h2>
         </div>
     </a>
 </article>
@@ -733,12 +733,12 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
             
                 
 <article class="">
-    <a href="../../post/kubernetes-on-proxmox-01/">
+    <a href="../../post/kubernetes-dashboard/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">kubernetesをproxmox上に立ててみた（1）</h2>
+            <h2 class="article-title">Kubernetesのダッシュボードをデプロイする＋LoadBalancerでIPアドレスを割り振る</h2>
         </div>
     </a>
 </article>
@@ -746,12 +746,12 @@ https://metallb.universe.tf/installation/ ARPの設定をする 1 1 2 3 kubectl 
             
                 
 <article class="">
-    <a href="../../post/kubernetes-ingress-traefik/">
+    <a href="../../post/kubernetes-loadbalancer-ip/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">KubernetesでTraefikを使用してIngressを使えるようにする</h2>
+            <h2 class="article-title">KubernetesのLoadBalancerでIPアドレスを指定する方法</h2>
         </div>
     </a>
 </article>
