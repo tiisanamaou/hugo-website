@@ -4,6 +4,7 @@ date: 2024-08-12
 slug: kubernetes-dashboard
 categories:
     - Kubernetes
+    - Helm
 ---
 
 ## 環境

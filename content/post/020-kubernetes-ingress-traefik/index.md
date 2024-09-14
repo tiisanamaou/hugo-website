@@ -5,6 +5,7 @@ slug: kubernetes-ingress-traefik
 categories:
     - Kubernetes
     - Traefik
+    - Helm
 ---
 
 ## 環境
