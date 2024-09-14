@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Kubernetes 1.31.0 Control-Plane：1台 Woker-Node：3台&#43;1台 cri-o v1.30.4 Longhorn 1.7.0 参考URL インストール手順
+https://longhorn.io/docs/1.7.0/deploy/install/install-with-kubectl/ インストール要件
+https://longhorn.io/docs/1.7.0/deploy/install/#installation-requirements https://longhorn.io/docs/1.7.0/advanced-resources/longhornctl/install-longhornctl/ Dashboardも表示できるようにする
+https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/ インストール手順 マニフェストファイルをダウンロードする
+1 wget https://raw.githubusercontent.com/longhorn/longhorn/v1.7.0/deploy/longhorn.yaml 4724行目あたり Dashboardを外部からアクセスできるように&quot;type: LoadBalancer&quot;する 1 2 - type: ClusterIP &#43; type: LoadBalancer デプロイする
+1 2 kubectl apply -f longhorn.yaml kubectl delete -f longhorn.yaml インストールの進行状況を確認する
+1 2 3 kubectl get pods \ --namespace longhorn-system \ --watch デプロイができているか確認する
+1 2 kubectl -n longhorn-system get pod kubectl -n longhorn-system get svc Podがすぐ&quot;Evicted&quot;になってしまう（解決済み） 試したこと（どれも解決しなかった）'>
+<title>KubernetesにLonghornをインストールする</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/kubernetes-longhorn/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='KubernetesにLonghornをインストールする'>
+<meta property='og:description' content='環境 Kubernetes 1.31.0 Control-Plane：1台 Woker-Node：3台&#43;1台 cri-o v1.30.4 Longhorn 1.7.0 参考URL インストール手順
+https://longhorn.io/docs/1.7.0/deploy/install/install-with-kubectl/ インストール要件
+https://longhorn.io/docs/1.7.0/deploy/install/#installation-requirements https://longhorn.io/docs/1.7.0/advanced-resources/longhornctl/install-longhornctl/ Dashboardも表示できるようにする
+https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/ インストール手順 マニフェストファイルをダウンロードする
+1 wget https://raw.githubusercontent.com/longhorn/longhorn/v1.7.0/deploy/longhorn.yaml 4724行目あたり Dashboardを外部からアクセスできるように&quot;type: LoadBalancer&quot;する 1 2 - type: ClusterIP &#43; type: LoadBalancer デプロイする
+1 2 kubectl apply -f longhorn.yaml kubectl delete -f longhorn.yaml インストールの進行状況を確認する
+1 2 3 kubectl get pods \ --namespace longhorn-system \ --watch デプロイができているか確認する
+1 2 kubectl -n longhorn-system get pod kubectl -n longhorn-system get svc Podがすぐ&quot;Evicted&quot;になってしまう（解決済み） 試したこと（どれも解決しなかった）'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/kubernetes-longhorn/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-09-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-09-14T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="KubernetesにLonghornをインストールする">
+<meta name="twitter:description" content="環境 Kubernetes 1.31.0 Control-Plane：1台 Woker-Node：3台&#43;1台 cri-o v1.30.4 Longhorn 1.7.0 参考URL インストール手順
+https://longhorn.io/docs/1.7.0/deploy/install/install-with-kubectl/ インストール要件
+https://longhorn.io/docs/1.7.0/deploy/install/#installation-requirements https://longhorn.io/docs/1.7.0/advanced-resources/longhornctl/install-longhornctl/ Dashboardも表示できるようにする
+https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/ インストール手順 マニフェストファイルをダウンロードする
+1 wget https://raw.githubusercontent.com/longhorn/longhorn/v1.7.0/deploy/longhorn.yaml 4724行目あたり Dashboardを外部からアクセスできるように&quot;type: LoadBalancer&quot;する 1 2 - type: ClusterIP &#43; type: LoadBalancer デプロイする
+1 2 kubectl apply -f longhorn.yaml kubectl delete -f longhorn.yaml インストールの進行状況を確認する
+1 2 3 kubectl get pods \ --namespace longhorn-system \ --watch デプロイができているか確認する
+1 2 kubectl -n longhorn-system get pod kubectl -n longhorn-system get svc Podがすぐ&quot;Evicted&quot;になってしまう（解決済み） 試したこと（どれも解決しなかった）">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://tiisanamaou.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/kubernetes/" >
+                Kubernetes
+            </a>
+        
+            <a href="../../categories/longhorn/" >
+                Longhorn
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/kubernetes-longhorn/">KubernetesにLonghornをインストールする</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024/09/14</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="環境">環境</h2>
+<ul>
+<li>Kubernetes 1.31.0
+<ul>
+<li>Control-Plane：1台</li>
+<li>Woker-Node：3台+1台</li>
+</ul>
+</li>
+<li>cri-o v1.30.4</li>
+<li>Longhorn 1.7.0</li>
+</ul>
+<h2 id="参考url">参考URL</h2>
+<p>インストール手順</p>
+<ul>
+<li><a class="link" href="https://longhorn.io/docs/1.7.0/deploy/install/install-with-kubectl/"  target="_blank" rel="noopener"
+    >https://longhorn.io/docs/1.7.0/deploy/install/install-with-kubectl/</a></li>
+</ul>
+<p>インストール要件</p>
+<ul>
+<li><a class="link" href="https://longhorn.io/docs/1.7.0/deploy/install/#installation-requirements"  target="_blank" rel="noopener"
+    >https://longhorn.io/docs/1.7.0/deploy/install/#installation-requirements</a></li>
+<li><a class="link" href="https://longhorn.io/docs/1.7.0/advanced-resources/longhornctl/install-longhornctl/"  target="_blank" rel="noopener"
+    >https://longhorn.io/docs/1.7.0/advanced-resources/longhornctl/install-longhornctl/</a></li>
+</ul>
+<p>Dashboardも表示できるようにする</p>
+<ul>
+<li><a class="link" href="https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/"  target="_blank" rel="noopener"
+    >https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/</a></li>
+</ul>
+<h2 id="インストール手順">インストール手順</h2>
+<p>マニフェストファイルをダウンロードする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">wget https://raw.githubusercontent.com/longhorn/longhorn/v1.7.0/deploy/longhorn.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>4724行目あたり</li>
+<li>Dashboardを外部からアクセスできるように&quot;type: LoadBalancer&quot;する</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">- type: ClusterIP
+</span></span><span class="line"><span class="cl">+ type: LoadBalancer
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>デプロイする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl apply -f longhorn.yaml
+</span></span><span class="line"><span class="cl">kubectl delete -f longhorn.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>インストールの進行状況を確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get pods \
+</span></span><span class="line"><span class="cl">--namespace longhorn-system \
+</span></span><span class="line"><span class="cl">--watch
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>デプロイができているか確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl -n longhorn-system get pod
+</span></span><span class="line"><span class="cl">kubectl -n longhorn-system get svc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="podがすぐevictedになってしまう解決済み">Podがすぐ&quot;Evicted&quot;になってしまう（解決済み）</h3>
+<ul>
+<li>
+<p>試したこと（どれも解決しなかった）</p>
+<ul>
+<li>EvictedになっているPodを削除した→変化なし、Podが再生成されるがEvictedになる</li>
+<li>メモリを16GBに増やす→変化なし</li>
+<li>Woker-Nodeを追加した→変化なし</li>
+<li>マニフェストファイル上の&quot;replicas&quot;の数を変更した→変化なし</li>
+</ul>
+</li>
+<li>
+<p>解決した方法</p>
+<ul>
+<li>Dashboard上で確認した際に&quot;down&quot;となっており、Evictedが表示されているPodがあるNodeのストレージ容量がぎりぎりになっていたため容量を増やした</li>
+<li>ストレージの容量を元々は10GBだったが20GBに拡張したら問題なく&quot;Running&quot;になり問題なく動作した</li>
+<li>&ldquo;Evicted&rdquo;,&ldquo;ContainerStatusUnknown&rdquo;,&ldquo;Error&quot;になってしまう場合はNodeのストレージの容量不足でなっていた</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$ kubectl get nodes -o wide
+</span></span><span class="line"><span class="cl">NAME                     STATUS   ROLES           AGE     VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+</span></span><span class="line"><span class="cl">cri-o-control-plane-01   Ready    control-plane   4d17h   v1.31.0   192.168.10.55   &lt;none&gt;        Ubuntu 24.04 LTS     6.8.0-41-generic   cri-o://1.30.4
+</span></span><span class="line"><span class="cl">cri-o-woker-node-02      Ready    &lt;none&gt;          4d17h   v1.31.0   192.168.10.58   &lt;none&gt;        Ubuntu 24.04 LTS     6.8.0-41-generic   cri-o://1.30.4
+</span></span><span class="line"><span class="cl">crio-woker-node-04       Ready    &lt;none&gt;          87m     v1.31.0   192.168.10.59   &lt;none&gt;        Ubuntu 24.04.1 LTS   6.8.0-41-generic   cri-o://1.30.4
+</span></span><span class="line"><span class="cl">k8s-crio-woker-node      Ready    &lt;none&gt;          46m     v1.31.0   192.168.10.57   &lt;none&gt;        Ubuntu 24.04 LTS     6.8.0-41-generic   cri-o://1.30.4
+</span></span><span class="line"><span class="cl">mao-cri-o-worker-node    Ready    &lt;none&gt;          4d17h   v1.31.0   192.168.10.56   &lt;none&gt;        Ubuntu 24.04 LTS     6.8.0-41-generic   cri-o://1.30.4
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$ kubectl -n longhorn-system get pod -o wide
+</span></span><span class="line"><span class="cl">NAME                                                READY   STATUS                   RESTARTS      AGE   IP              NODE                    NOMINATED NODE   READINESS GATES
+</span></span><span class="line"><span class="cl">csi-attacher-d7d65647-7pmv5                         1/1     Running                  3 (93m ago)   22h   10.128.89.161   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-attacher-d7d65647-7sgfb                         1/1     Running                  2 (93m ago)   22h   10.128.89.164   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-attacher-d7d65647-xsrqw                         1/1     Running                  1             22h   10.128.43.177   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-provisioner-c4bc78768-8nnmq                     1/1     Running                  2             22h   10.128.43.176   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-provisioner-c4bc78768-bfvkv                     1/1     Running                  2 (93m ago)   22h   10.128.89.166   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-provisioner-c4bc78768-j9mvn                     1/1     Running                  3 (93m ago)   22h   10.128.89.169   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-resizer-5d979bd54f-mm2nv                        1/1     Running                  2 (93m ago)   22h   10.128.89.171   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-resizer-5d979bd54f-r9v2l                        1/1     Running                  1             22h   10.128.43.171   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-resizer-5d979bd54f-zsvsp                        1/1     Running                  2 (93m ago)   22h   10.128.89.160   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-snapshotter-6967b768c5-5k7bw                    1/1     Running                  2 (93m ago)   22h   10.128.89.168   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-snapshotter-6967b768c5-b8rhc                    1/1     Running                  1             22h   10.128.43.172   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-snapshotter-6967b768c5-bgndk                    1/1     Running                  2 (93m ago)   22h   10.128.89.170   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">engine-image-ei-04c05bf8-5scw8                      1/1     Running                  0             90m   10.85.0.3       crio-woker-node-04      &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">engine-image-ei-04c05bf8-cwv4s                      0/1     Error                    0             50s   10.128.42.209   k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">engine-image-ei-04c05bf8-js9cs                      1/1     Running                  1             22h   10.128.89.167   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">engine-image-ei-04c05bf8-qcsrv                      1/1     Running                  1             22h   10.128.43.181   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">instance-manager-0ecb4b94c60d35839b99dd2d623388ed   0/1     Evicted                  0             31s   &lt;none&gt;          k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">instance-manager-aab3d619b1ba92d19591bd1d921a1146   1/1     Running                  0             86m   10.128.158.65   crio-woker-node-04      &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">instance-manager-ceb82c2dc60ec205037420596df48d66   1/1     Running                  0             94m   10.128.89.173   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">instance-manager-d5708d70dcb6e03f00727b77e7699675   1/1     Running                  0             94m   10.128.43.183   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-csi-plugin-9h5pz                           3/3     Running                  6 (93m ago)   22h   10.128.89.163   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-csi-plugin-cpt7t                           3/3     Running                  5 (94m ago)   22h   10.128.43.175   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-csi-plugin-d5mf9                           0/3     Error                    0             49s   10.128.42.210   k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-csi-plugin-ncxxj                           3/3     Running                  5 (88m ago)   90m   10.85.0.2       crio-woker-node-04      &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-driver-deployer-588c6bb4c8-6ldxd           1/1     Running                  1             22h   10.128.43.180   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-manager-fc8qn                              0/2     ContainerStatusUnknown   1             53s   10.128.42.208   k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-manager-lx4n2                              2/2     Running                  2             22h   10.128.89.162   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-manager-qwbxr                              2/2     Running                  3 (87m ago)   90m   10.85.0.4       crio-woker-node-04      &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-manager-vkfm9                              2/2     Running                  2             22h   10.128.43.178   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-ui-5cb7d58f9c-44sr7                        1/1     Running                  2 (94m ago)   22h   10.128.89.172   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-ui-5cb7d58f9c-6jczn                        1/1     Running                  1             21h   10.128.43.174   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$ kubectl -n longhorn-system get pod -o wide
+</span></span><span class="line"><span class="cl">NAME                                                READY   STATUS                   RESTARTS      AGE   IP              NODE                    NOMINATED NODE   READINESS GATES
+</span></span><span class="line"><span class="cl">csi-attacher-d7d65647-7pmv5                         1/1     Running                  3 (92m ago)   22h   10.128.89.161   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-attacher-d7d65647-7sgfb                         1/1     Running                  2 (92m ago)   22h   10.128.89.164   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-attacher-d7d65647-xsrqw                         1/1     Running                  1             22h   10.128.43.177   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-provisioner-c4bc78768-8nnmq                     1/1     Running                  2             22h   10.128.43.176   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-provisioner-c4bc78768-bfvkv                     1/1     Running                  2 (92m ago)   22h   10.128.89.166   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-provisioner-c4bc78768-j9mvn                     1/1     Running                  3 (92m ago)   22h   10.128.89.169   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-resizer-5d979bd54f-mm2nv                        1/1     Running                  2 (92m ago)   22h   10.128.89.171   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-resizer-5d979bd54f-r9v2l                        1/1     Running                  1             22h   10.128.43.171   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-resizer-5d979bd54f-zsvsp                        1/1     Running                  2 (92m ago)   22h   10.128.89.160   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-snapshotter-6967b768c5-5k7bw                    1/1     Running                  2 (92m ago)   22h   10.128.89.168   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-snapshotter-6967b768c5-b8rhc                    1/1     Running                  1             22h   10.128.43.172   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-snapshotter-6967b768c5-bgndk                    1/1     Running                  2 (92m ago)   22h   10.128.89.170   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">engine-image-ei-04c05bf8-5scw8                      1/1     Running                  0             88m   10.85.0.3       crio-woker-node-04      &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">engine-image-ei-04c05bf8-85qqz                      0/1     Error                    0             15m   &lt;none&gt;          k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">engine-image-ei-04c05bf8-js9cs                      1/1     Running                  1             22h   10.128.89.167   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">engine-image-ei-04c05bf8-qcsrv                      1/1     Running                  1             22h   10.128.43.181   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">instance-manager-0ecb4b94c60d35839b99dd2d623388ed   0/1     ContainerStatusUnknown   1             15m   &lt;none&gt;          k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">instance-manager-aab3d619b1ba92d19591bd1d921a1146   1/1     Running                  0             85m   10.128.158.65   crio-woker-node-04      &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">instance-manager-ceb82c2dc60ec205037420596df48d66   1/1     Running                  0             92m   10.128.89.173   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">instance-manager-d5708d70dcb6e03f00727b77e7699675   1/1     Running                  0             92m   10.128.43.183   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-csi-plugin-9h5pz                           3/3     Running                  6 (92m ago)   22h   10.128.89.163   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-csi-plugin-cpt7t                           3/3     Running                  5 (92m ago)   22h   10.128.43.175   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-csi-plugin-ncxxj                           3/3     Running                  5 (87m ago)   88m   10.85.0.2       crio-woker-node-04      &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-csi-plugin-ndgbb                           0/3     Error                    1             15m   &lt;none&gt;          k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-driver-deployer-588c6bb4c8-6ldxd           1/1     Running                  1             22h   10.128.43.180   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-manager-842xw                              0/2     ContainerStatusUnknown   2             15m   &lt;none&gt;          k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-manager-lx4n2                              2/2     Running                  2             22h   10.128.89.162   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-manager-qwbxr                              2/2     Running                  3 (86m ago)   88m   10.85.0.4       crio-woker-node-04      &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-manager-vkfm9                              2/2     Running                  2             22h   10.128.43.178   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-ui-5cb7d58f9c-44sr7                        1/1     Running                  2 (92m ago)   22h   10.128.89.172   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">longhorn-ui-5cb7d58f9c-6jczn                        1/1     Running                  1             21h   10.128.43.174   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="dashboardを確認する">Dashboardを確認する</h2>
+<ul>
+<li>LoadBalancerを指定したのでIPアドレスが割り当てられています</li>
+<li>下記コマンドで確認します</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl -n longhorn-system get service
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$ kubectl -n longhorn-system get service
+</span></span><span class="line"><span class="cl">NAME                          TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE
+</span></span><span class="line"><span class="cl">longhorn-admission-webhook    ClusterIP      10.109.17.201    &lt;none&gt;          9502/TCP       24h
+</span></span><span class="line"><span class="cl">longhorn-backend              ClusterIP      10.102.186.222   &lt;none&gt;          9500/TCP       24h
+</span></span><span class="line"><span class="cl">longhorn-conversion-webhook   ClusterIP      10.103.48.37     &lt;none&gt;          9501/TCP       24h
+</span></span><span class="line"><span class="cl">longhorn-frontend             LoadBalancer   10.99.231.247    192.168.10.60   80:31171/TCP   24h
+</span></span><span class="line"><span class="cl">longhorn-recovery-backend     ClusterIP      10.111.12.211    &lt;none&gt;          9503/TCP       24h
+</span></span><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>&ldquo;192.168.10.60&quot;にアクセスするとDashboardが表示されます
+<img src="../../post/kubernetes-longhorn/01.png"
+	width="2228"
+	height="2146"
+	srcset="../../post/kubernetes-longhorn/01_hu4513655758661995381.png 480w, ../../post/kubernetes-longhorn/01_hu9363439163950720526.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="249px"
+	
+>
+<img src="../../post/kubernetes-longhorn/02.png"
+	width="2228"
+	height="2146"
+	srcset="../../post/kubernetes-longhorn/02_hu2474963238826714173.png 480w, ../../post/kubernetes-longhorn/02_hu5641418462319161842.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="249px"
+	
+></li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-cri-o/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cri-oを使用してkubernetesを構築する</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-ingress-traefik/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">KubernetesでTraefikを使用してIngressを使えるようにする</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-upgrade-v1-31-0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-pv-pvc/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NFS-serverを構築してPV(PersistentVolume)を作成する</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-upgrade-v1-30-3/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Kubernetesのクラスタをv1.30.2からv1.30.3へアップグレードをする</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

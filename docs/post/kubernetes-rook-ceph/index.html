@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Kubernetes 1.31.0 Control-Plane：1台 Woker-Node：3台&#43;1台 cri-o v1.30.4 CNI(Container Networking Interface) Calico v3.28.0 Cilium v1.16.1 Rook-Ceph 1.15 参考URL https://rook.io/docs/rook/latest-release/Getting-Started/quickstart https://qiita.com/ohtsuka-shota/items/cc45d595f742f3625099 https://qiita.com/takuya_0301/items/5f6ad4fa197d0e4f9815 https://qiita.com/showchan33/items/f678665c5fddb3bf7551 https://qiita.com/t_ume/items/4ac37f746bf07146d5f9 https://zenn.dev/vampire_yuta/articles/367ee53b78d681 https://techstep.hatenablog.com/entry/2020/02/02/134702 CNIにCalicoを使用していると動作しない https://hidemium.hatenablog.com/entry/2023/01/21/083020 https://github.com/rook/rook/issues/7769 インストール インストール手順は公式ドキュメントを参考にする
+https://rook.io/docs/rook/latest-release/Getting-Started/quickstart マニフェストファイルをダウンロードする
+1 2 3 4 wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/crds.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/common.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/operator.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/cluster.yaml CNIがCaliicoの場合（上手く行かない） いくつかのPodが&quot;Pending&quot;になってしまう Rookをデプロイする 下記コマンドを実行して&quot;Rook&quot;をデプロイする
+1 kubectl create -f crds.yaml -f common.yaml -f operator.yaml デプロイされたか確認する
+1 kubectl -n rook-ceph get pod 1 2 3 4 mao@cilium-control-plane-01:~$ kubectl -n rook-ceph get pod NAME READY STATUS RESTARTS AGE rook-ceph-operator-b777cf696-d2v8d 1/1 Running 0 2m19s mao@cilium-control-plane-01:~$ 1 kubectl get all -n rook-ceph 1 2 3 4 5 6 7 8 9 10 mao@cilium-control-plane-01:~$ kubectl get all -n rook-ceph NAME READY STATUS RESTARTS AGE pod/rook-ceph-operator-b777cf696-d2v8d 1/1 Running 0 3m6s NAME READY UP-TO-DATE AVAILABLE AGE deployment.'>
+<title>KubernetesにRook-Cephをインストールする</title>
+
+<link rel='canonical' href='http://localhost:1313/post/kubernetes-rook-ceph/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='KubernetesにRook-Cephをインストールする'>
+<meta property='og:description' content='環境 Kubernetes 1.31.0 Control-Plane：1台 Woker-Node：3台&#43;1台 cri-o v1.30.4 CNI(Container Networking Interface) Calico v3.28.0 Cilium v1.16.1 Rook-Ceph 1.15 参考URL https://rook.io/docs/rook/latest-release/Getting-Started/quickstart https://qiita.com/ohtsuka-shota/items/cc45d595f742f3625099 https://qiita.com/takuya_0301/items/5f6ad4fa197d0e4f9815 https://qiita.com/showchan33/items/f678665c5fddb3bf7551 https://qiita.com/t_ume/items/4ac37f746bf07146d5f9 https://zenn.dev/vampire_yuta/articles/367ee53b78d681 https://techstep.hatenablog.com/entry/2020/02/02/134702 CNIにCalicoを使用していると動作しない https://hidemium.hatenablog.com/entry/2023/01/21/083020 https://github.com/rook/rook/issues/7769 インストール インストール手順は公式ドキュメントを参考にする
+https://rook.io/docs/rook/latest-release/Getting-Started/quickstart マニフェストファイルをダウンロードする
+1 2 3 4 wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/crds.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/common.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/operator.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/cluster.yaml CNIがCaliicoの場合（上手く行かない） いくつかのPodが&quot;Pending&quot;になってしまう Rookをデプロイする 下記コマンドを実行して&quot;Rook&quot;をデプロイする
+1 kubectl create -f crds.yaml -f common.yaml -f operator.yaml デプロイされたか確認する
+1 kubectl -n rook-ceph get pod 1 2 3 4 mao@cilium-control-plane-01:~$ kubectl -n rook-ceph get pod NAME READY STATUS RESTARTS AGE rook-ceph-operator-b777cf696-d2v8d 1/1 Running 0 2m19s mao@cilium-control-plane-01:~$ 1 kubectl get all -n rook-ceph 1 2 3 4 5 6 7 8 9 10 mao@cilium-control-plane-01:~$ kubectl get all -n rook-ceph NAME READY STATUS RESTARTS AGE pod/rook-ceph-operator-b777cf696-d2v8d 1/1 Running 0 3m6s NAME READY UP-TO-DATE AVAILABLE AGE deployment.'>
+<meta property='og:url' content='http://localhost:1313/post/kubernetes-rook-ceph/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-09-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-09-14T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="KubernetesにRook-Cephをインストールする">
+<meta name="twitter:description" content="環境 Kubernetes 1.31.0 Control-Plane：1台 Woker-Node：3台&#43;1台 cri-o v1.30.4 CNI(Container Networking Interface) Calico v3.28.0 Cilium v1.16.1 Rook-Ceph 1.15 参考URL https://rook.io/docs/rook/latest-release/Getting-Started/quickstart https://qiita.com/ohtsuka-shota/items/cc45d595f742f3625099 https://qiita.com/takuya_0301/items/5f6ad4fa197d0e4f9815 https://qiita.com/showchan33/items/f678665c5fddb3bf7551 https://qiita.com/t_ume/items/4ac37f746bf07146d5f9 https://zenn.dev/vampire_yuta/articles/367ee53b78d681 https://techstep.hatenablog.com/entry/2020/02/02/134702 CNIにCalicoを使用していると動作しない https://hidemium.hatenablog.com/entry/2023/01/21/083020 https://github.com/rook/rook/issues/7769 インストール インストール手順は公式ドキュメントを参考にする
+https://rook.io/docs/rook/latest-release/Getting-Started/quickstart マニフェストファイルをダウンロードする
+1 2 3 4 wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/crds.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/common.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/operator.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/cluster.yaml CNIがCaliicoの場合（上手く行かない） いくつかのPodが&quot;Pending&quot;になってしまう Rookをデプロイする 下記コマンドを実行して&quot;Rook&quot;をデプロイする
+1 kubectl create -f crds.yaml -f common.yaml -f operator.yaml デプロイされたか確認する
+1 kubectl -n rook-ceph get pod 1 2 3 4 mao@cilium-control-plane-01:~$ kubectl -n rook-ceph get pod NAME READY STATUS RESTARTS AGE rook-ceph-operator-b777cf696-d2v8d 1/1 Running 0 2m19s mao@cilium-control-plane-01:~$ 1 kubectl get all -n rook-ceph 1 2 3 4 5 6 7 8 9 10 mao@cilium-control-plane-01:~$ kubectl get all -n rook-ceph NAME READY STATUS RESTARTS AGE pod/rook-ceph-operator-b777cf696-d2v8d 1/1 Running 0 3m6s NAME READY UP-TO-DATE AVAILABLE AGE deployment.">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="http://localhost:1313/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/kubernetes/" >
+                Kubernetes
+            </a>
+        
+            <a href="../../categories/rook-ceph/" >
+                Rook-Ceph
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/kubernetes-rook-ceph/">KubernetesにRook-Cephをインストールする</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024/09/14</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="環境">環境</h2>
+<ul>
+<li>Kubernetes 1.31.0
+<ul>
+<li>Control-Plane：1台</li>
+<li>Woker-Node：3台+1台</li>
+</ul>
+</li>
+<li>cri-o v1.30.4</li>
+<li>CNI(Container Networking Interface)
+<ul>
+<li>Calico v3.28.0</li>
+<li>Cilium v1.16.1</li>
+</ul>
+</li>
+<li>Rook-Ceph 1.15</li>
+</ul>
+<h2 id="参考url">参考URL</h2>
+<ul>
+<li><a class="link" href="https://rook.io/docs/rook/latest-release/Getting-Started/quickstart"  target="_blank" rel="noopener"
+    >https://rook.io/docs/rook/latest-release/Getting-Started/quickstart</a></li>
+<li><a class="link" href="https://qiita.com/ohtsuka-shota/items/cc45d595f742f3625099"  target="_blank" rel="noopener"
+    >https://qiita.com/ohtsuka-shota/items/cc45d595f742f3625099</a></li>
+<li><a class="link" href="https://qiita.com/takuya_0301/items/5f6ad4fa197d0e4f9815"  target="_blank" rel="noopener"
+    >https://qiita.com/takuya_0301/items/5f6ad4fa197d0e4f9815</a></li>
+<li><a class="link" href="https://qiita.com/showchan33/items/f678665c5fddb3bf7551"  target="_blank" rel="noopener"
+    >https://qiita.com/showchan33/items/f678665c5fddb3bf7551</a></li>
+<li><a class="link" href="https://qiita.com/t_ume/items/4ac37f746bf07146d5f9"  target="_blank" rel="noopener"
+    >https://qiita.com/t_ume/items/4ac37f746bf07146d5f9</a></li>
+<li><a class="link" href="https://zenn.dev/vampire_yuta/articles/367ee53b78d681"  target="_blank" rel="noopener"
+    >https://zenn.dev/vampire_yuta/articles/367ee53b78d681</a></li>
+<li><a class="link" href="https://techstep.hatenablog.com/entry/2020/02/02/134702"  target="_blank" rel="noopener"
+    >https://techstep.hatenablog.com/entry/2020/02/02/134702</a></li>
+</ul>
+<h2 id="cniにcalicoを使用していると動作しない">CNIにCalicoを使用していると動作しない</h2>
+<ul>
+<li><a class="link" href="https://hidemium.hatenablog.com/entry/2023/01/21/083020"  target="_blank" rel="noopener"
+    >https://hidemium.hatenablog.com/entry/2023/01/21/083020</a></li>
+<li><a class="link" href="https://github.com/rook/rook/issues/7769"  target="_blank" rel="noopener"
+    >https://github.com/rook/rook/issues/7769</a></li>
+</ul>
+<h2 id="インストール">インストール</h2>
+<p>インストール手順は公式ドキュメントを参考にする</p>
+<ul>
+<li><a class="link" href="https://rook.io/docs/rook/latest-release/Getting-Started/quickstart"  target="_blank" rel="noopener"
+    >https://rook.io/docs/rook/latest-release/Getting-Started/quickstart</a></li>
+</ul>
+<p>マニフェストファイルをダウンロードする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/crds.yaml
+</span></span><span class="line"><span class="cl">wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/common.yaml
+</span></span><span class="line"><span class="cl">wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/operator.yaml
+</span></span><span class="line"><span class="cl">wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/cluster.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="cniがcaliicoの場合上手く行かない">CNIがCaliicoの場合（上手く行かない）</h2>
+<ul>
+<li>いくつかのPodが&quot;Pending&quot;になってしまう</li>
+</ul>
+<h3 id="rookをデプロイする">Rookをデプロイする</h3>
+<p>下記コマンドを実行して&quot;Rook&quot;をデプロイする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>デプロイされたか確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl -n rook-ceph get pod
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@cilium-control-plane-01:~$ kubectl -n rook-ceph get pod
+</span></span><span class="line"><span class="cl">NAME                                 READY   STATUS    RESTARTS   AGE
+</span></span><span class="line"><span class="cl">rook-ceph-operator-b777cf696-d2v8d   1/1     Running   0          2m19s
+</span></span><span class="line"><span class="cl">mao@cilium-control-plane-01:~$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get all -n rook-ceph
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@cilium-control-plane-01:~$ kubectl get all -n rook-ceph
+</span></span><span class="line"><span class="cl">NAME                                     READY   STATUS    RESTARTS   AGE
+</span></span><span class="line"><span class="cl">pod/rook-ceph-operator-b777cf696-d2v8d   1/1     Running   0          3m6s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
+</span></span><span class="line"><span class="cl">deployment.apps/rook-ceph-operator   1/1     1            1           3m6s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                                           DESIRED   CURRENT   READY   AGE
+</span></span><span class="line"><span class="cl">replicaset.apps/rook-ceph-operator-b777cf696   1         1         1       3m6s
+</span></span><span class="line"><span class="cl">mao@cilium-control-plane-01:~$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="cephをデプロイする">Cephをデプロイする</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl create -f cluster.yaml
+</span></span><span class="line"><span class="cl">kubectl apply -f cluster.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$ kubectl -n rook-ceph get pod
+</span></span><span class="line"><span class="cl">NAME                                            READY   STATUS              RESTARTS   AGE
+</span></span><span class="line"><span class="cl">csi-cephfsplugin-frgl7                          3/3     Running             0          33s
+</span></span><span class="line"><span class="cl">csi-cephfsplugin-provisioner-76cc6d46cd-88s2t   0/6     ContainerCreating   0          33s
+</span></span><span class="line"><span class="cl">csi-cephfsplugin-provisioner-76cc6d46cd-8p4wr   0/6     ContainerCreating   0          33s
+</span></span><span class="line"><span class="cl">csi-cephfsplugin-rbjwz                          3/3     Running             0          33s
+</span></span><span class="line"><span class="cl">csi-cephfsplugin-rrc96                          0/3     ContainerCreating   0          33s
+</span></span><span class="line"><span class="cl">csi-rbdplugin-2l57x                             3/3     Running             0          34s
+</span></span><span class="line"><span class="cl">csi-rbdplugin-9mjr7                             0/3     ContainerCreating   0          34s
+</span></span><span class="line"><span class="cl">csi-rbdplugin-b64g2                             3/3     Running             0          34s
+</span></span><span class="line"><span class="cl">csi-rbdplugin-provisioner-cd76f59d6-m2dtd       0/6     ContainerCreating   0          33s
+</span></span><span class="line"><span class="cl">csi-rbdplugin-provisioner-cd76f59d6-zrnlw       0/6     ContainerCreating   0          33s
+</span></span><span class="line"><span class="cl">rook-ceph-csi-detect-version-2wfxz              0/1     PodInitializing     0          23s
+</span></span><span class="line"><span class="cl">rook-ceph-mon-a-canary-644484764b-rlb5d         2/2     Running             0          36s
+</span></span><span class="line"><span class="cl">rook-ceph-mon-b-canary-5cbb87459c-4jsrl         2/2     Running             0          36s
+</span></span><span class="line"><span class="cl">rook-ceph-mon-c-canary-5c54488996-lcmsh         0/2     Pending             0          36s
+</span></span><span class="line"><span class="cl">rook-ceph-operator-9b9dd876c-5xkpb              1/1     Running             0          3m29s
+</span></span><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$ kubectl -n rook-ceph get pod -o wide
+</span></span><span class="line"><span class="cl">NAME                                            READY   STATUS      RESTARTS        AGE     IP              NODE                    NOMINATED NODE   READINESS GATES
+</span></span><span class="line"><span class="cl">csi-cephfsplugin-frgl7                          3/3     Running     0               3m28s   192.168.10.56   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-cephfsplugin-provisioner-76cc6d46cd-88s2t   6/6     Running     0               3m28s   10.128.89.151   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-cephfsplugin-provisioner-76cc6d46cd-8p4wr   6/6     Running     1 (2m44s ago)   3m28s   10.128.42.210   k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-cephfsplugin-rbjwz                          3/3     Running     0               3m28s   192.168.10.58   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-cephfsplugin-rrc96                          3/3     Running     2 (110s ago)    3m28s   192.168.10.57   k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-rbdplugin-2l57x                             3/3     Running     0               3m29s   192.168.10.56   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-rbdplugin-9mjr7                             3/3     Running     2 (2m16s ago)   3m29s   192.168.10.57   k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-rbdplugin-b64g2                             3/3     Running     0               3m29s   192.168.10.58   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-rbdplugin-provisioner-cd76f59d6-m2dtd       6/6     Running     0               3m28s   10.128.89.150   mao-cri-o-worker-node   &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">csi-rbdplugin-provisioner-cd76f59d6-zrnlw       6/6     Running     1 (2m47s ago)   3m28s   10.128.42.209   k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">rook-ceph-csi-detect-version-2wfxz              0/1     Completed   0               3m18s   10.128.42.211   k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">rook-ceph-mon-a-5b99cfb698-n9df2                0/2     Pending     0               2m27s   &lt;none&gt;          &lt;none&gt;                  &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">rook-ceph-operator-9b9dd876c-5xkpb              0/1     Completed   0               6m24s   10.128.42.206   k8s-crio-woker-node     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">rook-ceph-operator-9b9dd876c-8jp86              0/1     Completed   0               2m20s   10.128.43.163   cri-o-woker-node-02     &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">rook-ceph-operator-9b9dd876c-xr24m              0/1     Pending     0               108s    &lt;none&gt;          &lt;none&gt;                  &lt;none&gt;           &lt;none&gt;
+</span></span><span class="line"><span class="cl">mao@cri-o-control-plane-01:~$ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="削除する">削除する</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl delete -f crds.yaml -f common.yaml -f operator.yaml
+</span></span><span class="line"><span class="cl">kubectl delete -f cluster.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="kubernetes-の-evicted-な-pod-を消してディスク領域を空ける">Kubernetes の Evicted な Pod を消してディスク領域を空ける</h4>
+<ul>
+<li><a class="link" href="https://zenn.dev/imksoo/articles/c3e27dc0392990"  target="_blank" rel="noopener"
+    >https://zenn.dev/imksoo/articles/c3e27dc0392990</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get pod -A --no-headers --field-selector status.phase!=Running | awk &#39;{print &#34;kubectl delete -n &#34;$1&#34; pod/&#34;$2}&#39; | sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="cniがciliumの場合上手く行く">CNIがCiliumの場合（上手く行く）</h2>
+<h3 id="rookをデプロイする-1">Rookをデプロイする</h3>
+<p>下記コマンドを実行して&quot;Rook&quot;をデプロイする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>デプロイされたか確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl -n rook-ceph get pod
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@cilium-control-plane-01:~$ kubectl -n rook-ceph get pod
+</span></span><span class="line"><span class="cl">NAME                                 READY   STATUS    RESTARTS   AGE
+</span></span><span class="line"><span class="cl">rook-ceph-operator-b777cf696-d2v8d   1/1     Running   0          2m19s
+</span></span><span class="line"><span class="cl">mao@cilium-control-plane-01:~$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get all -n rook-ceph
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@cilium-control-plane-01:~$ kubectl get all -n rook-ceph
+</span></span><span class="line"><span class="cl">NAME                                     READY   STATUS    RESTARTS   AGE
+</span></span><span class="line"><span class="cl">pod/rook-ceph-operator-b777cf696-d2v8d   1/1     Running   0          3m6s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
+</span></span><span class="line"><span class="cl">deployment.apps/rook-ceph-operator   1/1     1            1           3m6s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">NAME                                           DESIRED   CURRENT   READY   AGE
+</span></span><span class="line"><span class="cl">replicaset.apps/rook-ceph-operator-b777cf696   1         1         1       3m6s
+</span></span><span class="line"><span class="cl">mao@cilium-control-plane-01:~$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="cephをデプロイする-1">Cephをデプロイする</h3>
+<ul>
+<li>&ldquo;cluster.yaml&quot;を編集する</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">storage: # cluster level storage configuration and selection
+</span></span><span class="line"><span class="cl">    #useAllNodes: true
+</span></span><span class="line"><span class="cl">    #useAllDevices: true
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    useAllNodes: false
+</span></span><span class="line"><span class="cl">    useAllDevices: false
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    #deviceFilter:
+</span></span><span class="line"><span class="cl">    config:
+</span></span><span class="line"><span class="cl">      # crushRoot: &#34;custom-root&#34; # specify a non-default root label for the CRUSH map
+</span></span><span class="line"><span class="cl">      # metadataDevice: &#34;md0&#34; # specify a non-rotational storage so ceph-volume will use it as block db device of bluestore.
+</span></span><span class="line"><span class="cl">      # databaseSizeMB: &#34;1024&#34; # uncomment if the disks are smaller than 100 GB
+</span></span><span class="line"><span class="cl">      # osdsPerDevice: &#34;1&#34; # this value can be overridden at the node or device level
+</span></span><span class="line"><span class="cl">      # encryptedDevice: &#34;true&#34; # the default value for this option is &#34;false&#34;
+</span></span><span class="line"><span class="cl">      # deviceClass: &#34;myclass&#34; # specify a device class for OSDs in the cluster
+</span></span><span class="line"><span class="cl">    allowDeviceClassUpdate: false # whether to allow changing the device class of an OSD after it is created
+</span></span><span class="line"><span class="cl">    allowOsdCrushWeightUpdate: false # whether to allow resizing the OSD crush weight after osd pvc is increased
+</span></span><span class="line"><span class="cl">    # Individual nodes and their config can be specified as well, but &#39;useAllNodes&#39; above must be set to false. Then, only the named
+</span></span><span class="line"><span class="cl">    # nodes below will be used as storage resources.  Each node&#39;s &#39;name&#39; field should match their &#39;kubernetes.io/hostname&#39; label.
+</span></span><span class="line"><span class="cl">    nodes:
+</span></span><span class="line"><span class="cl">      #- name: &#34;192.168.10.56&#34;
+</span></span><span class="line"><span class="cl">      - name: &#34;cilium-woker-node-01&#34;
+</span></span><span class="line"><span class="cl">        devices:
+</span></span><span class="line"><span class="cl">        - name: &#34;sdb&#34;
+</span></span><span class="line"><span class="cl">      #- name: &#34;192.168.10.57&#34;
+</span></span><span class="line"><span class="cl">      - name: &#34;cilium-woker-node-01&#34;
+</span></span><span class="line"><span class="cl">        devices:
+</span></span><span class="line"><span class="cl">        - name: &#34;sdb&#34;
+</span></span><span class="line"><span class="cl">      #- name: &#34;192.168.10.58&#34;
+</span></span><span class="line"><span class="cl">      - name: &#34;cilium-woker-node-01&#34;
+</span></span><span class="line"><span class="cl">        devices:
+</span></span><span class="line"><span class="cl">        - name: &#34;sdb&#34;
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # nodes:
+</span></span><span class="line"><span class="cl">    #   - name: &#34;172.17.4.201&#34;
+</span></span><span class="line"><span class="cl">    #     devices: # specific devices to use for storage can be specified for each node
+</span></span><span class="line"><span class="cl">    #       - name: &#34;sdb&#34;
+</span></span><span class="line"><span class="cl">    #       - name: &#34;nvme01&#34; # multiple osds can be created on high performance devices
+</span></span><span class="line"><span class="cl">    #         config:
+</span></span><span class="line"><span class="cl">    #           osdsPerDevice: &#34;5&#34;
+</span></span><span class="line"><span class="cl">    #       - name: &#34;/dev/disk/by-id/ata-ST4000DM004-XXXX&#34; # devices can be specified using full udev paths
+</span></span><span class="line"><span class="cl">    #     config: # configuration can be specified at the node level which overrides the cluster level config
+</span></span><span class="line"><span class="cl">    #   - name: &#34;172.17.4.301&#34;
+</span></span><span class="line"><span class="cl">    #     deviceFilter: &#34;^sd.&#34;
+</span></span><span class="line"><span class="cl">    # when onlyApplyOSDPlacement is false, will merge both placement.All() and placement.osd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>&ldquo;nodes&quot;の&quot;name:&ldquo;はIPアドレスだと動作しないのでNodeの名前を入力する（&ldquo;cilium-woker-node-01&quot;等）</li>
+<li>&ldquo;storage.nodes.name.devices.name&quot;は使用するストレージを選択する（この場合は&quot;sdb&quot;を使用している）</li>
+<li><a class="link" href="https://rook.io/docs/rook/latest-release/CRDs/Cluster/host-cluster/#specific-nodes-and-devices"  target="_blank" rel="noopener"
+    >https://rook.io/docs/rook/latest-release/CRDs/Cluster/host-cluster/#specific-nodes-and-devices</a></li>
+</ul>
+<p>デプロイする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl create -f cluster.yaml
+</span></span><span class="line"><span class="cl">kubectl apply -f cluster.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl get pod -n rook-ceph -o wide
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">cilium</span><span class="o">-</span><span class="n">control</span><span class="o">-</span><span class="n">plane</span><span class="o">-</span><span class="mi">01</span><span class="p">:</span><span class="o">~$</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">pod</span> <span class="o">-</span><span class="n">n</span> <span class="n">rook</span><span class="o">-</span><span class="n">ceph</span> <span class="o">-</span><span class="n">o</span> <span class="n">wide</span>
+</span></span><span class="line"><span class="cl"><span class="n">NAME</span>                                                             <span class="n">READY</span>   <span class="n">STATUS</span>    <span class="n">RESTARTS</span>      <span class="n">AGE</span>   <span class="ne">IP</span>              <span class="n">NODE</span>                   <span class="n">NOMINATED</span> <span class="n">NODE</span>   <span class="n">READINESS</span> <span class="n">GATES</span>
+</span></span><span class="line"><span class="cl"><span class="n">csi</span><span class="o">-</span><span class="n">cephfsplugin</span><span class="o">-</span><span class="n">gtfc5</span>                                           <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>   <span class="mi">1</span> <span class="p">(</span><span class="mi">66</span><span class="n">m</span> <span class="n">ago</span><span class="p">)</span>   <span class="mi">67</span><span class="n">m</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.58</span>   <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">03</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">csi</span><span class="o">-</span><span class="n">cephfsplugin</span><span class="o">-</span><span class="n">provisioner</span><span class="o">-</span><span class="mi">76</span><span class="n">cc6d46cd</span><span class="o">-</span><span class="mi">78</span><span class="n">cns</span>                    <span class="mi">6</span><span class="o">/</span><span class="mi">6</span>     <span class="n">Running</span>   <span class="mi">1</span> <span class="p">(</span><span class="mi">66</span><span class="n">m</span> <span class="n">ago</span><span class="p">)</span>   <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">3.86</span>     <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">03</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">csi</span><span class="o">-</span><span class="n">cephfsplugin</span><span class="o">-</span><span class="n">provisioner</span><span class="o">-</span><span class="mi">76</span><span class="n">cc6d46cd</span><span class="o">-</span><span class="n">jd26f</span>                    <span class="mi">6</span><span class="o">/</span><span class="mi">6</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">2.193</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">02</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">csi</span><span class="o">-</span><span class="n">cephfsplugin</span><span class="o">-</span><span class="n">qvmmv</span>                                           <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.57</span>   <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">02</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">csi</span><span class="o">-</span><span class="n">cephfsplugin</span><span class="o">-</span><span class="n">vj7s5</span>                                           <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>   <span class="mi">1</span> <span class="p">(</span><span class="mi">66</span><span class="n">m</span> <span class="n">ago</span><span class="p">)</span>   <span class="mi">67</span><span class="n">m</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.56</span>   <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">01</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">csi</span><span class="o">-</span><span class="n">rbdplugin</span><span class="o">-</span><span class="n">mz4v6</span>                                              <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>   <span class="mi">1</span> <span class="p">(</span><span class="mi">67</span><span class="n">m</span> <span class="n">ago</span><span class="p">)</span>   <span class="mi">67</span><span class="n">m</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.56</span>   <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">01</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">csi</span><span class="o">-</span><span class="n">rbdplugin</span><span class="o">-</span><span class="n">pggtk</span>                                              <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>   <span class="mi">1</span> <span class="p">(</span><span class="mi">67</span><span class="n">m</span> <span class="n">ago</span><span class="p">)</span>   <span class="mi">67</span><span class="n">m</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.58</span>   <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">03</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">csi</span><span class="o">-</span><span class="n">rbdplugin</span><span class="o">-</span><span class="n">provisioner</span><span class="o">-</span><span class="n">cd76f59d6</span><span class="o">-</span><span class="mi">2</span><span class="n">tbhw</span>                        <span class="mi">6</span><span class="o">/</span><span class="mi">6</span>     <span class="n">Running</span>   <span class="mi">1</span> <span class="p">(</span><span class="mi">66</span><span class="n">m</span> <span class="n">ago</span><span class="p">)</span>   <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">3.138</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">03</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">csi</span><span class="o">-</span><span class="n">rbdplugin</span><span class="o">-</span><span class="n">provisioner</span><span class="o">-</span><span class="n">cd76f59d6</span><span class="o">-</span><span class="n">ngmxj</span>                        <span class="mi">6</span><span class="o">/</span><span class="mi">6</span>     <span class="n">Running</span>   <span class="mi">1</span> <span class="p">(</span><span class="mi">66</span><span class="n">m</span> <span class="n">ago</span><span class="p">)</span>   <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">0.35</span>     <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">01</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">csi</span><span class="o">-</span><span class="n">rbdplugin</span><span class="o">-</span><span class="n">zttwq</span>                                              <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.57</span>   <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">02</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">crashcollector</span><span class="o">-</span><span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">8456599</span><span class="n">cf6</span><span class="o">-</span><span class="n">tgc64</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">0.132</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">01</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">crashcollector</span><span class="o">-</span><span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">97</span><span class="n">bd68f69</span><span class="o">-</span><span class="n">rg25b</span>    <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">2.12</span>     <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">02</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">crashcollector</span><span class="o">-</span><span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">6644</span><span class="n">b8c6d8</span><span class="o">-</span><span class="mi">72j7</span><span class="n">c</span>   <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">3.134</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">03</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">exporter</span><span class="o">-</span><span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">5</span><span class="n">f4cf5f7f6</span><span class="o">-</span><span class="n">b74j2</span>         <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">0.133</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">01</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">exporter</span><span class="o">-</span><span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">55674</span><span class="n">c8b97</span><span class="o">-</span><span class="n">t9rj5</span>         <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">2.218</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">02</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">exporter</span><span class="o">-</span><span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">6</span><span class="n">cf4549856</span><span class="o">-</span><span class="n">mt9mb</span>         <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">3.210</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">03</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mgr</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="mi">5</span><span class="n">cc85f554</span><span class="o">-</span><span class="n">vhz4f</span>                                  <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">0.188</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">01</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mgr</span><span class="o">-</span><span class="n">b</span><span class="o">-</span><span class="mi">6598</span><span class="n">b8cc89</span><span class="o">-</span><span class="mi">7</span><span class="n">zh6m</span>                                 <span class="mi">3</span><span class="o">/</span><span class="mi">3</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">2.130</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">02</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mon</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="mi">86</span><span class="n">bdc645fd</span><span class="o">-</span><span class="n">mmkk4</span>                                 <span class="mi">2</span><span class="o">/</span><span class="mi">2</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">70</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">2.185</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">02</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mon</span><span class="o">-</span><span class="n">b</span><span class="o">-</span><span class="mi">669799</span><span class="n">cb8d</span><span class="o">-</span><span class="n">f9ktn</span>                                 <span class="mi">2</span><span class="o">/</span><span class="mi">2</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">69</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">3.42</span>     <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">03</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mon</span><span class="o">-</span><span class="n">c</span><span class="o">-</span><span class="mi">7</span><span class="n">d68b88dc9</span><span class="o">-</span><span class="n">k7jlv</span>                                 <span class="mi">2</span><span class="o">/</span><span class="mi">2</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">67</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">0.131</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">01</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">operator</span><span class="o">-</span><span class="n">b777cf696</span><span class="o">-</span><span class="n">d2v8d</span>                               <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>             <span class="mi">78</span><span class="n">m</span>   <span class="mf">10.128</span><span class="o">.</span><span class="mf">2.155</span>    <span class="n">cilium</span><span class="o">-</span><span class="n">woker</span><span class="o">-</span><span class="n">node</span><span class="o">-</span><span class="mi">02</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>           <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">cilium</span><span class="o">-</span><span class="n">control</span><span class="o">-</span><span class="n">plane</span><span class="o">-</span><span class="mi">01</span><span class="p">:</span><span class="o">~$</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>全て&quot;Running&quot;になっているので問題なくデプロイできている</li>
+</ul>
+<h2 id="web-ui-dashboard-loadbalancer">Web UI (Dashboard) LoadBalancer</h2>
+<ul>
+<li>MetalLBをインストールする</li>
+</ul>
+<h3 id="loadbalancerデプロイ">LoadBalancerデプロイ</h3>
+<p>参考URL</p>
+<ul>
+<li><a class="link" href="https://rook.io/docs/rook/latest-release/Storage-Configuration/Monitoring/ceph-dashboard/#load-balancer"  target="_blank" rel="noopener"
+    >https://rook.io/docs/rook/latest-release/Storage-Configuration/Monitoring/ceph-dashboard/#load-balancer</a></li>
+<li><a class="link" href="https://github.com/rook/rook/blob/release-1.15/deploy/examples/dashboard-loadbalancer.yaml"  target="_blank" rel="noopener"
+    >https://github.com/rook/rook/blob/release-1.15/deploy/examples/dashboard-loadbalancer.yaml</a></li>
+</ul>
+<p>マニフェストファイルをダウンロードする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">rook</span><span class="o">/</span><span class="n">rook</span><span class="o">/</span><span class="n">release</span><span class="o">-</span><span class="mf">1.15</span><span class="o">/</span><span class="n">deploy</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">dashboard</span><span class="o">-</span><span class="n">loadbalancer</span><span class="o">.</span><span class="n">yaml</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>デプロイする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">kubectl</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">dashboard</span><span class="o">-</span><span class="n">loadbalancer</span><span class="o">.</span><span class="n">yaml</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>デプロイされたダッシュボードのIPアドレスを確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl -n rook-ceph get service
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">cilium</span><span class="o">-</span><span class="n">control</span><span class="o">-</span><span class="n">plane</span><span class="o">-</span><span class="mi">01</span><span class="p">:</span><span class="o">~$</span> <span class="n">kubectl</span> <span class="o">-</span><span class="n">n</span> <span class="n">rook</span><span class="o">-</span><span class="n">ceph</span> <span class="n">get</span> <span class="n">service</span>
+</span></span><span class="line"><span class="cl"><span class="n">NAME</span>                                   <span class="n">TYPE</span>           <span class="n">CLUSTER</span><span class="o">-</span><span class="ne">IP</span>       <span class="n">EXTERNAL</span><span class="o">-</span><span class="ne">IP</span>     <span class="n">PORT</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>             <span class="n">AGE</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">exporter</span>                     <span class="n">ClusterIP</span>      <span class="mf">10.108</span><span class="o">.</span><span class="mf">226.114</span>   <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>          <span class="mi">9926</span><span class="o">/</span><span class="n">TCP</span>            <span class="mi">93</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mgr</span>                          <span class="n">ClusterIP</span>      <span class="mf">10.98</span><span class="o">.</span><span class="mf">27.89</span>      <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>          <span class="mi">9283</span><span class="o">/</span><span class="n">TCP</span>            <span class="mi">93</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mgr</span><span class="o">-</span><span class="n">dashboard</span>                <span class="n">ClusterIP</span>      <span class="mf">10.102</span><span class="o">.</span><span class="mf">164.58</span>    <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>          <span class="mi">8443</span><span class="o">/</span><span class="n">TCP</span>            <span class="mi">93</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mgr</span><span class="o">-</span><span class="n">dashboard</span><span class="o">-</span><span class="n">loadbalancer</span>   <span class="n">LoadBalancer</span>   <span class="mf">10.98</span><span class="o">.</span><span class="mf">225.42</span>     <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.59</span>   <span class="mi">8443</span><span class="p">:</span><span class="mi">32740</span><span class="o">/</span><span class="n">TCP</span>      <span class="mi">2</span><span class="n">m8s</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mon</span><span class="o">-</span><span class="n">a</span>                        <span class="n">ClusterIP</span>      <span class="mf">10.105</span><span class="o">.</span><span class="mf">48.50</span>     <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>          <span class="mi">6789</span><span class="o">/</span><span class="n">TCP</span><span class="p">,</span><span class="mi">3300</span><span class="o">/</span><span class="n">TCP</span>   <span class="mi">97</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mon</span><span class="o">-</span><span class="n">b</span>                        <span class="n">ClusterIP</span>      <span class="mf">10.97</span><span class="o">.</span><span class="mf">27.164</span>     <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>          <span class="mi">6789</span><span class="o">/</span><span class="n">TCP</span><span class="p">,</span><span class="mi">3300</span><span class="o">/</span><span class="n">TCP</span>   <span class="mi">96</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="n">rook</span><span class="o">-</span><span class="n">ceph</span><span class="o">-</span><span class="n">mon</span><span class="o">-</span><span class="n">c</span>                        <span class="n">ClusterIP</span>      <span class="mf">10.102</span><span class="o">.</span><span class="mf">18.161</span>    <span class="o">&lt;</span><span class="n">none</span><span class="o">&gt;</span>          <span class="mi">6789</span><span class="o">/</span><span class="n">TCP</span><span class="p">,</span><span class="mi">3300</span><span class="o">/</span><span class="n">TCP</span>   <span class="mi">94</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">cilium</span><span class="o">-</span><span class="n">control</span><span class="o">-</span><span class="n">plane</span><span class="o">-</span><span class="mi">01</span><span class="p">:</span><span class="o">~$</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下記のIPアドレスにアクセスする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">https://192.168.10.59:8443/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="ダッシュボードのログイン情報の確認方法">ダッシュボードのログイン情報の確認方法</h3>
+<ul>
+<li>パスワードの確認方法</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath=&#34;{[&#39;data&#39;][&#39;password&#39;]}&#34; | base64 --decode &amp;&amp; echo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>画面にアクセスして入力する</p>
+<ul>
+<li>admin</li>
+<li>Fd)q*/TcDC.x-YaM+t1X
+<img src="../../post/kubernetes-rook-ceph/02.png"
+	width="2228"
+	height="2148"
+	srcset="../../post/kubernetes-rook-ceph/02_hu15446191455530301373.png 480w, ../../post/kubernetes-rook-ceph/02_hu5782053400455899655.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="248px"
+	
+></li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-longhorn/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">KubernetesにLonghornをインストールする</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-cni-cilium/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">KubernetesのCNIにCiliumを使用して構築する</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-cri-o/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">cri-oを使用してkubernetesを構築する</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-ingress-traefik/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">KubernetesでTraefikを使用してIngressを使えるようにする</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-upgrade-v1-31-0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
