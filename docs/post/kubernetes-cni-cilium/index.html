@@ -625,7 +625,7 @@
 </span></span><span class="line"><span class="cl">helm version
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>インストール完了</p>
+</div><p>インストール完了（バージョン確認）</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -636,19 +636,17 @@
 </span></span><span class="line"><span class="cl">version.BuildInfo{Version:&#34;v3.15.4&#34;, GitCommit:&#34;fa9efb07d9d8debbb4306d72af76a383895aa8c4&#34;, GitTreeState:&#34;clean&#34;, GoVersion:&#34;go1.22.6&#34;}
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>アンインストール方法</p>
+</div><p>Helmでデプロイしたリソースのアンインストール方法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">helm uninstall release_name -n release_namespace
-</span></span><span class="line"><span class="cl">helm uninstall kubernetes-dashboard -n kubernetes-dashboard
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="ciliumのデプロイ">Ciliumのデプロイ</h2>
-<h3 id="リポジトリの追加します">リポジトリの追加します</h3>
+<h3 id="リポジトリを追加します">リポジトリを追加します</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -657,7 +655,7 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">helm repo add cilium https://helm.cilium.io/
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>追加されたか確認</p>
+</div><p>追加されたか確認をします</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -861,8 +859,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#enabled: false
-</span></span><span class="line"><span class="cl">enabled: true
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">- #enabled: false
+</span></span><span class="line"><span class="cl">+ enabled: true
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -874,8 +872,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#enabled: false
-</span></span><span class="line"><span class="cl">enabled: true
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">- #enabled: false
+</span></span><span class="line"><span class="cl">+ enabled: true
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -887,8 +885,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">#type: ClusterIP
-</span></span><span class="line"><span class="cl">type: LoadBalancer
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">- #type: ClusterIP
+</span></span><span class="line"><span class="cl">+ type: LoadBalancer
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>デプロイする（アップグレードする）</p>
@@ -940,7 +938,7 @@
 </span></span><span class="line"><span class="cl">mao@cilium-control-plane-01:~$ 
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>UIのIPアドレスを確認する</p>
+</div><p>Hubble-UIのIPアドレスを確認する</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -969,7 +967,7 @@
 </span></span><span class="line"><span class="cl">mao@cilium-control-plane-01:~$ 
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>下記IPアドレスにアクセスする</p>
+</div><p>&ldquo;EXTERNAL-IP&quot;に記載されているIPアドレスにアクセスする</p>
 <ul>
 <li>&ldquo;192.168.10.60&rdquo;
 <img src="../../post/kubernetes-cni-cilium/01.png"

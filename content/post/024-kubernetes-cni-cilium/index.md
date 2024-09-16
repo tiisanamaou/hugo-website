@@ -173,25 +173,24 @@ sudo mv linux-amd64/helm /usr/local/bin/helm
 helm version
 ```
 
-インストール完了
+インストール完了（バージョン確認）
 ```
 mao@cilium-control-plane-01:~$ helm version
 version.BuildInfo{Version:"v3.15.4", GitCommit:"fa9efb07d9d8debbb4306d72af76a383895aa8c4", GitTreeState:"clean", GoVersion:"go1.22.6"}
 ```
 
-アンインストール方法
+Helmでデプロイしたリソースのアンインストール方法
 ```
 helm uninstall release_name -n release_namespace
-helm uninstall kubernetes-dashboard -n kubernetes-dashboard
 ```
 
 ## Ciliumのデプロイ
-### リポジトリの追加します
+### リポジトリを追加します
 ```
 helm repo add cilium https://helm.cilium.io/
 ```
 
-追加されたか確認
+追加されたか確認をします
 ```
 helm repo list
 ```
@@ -290,20 +289,20 @@ sudo ip link
 “vakues.yaml"を編集する
 - 1307行目、"hubble.relay.enabled"
 ```
-#enabled: false
-enabled: true
+- #enabled: false
++ enabled: true
 ```
 
 - 1523行目、"hubble.ui.enabled"
 ```
-#enabled: false
-enabled: true
+- #enabled: false
++ enabled: true
 ```
 
 - 1683行目、"hubble.ui.service.type"
 ```
-#type: ClusterIP
-type: LoadBalancer
+- #type: ClusterIP
++ type: LoadBalancer
 ```
 
 デプロイする（アップグレードする）
@@ -330,7 +329,7 @@ For any further help, visit https://docs.cilium.io/en/v1.16/gettinghelp
 mao@cilium-control-plane-01:~$ 
 ```
 
-UIのIPアドレスを確認する
+Hubble-UIのIPアドレスを確認する
 ```
 kubectl -n kube-system get service
 ```
@@ -344,7 +343,7 @@ kube-dns       ClusterIP      10.96.0.10      <none>          53/UDP,53/TCP,9153
 mao@cilium-control-plane-01:~$ 
 ```
 
-下記IPアドレスにアクセスする
+"EXTERNAL-IP"に記載されているIPアドレスにアクセスする
 - "192.168.10.60"
 ![](01.png)
 
