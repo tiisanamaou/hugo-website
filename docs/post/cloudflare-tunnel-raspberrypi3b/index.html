@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Ubuntuにスワップを作成する（ラズパイ） ラズパイのスペックは下記の通りです
+Raspberry Pi 3B メモリ1GB SDカード32GB メモリが少ないのでDockerを使用するには少ないので、8GBのスワップメモリを作成します
+何も表示されない場合はスワップは作成されていない 1 sudo swapon --show ストレージの容量を確認します 1 df -h スワップ用のファイルを作成する 8GBのスワップを作成する 1 2 sudo fallocate -l 8G /swapfile ls -lh /swapfile スワップファイルを設定して、有効にします 1 2 3 sudo chmod 600 /swapfile sudo mkswap /swapfile sudo swapon /swapfile 再度確認をします 1 sudo swapon --show スワップが作成されています 1 2 3 mao@raspberrypi3:~$ sudo swapon --show NAME TYPE SIZE USED PRIO /swapfile file 8G 0B -2 スワップの永続設定をする 1 sudo nano /etc/fstab 下記を追記する 1 /swapfile none swap sw 0 0 UbuntuにDockerをインストールする 公式ドキュメントを参考にインストールする'>
+<title>CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする'>
+<meta property='og:description' content='Ubuntuにスワップを作成する（ラズパイ） ラズパイのスペックは下記の通りです
+Raspberry Pi 3B メモリ1GB SDカード32GB メモリが少ないのでDockerを使用するには少ないので、8GBのスワップメモリを作成します
+何も表示されない場合はスワップは作成されていない 1 sudo swapon --show ストレージの容量を確認します 1 df -h スワップ用のファイルを作成する 8GBのスワップを作成する 1 2 sudo fallocate -l 8G /swapfile ls -lh /swapfile スワップファイルを設定して、有効にします 1 2 3 sudo chmod 600 /swapfile sudo mkswap /swapfile sudo swapon /swapfile 再度確認をします 1 sudo swapon --show スワップが作成されています 1 2 3 mao@raspberrypi3:~$ sudo swapon --show NAME TYPE SIZE USED PRIO /swapfile file 8G 0B -2 スワップの永続設定をする 1 sudo nano /etc/fstab 下記を追記する 1 /swapfile none swap sw 0 0 UbuntuにDockerをインストールする 公式ドキュメントを参考にインストールする'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-10-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-10-07T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする">
+<meta name="twitter:description" content="Ubuntuにスワップを作成する（ラズパイ） ラズパイのスペックは下記の通りです
+Raspberry Pi 3B メモリ1GB SDカード32GB メモリが少ないのでDockerを使用するには少ないので、8GBのスワップメモリを作成します
+何も表示されない場合はスワップは作成されていない 1 sudo swapon --show ストレージの容量を確認します 1 df -h スワップ用のファイルを作成する 8GBのスワップを作成する 1 2 sudo fallocate -l 8G /swapfile ls -lh /swapfile スワップファイルを設定して、有効にします 1 2 3 sudo chmod 600 /swapfile sudo mkswap /swapfile sudo swapon /swapfile 再度確認をします 1 sudo swapon --show スワップが作成されています 1 2 3 mao@raspberrypi3:~$ sudo swapon --show NAME TYPE SIZE USED PRIO /swapfile file 8G 0B -2 スワップの永続設定をする 1 sudo nano /etc/fstab 下記を追記する 1 /swapfile none swap sw 0 0 UbuntuにDockerをインストールする 公式ドキュメントを参考にインストールする">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://tiisanamaou.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/raspberrypi/" >
+                RaspberryPi
+            </a>
+        
+            <a href="../../categories/cloudflaretunnel/" >
+                CloudflareTunnel
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/cloudflare-tunnel-raspberrypi3b/">CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024/10/07</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="ubuntuにスワップを作成するラズパイ">Ubuntuにスワップを作成する（ラズパイ）</h2>
+<p>ラズパイのスペックは下記の通りです</p>
+<ul>
+<li>Raspberry Pi 3B</li>
+<li>メモリ1GB</li>
+<li>SDカード32GB</li>
+</ul>
+<p>メモリが少ないのでDockerを使用するには少ないので、8GBのスワップメモリを作成します</p>
+<ol>
+<li>何も表示されない場合はスワップは作成されていない</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo swapon --show
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>ストレージの容量を確認します</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">df -h
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>スワップ用のファイルを作成する</li>
+</ol>
+<ul>
+<li>8GBのスワップを作成する</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo fallocate -l 8G /swapfile
+</span></span><span class="line"><span class="cl">ls -lh /swapfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>スワップファイルを設定して、有効にします</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo chmod 600 /swapfile
+</span></span><span class="line"><span class="cl">sudo mkswap /swapfile
+</span></span><span class="line"><span class="cl">sudo swapon /swapfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>再度確認をします</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo swapon --show
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="6">
+<li>スワップが作成されています</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@raspberrypi3:~$ sudo swapon --show
+</span></span><span class="line"><span class="cl">NAME      TYPE SIZE USED PRIO
+</span></span><span class="line"><span class="cl">/swapfile file   8G   0B   -2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="7">
+<li>スワップの永続設定をする</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo nano /etc/fstab
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>下記を追記する</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">/swapfile none swap sw 0 0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ubuntuにdockerをインストールする">UbuntuにDockerをインストールする</h2>
+<p>公式ドキュメントを参考にインストールする</p>
+<ul>
+<li><a class="link" href="https://docs.docker.com/engine/install/ubuntu/"  target="_blank" rel="noopener"
+    >https://docs.docker.com/engine/install/ubuntu/</a></li>
+</ul>
+<h3 id="debをダウンロードする">debをダウンロードする</h3>
+<ul>
+<li>2024年10月05日時点での最新版をダウンロードする</li>
+<li>amd64ではなくarm64をダウンロードする</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">dists</span><span class="o">/</span><span class="n">noble</span><span class="o">/</span><span class="n">pool</span><span class="o">/</span><span class="n">stable</span><span class="o">/</span><span class="n">arm64</span><span class="o">/</span><span class="n">containerd</span><span class="o">.</span><span class="n">io_1</span><span class="o">.</span><span class="mf">7.22</span><span class="o">-</span><span class="mi">1</span><span class="n">_arm64</span><span class="o">.</span><span class="n">deb</span> \
+</span></span><span class="line"><span class="cl"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">dists</span><span class="o">/</span><span class="n">noble</span><span class="o">/</span><span class="n">pool</span><span class="o">/</span><span class="n">stable</span><span class="o">/</span><span class="n">arm64</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">buildx</span><span class="o">-</span><span class="n">plugin_0</span><span class="o">.</span><span class="mf">17.1</span><span class="o">-</span><span class="mi">1</span><span class="o">~</span><span class="n">ubuntu</span><span class="o">.</span><span class="mf">24.04</span><span class="o">~</span><span class="n">noble_arm64</span><span class="o">.</span><span class="n">deb</span> \
+</span></span><span class="line"><span class="cl"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">dists</span><span class="o">/</span><span class="n">noble</span><span class="o">/</span><span class="n">pool</span><span class="o">/</span><span class="n">stable</span><span class="o">/</span><span class="n">arm64</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">ce</span><span class="o">-</span><span class="n">cli_27</span><span class="o">.</span><span class="mf">3.1</span><span class="o">-</span><span class="mi">1</span><span class="o">~</span><span class="n">ubuntu</span><span class="o">.</span><span class="mf">24.04</span><span class="o">~</span><span class="n">noble_arm64</span><span class="o">.</span><span class="n">deb</span> \
+</span></span><span class="line"><span class="cl"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">dists</span><span class="o">/</span><span class="n">noble</span><span class="o">/</span><span class="n">pool</span><span class="o">/</span><span class="n">stable</span><span class="o">/</span><span class="n">arm64</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">ce_27</span><span class="o">.</span><span class="mf">3.1</span><span class="o">-</span><span class="mi">1</span><span class="o">~</span><span class="n">ubuntu</span><span class="o">.</span><span class="mf">24.04</span><span class="o">~</span><span class="n">noble_arm64</span><span class="o">.</span><span class="n">deb</span> \
+</span></span><span class="line"><span class="cl"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">dists</span><span class="o">/</span><span class="n">noble</span><span class="o">/</span><span class="n">pool</span><span class="o">/</span><span class="n">stable</span><span class="o">/</span><span class="n">arm64</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">-</span><span class="n">plugin_2</span><span class="o">.</span><span class="mf">29.7</span><span class="o">-</span><span class="mi">1</span><span class="o">~</span><span class="n">ubuntu</span><span class="o">.</span><span class="mf">24.04</span><span class="o">~</span><span class="n">noble_arm64</span><span class="o">.</span><span class="n">deb</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="インストールをする">インストールをする</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo dpkg -i ./containerd.io_&lt;version&gt;_&lt;arch&gt;.deb \
+</span></span><span class="line"><span class="cl">  ./docker-ce_&lt;version&gt;_&lt;arch&gt;.deb \
+</span></span><span class="line"><span class="cl">  ./docker-ce-cli_&lt;version&gt;_&lt;arch&gt;.deb \
+</span></span><span class="line"><span class="cl">  ./docker-buildx-plugin_&lt;version&gt;_&lt;arch&gt;.deb \
+</span></span><span class="line"><span class="cl">  ./docker-compose-plugin_&lt;version&gt;_&lt;arch&gt;.deb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo dpkg -i ./containerd.io_1.7.22-1_arm64.deb \
+</span></span><span class="line"><span class="cl">  ./docker-ce_27.3.1-1~ubuntu.24.04~noble_arm64.deb \
+</span></span><span class="line"><span class="cl">  ./docker-ce-cli_27.3.1-1~ubuntu.24.04~noble_arm64.deb \
+</span></span><span class="line"><span class="cl">  ./docker-buildx-plugin_0.17.1-1~ubuntu.24.04~noble_arm64.deb \
+</span></span><span class="line"><span class="cl">  ./docker-compose-plugin_2.29.7-1~ubuntu.24.04~noble_arm64.deb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>containerd.io_1.7.22-1_arm64.deb</li>
+<li>docker-ce_27.3.1-1-ubuntu.24.04~noble_arm64.deb</li>
+<li>docker-ce-cli_27.3.1-1-ubuntu.24.04~noble_arm64.deb</li>
+<li>docker-buildx-plugin_0.17.1-1-ubuntu.24.04~noble_arm64.deb</li>
+<li>docker-compose-plugin_2.29.7-1-ubuntu.24.04~noble_arm64.deb</li>
+</ul>
+<h3 id="バージョン確認">バージョン確認</h3>
+<p>dockerとdocker composeのバージョンを確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker version
+</span></span><span class="line"><span class="cl">sudo docker compose version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="cloudflare-tunnelを作成する">Cloudflare Tunnelを作成する</h2>
+<h3 id="トンネルをcloudflareのサイトで作成する">トンネルをCloudflareのサイトで作成する</h3>
+<ul>
+<li>Cloudflareのホーム画面の左側のメニューから&quot;Zero Trust&quot;を押します</li>
+<li>その後、左側のメニューから&quot;Networks&quot;&gt;&ldquo;Tunnels&quot;を押します</li>
+<li>&ldquo;Tunnels&quot;の画面になったら&quot;&ldquo;を押してTunnelを作成します</li>
+<li>&ldquo;Create a tunnel&quot;と表示された画面になります
+<ul>
+<li>&ldquo;Select your tunnel type&quot;は&quot;Cloudflared&quot;を選択して&quot;Next&quot;を押します</li>
+<li>&ldquo;Name your tunnel&quot;に自分がわかるようにTunnelの名前を入力し、&ldquo;Save Tunnel&quot;を押します</li>
+</ul>
+</li>
+<li>すると&quot;Configure&quot;ｔ表示された画面になります
+<img src="../../post/cloudflare-tunnel-raspberrypi3b/01.png"
+	width="2746"
+	height="1854"
+	srcset="../../post/cloudflare-tunnel-raspberrypi3b/01_hu10269101231633997555.png 480w, ../../post/cloudflare-tunnel-raspberrypi3b/01_hu9079611263127604116.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="148"
+		data-flex-basis="355px"
+	
+>
+<ul>
+<li>&ldquo;Choose your environment&quot;は&quot;Docker&quot;を選択します</li>
+<li>&ldquo;Install and run a connector&quot;にdockerコマンドとトークンが表示されるので、コピーしておきます</li>
+<li>トークンは他の人には絶対に見せないでください（トークンがあれば接続できてしまいます）</li>
+<li>コピーをしたら&quot;Next&quot;を押します</li>
+</ul>
+</li>
+<li>&ldquo;Add public hostname for TunnelName&quot;と表示された画面になります
+<img src="../../post/cloudflare-tunnel-raspberrypi3b/02.png"
+	width="3032"
+	height="1854"
+	srcset="../../post/cloudflare-tunnel-raspberrypi3b/02_hu17878355857062477510.png 480w, ../../post/cloudflare-tunnel-raspberrypi3b/02_hu7770346448886141856.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="163"
+		data-flex-basis="392px"
+	
+>
+<ul>
+<li>&ldquo;Subdomain&quot;にはサブドメイン名を入力します</li>
+<li>&ldquo;Domain&quot;にはCloudflareで管理されているドメインが選択できます</li>
+<li>&ldquo;Service&quot;の&quot;Type&quot;にはHTTPやSSHなどを選択できます</li>
+<li>&ldquo;URL&quot;にはdocker composeの場合はコンテナ名とポートを入力し、&ldquo;Save tunnel&quot;を押します
+<ul>
+<li>（例）Type:&ldquo;HTTP&rdquo;,Service:&ldquo;nginx:8080&rdquo;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>&ldquo;Tunnels&quot;と表示された画面に戻ります、以上でトンネルが作成されます</li>
+</ul>
+<h2 id="dokcer-composeファイルの作成と起動停止">dokcer composeファイルの作成と起動・停止</h2>
+<p>compose.yamlファイルの作成をする</p>
+<ul>
+<li>compose.yaml</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">services:
+</span></span><span class="line"><span class="cl">  blog:
+</span></span><span class="line"><span class="cl">    image: nginx:latest
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  tunnel:
+</span></span><span class="line"><span class="cl">    restart: always
+</span></span><span class="line"><span class="cl">    image: cloudflare/cloudflared:latest
+</span></span><span class="line"><span class="cl">    command: tunnel --no-autoupdate run
+</span></span><span class="line"><span class="cl">    environment:
+</span></span><span class="line"><span class="cl">      - TUNNEL_TOKEN=トンネル作成時のトークンをここに記載する
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>起動と停止のコマンド</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker compose up -d
+</span></span><span class="line"><span class="cl">sudo docker compose down --volumes
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="アクセスする">アクセスする</h2>
+<p>docker composeで起動し、設定したサブドメインにアクセスして画面が表示されれば無事起動されトンネルができている<br>
+下記の画像は&quot;raspberrypi3b&quot;をサブドメインとして設定した<br>
+503等がでると、cloudflaredは起動しているがdocker compose内での接続が上手く行っていない可能性がある<br>
+※コンテナ名やポート番号が異なるなど
+<img src="../../post/cloudflare-tunnel-raspberrypi3b/03.png"
+	width="2228"
+	height="2148"
+	srcset="../../post/cloudflare-tunnel-raspberrypi3b/03_hu18080092092011390735.png 480w, ../../post/cloudflare-tunnel-raspberrypi3b/03_hu207359769127267082.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="248px"
+	
+></p>
+<h2 id="参考url">参考URL</h2>
+<ul>
+<li>MisskeyをDocker Compose+Cloudflare Tunnelでサクッと建てる
+<ul>
+<li><a class="link" href="https://zenn.dev/hrko/scraps/29df6c7ac02f03"  target="_blank" rel="noopener"
+    >https://zenn.dev/hrko/scraps/29df6c7ac02f03</a></li>
+</ul>
+</li>
+<li>個人的docker composeおすすめtips 9選
+<ul>
+<li><a class="link" href="https://future-architect.github.io/articles/20240620a/"  target="_blank" rel="noopener"
+    >https://future-architect.github.io/articles/20240620a/</a></li>
+</ul>
+</li>
+<li>cloudflare tunnelで自宅サーバー（動的IP）を運用したい、しかもdocker composeで
+<ul>
+<li><a class="link" href="https://qiita.com/github0013@github/items/6686cc39a297b521d58e"  target="_blank" rel="noopener"
+    >https://qiita.com/github0013@github/items/6686cc39a297b521d58e</a></li>
+</ul>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
