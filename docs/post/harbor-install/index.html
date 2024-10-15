@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 harbor v2.11.1 docker version 27.3.1 Docker Compose version v2.29.7 OpenSSL 3.0.13 インストール要件確認
+https://goharbor.io/docs/2.11.0/install-config/installation-prereqs/ harborのオフラインインストーラーとdocker,docker compose,OpenSSLが必要なのでダウンロードとインストールをしていきます
+offlineインストーラーをダウンロードする 最新版を確認しダウンロードする
+https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新版の2.11.1をダウンロードします
+1 wget https://github.com/goharbor/harbor/releases/download/v2.11.1/harbor-offline-installer-v2.11.1.tgz ダウンロードしたファイルを解凍して設定ファイルをコピーする
+1 2 3 tar xvzf harbor-offline-installer-v2.11.1.tgz cd harbor cp harbor.yml.tmpl harbor.yml 1 2 3 4 5 6 7 8 9 10 mao@harbor-server:~$ tar xvzf harbor-offline-installer-v2.11.1.tgz harbor/harbor.v2.11.1.tar.gz harbor/prepare harbor/LICENSE harbor/install.sh harbor/common.sh harbor/harbor.yml.tmpl mao@harbor-server:~$ cd harbor mao@harbor-server:~/harbor$ cp harbor.yml.tmpl harbor.yml mao@harbor-server:~/harbor$ 設定ファイルを編集する
+&ldquo;hostname:&ldquo;をIPアドレスへ変更する &ldquo;https:&ldquo;の設定を、今回はhttpでアクセスするのでコメントアウトする &ldquo;certificate: /your/certificate/path&quot;もコメントアウトする &ldquo;private_key: /your/private/key/path&quot;もコメントアウトする 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 # Configuration file of Harbor # The IP address or hostname to access admin UI and registry service.'>
+<title>Harborのインストールしてpushとpullをしてみる</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/harbor-install/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Harborのインストールしてpushとpullをしてみる'>
+<meta property='og:description' content='環境 harbor v2.11.1 docker version 27.3.1 Docker Compose version v2.29.7 OpenSSL 3.0.13 インストール要件確認
+https://goharbor.io/docs/2.11.0/install-config/installation-prereqs/ harborのオフラインインストーラーとdocker,docker compose,OpenSSLが必要なのでダウンロードとインストールをしていきます
+offlineインストーラーをダウンロードする 最新版を確認しダウンロードする
+https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新版の2.11.1をダウンロードします
+1 wget https://github.com/goharbor/harbor/releases/download/v2.11.1/harbor-offline-installer-v2.11.1.tgz ダウンロードしたファイルを解凍して設定ファイルをコピーする
+1 2 3 tar xvzf harbor-offline-installer-v2.11.1.tgz cd harbor cp harbor.yml.tmpl harbor.yml 1 2 3 4 5 6 7 8 9 10 mao@harbor-server:~$ tar xvzf harbor-offline-installer-v2.11.1.tgz harbor/harbor.v2.11.1.tar.gz harbor/prepare harbor/LICENSE harbor/install.sh harbor/common.sh harbor/harbor.yml.tmpl mao@harbor-server:~$ cd harbor mao@harbor-server:~/harbor$ cp harbor.yml.tmpl harbor.yml mao@harbor-server:~/harbor$ 設定ファイルを編集する
+&ldquo;hostname:&ldquo;をIPアドレスへ変更する &ldquo;https:&ldquo;の設定を、今回はhttpでアクセスするのでコメントアウトする &ldquo;certificate: /your/certificate/path&quot;もコメントアウトする &ldquo;private_key: /your/private/key/path&quot;もコメントアウトする 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 # Configuration file of Harbor # The IP address or hostname to access admin UI and registry service.'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/harbor-install/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-10-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-10-15T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Harborのインストールしてpushとpullをしてみる">
+<meta name="twitter:description" content="環境 harbor v2.11.1 docker version 27.3.1 Docker Compose version v2.29.7 OpenSSL 3.0.13 インストール要件確認
+https://goharbor.io/docs/2.11.0/install-config/installation-prereqs/ harborのオフラインインストーラーとdocker,docker compose,OpenSSLが必要なのでダウンロードとインストールをしていきます
+offlineインストーラーをダウンロードする 最新版を確認しダウンロードする
+https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新版の2.11.1をダウンロードします
+1 wget https://github.com/goharbor/harbor/releases/download/v2.11.1/harbor-offline-installer-v2.11.1.tgz ダウンロードしたファイルを解凍して設定ファイルをコピーする
+1 2 3 tar xvzf harbor-offline-installer-v2.11.1.tgz cd harbor cp harbor.yml.tmpl harbor.yml 1 2 3 4 5 6 7 8 9 10 mao@harbor-server:~$ tar xvzf harbor-offline-installer-v2.11.1.tgz harbor/harbor.v2.11.1.tar.gz harbor/prepare harbor/LICENSE harbor/install.sh harbor/common.sh harbor/harbor.yml.tmpl mao@harbor-server:~$ cd harbor mao@harbor-server:~/harbor$ cp harbor.yml.tmpl harbor.yml mao@harbor-server:~/harbor$ 設定ファイルを編集する
+&ldquo;hostname:&ldquo;をIPアドレスへ変更する &ldquo;https:&ldquo;の設定を、今回はhttpでアクセスするのでコメントアウトする &ldquo;certificate: /your/certificate/path&quot;もコメントアウトする &ldquo;private_key: /your/private/key/path&quot;もコメントアウトする 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 # Configuration file of Harbor # The IP address or hostname to access admin UI and registry service.">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://tiisanamaou.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/harbor/" >
+                Harbor
+            </a>
+        
+            <a href="../../categories/docker/" >
+                Docker
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/harbor-install/">Harborのインストールしてpushとpullをしてみる</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024/10/15</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="環境">環境</h2>
+<ul>
+<li>harbor v2.11.1</li>
+<li>docker version 27.3.1</li>
+<li>Docker Compose version v2.29.7</li>
+<li>OpenSSL 3.0.13</li>
+</ul>
+<p>インストール要件確認</p>
+<ul>
+<li><a class="link" href="https://goharbor.io/docs/2.11.0/install-config/installation-prereqs/"  target="_blank" rel="noopener"
+    >https://goharbor.io/docs/2.11.0/install-config/installation-prereqs/</a></li>
+</ul>
+<p>harborのオフラインインストーラーとdocker,docker compose,OpenSSLが必要なのでダウンロードとインストールをしていきます</p>
+<h2 id="offlineインストーラーをダウンロードする">offlineインストーラーをダウンロードする</h2>
+<p>最新版を確認しダウンロードする</p>
+<ul>
+<li><a class="link" href="https://github.com/goharbor/harbor/releases"  target="_blank" rel="noopener"
+    >https://github.com/goharbor/harbor/releases</a></li>
+</ul>
+<p>2024年10月13日時点での最新版の2.11.1をダウンロードします</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">offline</span><span class="o">-</span><span class="n">installer</span><span class="o">-</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span><span class="o">.</span><span class="n">tgz</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ダウンロードしたファイルを解凍して設定ファイルをコピーする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tar xvzf harbor-offline-installer-v2.11.1.tgz
+</span></span><span class="line"><span class="cl">cd harbor
+</span></span><span class="line"><span class="cl">cp harbor.yml.tmpl harbor.yml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@harbor-server:~$ tar xvzf harbor-offline-installer-v2.11.1.tgz
+</span></span><span class="line"><span class="cl">harbor/harbor.v2.11.1.tar.gz
+</span></span><span class="line"><span class="cl">harbor/prepare
+</span></span><span class="line"><span class="cl">harbor/LICENSE
+</span></span><span class="line"><span class="cl">harbor/install.sh
+</span></span><span class="line"><span class="cl">harbor/common.sh
+</span></span><span class="line"><span class="cl">harbor/harbor.yml.tmpl
+</span></span><span class="line"><span class="cl">mao@harbor-server:~$ cd harbor
+</span></span><span class="line"><span class="cl">mao@harbor-server:~/harbor$ cp harbor.yml.tmpl harbor.yml
+</span></span><span class="line"><span class="cl">mao@harbor-server:~/harbor$ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>設定ファイルを編集する</p>
+<ul>
+<li>&ldquo;hostname:&ldquo;をIPアドレスへ変更する</li>
+<li>&ldquo;https:&ldquo;の設定を、今回はhttpでアクセスするのでコメントアウトする
+<ul>
+<li>&ldquo;certificate: /your/certificate/path&quot;もコメントアウトする</li>
+<li>&ldquo;private_key: /your/private/key/path&quot;もコメントアウトする</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Configuration file of Harbor
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># The IP address or hostname to access admin UI and registry service.
+</span></span><span class="line"><span class="cl"># DO NOT use localhost or 127.0.0.1, because Harbor needs to be accessed by external clients.
+</span></span><span class="line"><span class="cl">+ hostname: 192.168.10.24
+</span></span><span class="line"><span class="cl">- hostname: reg.mydomain.com
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># http related config
+</span></span><span class="line"><span class="cl">http:
+</span></span><span class="line"><span class="cl">  # port for http, default is 80. If https enabled, this port will redirect to https port
+</span></span><span class="line"><span class="cl">  port: 80
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># https related config
+</span></span><span class="line"><span class="cl">+ #https:
+</span></span><span class="line"><span class="cl">- https:
+</span></span><span class="line"><span class="cl">  # https port for harbor, default is 443
+</span></span><span class="line"><span class="cl">+ #port: 443
+</span></span><span class="line"><span class="cl">- port: 443
+</span></span><span class="line"><span class="cl">  # The path of cert and key files for nginx
+</span></span><span class="line"><span class="cl">+ #certificate: /your/certificate/path
+</span></span><span class="line"><span class="cl">+ #private_key: /your/private/key/path
+</span></span><span class="line"><span class="cl">- certificate: /your/certificate/path
+</span></span><span class="line"><span class="cl">- private_key: /your/private/key/path
+</span></span><span class="line"><span class="cl">  # enable strong ssl ciphers (default: false)
+</span></span><span class="line"><span class="cl">  # strong_ssl_ciphers: false
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="docker-engineとdocker-composeをインストールする">docker engineとdocker composeをインストールする</h2>
+<p>公式ドキュメントの通りにインストールする</p>
+<ul>
+<li><a class="link" href="https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository"  target="_blank" rel="noopener"
+    >https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># Add Docker&#39;s official GPG key:</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ca</span><span class="o">-</span><span class="n">certificates</span> <span class="n">curl</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">install</span> <span class="o">-</span><span class="n">m</span> <span class="mi">0755</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">curl</span> <span class="o">-</span><span class="n">fsSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">gpg</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">asc</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">r</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">asc</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Add the repository to Apt sources:</span>
+</span></span><span class="line"><span class="cl"><span class="n">echo</span> \
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">  $(. /etc/os-release &amp;&amp; echo &#34;</span><span class="o">$</span><span class="n">VERSION_CODENAME</span><span class="s2">&#34;) stable&#34;</span> <span class="o">|</span> \
+</span></span><span class="line"><span class="cl">  <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">list</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="opensslがインストールされているか確認する">OpenSSLがインストールされているか確認する</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">openssl version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@harbor-server:~$ openssl version
+</span></span><span class="line"><span class="cl">OpenSSL 3.0.13 30 Jan 2024 (Library: OpenSSL 3.0.13 30 Jan 2024)
+</span></span><span class="line"><span class="cl">mao@harbor-server:~$ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="harborをインストールする">harborをインストールする</h2>
+<p>下記のコマンドを実行してインストールする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo ./install.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="o">./</span><span class="n">install</span><span class="o">.</span><span class="n">sh</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">0</span><span class="p">]:</span> <span class="n">checking</span> <span class="k">if</span> <span class="n">docker</span> <span class="n">is</span> <span class="n">installed</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Note</span><span class="p">:</span> <span class="n">docker</span> <span class="n">version</span><span class="p">:</span> <span class="mf">27.3</span><span class="o">.</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">1</span><span class="p">]:</span> <span class="n">checking</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">is</span> <span class="n">installed</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Note</span><span class="p">:</span> <span class="n">Docker</span> <span class="n">Compose</span> <span class="n">version</span> <span class="n">v2</span><span class="o">.</span><span class="mf">29.7</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">2</span><span class="p">]:</span> <span class="n">loading</span> <span class="n">Harbor</span> <span class="n">images</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">fa65d0b345aa</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>   <span class="mf">40.5</span><span class="n">MB</span><span class="o">/</span><span class="mf">40.5</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">40</span><span class="n">dbf36fc7e0</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">112.7</span><span class="n">MB</span><span class="o">/</span><span class="mf">112.7</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">e27e903fe711</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">51.64</span><span class="n">MB</span><span class="o">/</span><span class="mf">51.64</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">312</span><span class="n">f4e210c8d</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">13.78</span><span class="n">MB</span><span class="o">/</span><span class="mf">13.78</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3e3</span><span class="n">d5fae203b</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">65.54</span><span class="n">kB</span><span class="o">/</span><span class="mf">65.54</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">bd56ad4f7c00</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>   <span class="mf">2.56</span><span class="n">kB</span><span class="o">/</span><span class="mf">2.56</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">58</span><span class="n">bd888248a1</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">1.536</span><span class="n">kB</span><span class="o">/</span><span class="mf">1.536</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">8</span><span class="n">ad07d6448d6</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">12.29</span><span class="n">kB</span><span class="o">/</span><span class="mf">12.29</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">7604</span><span class="n">bd93290d</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">2.744</span><span class="n">MB</span><span class="o">/</span><span class="mf">2.744</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">8637</span><span class="n">aeee1380</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">492.5</span><span class="n">kB</span><span class="o">/</span><span class="mf">492.5</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">prepare</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">59</span><span class="n">cd002b46d2</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">21.86</span><span class="n">MB</span><span class="o">/</span><span class="mf">21.86</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2e8</span><span class="n">f9fa1e5f5</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>    <span class="mi">175</span><span class="n">MB</span><span class="o">/</span><span class="mi">175</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">ecd34246c904</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">26.04</span><span class="n">MB</span><span class="o">/</span><span class="mf">26.04</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">d8b960cafd25</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">18.54</span><span class="n">MB</span><span class="o">/</span><span class="mf">18.54</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">410</span><span class="n">dc4347a57</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>   <span class="mf">5.12</span><span class="n">kB</span><span class="o">/</span><span class="mf">5.12</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">80921</span><span class="n">caabb24</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">6.144</span><span class="n">kB</span><span class="o">/</span><span class="mf">6.144</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">e91542fda4dd</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.072</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.072</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">df3f2e9dd439</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">2.048</span><span class="n">kB</span><span class="o">/</span><span class="mf">2.048</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">d8facbd2a6c0</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>   <span class="mf">2.56</span><span class="n">kB</span><span class="o">/</span><span class="mf">2.56</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4715</span><span class="n">dde7127c</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>   <span class="mf">7.68</span><span class="n">kB</span><span class="o">/</span><span class="mf">7.68</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">db</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">926647</span><span class="n">c50af4</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">17.23</span><span class="n">MB</span><span class="o">/</span><span class="mf">17.23</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">99</span><span class="n">ff9f9dc8ce</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">28.75</span><span class="n">MB</span><span class="o">/</span><span class="mf">28.75</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">99078</span><span class="n">c9b3a60</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">4.608</span><span class="n">kB</span><span class="o">/</span><span class="mf">4.608</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">fe5588cde585</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">29.54</span><span class="n">MB</span><span class="o">/</span><span class="mf">29.54</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">exporter</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span><span class="n">ec814cdc7b2</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">21.86</span><span class="n">MB</span><span class="o">/</span><span class="mf">21.86</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">235</span><span class="n">f2878bf8a</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">110.5</span><span class="n">MB</span><span class="o">/</span><span class="mf">110.5</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">cdccfb99123c</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.072</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.072</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">c7ea796bb849</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>   <span class="mf">59.9</span><span class="n">kB</span><span class="o">/</span><span class="mf">59.9</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">f8a27040ef0d</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">61.95</span><span class="n">kB</span><span class="o">/</span><span class="mf">61.95</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">redis</span><span class="o">-</span><span class="n">photon</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">7</span><span class="n">a130cf406bb</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">121.1</span><span class="n">MB</span><span class="o">/</span><span class="mf">121.1</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">photon</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">7786</span><span class="n">af5594f6</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">121.1</span><span class="n">MB</span><span class="o">/</span><span class="mf">121.1</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span><span class="n">c39daf00027</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">6.703</span><span class="n">MB</span><span class="o">/</span><span class="mf">6.703</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">c9af590a487f</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">251.9</span><span class="n">kB</span><span class="o">/</span><span class="mf">251.9</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">9</span><span class="n">ba79732c750</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">1.477</span><span class="n">MB</span><span class="o">/</span><span class="mf">1.477</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">portal</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2124</span><span class="n">fec7bf7d</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">17.23</span><span class="n">MB</span><span class="o">/</span><span class="mf">17.23</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">257165566506</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.584</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.584</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">71</span><span class="n">c6cf01ef4c</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>   <span class="mf">2.56</span><span class="n">kB</span><span class="o">/</span><span class="mf">2.56</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">e6aaf52bc017</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">67.13</span><span class="n">MB</span><span class="o">/</span><span class="mf">67.13</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">ac2b2a90f17c</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">5.632</span><span class="n">kB</span><span class="o">/</span><span class="mf">5.632</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span><span class="n">deff795bee3</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">125.4</span><span class="n">kB</span><span class="o">/</span><span class="mf">125.4</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">e4bd545de86d</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">201.7</span><span class="n">kB</span><span class="o">/</span><span class="mf">201.7</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">847012124</span><span class="n">c72</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">68.25</span><span class="n">MB</span><span class="o">/</span><span class="mf">68.25</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">d1601b055891</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>   <span class="mf">2.56</span><span class="n">kB</span><span class="o">/</span><span class="mf">2.56</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">core</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">e4f7bca07127</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">130.8</span><span class="n">MB</span><span class="o">/</span><span class="mf">130.8</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">3</span><span class="n">d744fdec5a0</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.584</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.584</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">e2c98f9cef30</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.072</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.072</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">cbe22372d70a</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>   <span class="mf">2.56</span><span class="n">kB</span><span class="o">/</span><span class="mf">2.56</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">c3cc060f064c</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.072</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.072</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">184</span><span class="n">ad5ccf4f4</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.584</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.584</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span><span class="n">a30d6215ed7</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">20.48</span><span class="n">kB</span><span class="o">/</span><span class="mf">20.48</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="nb">log</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">d2e836032dca</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">17.23</span><span class="n">MB</span><span class="o">/</span><span class="mf">17.23</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">6159</span><span class="n">b9476a38</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.584</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.584</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">6</span><span class="n">cd40121c7f9</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>   <span class="mf">2.56</span><span class="n">kB</span><span class="o">/</span><span class="mf">2.56</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">ab578d976e3e</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">54.27</span><span class="n">MB</span><span class="o">/</span><span class="mf">54.27</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">74</span><span class="n">d4b342c232</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">55.06</span><span class="n">MB</span><span class="o">/</span><span class="mf">55.06</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">jobservice</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">a370043a2cd6</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">14.22</span><span class="n">MB</span><span class="o">/</span><span class="mf">14.22</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">068</span><span class="n">c345c0269</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">4.096</span><span class="n">kB</span><span class="o">/</span><span class="mf">4.096</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">24607</span><span class="n">b1b1b88</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">17.86</span><span class="n">MB</span><span class="o">/</span><span class="mf">17.86</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">d460b7320fa0</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.072</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.072</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">41</span><span class="n">f6293d43da</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">38.93</span><span class="n">MB</span><span class="o">/</span><span class="mf">38.93</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">47</span><span class="n">c258cefc9f</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">57.57</span><span class="n">MB</span><span class="o">/</span><span class="mf">57.57</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">registryctl</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">b020161dfc96</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">14.22</span><span class="n">MB</span><span class="o">/</span><span class="mf">14.22</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">660</span><span class="n">cc2bb7fc2</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">4.096</span><span class="n">kB</span><span class="o">/</span><span class="mf">4.096</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">093817</span><span class="n">c1779d</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.072</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.072</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="n">baa5b276e894</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">17.86</span><span class="n">MB</span><span class="o">/</span><span class="mf">17.86</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span><span class="n">db5e5303fdc</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">18.65</span><span class="n">MB</span><span class="o">/</span><span class="mf">18.65</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">registry</span><span class="o">-</span><span class="n">photon</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">cf045d0bacdb</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">14.73</span><span class="n">MB</span><span class="o">/</span><span class="mf">14.73</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">7</span><span class="n">b3be75d25ec</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">4.096</span><span class="n">kB</span><span class="o">/</span><span class="mf">4.096</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">300144</span><span class="n">cef16c</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">3.072</span><span class="n">kB</span><span class="o">/</span><span class="mf">3.072</span><span class="n">kB</span>
+</span></span><span class="line"><span class="cl"><span class="mi">20</span><span class="n">b0983274b3</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">127.1</span><span class="n">MB</span><span class="o">/</span><span class="mf">127.1</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">c64d3b51f3b9</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">14.89</span><span class="n">MB</span><span class="o">/</span><span class="mf">14.89</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">ecf40289f004</span><span class="p">:</span> <span class="n">Loading</span> <span class="n">layer</span>  <span class="mf">142.7</span><span class="n">MB</span><span class="o">/</span><span class="mf">142.7</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">trivy</span><span class="o">-</span><span class="n">adapter</span><span class="o">-</span><span class="n">photon</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">3</span><span class="p">]:</span> <span class="n">preparing</span> <span class="n">environment</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">4</span><span class="p">]:</span> <span class="n">preparing</span> <span class="n">harbor</span> <span class="n">configs</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">prepare</span> <span class="n">base</span> <span class="n">dir</span> <span class="n">is</span> <span class="n">set</span> <span class="n">to</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span><span class="n">harbor</span>
+</span></span><span class="line"><span class="cl"><span class="n">ERROR</span><span class="p">:</span><span class="n">root</span><span class="p">:</span><span class="n">Error</span><span class="p">:</span> <span class="n">The</span> <span class="n">protocol</span> <span class="n">is</span> <span class="n">https</span> <span class="n">but</span> <span class="n">attribute</span> <span class="n">ssl_cert</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">set</span>
+</span></span><span class="line"><span class="cl"><span class="n">Error</span> <span class="n">happened</span> <span class="ow">in</span> <span class="n">config</span> <span class="n">validation</span><span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="o">./</span><span class="n">install</span><span class="o">.</span><span class="n">sh</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">0</span><span class="p">]:</span> <span class="n">checking</span> <span class="k">if</span> <span class="n">docker</span> <span class="n">is</span> <span class="n">installed</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Note</span><span class="p">:</span> <span class="n">docker</span> <span class="n">version</span><span class="p">:</span> <span class="mf">27.3</span><span class="o">.</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">1</span><span class="p">]:</span> <span class="n">checking</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">is</span> <span class="n">installed</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Note</span><span class="p">:</span> <span class="n">Docker</span> <span class="n">Compose</span> <span class="n">version</span> <span class="n">v2</span><span class="o">.</span><span class="mf">29.7</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">2</span><span class="p">]:</span> <span class="n">loading</span> <span class="n">Harbor</span> <span class="n">images</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">prepare</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">db</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">exporter</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">redis</span><span class="o">-</span><span class="n">photon</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">photon</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">portal</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">core</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="nb">log</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">jobservice</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">registryctl</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">registry</span><span class="o">-</span><span class="n">photon</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl"><span class="n">Loaded</span> <span class="n">image</span><span class="p">:</span> <span class="n">goharbor</span><span class="o">/</span><span class="n">trivy</span><span class="o">-</span><span class="n">adapter</span><span class="o">-</span><span class="n">photon</span><span class="p">:</span><span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">3</span><span class="p">]:</span> <span class="n">preparing</span> <span class="n">environment</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">4</span><span class="p">]:</span> <span class="n">preparing</span> <span class="n">harbor</span> <span class="n">configs</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">prepare</span> <span class="n">base</span> <span class="n">dir</span> <span class="n">is</span> <span class="n">set</span> <span class="n">to</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span><span class="n">harbor</span>
+</span></span><span class="line"><span class="cl"><span class="n">WARNING</span><span class="p">:</span><span class="n">root</span><span class="p">:</span><span class="n">WARNING</span><span class="p">:</span> <span class="n">HTTP</span> <span class="n">protocol</span> <span class="n">is</span> <span class="n">insecure</span><span class="o">.</span> <span class="n">Harbor</span> <span class="n">will</span> <span class="n">deprecate</span> <span class="n">http</span> <span class="n">protocol</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">future</span><span class="o">.</span> <span class="n">Please</span> <span class="n">make</span> <span class="n">sure</span> <span class="n">to</span> <span class="n">upgrade</span> <span class="n">to</span> <span class="n">https</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">portal</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">conf</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">logrotate</span><span class="o">.</span><span class="n">conf</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">rsyslog_docker</span><span class="o">.</span><span class="n">conf</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">conf</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">env</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">app</span><span class="o">.</span><span class="n">conf</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">registry</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">yml</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">registryctl</span><span class="o">/</span><span class="n">env</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">registryctl</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">yml</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="n">env</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">jobservice</span><span class="o">/</span><span class="n">env</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">jobservice</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">yml</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="ow">and</span> <span class="n">saved</span> <span class="n">secret</span> <span class="n">to</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">secret</span><span class="o">/</span><span class="n">keys</span><span class="o">/</span><span class="n">secretkey</span>
+</span></span><span class="line"><span class="cl"><span class="n">Successfully</span> <span class="n">called</span> <span class="k">func</span><span class="p">:</span> <span class="n">create_root_cert</span>
+</span></span><span class="line"><span class="cl"><span class="n">Generated</span> <span class="n">configuration</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">compose_location</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span>
+</span></span><span class="line"><span class="cl"><span class="n">Clean</span> <span class="n">up</span> <span class="n">the</span> <span class="n">input</span> <span class="n">dir</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Note</span><span class="p">:</span> <span class="n">stopping</span> <span class="n">existing</span> <span class="n">Harbor</span> <span class="n">instance</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">WARN</span><span class="p">[</span><span class="mi">0000</span><span class="p">]</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span><span class="n">harbor</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span><span class="p">:</span> <span class="n">the</span> <span class="n">attribute</span> <span class="err">`</span><span class="n">version</span><span class="err">`</span> <span class="n">is</span> <span class="n">obsolete</span><span class="p">,</span> <span class="n">it</span> <span class="n">will</span> <span class="n">be</span> <span class="n">ignored</span><span class="p">,</span> <span class="n">please</span> <span class="n">remove</span> <span class="n">it</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">potential</span> <span class="n">confusion</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Step</span> <span class="mi">5</span><span class="p">]:</span> <span class="n">starting</span> <span class="n">Harbor</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">WARN</span><span class="p">[</span><span class="mi">0000</span><span class="p">]</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span><span class="o">/</span><span class="n">harbor</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span><span class="p">:</span> <span class="n">the</span> <span class="n">attribute</span> <span class="err">`</span><span class="n">version</span><span class="err">`</span> <span class="n">is</span> <span class="n">obsolete</span><span class="p">,</span> <span class="n">it</span> <span class="n">will</span> <span class="n">be</span> <span class="n">ignored</span><span class="p">,</span> <span class="n">please</span> <span class="n">remove</span> <span class="n">it</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">potential</span> <span class="n">confusion</span> 
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">Running</span> <span class="mi">10</span><span class="o">/</span><span class="mi">10</span>
+</span></span><span class="line"><span class="cl"> <span class="err">✔</span> <span class="n">Network</span> <span class="n">harbor_harbor</span>        <span class="n">Created</span>                                          <span class="mf">0.1</span><span class="n">s</span> 
+</span></span><span class="line"><span class="cl"> <span class="err">✔</span> <span class="ne">Container</span> <span class="n">harbor</span><span class="o">-</span><span class="nb">log</span>         <span class="n">Started</span>                                          <span class="mf">0.7</span><span class="n">s</span> 
+</span></span><span class="line"><span class="cl"> <span class="err">✔</span> <span class="ne">Container</span> <span class="n">registry</span>           <span class="n">Started</span>                                          <span class="mf">0.9</span><span class="n">s</span> 
+</span></span><span class="line"><span class="cl"> <span class="err">✔</span> <span class="ne">Container</span> <span class="n">harbor</span><span class="o">-</span><span class="n">portal</span>      <span class="n">Started</span>                                          <span class="mf">1.0</span><span class="n">s</span> 
+</span></span><span class="line"><span class="cl"> <span class="err">✔</span> <span class="ne">Container</span> <span class="n">harbor</span><span class="o">-</span><span class="n">db</span>          <span class="n">Started</span>                                          <span class="mf">1.1</span><span class="n">s</span> 
+</span></span><span class="line"><span class="cl"> <span class="err">✔</span> <span class="ne">Container</span> <span class="n">registryctl</span>        <span class="n">Started</span>                                          <span class="mf">1.1</span><span class="n">s</span> 
+</span></span><span class="line"><span class="cl"> <span class="err">✔</span> <span class="ne">Container</span> <span class="n">redis</span>              <span class="n">Started</span>                                          <span class="mf">1.0</span><span class="n">s</span> 
+</span></span><span class="line"><span class="cl"> <span class="err">✔</span> <span class="ne">Container</span> <span class="n">harbor</span><span class="o">-</span><span class="n">core</span>        <span class="n">Started</span>                                          <span class="mf">1.1</span><span class="n">s</span> 
+</span></span><span class="line"><span class="cl"> <span class="err">✔</span> <span class="ne">Container</span> <span class="n">harbor</span><span class="o">-</span><span class="n">jobservice</span>  <span class="n">Started</span>                                          <span class="mf">1.4</span><span class="n">s</span> 
+</span></span><span class="line"><span class="cl"> <span class="err">✔</span> <span class="ne">Container</span> <span class="n">nginx</span>              <span class="n">Started</span>                                          <span class="mf">1.4</span><span class="n">s</span> 
+</span></span><span class="line"><span class="cl"><span class="err">✔</span> <span class="o">----</span><span class="n">Harbor</span> <span class="n">has</span> <span class="n">been</span> <span class="n">installed</span> <span class="ow">and</span> <span class="n">started</span> <span class="n">successfully</span><span class="o">.----</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>インストール後に自動で下記のようなフォルダ構成になる</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@harbor-server:~/harbor$ tree
+</span></span><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── LICENSE
+</span></span><span class="line"><span class="cl">├── common
+</span></span><span class="line"><span class="cl">│   └── config
+</span></span><span class="line"><span class="cl">│       ├── core
+</span></span><span class="line"><span class="cl">│       │   ├── app.conf
+</span></span><span class="line"><span class="cl">│       │   ├── certificates
+</span></span><span class="line"><span class="cl">│       │   └── env
+</span></span><span class="line"><span class="cl">│       ├── db
+</span></span><span class="line"><span class="cl">│       │   └── env
+</span></span><span class="line"><span class="cl">│       ├── jobservice
+</span></span><span class="line"><span class="cl">│       │   ├── config.yml
+</span></span><span class="line"><span class="cl">│       │   └── env
+</span></span><span class="line"><span class="cl">│       ├── log
+</span></span><span class="line"><span class="cl">│       │   ├── logrotate.conf
+</span></span><span class="line"><span class="cl">│       │   └── rsyslog_docker.conf
+</span></span><span class="line"><span class="cl">│       ├── nginx
+</span></span><span class="line"><span class="cl">│       │   ├── conf.d
+</span></span><span class="line"><span class="cl">│       │   └── nginx.conf
+</span></span><span class="line"><span class="cl">│       ├── portal
+</span></span><span class="line"><span class="cl">│       │   └── nginx.conf
+</span></span><span class="line"><span class="cl">│       ├── registry
+</span></span><span class="line"><span class="cl">│       │   ├── config.yml
+</span></span><span class="line"><span class="cl">│       │   ├── passwd
+</span></span><span class="line"><span class="cl">│       │   └── root.crt
+</span></span><span class="line"><span class="cl">│       ├── registryctl
+</span></span><span class="line"><span class="cl">│       │   ├── config.yml
+</span></span><span class="line"><span class="cl">│       │   └── env
+</span></span><span class="line"><span class="cl">│       └── shared
+</span></span><span class="line"><span class="cl">│           └── trust-certificates
+</span></span><span class="line"><span class="cl">├── common.sh
+</span></span><span class="line"><span class="cl">├── docker-compose.yml
+</span></span><span class="line"><span class="cl">├── harbor.v2.11.1.tar.gz
+</span></span><span class="line"><span class="cl">├── harbor.yml
+</span></span><span class="line"><span class="cl">├── harbor.yml.tmpl
+</span></span><span class="line"><span class="cl">├── install.sh
+</span></span><span class="line"><span class="cl">└── prepare
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">15 directories, 22 files
+</span></span><span class="line"><span class="cl">mao@harbor-server:~/harbor$ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>WebUIにIPアドレスでアクセスし下記のアカウント情報でログインする</p>
+<ul>
+<li>Username
+<ul>
+<li>admin</li>
+</ul>
+</li>
+<li>Password
+<ul>
+<li>Harbor12345</li>
+</ul>
+</li>
+</ul>
+<h2 id="harborのwebui上でプロジェクトを作成する">harborのWebUI上でプロジェクトを作成する</h2>
+<p>WebUIでログインして、左のメニューバーから&quot;Project&quot;を押す
+最初は&quot;library&quot;があるが、今回はプロジェクトを新規作成する</p>
+<ul>
+<li>&ldquo;NEW PROJECT&quot;を押す</li>
+<li>&ldquo;Project Name&quot;を今回は&quot;homelab&quot;にする</li>
+<li>&ldquo;Public&quot;にチェックを入れておく
+&ldquo;OK&quot;を押すとプロジェクトを作成される
+<img src="../../post/harbor-install/01.png"
+	width="2228"
+	height="2148"
+	srcset="../../post/harbor-install/01_hu6319719390084239471.png 480w, ../../post/harbor-install/01_hu808380550738303184.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="248px"
+	
+>
+<img src="../../post/harbor-install/02.png"
+	width="2228"
+	height="2148"
+	srcset="../../post/harbor-install/02_hu6027280624597969458.png 480w, ../../post/harbor-install/02_hu17759964401822453956.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="248px"
+	
+></li>
+</ul>
+<h2 id="harborにdocker-imageをpushする">harborにdocker imageをpushする</h2>
+<p>ログインする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker login 192.168.10.24
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ログインしようとするとhttpsではないのでエラーになる</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@harbor-server:~/harbor$ docker login 192.168.10.24
+</span></span><span class="line"><span class="cl">Username: admin
+</span></span><span class="line"><span class="cl">Password: 
+</span></span><span class="line"><span class="cl">time=&#34;2024-10-13T01:22:33Z&#34; level=info msg=&#34;Error logging in to endpoint, trying next endpoint&#34; error=&#34;Get \&#34;https://192.168.10.24/v2/\&#34;: dial tcp 192.168.10.24:443: connect: connection refused&#34;
+</span></span><span class="line"><span class="cl">Get &#34;https://192.168.10.24/v2/&#34;: dial tcp 192.168.10.24:443: connect: connection refused
+</span></span><span class="line"><span class="cl">mao@harbor-server:~/harbor$ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="httpで接続できるように設定する">httpで接続できるように設定する</h3>
+<p>ファイルを作成する</p>
+<ul>
+<li>daemon.json</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    &#34;insecure-registries&#34;: [
+</span></span><span class="line"><span class="cl">        &#34;192.168.10.24&#34;
+</span></span><span class="line"><span class="cl">    ]
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>設定ファイルをコピーしてdockerを再起動する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">cp</span> <span class="o">-</span><span class="n">f</span> <span class="o">./</span><span class="n">daemon</span><span class="o">.</span><span class="n">json</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">daemon</span><span class="o">.</span><span class="n">json</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">docker</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="httpでdockerにログインする">httpでdockerにログインする</h3>
+<p>リロードしたあとにそのままだとログインできなかったので、一度docker composeを再起動する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker compose down --volumes
+</span></span><span class="line"><span class="cl">sudo docker compose up -d
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ログインする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker login 192.168.10.24
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Username
+<ul>
+<li>admin</li>
+</ul>
+</li>
+<li>Password
+<ul>
+<li>Harbor12345</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@harbor-server:~/harbor$ sudo docker login 192.168.10.24
+</span></span><span class="line"><span class="cl">Username: admin
+</span></span><span class="line"><span class="cl">Password: 
+</span></span><span class="line"><span class="cl">WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+</span></span><span class="line"><span class="cl">Configure a credential helper to remove this warning. See
+</span></span><span class="line"><span class="cl">https://docs.docker.com/engine/reference/commandline/login/#credential-stores
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Login Succeeded
+</span></span><span class="line"><span class="cl">mao@harbor-server:~/harbor$ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="docker-imageをdockerhubからpullしてharborにpushする">docker imageをDockerHubからpullしてharborにpushする</h3>
+<p>DockerHubからimageをpullする</p>
+<ul>
+<li>例として&quot;traefik:3.1.6&quot;と&quot;debian:12.7&quot;をpullしてpushする</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker pull traefik:3.1.6
+</span></span><span class="line"><span class="cl">sudo docker pull debian:12.7
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>pullしてimageにtagを付ける</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker tag traefik:3.1.6 192.168.10.24/homelab/homelab-traefik:3.1.6
+</span></span><span class="line"><span class="cl">sudo docker tag debian:12.7 192.168.10.24/homelab/homelab-debian:12.7
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>harborにimageをpushする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker push 192.168.10.24/homelab/homelab-traefik:3.1.6
+</span></span><span class="line"><span class="cl">sudo docker push 192.168.10.24/homelab/homelab-debian:12.7
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>imageを削除する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker image ls
+</span></span><span class="line"><span class="cl">sudo docker rmi traefik:3.1.6
+</span></span><span class="line"><span class="cl">sudo docker rmi 192.168.10.24/homelab/homelab-traefik:3.1.6
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo docker rmi debian:12.7
+</span></span><span class="line"><span class="cl">sudo docker rmi 192.168.10.24/homelab/homelab-debian:12.7
+</span></span><span class="line"><span class="cl">sudo docker image ls
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">traefik</span><span class="p">:</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span><span class="p">:</span> <span class="n">Pulling</span> <span class="n">from</span> <span class="n">library</span><span class="o">/</span><span class="n">traefik</span>
+</span></span><span class="line"><span class="cl"><span class="mi">43</span><span class="n">c4264eed91</span><span class="p">:</span> <span class="n">Pull</span> <span class="n">complete</span> 
+</span></span><span class="line"><span class="cl"><span class="n">f60fb4c0fbec</span><span class="p">:</span> <span class="n">Pull</span> <span class="n">complete</span> 
+</span></span><span class="line"><span class="cl"><span class="mi">9</span><span class="n">a6d31097c4f</span><span class="p">:</span> <span class="n">Pull</span> <span class="n">complete</span> 
+</span></span><span class="line"><span class="cl"><span class="n">e5f06ee63d76</span><span class="p">:</span> <span class="n">Pull</span> <span class="n">complete</span> 
+</span></span><span class="line"><span class="cl"><span class="n">Digest</span><span class="p">:</span> <span class="n">sha256</span><span class="p">:</span><span class="n">f703a2ac2ddf75f6e06c9cccac7f158765e2ab42d642b04e79e2e3d7355c2ddc</span>
+</span></span><span class="line"><span class="cl"><span class="n">Status</span><span class="p">:</span> <span class="n">Downloaded</span> <span class="n">newer</span> <span class="n">image</span> <span class="k">for</span> <span class="n">traefik</span><span class="p">:</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">library</span><span class="o">/</span><span class="n">traefik</span><span class="p">:</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">tag</span> <span class="n">traefik</span><span class="p">:</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">traefik</span><span class="p">:</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">push</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">traefik</span><span class="p">:</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="n">The</span> <span class="n">push</span> <span class="n">refers</span> <span class="n">to</span> <span class="n">repository</span> <span class="p">[</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">traefik</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">affde95bf5bb</span><span class="p">:</span> <span class="n">Pushed</span> 
+</span></span><span class="line"><span class="cl"><span class="mi">9</span><span class="n">a1c58574d55</span><span class="p">:</span> <span class="n">Pushed</span> 
+</span></span><span class="line"><span class="cl"><span class="mi">96513</span><span class="n">adaf6d9</span><span class="p">:</span> <span class="n">Pushed</span> 
+</span></span><span class="line"><span class="cl"><span class="mi">63</span><span class="n">ca1fbb43ae</span><span class="p">:</span> <span class="n">Pushed</span> 
+</span></span><span class="line"><span class="cl"><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span><span class="p">:</span> <span class="n">digest</span><span class="p">:</span> <span class="n">sha256</span><span class="p">:</span><span class="mi">22</span><span class="n">aec04848987fe5b3999a4099d766de614b04da52a936fc5ac214ffec04dbac</span> <span class="n">size</span><span class="p">:</span> <span class="mi">1157</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="mf">12.7</span><span class="p">:</span> <span class="n">Pulling</span> <span class="n">from</span> <span class="n">library</span><span class="o">/</span><span class="n">debian</span>
+</span></span><span class="line"><span class="cl"><span class="n">cdd62bf39133</span><span class="p">:</span> <span class="n">Pull</span> <span class="n">complete</span> 
+</span></span><span class="line"><span class="cl"><span class="n">Digest</span><span class="p">:</span> <span class="n">sha256</span><span class="p">:</span><span class="mi">27586</span><span class="n">f4609433f2f49a9157405b473c62c3cb28a581c413393975b4e8496d0ab</span>
+</span></span><span class="line"><span class="cl"><span class="n">Status</span><span class="p">:</span> <span class="n">Downloaded</span> <span class="n">newer</span> <span class="n">image</span> <span class="k">for</span> <span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">library</span><span class="o">/</span><span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">tag</span> <span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">push</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="n">The</span> <span class="n">push</span> <span class="n">refers</span> <span class="n">to</span> <span class="n">repository</span> <span class="p">[</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">d50132f2fe78</span><span class="p">:</span> <span class="n">Pushed</span> 
+</span></span><span class="line"><span class="cl"><span class="mf">12.7</span><span class="p">:</span> <span class="n">digest</span><span class="p">:</span> <span class="n">sha256</span><span class="p">:</span><span class="n">e225d70fafe80791f18c79b8d76afa1d1b4192b3a40a50f1ffd4de84555ebd04</span> <span class="n">size</span><span class="p">:</span> <span class="mi">529</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">rmi</span> <span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="n">Untagged</span><span class="p">:</span> <span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="n">Untagged</span><span class="p">:</span> <span class="n">debian</span><span class="err">@</span><span class="n">sha256</span><span class="p">:</span><span class="mi">27586</span><span class="n">f4609433f2f49a9157405b473c62c3cb28a581c413393975b4e8496d0ab</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">rmi</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="n">Untagged</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="n">Untagged</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span><span class="err">@</span><span class="n">sha256</span><span class="p">:</span><span class="n">e225d70fafe80791f18c79b8d76afa1d1b4192b3a40a50f1ffd4de84555ebd04</span>
+</span></span><span class="line"><span class="cl"><span class="n">Deleted</span><span class="p">:</span> <span class="n">sha256</span><span class="p">:</span><span class="n">c7f9867d67219411cb7dff983c83eddb881d415eae5495ad9116fb5d6db8bb60</span>
+</span></span><span class="line"><span class="cl"><span class="n">Deleted</span><span class="p">:</span> <span class="n">sha256</span><span class="p">:</span><span class="n">d50132f2fe78aaa8e67f229e53305d0c4a7a86c9deda4bf3160be0a678926458</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">image</span> <span class="n">ls</span>
+</span></span><span class="line"><span class="cl"><span class="n">REPOSITORY</span>                      <span class="n">TAG</span>       <span class="n">IMAGE</span> <span class="n">ID</span>       <span class="n">CREATED</span>       <span class="n">SIZE</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">exporter</span>        <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">cdf68efc001e</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">114</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">redis</span><span class="o">-</span><span class="n">photon</span>           <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">acf90a312d47</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">170</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">trivy</span><span class="o">-</span><span class="n">adapter</span><span class="o">-</span><span class="n">photon</span>   <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">24</span><span class="n">a8273e807a</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">339</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">registryctl</span>     <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">43</span><span class="n">fca2a06374</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">168</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">registry</span><span class="o">-</span><span class="n">photon</span>        <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">9</span><span class="n">da6663b36f2</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mf">90.3</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">photon</span>           <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">193</span><span class="n">a1b77b7d4</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">159</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="nb">log</span>             <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mf">2752e033</span><span class="n">bfbb</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">169</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">jobservice</span>      <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">a8005a88b3dc</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">165</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">core</span>            <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">eaf65baad3f6</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">191</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">portal</span>          <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">f58813018a49</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">167</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">db</span>              <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">be56f8030c48</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">277</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">prepare</span>                <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">1</span><span class="n">d00ffdb2e67</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">216</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~/</span><span class="n">harbor</span><span class="o">$</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>WebUI上でもイメージがpushされているか確認する
+<img src="../../post/harbor-install/03.png"
+	width="2228"
+	height="2148"
+	srcset="../../post/harbor-install/03_hu9716855960618926802.png 480w, ../../post/harbor-install/03_hu9765072620685919439.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="248px"
+	
+></p>
+<h2 id="harborからdocker-imageをpullする">harborからdocker imageをpullする</h2>
+<p>下記のコマンドでharborからpullしてみる</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker pull 192.168.10.24/homelab/homelab-traefik:3.1.6
+</span></span><span class="line"><span class="cl">sudo docker pull 192.168.10.24/homelab/homelab-debian:12.7
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>pullしようとしているdocker imageがないことを確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">image</span> <span class="n">ls</span>
+</span></span><span class="line"><span class="cl"><span class="n">REPOSITORY</span>                      <span class="n">TAG</span>       <span class="n">IMAGE</span> <span class="n">ID</span>       <span class="n">CREATED</span>       <span class="n">SIZE</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">exporter</span>        <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">cdf68efc001e</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">114</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">redis</span><span class="o">-</span><span class="n">photon</span>           <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">acf90a312d47</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">170</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">trivy</span><span class="o">-</span><span class="n">adapter</span><span class="o">-</span><span class="n">photon</span>   <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">24</span><span class="n">a8273e807a</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">339</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">registryctl</span>     <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">43</span><span class="n">fca2a06374</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">168</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">registry</span><span class="o">-</span><span class="n">photon</span>        <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">9</span><span class="n">da6663b36f2</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mf">90.3</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">photon</span>           <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">193</span><span class="n">a1b77b7d4</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">159</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="nb">log</span>             <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mf">2752e033</span><span class="n">bfbb</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">169</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">jobservice</span>      <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">a8005a88b3dc</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">165</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">core</span>            <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">eaf65baad3f6</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">191</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">portal</span>          <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">f58813018a49</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">167</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">db</span>              <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">be56f8030c48</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">277</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">prepare</span>                <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">1</span><span class="n">d00ffdb2e67</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">216</span><span class="n">MB</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ないことを確認したのでdocker imageをpullする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">traefik</span><span class="p">:</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span><span class="p">:</span> <span class="n">Pulling</span> <span class="n">from</span> <span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">traefik</span>
+</span></span><span class="line"><span class="cl"><span class="mi">43</span><span class="n">c4264eed91</span><span class="p">:</span> <span class="n">Pull</span> <span class="n">complete</span> 
+</span></span><span class="line"><span class="cl"><span class="n">f60fb4c0fbec</span><span class="p">:</span> <span class="n">Pull</span> <span class="n">complete</span> 
+</span></span><span class="line"><span class="cl"><span class="mi">9</span><span class="n">a6d31097c4f</span><span class="p">:</span> <span class="n">Pull</span> <span class="n">complete</span> 
+</span></span><span class="line"><span class="cl"><span class="n">e5f06ee63d76</span><span class="p">:</span> <span class="n">Pull</span> <span class="n">complete</span> 
+</span></span><span class="line"><span class="cl"><span class="n">Digest</span><span class="p">:</span> <span class="n">sha256</span><span class="p">:</span><span class="mi">22</span><span class="n">aec04848987fe5b3999a4099d766de614b04da52a936fc5ac214ffec04dbac</span>
+</span></span><span class="line"><span class="cl"><span class="n">Status</span><span class="p">:</span> <span class="n">Downloaded</span> <span class="n">newer</span> <span class="n">image</span> <span class="k">for</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">traefik</span><span class="p">:</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">traefik</span><span class="p">:</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">pull</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="mf">12.7</span><span class="p">:</span> <span class="n">Pulling</span> <span class="n">from</span> <span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span>
+</span></span><span class="line"><span class="cl"><span class="n">cdd62bf39133</span><span class="p">:</span> <span class="n">Pull</span> <span class="n">complete</span> 
+</span></span><span class="line"><span class="cl"><span class="n">Digest</span><span class="p">:</span> <span class="n">sha256</span><span class="p">:</span><span class="n">e225d70fafe80791f18c79b8d76afa1d1b4192b3a40a50f1ffd4de84555ebd04</span>
+</span></span><span class="line"><span class="cl"><span class="n">Status</span><span class="p">:</span> <span class="n">Downloaded</span> <span class="n">newer</span> <span class="n">image</span> <span class="k">for</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span><span class="line"><span class="cl"><span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span><span class="p">:</span><span class="mf">12.7</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ちゃんとpullできているか確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~$</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">image</span> <span class="n">ls</span>
+</span></span><span class="line"><span class="cl"><span class="n">REPOSITORY</span>                              <span class="n">TAG</span>       <span class="n">IMAGE</span> <span class="n">ID</span>       <span class="n">CREATED</span>       <span class="n">SIZE</span>
+</span></span><span class="line"><span class="cl"><span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">traefik</span>   <span class="mf">3.1</span><span class="o">.</span><span class="mi">6</span>     <span class="n">ec31dae6a8fb</span>   <span class="mi">4</span> <span class="n">days</span> <span class="n">ago</span>    <span class="mi">174</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="mf">192.168</span><span class="o">.</span><span class="mf">10.24</span><span class="o">/</span><span class="n">homelab</span><span class="o">/</span><span class="n">homelab</span><span class="o">-</span><span class="n">debian</span>    <span class="mf">12.7</span>      <span class="n">c7f9867d6721</span>   <span class="mi">2</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">117</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">exporter</span>                <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">cdf68efc001e</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">114</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">redis</span><span class="o">-</span><span class="n">photon</span>                   <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">acf90a312d47</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">170</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">trivy</span><span class="o">-</span><span class="n">adapter</span><span class="o">-</span><span class="n">photon</span>           <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">24</span><span class="n">a8273e807a</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">339</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">registryctl</span>             <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">43</span><span class="n">fca2a06374</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">168</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">registry</span><span class="o">-</span><span class="n">photon</span>                <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">9</span><span class="n">da6663b36f2</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mf">90.3</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">photon</span>                   <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">193</span><span class="n">a1b77b7d4</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">159</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="nb">log</span>                     <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mf">2752e033</span><span class="n">bfbb</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">169</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">jobservice</span>              <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">a8005a88b3dc</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">165</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">core</span>                    <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">eaf65baad3f6</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">191</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">portal</span>                  <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">f58813018a49</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">167</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">harbor</span><span class="o">-</span><span class="n">db</span>                      <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="n">be56f8030c48</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">277</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">goharbor</span><span class="o">/</span><span class="n">prepare</span>                        <span class="n">v2</span><span class="o">.</span><span class="mf">11.1</span>   <span class="mi">1</span><span class="n">d00ffdb2e67</span>   <span class="mi">8</span> <span class="n">weeks</span> <span class="n">ago</span>   <span class="mi">216</span><span class="n">MB</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">harbor</span><span class="o">-</span><span class="n">server</span><span class="p">:</span><span class="o">~$</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>しっかりと&quot;homelab-traefik&quot;と&quot;homelab-debian&quot;が増えているのでpullできている</p>
+<p>以上でharborを使用して、自分専用のローカルリポジトリが作成できた<br>
+今回は仮想マシン上に構築したが、Kubernetes上にも構築できるようなので、そちらもやってみようと思う</p>
+<h2 id="参考url">参考URL</h2>
+<ul>
+<li>OSSのコンテナレジストリ「Harbor」インストール手順
+<ul>
+<li><a class="link" href="https://tech-mmmm.blogspot.com/2022/12/ossharbor.html"  target="_blank" rel="noopener"
+    >https://tech-mmmm.blogspot.com/2022/12/ossharbor.html</a></li>
+</ul>
+</li>
+<li>docker-composeでHarborをインストールする
+<ul>
+<li><a class="link" href="https://zenn.dev/vampire_yuta/articles/5fc115fcfd083f"  target="_blank" rel="noopener"
+    >https://zenn.dev/vampire_yuta/articles/5fc115fcfd083f</a></li>
+</ul>
+</li>
+<li>プライベートコンテナリポジトリを構築しdockerコンテナを起動してみる
+<ul>
+<li><a class="link" href="https://qiita.com/watav/items/bac6564f9fb38578a67b"  target="_blank" rel="noopener"
+    >https://qiita.com/watav/items/bac6564f9fb38578a67b</a></li>
+</ul>
+</li>
+<li>Harbor(プライベートコンテナレジストリ)のインストール
+<ul>
+<li><a class="link" href="https://engineeroutput.com/harbor%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%83%AC%E3%82%B8%E3%82%B9%E3%83%88%E3%83%AA%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC/"  target="_blank" rel="noopener"
+    >https://engineeroutput.com/harbor%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%83%AC%E3%82%B8%E3%82%B9%E3%83%88%E3%83%AA%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC/</a></li>
+</ul>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/docker-compose-mysql-log/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">docker-composeで構築したMySQLのログをローカルに保存する</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
