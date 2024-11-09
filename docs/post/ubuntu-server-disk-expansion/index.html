@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='背景 Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です
+環境 Ubuntu Server 24.04 LTS Parted 3.6 ディスク容量：10GB→20GB 参考URL VMware上のUbuntu 22.04 ファイルシステム拡張 https://qiita.com/mcyang/items/a32b914db073f308a3cb 仮想マシンのDiskの拡張手順 下記の順番でコマンドを実行していけば、割り当てられたストレージの容量いっぱいに拡張される パーティションを拡張する 1 2 3 4 df -h sudo pvdisplay sudo apt install parted sudo parted /dev/sda 1 print free 1 2 3 4 (parted) print free Warning: Not all of the space available to /dev/sda appears to be used, you can fix the GPT to use all of the space (an extra 20971520 blocks) or continue with the current setting?'>
+<title>仮想マシン上のDiskの拡張手順</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='仮想マシン上のDiskの拡張手順'>
+<meta property='og:description' content='背景 Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です
+環境 Ubuntu Server 24.04 LTS Parted 3.6 ディスク容量：10GB→20GB 参考URL VMware上のUbuntu 22.04 ファイルシステム拡張 https://qiita.com/mcyang/items/a32b914db073f308a3cb 仮想マシンのDiskの拡張手順 下記の順番でコマンドを実行していけば、割り当てられたストレージの容量いっぱいに拡張される パーティションを拡張する 1 2 3 4 df -h sudo pvdisplay sudo apt install parted sudo parted /dev/sda 1 print free 1 2 3 4 (parted) print free Warning: Not all of the space available to /dev/sda appears to be used, you can fix the GPT to use all of the space (an extra 20971520 blocks) or continue with the current setting?'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-11-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-11-09T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="仮想マシン上のDiskの拡張手順">
+<meta name="twitter:description" content="背景 Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です
+環境 Ubuntu Server 24.04 LTS Parted 3.6 ディスク容量：10GB→20GB 参考URL VMware上のUbuntu 22.04 ファイルシステム拡張 https://qiita.com/mcyang/items/a32b914db073f308a3cb 仮想マシンのDiskの拡張手順 下記の順番でコマンドを実行していけば、割り当てられたストレージの容量いっぱいに拡張される パーティションを拡張する 1 2 3 4 df -h sudo pvdisplay sudo apt install parted sudo parted /dev/sda 1 print free 1 2 3 4 (parted) print free Warning: Not all of the space available to /dev/sda appears to be used, you can fix the GPT to use all of the space (an extra 20971520 blocks) or continue with the current setting?">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://tiisanamaou.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/ubuntu/" >
+                Ubuntu
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/ubuntu-server-disk-expansion/">仮想マシン上のDiskの拡張手順</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024/11/09</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="背景">背景</h2>
+<p>Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu Server 24.04 LTS</li>
+<li>Parted 3.6</li>
+<li>ディスク容量：10GB→20GB</li>
+</ul>
+<h2 id="参考url">参考URL</h2>
+<ul>
+<li>VMware上のUbuntu 22.04 ファイルシステム拡張
+<ul>
+<li><a class="link" href="https://qiita.com/mcyang/items/a32b914db073f308a3cb"  target="_blank" rel="noopener"
+    >https://qiita.com/mcyang/items/a32b914db073f308a3cb</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="仮想マシンのdiskの拡張手順">仮想マシンのDiskの拡張手順</h2>
+<ul>
+<li>下記の順番でコマンドを実行していけば、割り当てられたストレージの容量いっぱいに拡張される</li>
+</ul>
+<h3 id="パーティションを拡張する">パーティションを拡張する</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">df -h
+</span></span><span class="line"><span class="cl">sudo pvdisplay
+</span></span><span class="line"><span class="cl">sudo apt install parted
+</span></span><span class="line"><span class="cl">sudo parted /dev/sda
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">print free
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">(parted) print free                                                       
+</span></span><span class="line"><span class="cl">Warning: Not all of the space available to /dev/sda appears to be used, you can fix the GPT to use all of the
+</span></span><span class="line"><span class="cl">space (an extra 20971520 blocks) or continue with the current setting? 
+</span></span><span class="line"><span class="cl">Fix/Ignore? Fix
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">resizepart 3 100% 
+</span></span><span class="line"><span class="cl">print free
+</span></span><span class="line"><span class="cl">q
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="物理ボリュームを拡張する">物理ボリュームを拡張する</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo pvdisplay
+</span></span><span class="line"><span class="cl">sudo pvresize /dev/sda3
+</span></span><span class="line"><span class="cl">sudo pvdisplay
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="ロジカルボリュームとファイルシステムを拡張する">ロジカルボリュームとファイルシステムを拡張する</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
+</span></span><span class="line"><span class="cl">sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+</span></span><span class="line"><span class="cl">df -h
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="実際の実行結果">実際の実行結果</h2>
+<ul>
+<li>10GBから20GBへ増やす</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> <span class="nx">df</span> <span class="o">-</span><span class="nx">h</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Filesystem</span>                         <span class="nx">Size</span>  <span class="nx">Used</span> <span class="nx">Avail</span> <span class="nx">Use</span><span class="o">%</span> <span class="nx">Mounted</span> <span class="nx">on</span>
+</span></span><span class="line"><span class="cl"><span class="nx">tmpfs</span>                              <span class="mi">795</span><span class="nx">M</span>  <span class="mf">1.5</span><span class="nx">M</span>  <span class="mi">793</span><span class="nx">M</span>   <span class="mi">1</span><span class="o">%</span> <span class="o">/</span><span class="nx">run</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">mapper</span><span class="o">/</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">vg</span><span class="o">-</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">lv</span>  <span class="mf">8.1</span><span class="nx">G</span>  <span class="mf">5.7</span><span class="nx">G</span>  <span class="mf">2.0</span><span class="nx">G</span>  <span class="mi">75</span><span class="o">%</span> <span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="nx">tmpfs</span>                              <span class="mf">3.9</span><span class="nx">G</span>     <span class="mi">0</span>  <span class="mf">3.9</span><span class="nx">G</span>   <span class="mi">0</span><span class="o">%</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">shm</span>
+</span></span><span class="line"><span class="cl"><span class="nx">tmpfs</span>                              <span class="mf">5.0</span><span class="nx">M</span>     <span class="mi">0</span>  <span class="mf">5.0</span><span class="nx">M</span>   <span class="mi">0</span><span class="o">%</span> <span class="o">/</span><span class="nx">run</span><span class="o">/</span><span class="nx">lock</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda2</span>                          <span class="mf">1.7</span><span class="nx">G</span>   <span class="mi">94</span><span class="nx">M</span>  <span class="mf">1.5</span><span class="nx">G</span>   <span class="mi">6</span><span class="o">%</span> <span class="o">/</span><span class="nx">boot</span>
+</span></span><span class="line"><span class="cl"><span class="nx">tmpfs</span>                              <span class="mi">795</span><span class="nx">M</span>   <span class="mi">12</span><span class="nx">K</span>  <span class="mi">795</span><span class="nx">M</span>   <span class="mi">1</span><span class="o">%</span> <span class="o">/</span><span class="nx">run</span><span class="o">/</span><span class="nx">user</span><span class="o">/</span><span class="mi">1000</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> <span class="nx">sudo</span> <span class="nx">pvdisplay</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">sudo</span><span class="p">]</span> <span class="nx">password</span> <span class="k">for</span> <span class="nx">mao</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">  <span class="o">---</span> <span class="nx">Physical</span> <span class="nx">volume</span> <span class="o">---</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PV</span> <span class="nx">Name</span>               <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda3</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">VG</span> <span class="nx">Name</span>               <span class="nx">ubuntu</span><span class="o">-</span><span class="nx">vg</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PV</span> <span class="nx">Size</span>               <span class="p">&lt;</span><span class="mf">8.25</span> <span class="nx">GiB</span> <span class="o">/</span> <span class="nx">not</span> <span class="nx">usable</span> <span class="mi">0</span>   
+</span></span><span class="line"><span class="cl">  <span class="nx">Allocatable</span>           <span class="nf">yes</span> <span class="p">(</span><span class="nx">but</span> <span class="nx">full</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PE</span> <span class="nx">Size</span>               <span class="mf">4.00</span> <span class="nx">MiB</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Total</span> <span class="nx">PE</span>              <span class="mi">2111</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Free</span> <span class="nx">PE</span>               <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Allocated</span> <span class="nx">PE</span>          <span class="mi">2111</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PV</span> <span class="nx">UUID</span>               <span class="nx">CGNZQy</span><span class="o">-</span><span class="mi">1</span><span class="nx">SZf</span><span class="o">-</span><span class="mi">8</span><span class="nx">wIh</span><span class="o">-</span><span class="nx">yeOq</span><span class="o">-</span><span class="nx">BIF7</span><span class="o">-</span><span class="nx">f2VJ</span><span class="o">-</span><span class="mi">9</span><span class="nx">cWRR2</span>
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> <span class="nx">sudo</span> <span class="nx">apt</span> <span class="nx">install</span> <span class="nx">parted</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Reading</span> <span class="kn">package</span> <span class="nx">lists</span><span class="o">...</span> <span class="nx">Done</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Building</span> <span class="nx">dependency</span> <span class="nx">tree</span><span class="o">...</span> <span class="nx">Done</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Reading</span> <span class="nx">state</span> <span class="nx">information</span><span class="o">...</span> <span class="nx">Done</span>
+</span></span><span class="line"><span class="cl"><span class="nx">The</span> <span class="nx">following</span> <span class="nx">additional</span> <span class="nx">packages</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">installed</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">dmidecode</span> <span class="nx">libparted2t64</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Suggested</span> <span class="nx">packages</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">libparted</span><span class="o">-</span><span class="nx">dev</span> <span class="nx">libparted</span><span class="o">-</span><span class="nx">i18n</span> <span class="nx">parted</span><span class="o">-</span><span class="nx">doc</span>
+</span></span><span class="line"><span class="cl"><span class="nx">The</span> <span class="nx">following</span> <span class="nx">NEW</span> <span class="nx">packages</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">installed</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">dmidecode</span> <span class="nx">libparted2t64</span> <span class="nx">parted</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span> <span class="nx">upgraded</span><span class="p">,</span> <span class="mi">3</span> <span class="nx">newly</span> <span class="nx">installed</span><span class="p">,</span> <span class="mi">0</span> <span class="nx">to</span> <span class="nx">remove</span> <span class="nx">and</span> <span class="mi">44</span> <span class="nx">not</span> <span class="nx">upgraded</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Need</span> <span class="nx">to</span> <span class="nx">get</span> <span class="mi">267</span> <span class="nx">kB</span> <span class="nx">of</span> <span class="nx">archives</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="nx">After</span> <span class="nx">this</span> <span class="nx">operation</span><span class="p">,</span> <span class="mi">758</span> <span class="nx">kB</span> <span class="nx">of</span> <span class="nx">additional</span> <span class="nx">disk</span> <span class="nx">space</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nx">used</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Do</span> <span class="nx">you</span> <span class="nx">want</span> <span class="nx">to</span> <span class="k">continue</span><span class="err">?</span> <span class="p">[</span><span class="nx">Y</span><span class="o">/</span><span class="nx">n</span><span class="p">]</span> <span class="nx">y</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Get</span><span class="p">:</span><span class="mi">1</span> <span class="nx">http</span><span class="p">:</span><span class="c1">//jp.archive.ubuntu.com/ubuntu noble/main amd64 dmidecode amd64 3.5-3build1 [72.1 kB]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">Get</span><span class="p">:</span><span class="mi">2</span> <span class="nx">http</span><span class="p">:</span><span class="c1">//jp.archive.ubuntu.com/ubuntu noble/main amd64 libparted2t64 amd64 3.6-4build1 [152 kB]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">Get</span><span class="p">:</span><span class="mi">3</span> <span class="nx">http</span><span class="p">:</span><span class="c1">//jp.archive.ubuntu.com/ubuntu noble/main amd64 parted amd64 3.6-4build1 [43.3 kB]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">Fetched</span> <span class="mi">267</span> <span class="nx">kB</span> <span class="nx">in</span> <span class="mi">2</span><span class="nf">s</span> <span class="p">(</span><span class="mi">131</span> <span class="nx">kB</span><span class="o">/</span><span class="nx">s</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nx">debconf</span><span class="p">:</span> <span class="nx">delaying</span> <span class="kn">package</span> <span class="nx">configuration</span><span class="p">,</span> <span class="nx">since</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">utils</span> <span class="nx">is</span> <span class="nx">not</span> <span class="nx">installed</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Selecting</span> <span class="nx">previously</span> <span class="nx">unselected</span> <span class="kn">package</span> <span class="nx">dmidecode</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nx">Reading</span> <span class="nx">database</span> <span class="o">...</span> <span class="mi">72892</span> <span class="nx">files</span> <span class="nx">and</span> <span class="nx">directories</span> <span class="nx">currently</span> <span class="nx">installed</span><span class="p">.)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Preparing</span> <span class="nx">to</span> <span class="nx">unpack</span> <span class="o">.../</span><span class="nx">dmidecode_3</span><span class="mf">.5</span><span class="o">-</span><span class="mi">3</span><span class="nx">build1_amd64</span><span class="p">.</span><span class="nx">deb</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Unpacking</span> <span class="nf">dmidecode</span> <span class="p">(</span><span class="mf">3.5</span><span class="o">-</span><span class="mi">3</span><span class="nx">build1</span><span class="p">)</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Selecting</span> <span class="nx">previously</span> <span class="nx">unselected</span> <span class="kn">package</span> <span class="nx">libparted2t64</span><span class="p">:</span><span class="nx">amd64</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Preparing</span> <span class="nx">to</span> <span class="nx">unpack</span> <span class="o">.../</span><span class="nx">libparted2t64_3</span><span class="mf">.6</span><span class="o">-</span><span class="mi">4</span><span class="nx">build1_amd64</span><span class="p">.</span><span class="nx">deb</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Adding</span> <span class="err">&#39;</span><span class="nx">diversion</span> <span class="nx">of</span> <span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">x86_64</span><span class="o">-</span><span class="nx">linux</span><span class="o">-</span><span class="nx">gnu</span><span class="o">/</span><span class="nx">libparted</span><span class="p">.</span><span class="nx">so</span><span class="mf">.2</span> <span class="nx">to</span> <span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">x86_64</span><span class="o">-</span><span class="nx">linux</span><span class="o">-</span><span class="nx">gnu</span><span class="o">/</span><span class="nx">libparted</span><span class="p">.</span><span class="nx">so</span><span class="mf">.2</span><span class="p">.</span><span class="nx">usr</span><span class="o">-</span><span class="nx">is</span><span class="o">-</span><span class="nx">merged</span> <span class="nx">by</span> <span class="nx">libparted2t64</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Adding</span> <span class="err">&#39;</span><span class="nx">diversion</span> <span class="nx">of</span> <span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">x86_64</span><span class="o">-</span><span class="nx">linux</span><span class="o">-</span><span class="nx">gnu</span><span class="o">/</span><span class="nx">libparted</span><span class="p">.</span><span class="nx">so</span><span class="mf">.2.0.5</span> <span class="nx">to</span> <span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">x86_64</span><span class="o">-</span><span class="nx">linux</span><span class="o">-</span><span class="nx">gnu</span><span class="o">/</span><span class="nx">libparted</span><span class="p">.</span><span class="nx">so</span><span class="mf">.2.0.5</span><span class="p">.</span><span class="nx">usr</span><span class="o">-</span><span class="nx">is</span><span class="o">-</span><span class="nx">merged</span> <span class="nx">by</span> <span class="nx">libparted2t64</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Unpacking</span> <span class="nx">libparted2t64</span><span class="p">:</span><span class="nf">amd64</span> <span class="p">(</span><span class="mf">3.6</span><span class="o">-</span><span class="mi">4</span><span class="nx">build1</span><span class="p">)</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Selecting</span> <span class="nx">previously</span> <span class="nx">unselected</span> <span class="kn">package</span> <span class="nx">parted</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Preparing</span> <span class="nx">to</span> <span class="nx">unpack</span> <span class="o">.../</span><span class="nx">parted_3</span><span class="mf">.6</span><span class="o">-</span><span class="mi">4</span><span class="nx">build1_amd64</span><span class="p">.</span><span class="nx">deb</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Unpacking</span> <span class="nf">parted</span> <span class="p">(</span><span class="mf">3.6</span><span class="o">-</span><span class="mi">4</span><span class="nx">build1</span><span class="p">)</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Setting</span> <span class="nx">up</span> <span class="nf">dmidecode</span> <span class="p">(</span><span class="mf">3.5</span><span class="o">-</span><span class="mi">3</span><span class="nx">build1</span><span class="p">)</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Setting</span> <span class="nx">up</span> <span class="nx">libparted2t64</span><span class="p">:</span><span class="nf">amd64</span> <span class="p">(</span><span class="mf">3.6</span><span class="o">-</span><span class="mi">4</span><span class="nx">build1</span><span class="p">)</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Removing</span> <span class="err">&#39;</span><span class="nx">diversion</span> <span class="nx">of</span> <span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">x86_64</span><span class="o">-</span><span class="nx">linux</span><span class="o">-</span><span class="nx">gnu</span><span class="o">/</span><span class="nx">libparted</span><span class="p">.</span><span class="nx">so</span><span class="mf">.2</span> <span class="nx">to</span> <span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">x86_64</span><span class="o">-</span><span class="nx">linux</span><span class="o">-</span><span class="nx">gnu</span><span class="o">/</span><span class="nx">libparted</span><span class="p">.</span><span class="nx">so</span><span class="mf">.2</span><span class="p">.</span><span class="nx">usr</span><span class="o">-</span><span class="nx">is</span><span class="o">-</span><span class="nx">merged</span> <span class="nx">by</span> <span class="nx">libparted2t64</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Removing</span> <span class="err">&#39;</span><span class="nx">diversion</span> <span class="nx">of</span> <span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">x86_64</span><span class="o">-</span><span class="nx">linux</span><span class="o">-</span><span class="nx">gnu</span><span class="o">/</span><span class="nx">libparted</span><span class="p">.</span><span class="nx">so</span><span class="mf">.2.0.5</span> <span class="nx">to</span> <span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">x86_64</span><span class="o">-</span><span class="nx">linux</span><span class="o">-</span><span class="nx">gnu</span><span class="o">/</span><span class="nx">libparted</span><span class="p">.</span><span class="nx">so</span><span class="mf">.2.0.5</span><span class="p">.</span><span class="nx">usr</span><span class="o">-</span><span class="nx">is</span><span class="o">-</span><span class="nx">merged</span> <span class="nx">by</span> <span class="nx">libparted2t64</span><span class="err">&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Setting</span> <span class="nx">up</span> <span class="nf">parted</span> <span class="p">(</span><span class="mf">3.6</span><span class="o">-</span><span class="mi">4</span><span class="nx">build1</span><span class="p">)</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Processing</span> <span class="nx">triggers</span> <span class="k">for</span> <span class="nx">libc</span><span class="o">-</span><span class="nf">bin</span> <span class="p">(</span><span class="mf">2.39</span><span class="o">-</span><span class="mi">0</span><span class="nx">ubuntu8</span><span class="mf">.3</span><span class="p">)</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Scanning</span> <span class="nx">processes</span><span class="o">...</span>                                                                                          
+</span></span><span class="line"><span class="cl"><span class="nx">Scanning</span> <span class="nx">linux</span> <span class="nx">images</span><span class="o">...</span>                                                                                       
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">Running</span> <span class="nx">kernel</span> <span class="nx">seems</span> <span class="nx">to</span> <span class="nx">be</span> <span class="nx">up</span><span class="o">-</span><span class="nx">to</span><span class="o">-</span><span class="nx">date</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">No</span> <span class="nx">services</span> <span class="nx">need</span> <span class="nx">to</span> <span class="nx">be</span> <span class="nx">restarted</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">No</span> <span class="nx">containers</span> <span class="nx">need</span> <span class="nx">to</span> <span class="nx">be</span> <span class="nx">restarted</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">No</span> <span class="nx">user</span> <span class="nx">sessions</span> <span class="nx">are</span> <span class="nx">running</span> <span class="nx">outdated</span> <span class="nx">binaries</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">No</span> <span class="nx">VM</span> <span class="nx">guests</span> <span class="nx">are</span> <span class="nx">running</span> <span class="nx">outdated</span> <span class="nf">hypervisor</span> <span class="p">(</span><span class="nx">qemu</span><span class="p">)</span> <span class="nx">binaries</span> <span class="nx">on</span> <span class="nx">this</span> <span class="nx">host</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> <span class="nx">sudo</span> <span class="nx">parted</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda</span>
+</span></span><span class="line"><span class="cl"><span class="nx">GNU</span> <span class="nx">Parted</span> <span class="mf">3.6</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Using</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Welcome</span> <span class="nx">to</span> <span class="nx">GNU</span> <span class="nx">Parted</span><span class="p">!</span> <span class="nx">Type</span> <span class="err">&#39;</span><span class="nx">help</span><span class="err">&#39;</span> <span class="nx">to</span> <span class="nx">view</span> <span class="nx">a</span> <span class="nx">list</span> <span class="nx">of</span> <span class="nx">commands</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nx">parted</span><span class="p">)</span> <span class="nx">print</span> <span class="nx">free</span>                                                       
+</span></span><span class="line"><span class="cl"><span class="nx">Warning</span><span class="p">:</span> <span class="nx">Not</span> <span class="nx">all</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">space</span> <span class="nx">available</span> <span class="nx">to</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda</span> <span class="nx">appears</span> <span class="nx">to</span> <span class="nx">be</span> <span class="nx">used</span><span class="p">,</span> <span class="nx">you</span> <span class="nx">can</span> <span class="nx">fix</span> <span class="nx">the</span> <span class="nx">GPT</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">all</span> <span class="nx">of</span> <span class="nx">the</span>
+</span></span><span class="line"><span class="cl"><span class="nf">space</span> <span class="p">(</span><span class="nx">an</span> <span class="nx">extra</span> <span class="mi">20971520</span> <span class="nx">blocks</span><span class="p">)</span> <span class="nx">or</span> <span class="k">continue</span> <span class="nx">with</span> <span class="nx">the</span> <span class="nx">current</span> <span class="nx">setting</span><span class="err">?</span> 
+</span></span><span class="line"><span class="cl"><span class="nx">Fix</span><span class="o">/</span><span class="nx">Ignore</span><span class="err">?</span> <span class="nx">Fix</span>                                                           
+</span></span><span class="line"><span class="cl"><span class="nx">Model</span><span class="p">:</span> <span class="nx">QEMU</span> <span class="nx">QEMU</span> <span class="nf">HARDDISK</span> <span class="p">(</span><span class="nx">scsi</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Disk</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda</span><span class="p">:</span> <span class="mf">21.5</span><span class="nx">GB</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Sector</span> <span class="nf">size</span> <span class="p">(</span><span class="nx">logical</span><span class="o">/</span><span class="nx">physical</span><span class="p">):</span> <span class="mi">512</span><span class="nx">B</span><span class="o">/</span><span class="mi">512</span><span class="nx">B</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Partition</span> <span class="nx">Table</span><span class="p">:</span> <span class="nx">gpt</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Disk</span> <span class="nx">Flags</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">Number</span>  <span class="nx">Start</span>   <span class="nx">End</span>     <span class="nx">Size</span>    <span class="nx">File</span> <span class="nx">system</span>  <span class="nx">Name</span>  <span class="nx">Flags</span>
+</span></span><span class="line"><span class="cl">        <span class="mf">17.4</span><span class="nx">kB</span>  <span class="mi">1049</span><span class="nx">kB</span>  <span class="mi">1031</span><span class="nx">kB</span>  <span class="nx">Free</span> <span class="nx">Space</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">1</span>      <span class="mi">1049</span><span class="nx">kB</span>  <span class="mi">2097</span><span class="nx">kB</span>  <span class="mi">1049</span><span class="nx">kB</span>                     <span class="nx">bios_grub</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">2</span>      <span class="mi">2097</span><span class="nx">kB</span>  <span class="mi">1881</span><span class="nx">MB</span>  <span class="mi">1879</span><span class="nx">MB</span>  <span class="nx">ext4</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">3</span>      <span class="mi">1881</span><span class="nx">MB</span>  <span class="mf">10.7</span><span class="nx">GB</span>  <span class="mi">8855</span><span class="nx">MB</span>
+</span></span><span class="line"><span class="cl">        <span class="mf">10.7</span><span class="nx">GB</span>  <span class="mf">21.5</span><span class="nx">GB</span>  <span class="mf">10.7</span><span class="nx">GB</span>  <span class="nx">Free</span> <span class="nf">Space</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nx">parted</span><span class="p">)</span> <span class="nx">resizepart</span> <span class="mi">3</span> <span class="mi">100</span><span class="o">%</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nx">parted</span><span class="p">)</span> <span class="nx">print</span> <span class="nx">free</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Model</span><span class="p">:</span> <span class="nx">QEMU</span> <span class="nx">QEMU</span> <span class="nf">HARDDISK</span> <span class="p">(</span><span class="nx">scsi</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Disk</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda</span><span class="p">:</span> <span class="mf">21.5</span><span class="nx">GB</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Sector</span> <span class="nf">size</span> <span class="p">(</span><span class="nx">logical</span><span class="o">/</span><span class="nx">physical</span><span class="p">):</span> <span class="mi">512</span><span class="nx">B</span><span class="o">/</span><span class="mi">512</span><span class="nx">B</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Partition</span> <span class="nx">Table</span><span class="p">:</span> <span class="nx">gpt</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Disk</span> <span class="nx">Flags</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">Number</span>  <span class="nx">Start</span>   <span class="nx">End</span>     <span class="nx">Size</span>    <span class="nx">File</span> <span class="nx">system</span>  <span class="nx">Name</span>  <span class="nx">Flags</span>
+</span></span><span class="line"><span class="cl">        <span class="mf">17.4</span><span class="nx">kB</span>  <span class="mi">1049</span><span class="nx">kB</span>  <span class="mi">1031</span><span class="nx">kB</span>  <span class="nx">Free</span> <span class="nx">Space</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">1</span>      <span class="mi">1049</span><span class="nx">kB</span>  <span class="mi">2097</span><span class="nx">kB</span>  <span class="mi">1049</span><span class="nx">kB</span>                     <span class="nx">bios_grub</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">2</span>      <span class="mi">2097</span><span class="nx">kB</span>  <span class="mi">1881</span><span class="nx">MB</span>  <span class="mi">1879</span><span class="nx">MB</span>  <span class="nx">ext4</span>
+</span></span><span class="line"><span class="cl"> <span class="mi">3</span>      <span class="mi">1881</span><span class="nx">MB</span>  <span class="mf">21.5</span><span class="nx">GB</span>  <span class="mf">19.6</span><span class="nf">GB</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nx">parted</span><span class="p">)</span> <span class="nx">q</span>                                                                
+</span></span><span class="line"><span class="cl"><span class="nx">Information</span><span class="p">:</span> <span class="nx">You</span> <span class="nx">may</span> <span class="nx">need</span> <span class="nx">to</span> <span class="nx">update</span> <span class="o">/</span><span class="nx">etc</span><span class="o">/</span><span class="nx">fstab</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> <span class="nx">sudo</span> <span class="nx">pvdisplay</span>                               
+</span></span><span class="line"><span class="cl">  <span class="o">---</span> <span class="nx">Physical</span> <span class="nx">volume</span> <span class="o">---</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PV</span> <span class="nx">Name</span>               <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda3</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">VG</span> <span class="nx">Name</span>               <span class="nx">ubuntu</span><span class="o">-</span><span class="nx">vg</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PV</span> <span class="nx">Size</span>               <span class="p">&lt;</span><span class="mf">8.25</span> <span class="nx">GiB</span> <span class="o">/</span> <span class="nx">not</span> <span class="nx">usable</span> <span class="mi">0</span>   
+</span></span><span class="line"><span class="cl">  <span class="nx">Allocatable</span>           <span class="nf">yes</span> <span class="p">(</span><span class="nx">but</span> <span class="nx">full</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PE</span> <span class="nx">Size</span>               <span class="mf">4.00</span> <span class="nx">MiB</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Total</span> <span class="nx">PE</span>              <span class="mi">2111</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Free</span> <span class="nx">PE</span>               <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Allocated</span> <span class="nx">PE</span>          <span class="mi">2111</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PV</span> <span class="nx">UUID</span>               <span class="nx">CGNZQy</span><span class="o">-</span><span class="mi">1</span><span class="nx">SZf</span><span class="o">-</span><span class="mi">8</span><span class="nx">wIh</span><span class="o">-</span><span class="nx">yeOq</span><span class="o">-</span><span class="nx">BIF7</span><span class="o">-</span><span class="nx">f2VJ</span><span class="o">-</span><span class="mi">9</span><span class="nx">cWRR2</span>
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> <span class="nx">sudo</span> <span class="nx">pvresize</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda3</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Physical</span> <span class="nx">volume</span> <span class="s">&#34;/dev/sda3&#34;</span> <span class="nx">changed</span>
+</span></span><span class="line"><span class="cl">  <span class="mi">1</span> <span class="nx">physical</span> <span class="nf">volume</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="nx">resized</span> <span class="nx">or</span> <span class="nx">updated</span> <span class="o">/</span> <span class="mi">0</span> <span class="nx">physical</span> <span class="nf">volume</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="nx">not</span> <span class="nx">resized</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> <span class="nx">sudo</span> <span class="nx">pvdisplay</span>
+</span></span><span class="line"><span class="cl">  <span class="o">---</span> <span class="nx">Physical</span> <span class="nx">volume</span> <span class="o">---</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PV</span> <span class="nx">Name</span>               <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda3</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">VG</span> <span class="nx">Name</span>               <span class="nx">ubuntu</span><span class="o">-</span><span class="nx">vg</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PV</span> <span class="nx">Size</span>               <span class="p">&lt;</span><span class="mf">18.25</span> <span class="nx">GiB</span> <span class="o">/</span> <span class="nx">not</span> <span class="nx">usable</span> <span class="mf">16.50</span> <span class="nx">KiB</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Allocatable</span>           <span class="nx">yes</span> 
+</span></span><span class="line"><span class="cl">  <span class="nx">PE</span> <span class="nx">Size</span>               <span class="mf">4.00</span> <span class="nx">MiB</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Total</span> <span class="nx">PE</span>              <span class="mi">4671</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Free</span> <span class="nx">PE</span>               <span class="mi">2560</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Allocated</span> <span class="nx">PE</span>          <span class="mi">2111</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PV</span> <span class="nx">UUID</span>               <span class="nx">CGNZQy</span><span class="o">-</span><span class="mi">1</span><span class="nx">SZf</span><span class="o">-</span><span class="mi">8</span><span class="nx">wIh</span><span class="o">-</span><span class="nx">yeOq</span><span class="o">-</span><span class="nx">BIF7</span><span class="o">-</span><span class="nx">f2VJ</span><span class="o">-</span><span class="mi">9</span><span class="nx">cWRR2</span>
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> <span class="nx">sudo</span> <span class="nx">lvextend</span> <span class="o">-</span><span class="nx">l</span> <span class="o">+</span><span class="mi">100</span><span class="o">%</span><span class="nx">FREE</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">mapper</span><span class="o">/</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">vg</span><span class="o">-</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">lv</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Size</span> <span class="nx">of</span> <span class="nx">logical</span> <span class="nx">volume</span> <span class="nx">ubuntu</span><span class="o">-</span><span class="nx">vg</span><span class="o">/</span><span class="nx">ubuntu</span><span class="o">-</span><span class="nx">lv</span> <span class="nx">changed</span> <span class="nx">from</span> <span class="p">&lt;</span><span class="mf">8.25</span> <span class="nf">GiB</span> <span class="p">(</span><span class="mi">2111</span> <span class="nx">extents</span><span class="p">)</span> <span class="nx">to</span> <span class="p">&lt;</span><span class="mf">18.25</span> <span class="nf">GiB</span> <span class="p">(</span><span class="mi">4671</span> <span class="nx">extents</span><span class="p">).</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Logical</span> <span class="nx">volume</span> <span class="nx">ubuntu</span><span class="o">-</span><span class="nx">vg</span><span class="o">/</span><span class="nx">ubuntu</span><span class="o">-</span><span class="nx">lv</span> <span class="nx">successfully</span> <span class="nx">resized</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> <span class="nx">sudo</span> <span class="nx">resize2fs</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">mapper</span><span class="o">/</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">vg</span><span class="o">-</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">lv</span>
+</span></span><span class="line"><span class="cl"><span class="nx">resize2fs</span> <span class="mf">1.47.0</span> <span class="p">(</span><span class="mi">5</span><span class="o">-</span><span class="nx">Feb</span><span class="o">-</span><span class="mi">2023</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Filesystem</span> <span class="nx">at</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">mapper</span><span class="o">/</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">vg</span><span class="o">-</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">lv</span> <span class="nx">is</span> <span class="nx">mounted</span> <span class="nx">on</span> <span class="o">/</span><span class="p">;</span> <span class="nx">on</span><span class="o">-</span><span class="nx">line</span> <span class="nx">resizing</span> <span class="nx">required</span>
+</span></span><span class="line"><span class="cl"><span class="nx">old_desc_blocks</span> <span class="p">=</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">new_desc_blocks</span> <span class="p">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="nx">The</span> <span class="nx">filesystem</span> <span class="nx">on</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">mapper</span><span class="o">/</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">vg</span><span class="o">-</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">lv</span> <span class="nx">is</span> <span class="nx">now</span> <span class="mi">4783104</span> <span class="p">(</span><span class="mi">4</span><span class="nx">k</span><span class="p">)</span> <span class="nx">blocks</span> <span class="nx">long</span><span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> <span class="nx">df</span> <span class="o">-</span><span class="nx">h</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Filesystem</span>                         <span class="nx">Size</span>  <span class="nx">Used</span> <span class="nx">Avail</span> <span class="nx">Use</span><span class="o">%</span> <span class="nx">Mounted</span> <span class="nx">on</span>
+</span></span><span class="line"><span class="cl"><span class="nx">tmpfs</span>                              <span class="mi">795</span><span class="nx">M</span>  <span class="mf">3.4</span><span class="nx">M</span>  <span class="mi">791</span><span class="nx">M</span>   <span class="mi">1</span><span class="o">%</span> <span class="o">/</span><span class="nx">run</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">mapper</span><span class="o">/</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">vg</span><span class="o">-</span><span class="nx">ubuntu</span><span class="o">--</span><span class="nx">lv</span>   <span class="mi">18</span><span class="nx">G</span>  <span class="mf">5.7</span><span class="nx">G</span>   <span class="mi">12</span><span class="nx">G</span>  <span class="mi">34</span><span class="o">%</span> <span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="nx">tmpfs</span>                              <span class="mf">3.9</span><span class="nx">G</span>     <span class="mi">0</span>  <span class="mf">3.9</span><span class="nx">G</span>   <span class="mi">0</span><span class="o">%</span> <span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">shm</span>
+</span></span><span class="line"><span class="cl"><span class="nx">tmpfs</span>                              <span class="mf">5.0</span><span class="nx">M</span>     <span class="mi">0</span>  <span class="mf">5.0</span><span class="nx">M</span>   <span class="mi">0</span><span class="o">%</span> <span class="o">/</span><span class="nx">run</span><span class="o">/</span><span class="nx">lock</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span><span class="nx">dev</span><span class="o">/</span><span class="nx">sda2</span>                          <span class="mf">1.7</span><span class="nx">G</span>   <span class="mi">94</span><span class="nx">M</span>  <span class="mf">1.5</span><span class="nx">G</span>   <span class="mi">6</span><span class="o">%</span> <span class="o">/</span><span class="nx">boot</span>
+</span></span><span class="line"><span class="cl"><span class="nx">tmpfs</span>                              <span class="mi">795</span><span class="nx">M</span>   <span class="mi">12</span><span class="nx">K</span>  <span class="mi">795</span><span class="nx">M</span>   <span class="mi">1</span><span class="o">%</span> <span class="o">/</span><span class="nx">run</span><span class="o">/</span><span class="nx">user</span><span class="o">/</span><span class="mi">1000</span>
+</span></span><span class="line"><span class="cl"><span class="nx">mao</span><span class="err">@</span><span class="nx">mao</span><span class="o">-</span><span class="nx">cri</span><span class="o">-</span><span class="nx">o</span><span class="o">-</span><span class="nx">worker</span><span class="o">-</span><span class="nx">node</span><span class="p">:~</span><span class="err">$</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/ubuntu-install-hugo/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">UbuntuにHugoをインストールする</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
