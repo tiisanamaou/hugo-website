@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='背景 複数のPCからaptを使用する際に毎回ダウンロードすると時間がかかるので、ローカルにキャッシュサーバーを立ててそこからダウンロードできるようにしたい
+キャッシュサーバーではなくミラーサーバーでも良かったが、ミラーサーバーだと容量が必要になるので、今回はキャッシュサーバーを使用することにした
+環境 Ubuntu Server 24.04 LTS Apt-Cacher-NG/3.7.4 apt-cacher-ngのインストールと設定ファイルの作成 1 sudo apt-get update; sudo apt-get install apt-cacher-ng ; echo &#39;Acquire::http::Proxy &#34;http://127.0.0.1:3142&#34;;&#39; | sudo tee /etc/apt/apt.conf.d/02proxy ; 作成した設定ファイルを編集する
+1 sudo nano /etc/apt/apt.conf.d/02proxy 下記の内容を追記する
+1 Acquire::http::Proxy &#34;http://192.168.10.***:3142&#34;; &ldquo;Acquire::http::Proxy &ldquo;http://192.168.10.16:3142&rdquo;;&rdquo; httpsのものはパススルーをするように設定する
+1 sudo nano /etc/apt-cacher-ng/acng.conf ; 1 PassThroughPattern: .* 設定を読み込むためにサービスを再起動する
+1 sudo service apt-cacher-ng restart WebUIにアクセスする &ldquo;http://192.168.10.16:3142&quot;にアクセスするとWebUIが表示される、どれくらいキャッシュされているか等が見れる
+他のPCからaptのキャッシュを参照するように設定する proxyの設定ファイルを編集する
+1 sudo nano /etc/apt/apt.conf.d/02proxy apt-cacher-ngをインストールしたサーバーのIPアドレスを指定する
+1 Acquire::http::Proxy &#34;http://192.168.10.***:3142&#34;; &ldquo;Acquire::http::Proxy &ldquo;http://192.168.10.16:3142&rdquo;;&rdquo; キャッシュしたデータとログの保存場所 キャッシュの保存場所
+1 /var/cache/apt-cacher-ng/ ログの保存場所'>
+<title>aptのキャッシュをしてくれるapt-cacher-ngのインストール方法</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/apt-cacher-ng/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='aptのキャッシュをしてくれるapt-cacher-ngのインストール方法'>
+<meta property='og:description' content='背景 複数のPCからaptを使用する際に毎回ダウンロードすると時間がかかるので、ローカルにキャッシュサーバーを立ててそこからダウンロードできるようにしたい
+キャッシュサーバーではなくミラーサーバーでも良かったが、ミラーサーバーだと容量が必要になるので、今回はキャッシュサーバーを使用することにした
+環境 Ubuntu Server 24.04 LTS Apt-Cacher-NG/3.7.4 apt-cacher-ngのインストールと設定ファイルの作成 1 sudo apt-get update; sudo apt-get install apt-cacher-ng ; echo &#39;Acquire::http::Proxy &#34;http://127.0.0.1:3142&#34;;&#39; | sudo tee /etc/apt/apt.conf.d/02proxy ; 作成した設定ファイルを編集する
+1 sudo nano /etc/apt/apt.conf.d/02proxy 下記の内容を追記する
+1 Acquire::http::Proxy &#34;http://192.168.10.***:3142&#34;; &ldquo;Acquire::http::Proxy &ldquo;http://192.168.10.16:3142&rdquo;;&rdquo; httpsのものはパススルーをするように設定する
+1 sudo nano /etc/apt-cacher-ng/acng.conf ; 1 PassThroughPattern: .* 設定を読み込むためにサービスを再起動する
+1 sudo service apt-cacher-ng restart WebUIにアクセスする &ldquo;http://192.168.10.16:3142&quot;にアクセスするとWebUIが表示される、どれくらいキャッシュされているか等が見れる
+他のPCからaptのキャッシュを参照するように設定する proxyの設定ファイルを編集する
+1 sudo nano /etc/apt/apt.conf.d/02proxy apt-cacher-ngをインストールしたサーバーのIPアドレスを指定する
+1 Acquire::http::Proxy &#34;http://192.168.10.***:3142&#34;; &ldquo;Acquire::http::Proxy &ldquo;http://192.168.10.16:3142&rdquo;;&rdquo; キャッシュしたデータとログの保存場所 キャッシュの保存場所
+1 /var/cache/apt-cacher-ng/ ログの保存場所'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/apt-cacher-ng/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-11-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-11-10T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="aptのキャッシュをしてくれるapt-cacher-ngのインストール方法">
+<meta name="twitter:description" content="背景 複数のPCからaptを使用する際に毎回ダウンロードすると時間がかかるので、ローカルにキャッシュサーバーを立ててそこからダウンロードできるようにしたい
+キャッシュサーバーではなくミラーサーバーでも良かったが、ミラーサーバーだと容量が必要になるので、今回はキャッシュサーバーを使用することにした
+環境 Ubuntu Server 24.04 LTS Apt-Cacher-NG/3.7.4 apt-cacher-ngのインストールと設定ファイルの作成 1 sudo apt-get update; sudo apt-get install apt-cacher-ng ; echo &#39;Acquire::http::Proxy &#34;http://127.0.0.1:3142&#34;;&#39; | sudo tee /etc/apt/apt.conf.d/02proxy ; 作成した設定ファイルを編集する
+1 sudo nano /etc/apt/apt.conf.d/02proxy 下記の内容を追記する
+1 Acquire::http::Proxy &#34;http://192.168.10.***:3142&#34;; &ldquo;Acquire::http::Proxy &ldquo;http://192.168.10.16:3142&rdquo;;&rdquo; httpsのものはパススルーをするように設定する
+1 sudo nano /etc/apt-cacher-ng/acng.conf ; 1 PassThroughPattern: .* 設定を読み込むためにサービスを再起動する
+1 sudo service apt-cacher-ng restart WebUIにアクセスする &ldquo;http://192.168.10.16:3142&quot;にアクセスするとWebUIが表示される、どれくらいキャッシュされているか等が見れる
+他のPCからaptのキャッシュを参照するように設定する proxyの設定ファイルを編集する
+1 sudo nano /etc/apt/apt.conf.d/02proxy apt-cacher-ngをインストールしたサーバーのIPアドレスを指定する
+1 Acquire::http::Proxy &#34;http://192.168.10.***:3142&#34;; &ldquo;Acquire::http::Proxy &ldquo;http://192.168.10.16:3142&rdquo;;&rdquo; キャッシュしたデータとログの保存場所 キャッシュの保存場所
+1 /var/cache/apt-cacher-ng/ ログの保存場所">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://tiisanamaou.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/apt-cacher-ng/" >
+                Apt-Cacher-Ng
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/apt-cacher-ng/">aptのキャッシュをしてくれるapt-cacher-ngのインストール方法</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024/11/10</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="背景">背景</h2>
+<p>複数のPCからaptを使用する際に毎回ダウンロードすると時間がかかるので、ローカルにキャッシュサーバーを立ててそこからダウンロードできるようにしたい<br>
+キャッシュサーバーではなくミラーサーバーでも良かったが、ミラーサーバーだと容量が必要になるので、今回はキャッシュサーバーを使用することにした</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu Server 24.04 LTS</li>
+<li>Apt-Cacher-NG/3.7.4</li>
+</ul>
+<h2 id="apt-cacher-ngのインストールと設定ファイルの作成">apt-cacher-ngのインストールと設定ファイルの作成</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt-get update; sudo apt-get install apt-cacher-ng ; echo &#39;Acquire::http::Proxy &#34;http://127.0.0.1:3142&#34;;&#39; | sudo tee /etc/apt/apt.conf.d/02proxy ;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>作成した設定ファイルを編集する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo nano /etc/apt/apt.conf.d/02proxy
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下記の内容を追記する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Acquire::http::Proxy &#34;http://192.168.10.***:3142&#34;;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>&ldquo;Acquire::http::Proxy &ldquo;http://192.168.10.16:3142&rdquo;;&rdquo;</li>
+</ul>
+<p>httpsのものはパススルーをするように設定する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo nano /etc/apt-cacher-ng/acng.conf ;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PassThroughPattern: .*
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>設定を読み込むためにサービスを再起動する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo service apt-cacher-ng restart
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="webuiにアクセスする">WebUIにアクセスする</h2>
+<p>&ldquo;http://192.168.10.16:3142&quot;にアクセスするとWebUIが表示される、どれくらいキャッシュされているか等が見れる</p>
+<h2 id="他のpcからaptのキャッシュを参照するように設定する">他のPCからaptのキャッシュを参照するように設定する</h2>
+<p>proxyの設定ファイルを編集する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo nano /etc/apt/apt.conf.d/02proxy
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>apt-cacher-ngをインストールしたサーバーのIPアドレスを指定する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Acquire::http::Proxy &#34;http://192.168.10.***:3142&#34;;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>&ldquo;Acquire::http::Proxy &ldquo;http://192.168.10.16:3142&rdquo;;&rdquo;</li>
+</ul>
+<h2 id="キャッシュしたデータとログの保存場所">キャッシュしたデータとログの保存場所</h2>
+<p>キャッシュの保存場所</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">apt</span><span class="o">-</span><span class="n">cacher</span><span class="o">-</span><span class="n">ng</span><span class="o">/</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ログの保存場所</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">apt</span><span class="o">-</span><span class="n">cacher</span><span class="o">-</span><span class="n">ng</span><span class="o">/</span><span class="n">apt</span><span class="o">-</span><span class="n">cacher</span><span class="o">.</span><span class="n">log</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="キャッシュの削除">キャッシュの削除</h2>
+<p>ストレージの容量不足でエラーになってしまったため一度キャッシュを削除する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ファイルへの書き込みでエラーが発生しました - write (28: デバイスに空き領域がありません) [IP: 192.168.10.16 3142]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>キャッシュの削除手順</p>
+<ul>
+<li>容量の確認</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">df -h
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>サービスを一旦止める</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo systemctl stop apt-cacher-ng
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>キャッシュデータの削除</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">apt</span><span class="o">/*</span> \
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">apt</span><span class="o">/*</span> \
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">apt</span><span class="o">-</span><span class="n">cacher</span><span class="o">-</span><span class="n">ng</span><span class="o">/</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">apt</span><span class="o">-</span><span class="n">cacher</span><span class="o">-</span><span class="n">ng</span><span class="o">/</span><span class="p">{</span><span class="n">headers</span><span class="p">,</span><span class="n">import</span><span class="p">,</span><span class="n">packages</span><span class="p">,</span><span class="n">private</span><span class="p">,</span><span class="n">temp</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">chown</span> <span class="n">apt</span><span class="o">-</span><span class="n">cacher</span><span class="o">-</span><span class="n">ng</span><span class="p">:</span><span class="n">apt</span><span class="o">-</span><span class="n">cacher</span><span class="o">-</span><span class="n">ng</span> <span class="o">-</span><span class="n">R</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">apt</span><span class="o">-</span><span class="n">cacher</span><span class="o">-</span><span class="n">ng</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>サービスの再開</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo systemctl start apt-cacher-ng
+</span></span><span class="line"><span class="cl">sudo systemctl status apt-cacher-ng
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>容量に空きができているか確認</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">df -h
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="参考url">参考URL</h3>
+<ul>
+<li><a class="link" href="https://qiita.com/mugimugi/items/edb743c6c32444159384"  target="_blank" rel="noopener"
+    >https://qiita.com/mugimugi/items/edb743c6c32444159384</a></li>
+<li><a class="link" href="http://bluearth.cocolog-nifty.com/blog/2020/04/post-182a10.html"  target="_blank" rel="noopener"
+    >http://bluearth.cocolog-nifty.com/blog/2020/04/post-182a10.html</a></li>
+<li><a class="link" href="http://bluearth.cocolog-nifty.com/blog/2020/04/post-8db9b1.html"  target="_blank" rel="noopener"
+    >http://bluearth.cocolog-nifty.com/blog/2020/04/post-8db9b1.html</a></li>
+<li><a class="link" href="https://qiita.com/mt08/items/c8b8187b1000382d77ae"  target="_blank" rel="noopener"
+    >https://qiita.com/mt08/items/c8b8187b1000382d77ae</a></li>
+<li><a class="link" href="https://zenn.dev/toru3/scraps/07d08e9f86ae71"  target="_blank" rel="noopener"
+    >https://zenn.dev/toru3/scraps/07d08e9f86ae71</a></li>
+<li><a class="link" href="https://blog.cybozu.io/entry/2016/07/19/103000"  target="_blank" rel="noopener"
+    >https://blog.cybozu.io/entry/2016/07/19/103000</a></li>
+</ul>
+<h2 id="直接インストールではなくdockerを使うやり方もあるよう">直接インストールではなくdockerを使うやり方もあるよう</h2>
+<p>dockerの方が楽そう</p>
+<ul>
+<li>apt-cacher-ng で apt をキャッシュする
+<ul>
+<li><a class="link" href="https://zenn.dev/st_little/articles/cache-apt-with-apt-cacher-ng"  target="_blank" rel="noopener"
+    >https://zenn.dev/st_little/articles/cache-apt-with-apt-cacher-ng</a></li>
+</ul>
+</li>
+<li>apt-cacher-ng サービスの Docker 化
+<ul>
+<li><a class="link" href="https://docs.docker.jp/engine/examples/apt-cacher-ng.html"  target="_blank" rel="noopener"
+    >https://docs.docker.jp/engine/examples/apt-cacher-ng.html</a></li>
+</ul>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
