@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='背景 ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する
+証明書の発行準備 証明書を発行する用のVMを作ったのでsshで接続する
+1 ssh mao@192.168.10.11 certbotをインストールする
+1 sudo apt install certbot オプションを確認するためにヘルプを参照する
+1 certbot help all 下記は今回必要なオプションを抜粋して記載（実際は全て表示される）
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 mao@lets-encrypt-certbot:~$ certbot help all usage: certbot [SUBCOMMAND] [options] [-d DOMAIN] [-d DOMAIN] ... Certbot can obtain and install HTTPS/TLS/SSL certificates.'>
+<title>証明書発行手順（Let&#39;s Encrypt）</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/certbot-lets-encrypt/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='証明書発行手順（Let&#39;s Encrypt）'>
+<meta property='og:description' content='背景 ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する
+証明書の発行準備 証明書を発行する用のVMを作ったのでsshで接続する
+1 ssh mao@192.168.10.11 certbotをインストールする
+1 sudo apt install certbot オプションを確認するためにヘルプを参照する
+1 certbot help all 下記は今回必要なオプションを抜粋して記載（実際は全て表示される）
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 mao@lets-encrypt-certbot:~$ certbot help all usage: certbot [SUBCOMMAND] [options] [-d DOMAIN] [-d DOMAIN] ... Certbot can obtain and install HTTPS/TLS/SSL certificates.'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/certbot-lets-encrypt/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-12-17T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-12-17T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="証明書発行手順（Let&#39;s Encrypt）">
+<meta name="twitter:description" content="背景 ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する
+証明書の発行準備 証明書を発行する用のVMを作ったのでsshで接続する
+1 ssh mao@192.168.10.11 certbotをインストールする
+1 sudo apt install certbot オプションを確認するためにヘルプを参照する
+1 certbot help all 下記は今回必要なオプションを抜粋して記載（実際は全て表示される）
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 mao@lets-encrypt-certbot:~$ certbot help all usage: certbot [SUBCOMMAND] [options] [-d DOMAIN] [-d DOMAIN] ... Certbot can obtain and install HTTPS/TLS/SSL certificates.">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://tiisanamaou.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/lets-encrypt/" >
+                Let&#39;s-Encrypt
+            </a>
+        
+            <a href="../../categories/certbot/" >
+                Certbot
+            </a>
+        
+            <a href="../../categories/ssl/" >
+                SSL
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/certbot-lets-encrypt/">証明書発行手順（Let&#39;s Encrypt）</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024/12/17</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="背景">背景</h2>
+<p>ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する</p>
+<h2 id="証明書の発行準備">証明書の発行準備</h2>
+<p>証明書を発行する用のVMを作ったのでsshで接続する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ssh mao@192.168.10.11
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>certbotをインストールする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt install certbot 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>オプションを確認するためにヘルプを参照する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">certbot help all
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下記は今回必要なオプションを抜粋して記載（実際は全て表示される）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@lets-encrypt-certbot:~$ certbot help all
+</span></span><span class="line"><span class="cl">usage: 
+</span></span><span class="line"><span class="cl">  certbot [SUBCOMMAND] [options] [-d DOMAIN] [-d DOMAIN] ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Certbot can obtain and install HTTPS/TLS/SSL certificates.  By default,
+</span></span><span class="line"><span class="cl">it will attempt to use a webserver both for obtaining and installing the
+</span></span><span class="line"><span class="cl">certificate. The most common SUBCOMMANDS and flags are:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">obtain, install, and renew certificates:
+</span></span><span class="line"><span class="cl">    certonly        Obtain or renew a certificate, but do not install it
+</span></span><span class="line"><span class="cl">   -d DOMAINS       Comma-separated list of domains to obtain a certificate for
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  --manual          Obtain certificates interactively, or using shell script hooks
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">options:
+</span></span><span class="line"><span class="cl">  -h, --help            show this help message and exit
+</span></span><span class="line"><span class="cl">  -d DOMAIN, --domains DOMAIN, --domain DOMAIN
+</span></span><span class="line"><span class="cl">                        Domain names to include. For multiple domains you can use multiple -d flags or enter a comma separated list of domains as a
+</span></span><span class="line"><span class="cl">                        parameter. All domains will be included as Subject Alternative Names on the certificate. The first domain will be used as the
+</span></span><span class="line"><span class="cl">                        certificate name, unless otherwise specified or if you already have a certificate with the same name. In the case of a name
+</span></span><span class="line"><span class="cl">                        conflict, a number like -0001 will be appended to the certificate name. (default: Ask)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">register:
+</span></span><span class="line"><span class="cl">  Options for account registration
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  --register-unsafely-without-email
+</span></span><span class="line"><span class="cl">                        Specifying this flag enables registering an account with no email address. This is strongly discouraged, because you will be unable
+</span></span><span class="line"><span class="cl">                        to receive notice about impending expiration or revocation of your certificates or problems with your Certbot installation that
+</span></span><span class="line"><span class="cl">                        will lead to failure to renew. (default: False)
+</span></span><span class="line"><span class="cl">  -m EMAIL, --email EMAIL
+</span></span><span class="line"><span class="cl">                        Email used for registration and recovery contact. Use comma to register multiple emails, ex: u1@example.com,u2@example.com.
+</span></span><span class="line"><span class="cl">                        (default: Ask).
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ssl証明書を発行する">SSL証明書を発行する</h2>
+<p>実行するコマンドは下記の通り</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">certbot certonly
+</span></span><span class="line"><span class="cl">--manual
+</span></span><span class="line"><span class="cl">--server https://acme-v02.api.letsencrypt.org/directory
+</span></span><span class="line"><span class="cl">--preferred-challenges dns
+</span></span><span class="line"><span class="cl">-d internal.onodera.dev
+</span></span><span class="line"><span class="cl">--register-unsafely-without-email
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>オプションの説明（発行するドメインに置き換える）</p>
+<ul>
+<li>&ldquo;certonly&rdquo;
+<ul>
+<li>証明書の発行のみをする</li>
+</ul>
+</li>
+<li>&ldquo;&ndash;manual&rdquo;
+<ul>
+<li>マニュアルで指定する</li>
+</ul>
+</li>
+<li>&ldquo;&ndash;server <a class="link" href="https://acme-v02.api.letsencrypt.org/directory%22"  target="_blank" rel="noopener"
+    >https://acme-v02.api.letsencrypt.org/directory"</a>
+<ul>
+<li>証明書の発行をするサーバーを指定する</li>
+</ul>
+</li>
+<li>&ldquo;&ndash;preferred-challenges dns&rdquo;
+<ul>
+<li>チャレンジ方法をDNSにする</li>
+</ul>
+</li>
+<li>&ldquo;-d *.internal.onodera.dev&rdquo;
+<ul>
+<li>証明書を発行するドメインを指定する</li>
+<li>今回はサブドメインで証明書を発行する</li>
+</ul>
+</li>
+<li>&ldquo;&ndash;register-unsafely-without-email&rdquo;
+<ul>
+<li>メールアドレスを登録せずに証明書を発行する</li>
+</ul>
+</li>
+</ul>
+<h3 id="コマンド実行">コマンド実行</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo certbot certonly --manual --server https://acme-v02.api.letsencrypt.org/directory --preferred-challenges dns -d internal.onodera-program.com --register-unsafely-without-email
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="実行結果">実行結果</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">lets</span><span class="o">-</span><span class="n">encrypt</span><span class="o">-</span><span class="n">certbot</span><span class="p">:</span><span class="o">~$</span> <span class="n">sudo</span> <span class="n">certbot</span> <span class="n">certonly</span> <span class="o">--</span><span class="n">manual</span> <span class="o">--</span><span class="n">server</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">acme</span><span class="o">-</span><span class="n">v02</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">letsencrypt</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">directory</span> <span class="o">--</span><span class="n">preferred</span><span class="o">-</span><span class="n">challenges</span> <span class="n">dns</span> <span class="o">-</span><span class="n">d</span> <span class="n">internal</span><span class="o">.</span><span class="n">onodera</span><span class="o">-</span><span class="n">program</span><span class="o">.</span><span class="n">com</span> <span class="o">--</span><span class="n">register</span><span class="o">-</span><span class="n">unsafely</span><span class="o">-</span><span class="n">without</span><span class="o">-</span><span class="n">email</span>
+</span></span><span class="line"><span class="cl"><span class="n">Saving</span> <span class="n">debug</span> <span class="nb">log</span> <span class="n">to</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">letsencrypt</span><span class="o">/</span><span class="n">letsencrypt</span><span class="o">.</span><span class="n">log</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl"><span class="n">Please</span> <span class="n">read</span> <span class="n">the</span> <span class="n">Terms</span> <span class="n">of</span> <span class="n">Service</span> <span class="n">at</span>
+</span></span><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">letsencrypt</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">documents</span><span class="o">/</span><span class="n">LE</span><span class="o">-</span><span class="n">SA</span><span class="o">-</span><span class="n">v1</span><span class="o">.</span><span class="mi">4</span><span class="o">-</span><span class="n">April</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mf">2024.</span><span class="n">pdf</span><span class="o">.</span> <span class="n">You</span> <span class="n">must</span> <span class="n">agree</span> <span class="ow">in</span>
+</span></span><span class="line"><span class="cl"><span class="n">order</span> <span class="n">to</span> <span class="n">register</span> <span class="n">with</span> <span class="n">the</span> <span class="n">ACME</span> <span class="n">server</span><span class="o">.</span> <span class="n">Do</span> <span class="n">you</span> <span class="n">agree</span><span class="err">?</span>
+</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">Y</span><span class="p">)</span><span class="n">es</span><span class="o">/</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="n">o</span><span class="p">:</span> <span class="n">Y</span>
+</span></span><span class="line"><span class="cl"><span class="n">Account</span> <span class="n">registered</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Requesting</span> <span class="n">a</span> <span class="n">certificate</span> <span class="k">for</span> <span class="n">internal</span><span class="o">.</span><span class="n">onodera</span><span class="o">-</span><span class="n">program</span><span class="o">.</span><span class="n">com</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl"><span class="n">Please</span> <span class="n">deploy</span> <span class="n">a</span> <span class="n">DNS</span> <span class="n">TXT</span> <span class="n">record</span> <span class="n">under</span> <span class="n">the</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">_acme</span><span class="o">-</span><span class="n">challenge</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">onodera</span><span class="o">-</span><span class="n">program</span><span class="o">.</span><span class="n">com</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">with</span> <span class="n">the</span> <span class="n">following</span> <span class="n">value</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">***</span><span class="mi">1</span><span class="n">b5eLnL15fqIdYkuSaqRu1CPGmgq6FTgnEHbZVTs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Before</span> <span class="n">continuing</span><span class="p">,</span> <span class="n">verify</span> <span class="n">the</span> <span class="n">TXT</span> <span class="n">record</span> <span class="n">has</span> <span class="n">been</span> <span class="n">deployed</span><span class="o">.</span> <span class="n">Depending</span> <span class="n">on</span> <span class="n">the</span> <span class="n">DNS</span>
+</span></span><span class="line"><span class="cl"><span class="n">provider</span><span class="p">,</span> <span class="n">this</span> <span class="n">may</span> <span class="n">take</span> <span class="n">some</span> <span class="n">time</span><span class="p">,</span> <span class="n">from</span> <span class="n">a</span> <span class="n">few</span> <span class="n">seconds</span> <span class="n">to</span> <span class="n">multiple</span> <span class="n">minutes</span><span class="o">.</span> <span class="n">You</span> <span class="n">can</span>
+</span></span><span class="line"><span class="cl"><span class="n">check</span> <span class="k">if</span> <span class="n">it</span> <span class="n">has</span> <span class="n">finished</span> <span class="n">deploying</span> <span class="n">with</span> <span class="n">aid</span> <span class="n">of</span> <span class="n">online</span> <span class="n">tools</span><span class="p">,</span> <span class="n">such</span> <span class="n">as</span> <span class="n">the</span> <span class="n">Google</span>
+</span></span><span class="line"><span class="cl"><span class="n">Admin</span> <span class="n">Toolbox</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">toolbox</span><span class="o">.</span><span class="n">googleapps</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">dig</span><span class="o">/</span><span class="c1">#TXT/_acme-challenge.internal.onodera-program.com.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Look</span> <span class="k">for</span> <span class="n">one</span> <span class="ow">or</span> <span class="n">more</span> <span class="n">bolded</span> <span class="n">line</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">below</span> <span class="n">the</span> <span class="n">line</span> <span class="s1">&#39;;ANSWER&#39;</span><span class="o">.</span> <span class="n">It</span> <span class="n">should</span> <span class="n">show</span> <span class="n">the</span>
+</span></span><span class="line"><span class="cl"><span class="n">value</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">you</span><span class="s1">&#39;ve just added.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl"><span class="n">Press</span> <span class="n">Enter</span> <span class="n">to</span> <span class="n">Continue</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Successfully</span> <span class="n">received</span> <span class="n">certificate</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Certificate</span> <span class="n">is</span> <span class="n">saved</span> <span class="n">at</span><span class="p">:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">letsencrypt</span><span class="o">/</span><span class="n">live</span><span class="o">/</span><span class="n">internal</span><span class="o">.</span><span class="n">onodera</span><span class="o">-</span><span class="n">program</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">fullchain</span><span class="o">.</span><span class="n">pem</span>
+</span></span><span class="line"><span class="cl"><span class="n">Key</span> <span class="n">is</span> <span class="n">saved</span> <span class="n">at</span><span class="p">:</span>         <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">letsencrypt</span><span class="o">/</span><span class="n">live</span><span class="o">/</span><span class="n">internal</span><span class="o">.</span><span class="n">onodera</span><span class="o">-</span><span class="n">program</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">privkey</span><span class="o">.</span><span class="n">pem</span>
+</span></span><span class="line"><span class="cl"><span class="n">This</span> <span class="n">certificate</span> <span class="n">expires</span> <span class="n">on</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mf">08.</span>
+</span></span><span class="line"><span class="cl"><span class="n">These</span> <span class="n">files</span> <span class="n">will</span> <span class="n">be</span> <span class="n">updated</span> <span class="n">when</span> <span class="n">the</span> <span class="n">certificate</span> <span class="n">renews</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">NEXT</span> <span class="n">STEPS</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="n">This</span> <span class="n">certificate</span> <span class="n">will</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">renewed</span> <span class="n">automatically</span><span class="o">.</span> <span class="n">Autorenewal</span> <span class="n">of</span> <span class="o">--</span><span class="n">manual</span> <span class="n">certificates</span> <span class="n">requires</span> <span class="n">the</span> <span class="n">use</span> <span class="n">of</span> <span class="n">an</span> <span class="n">authentication</span> <span class="n">hook</span> <span class="n">script</span> <span class="p">(</span><span class="o">--</span><span class="n">manual</span><span class="o">-</span><span class="n">auth</span><span class="o">-</span><span class="n">hook</span><span class="p">)</span> <span class="n">but</span> <span class="n">one</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">provided</span><span class="o">.</span> <span class="n">To</span> <span class="n">renew</span> <span class="n">this</span> <span class="n">certificate</span><span class="p">,</span> <span class="n">repeat</span> <span class="n">this</span> <span class="n">same</span> <span class="n">certbot</span> <span class="n">command</span> <span class="n">before</span> <span class="n">the</span> <span class="n">certificate</span><span class="s1">&#39;s expiry date.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl"><span class="n">If</span> <span class="n">you</span> <span class="n">like</span> <span class="n">Certbot</span><span class="p">,</span> <span class="n">please</span> <span class="n">consider</span> <span class="n">supporting</span> <span class="n">our</span> <span class="n">work</span> <span class="n">by</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">Donating</span> <span class="n">to</span> <span class="n">ISRG</span> <span class="o">/</span> <span class="n">Let</span><span class="s1">&#39;s Encrypt:   https://letsencrypt.org/donate</span>
+</span></span><span class="line"><span class="cl"> <span class="o">*</span> <span class="n">Donating</span> <span class="n">to</span> <span class="n">EFF</span><span class="p">:</span>                    <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">eff</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">donate</span><span class="o">-</span><span class="n">le</span>
+</span></span><span class="line"><span class="cl"><span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">lets</span><span class="o">-</span><span class="n">encrypt</span><span class="o">-</span><span class="n">certbot</span><span class="p">:</span><span class="o">~$</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="発行手順">発行手順</h3>
+<ul>
+<li>利用規約を読み同意するか求められるので、&ldquo;Y&quot;を押す</li>
+<li>DNSのTXTレコードに値を登録するよう求められるので、DNSに値を登録する</li>
+<li>DNSにTXTレコードが反映されているかdigコマンド等で確認する</li>
+<li>TXTレコードが反映されていたら、Enterを押す</li>
+<li>証明書が発行される</li>
+</ul>
+<h4 id="txtレコードの確認方法">TXTレコードの確認方法</h4>
+<p>下記コマンドを実行する（ドメイン名は登録したドメインを指定）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">dig -t txt _acme-challenge.internal.onodera-program.com
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>&ldquo;ANSWER SECTION:&ldquo;に値が記載されていれば反映されている</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; -t txt _acme-challenge.internal.onodera-program.com
+</span></span><span class="line"><span class="cl">;; global options: +cmd
+</span></span><span class="line"><span class="cl">;; Got answer:
+</span></span><span class="line"><span class="cl">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 61386
+</span></span><span class="line"><span class="cl">;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">;; OPT PSEUDOSECTION:
+</span></span><span class="line"><span class="cl">; EDNS: version: 0, flags:; udp: 1232
+</span></span><span class="line"><span class="cl">;; QUESTION SECTION:
+</span></span><span class="line"><span class="cl">;_acme-challenge.internal.onodera-program.com. IN TXT
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">;; ANSWER SECTION:
+</span></span><span class="line"><span class="cl">_acme-challenge.internal.onodera-program.com. 300 IN TXT &#34;***1b5eLnL15fqIdYkuSaqRu1CPGmgq6FTgnEHbZVTs&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">;; Query time: 93 msec
+</span></span><span class="line"><span class="cl">;; SERVER: 192.168.10.1#53(192.168.10.1)
+</span></span><span class="line"><span class="cl">;; WHEN: Sun Dec 08 11:32:45 JST 2024
+</span></span><span class="line"><span class="cl">;; MSG SIZE  rcvd: 129
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="証明書をダウンロードする">証明書をダウンロードする</h2>
+<h3 id="所有者変更">所有者変更</h3>
+<ul>
+<li>chown:&ldquo;change owner&rdquo;:所有者変更</li>
+<li>chmod:&ldquo;change mode&rdquo;:アクセス権変更</li>
+</ul>
+<p><strong>注意1</strong><br>
+下記の方法でコピーしてもファイルの実態は別の場所にあり、シンボリックリンクがコピーされるだけなので、ローカルにダウンロードする際に権限エラーになってしまうので、<strong>注意2</strong>の方法でダウンロードできる</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo su -
+</span></span><span class="line"><span class="cl">cp -r /etc/letsencrypt/live/internal.onodera-program.com /home/mao
+</span></span><span class="line"><span class="cl">cd /home/mao
+</span></span><span class="line"><span class="cl">chown -R mao internal.onodera-program.com
+</span></span><span class="line"><span class="cl">exit
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@lets-encrypt-certbot:~$ sudo su -
+</span></span><span class="line"><span class="cl">root@lets-encrypt-certbot:~# cp -r /etc/letsencrypt/live/internal.onodera-program.com /home/mao
+</span></span><span class="line"><span class="cl">root@lets-encrypt-certbot:~# cd /home/mao
+</span></span><span class="line"><span class="cl">root@lets-encrypt-certbot:/home/mao# ls -l
+</span></span><span class="line"><span class="cl">total 4
+</span></span><span class="line"><span class="cl">drwxr-xr-x 2 root root 4096 Dec  8 03:05 internal.onodera-program.com
+</span></span><span class="line"><span class="cl">root@lets-encrypt-certbot:/home/mao# chown -R mao internal.onodera-program.com
+</span></span><span class="line"><span class="cl">root@lets-encrypt-certbot:/home/mao# ls -l
+</span></span><span class="line"><span class="cl">total 4
+</span></span><span class="line"><span class="cl">drwxr-xr-x 2 mao root 4096 Dec  8 03:05 internal.onodera-program.com
+</span></span><span class="line"><span class="cl">root@lets-encrypt-certbot:/home/mao# exit
+</span></span><span class="line"><span class="cl">logout
+</span></span><span class="line"><span class="cl">mao@lets-encrypt-certbot:~$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注意2</strong><br>
+上記のファイルをコピーしても別の場所にあるファイルをリンクしているだけなのでダウンロード時にエラーになってしまったので、
+ファイル本体をコピーして所有権を変更する</p>
+<p>シンボリックリンクのファイル本体（リンク先）がどこにあるか確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@lets-encrypt-certbot:~/internal.onodera-program.com$ ls -l
+</span></span><span class="line"><span class="cl">total 4
+</span></span><span class="line"><span class="cl">-rw-r--r-- 1 mao root 692 Dec  8 03:05 README
+</span></span><span class="line"><span class="cl">lrwxrwxrwx 1 mao root  52 Dec  8 03:05 cert.pem -&gt; ../../archive/internal.onodera-program.com/cert1.pem
+</span></span><span class="line"><span class="cl">lrwxrwxrwx 1 mao root  53 Dec  8 03:05 chain.pem -&gt; ../../archive/internal.onodera-program.com/chain1.pem
+</span></span><span class="line"><span class="cl">lrwxrwxrwx 1 mao root  57 Dec  8 03:05 fullchain.pem -&gt; ../../archive/internal.onodera-program.com/fullchain1.pem
+</span></span><span class="line"><span class="cl">lrwxrwxrwx 1 mao root  55 Dec  8 03:05 privkey.pem -&gt; ../../archive/internal.onodera-program.com/privkey1.pem
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="変更手順">変更手順</h4>
+<p>root権限にする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo su -
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ファイルをホームディレクトリへコピーする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cp -r /etc/letsencrypt/archive/internal.onodera-program.com /home/mao
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所有者を変更する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cd /home/mao
+</span></span><span class="line"><span class="cl">chown -R mao internal.onodera-program.com
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>root権限から抜ける</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">exit
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="証明書をローカルにダウンロードする">証明書をローカルにダウンロードする</h3>
+<ul>
+<li>Macで作業</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">scp -r mao@192.168.10.11:/home/mao/internal.onodera-program.com /Users/username
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">% &gt; scp -r mao@192.168.10.11:/home/mao/internal.onodera-program.com /Users/username
+</span></span><span class="line"><span class="cl">mao@192.168.10.11&#39;s password: 
+</span></span><span class="line"><span class="cl">privkey1.pem                                                                          100%  241    35.4KB/s   00:00    
+</span></span><span class="line"><span class="cl">README                                                                                100%  692    57.3KB/s   00:00    
+</span></span><span class="line"><span class="cl">fullchain1.pem                                                                        100% 2872   272.6KB/s   00:00    
+</span></span><span class="line"><span class="cl">cert1.pem                                                                             100% 1306   134.0KB/s   00:00    
+</span></span><span class="line"><span class="cl">chain1.pem 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ダウンロードしたファイルの説明</p>
+<ul>
+<li>&ldquo;privkey1.pem&rdquo;:秘密鍵</li>
+<li>&ldquo;fullchain1.pem&rdquo;:証明書＋中間証明書の連結ファイル</li>
+<li>&ldquo;cert1.pem&rdquo;:証明書</li>
+<li>&ldquo;chain1.pem&rdquo;:中間証明書</li>
+</ul>
+<p>この証明書をアップロードしたりして使用できる</p>
+<h2 id="参考url">参考URL</h2>
+<ul>
+<li>Certbot documentation
+<ul>
+<li><a class="link" href="https://eff-certbot.readthedocs.io/en/stable/"  target="_blank" rel="noopener"
+    >https://eff-certbot.readthedocs.io/en/stable/</a></li>
+</ul>
+</li>
+<li>Let’s Encrypt ドキュメント
+<ul>
+<li><a class="link" href="https://letsencrypt.org/ja/docs/"  target="_blank" rel="noopener"
+    >https://letsencrypt.org/ja/docs/</a></li>
+</ul>
+</li>
+<li>無料SSL証明書のLet’s Encryptとは？
+<ul>
+<li><a class="link" href="https://ssl.sakura.ad.jp/column/letsencrypt/"  target="_blank" rel="noopener"
+    >https://ssl.sakura.ad.jp/column/letsencrypt/</a></li>
+</ul>
+</li>
+<li>シンボリックリンクの作成と削除
+<ul>
+<li><a class="link" href="https://qiita.com/colorrabbit/items/2e99304bd92201261c60"  target="_blank" rel="noopener"
+    >https://qiita.com/colorrabbit/items/2e99304bd92201261c60</a></li>
+</ul>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
