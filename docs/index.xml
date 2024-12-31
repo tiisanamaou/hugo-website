@@ -8,6 +8,25 @@
         <language>ja</language>
         <copyright>onodera</copyright>
         <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>2024年振り返りと2025年の目標</title>
+        <link>https://tiisanamaou.github.io/post/2024review-and-2025plan/</link>
+        <pubDate>Tue, 31 Dec 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/post/2024review-and-2025plan/</guid>
+        <description>&lt;h2 id=&#34;2024年振り返り&#34;&gt;2024年振り返り&lt;/h2&gt;
+&lt;p&gt;今年の目標としていた、基本情報と応用情報の合格は両方受験をして、基本情報技術者のみ合格することができました。&lt;/p&gt;
+&lt;p&gt;基本情報に合格できた理由は、先に応用を受験して落ちていたので、その反省から、勉強時間を増やして試験に望んだからだと思っています。&lt;br&gt;
+勉強の仕方もただ覚えるのではなく「どのような仕組みなのか」を意識しながら勉強したことも良かったのかなと思っています。&lt;/p&gt;
+&lt;p&gt;応用情報に合格できなかった点としては、難易度を軽く見ていたことによる勉強不足と思っています。&lt;br&gt;
+なので、来年受験するときには前回受けたときより知識も増えてはいると思いますが、もっと勉強時間を増やし2025年に合格することを目指します。&lt;/p&gt;
+&lt;p&gt;他にはkubernetesの勉強がてら1から構築してCNIを色々試してみたり、ブログサイトをHugoで作って記事を31個作成したりしました。&lt;br&gt;
+来年はkubernetes上で動くアプリケーションを色々試したりGoで作成したり、電子工作もしているので技術を融合させて作ってみようと思っています。&lt;br&gt;
+ブログに関しては来年はもっと色々と挑戦して勉強して、結果として今年よりも多く記事を書けたらと思っています。&lt;/p&gt;
+&lt;h2 id=&#34;2025年の目標&#34;&gt;2025年の目標&lt;/h2&gt;
+&lt;p&gt;来年2025年の目標は「応用情報技術者試験合格」、「LPIC1合格」、「1つ山に登る」、「自分で基板から作ったIoT関係のものを作る」、を頑張っていきます。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする</title>
         <link>https://tiisanamaou.github.io/post/internal-https-domain/</link>
         <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
