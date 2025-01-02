@@ -2,203 +2,206 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://tiisanamaou.github.io/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2025-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/</loc>
+    <loc>http://localhost:1313/post/</loc>
     <lastmod>2025-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/2024review-and-2025plan/</loc>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2025-01-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/ubuntu/</loc>
+    <lastmod>2025-01-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/static-routing/</loc>
+    <lastmod>2025-01-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/2024review-and-2025plan/</loc>
     <lastmod>2024-12-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/</loc>
+    <loc>http://localhost:1313/categories/%E6%8C%AF%E3%82%8A%E8%BF%94%E3%82%8A/</loc>
     <lastmod>2024-12-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/%E6%8C%AF%E3%82%8A%E8%BF%94%E3%82%8A/</loc>
-    <lastmod>2024-12-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://tiisanamaou.github.io/categories/ssl/</loc>
+    <loc>http://localhost:1313/categories/ssl/</loc>
     <lastmod>2024-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/unbound/</loc>
+    <loc>http://localhost:1313/categories/unbound/</loc>
     <lastmod>2024-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/internal-https-domain/</loc>
+    <loc>http://localhost:1313/post/internal-https-domain/</loc>
     <lastmod>2024-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/certbot/</loc>
+    <loc>http://localhost:1313/categories/certbot/</loc>
     <lastmod>2024-12-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/lets-encrypt/</loc>
+    <loc>http://localhost:1313/categories/lets-encrypt/</loc>
     <lastmod>2024-12-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/certbot-lets-encrypt/</loc>
+    <loc>http://localhost:1313/post/certbot-lets-encrypt/</loc>
     <lastmod>2024-12-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/apt-cacher-ng/</loc>
+    <loc>http://localhost:1313/categories/apt-cacher-ng/</loc>
     <lastmod>2024-11-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/apt-cacher-ng/</loc>
+    <loc>http://localhost:1313/post/apt-cacher-ng/</loc>
     <lastmod>2024-11-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/ubuntu/</loc>
+    <loc>http://localhost:1313/post/ubuntu-server-disk-expansion/</loc>
     <lastmod>2024-11-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/</loc>
-    <lastmod>2024-11-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://tiisanamaou.github.io/categories/docker/</loc>
+    <loc>http://localhost:1313/categories/docker/</loc>
     <lastmod>2024-10-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/harbor/</loc>
+    <loc>http://localhost:1313/categories/harbor/</loc>
     <lastmod>2024-10-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/harbor-install/</loc>
+    <loc>http://localhost:1313/post/harbor-install/</loc>
     <lastmod>2024-10-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/cloudflaretunnel/</loc>
+    <loc>http://localhost:1313/categories/cloudflaretunnel/</loc>
     <lastmod>2024-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</loc>
+    <loc>http://localhost:1313/post/cloudflare-tunnel-raspberrypi3b/</loc>
     <lastmod>2024-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/raspberrypi/</loc>
+    <loc>http://localhost:1313/categories/raspberrypi/</loc>
     <lastmod>2024-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/fe-passed-20240930/</loc>
+    <loc>http://localhost:1313/post/fe-passed-20240930/</loc>
     <lastmod>2024-10-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/%E8%A9%A6%E9%A8%93/</loc>
+    <loc>http://localhost:1313/categories/%E8%A9%A6%E9%A8%93/</loc>
     <lastmod>2024-10-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/cilium/</loc>
+    <loc>http://localhost:1313/categories/cilium/</loc>
     <lastmod>2024-09-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/kubernetes/</loc>
+    <loc>http://localhost:1313/categories/kubernetes/</loc>
     <lastmod>2024-09-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</loc>
+    <loc>http://localhost:1313/post/kubernetes-cni-cilium/</loc>
     <lastmod>2024-09-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</loc>
+    <loc>http://localhost:1313/post/kubernetes-rook-ceph/</loc>
     <lastmod>2024-09-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/rook-ceph/</loc>
+    <loc>http://localhost:1313/categories/rook-ceph/</loc>
     <lastmod>2024-09-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-longhorn/</loc>
+    <loc>http://localhost:1313/post/kubernetes-longhorn/</loc>
     <lastmod>2024-09-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/longhorn/</loc>
+    <loc>http://localhost:1313/categories/longhorn/</loc>
     <lastmod>2024-09-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-cri-o/</loc>
+    <loc>http://localhost:1313/post/kubernetes-cri-o/</loc>
     <lastmod>2024-08-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/helm/</loc>
+    <loc>http://localhost:1313/categories/helm/</loc>
     <lastmod>2024-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</loc>
+    <loc>http://localhost:1313/post/kubernetes-ingress-traefik/</loc>
     <lastmod>2024-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/traefik/</loc>
+    <loc>http://localhost:1313/categories/traefik/</loc>
     <lastmod>2024-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</loc>
+    <loc>http://localhost:1313/post/kubernetes-upgrade-v1-31-0/</loc>
     <lastmod>2024-08-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/hugo/</loc>
+    <loc>http://localhost:1313/categories/hugo/</loc>
     <lastmod>2024-08-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</loc>
+    <loc>http://localhost:1313/post/ubuntu-install-hugo/</loc>
     <lastmod>2024-08-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</loc>
+    <loc>http://localhost:1313/post/kubernetes-pv-pvc/</loc>
     <lastmod>2024-08-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-30-3/</loc>
+    <loc>http://localhost:1313/post/kubernetes-upgrade-v1-30-3/</loc>
     <lastmod>2024-08-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-dashboard/</loc>
+    <loc>http://localhost:1313/post/kubernetes-dashboard/</loc>
     <lastmod>2024-08-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-loadbalancer-ip/</loc>
+    <loc>http://localhost:1313/post/kubernetes-loadbalancer-ip/</loc>
     <lastmod>2024-08-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/metallb/</loc>
+    <loc>http://localhost:1313/categories/metallb/</loc>
     <lastmod>2024-08-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/ansible/</loc>
+    <loc>http://localhost:1313/categories/ansible/</loc>
     <lastmod>2024-07-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/ansible-k8s/</loc>
+    <loc>http://localhost:1313/post/ansible-k8s/</loc>
     <lastmod>2024-07-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/ansible/</loc>
+    <loc>http://localhost:1313/post/ansible/</loc>
     <lastmod>2024-07-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</loc>
+    <loc>http://localhost:1313/post/kubernetes-on-proxmox-05/</loc>
     <lastmod>2024-07-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/proxmox/</loc>
+    <loc>http://localhost:1313/categories/proxmox/</loc>
     <lastmod>2024-07-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</loc>
+    <loc>http://localhost:1313/post/kubernetes-on-proxmox-04/</loc>
     <lastmod>2024-07-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</loc>
+    <loc>http://localhost:1313/post/kubernetes-on-proxmox-03/</loc>
     <lastmod>2024-07-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</loc>
+    <loc>http://localhost:1313/post/kubernetes-on-proxmox-02/</loc>
     <lastmod>2024-07-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</loc>
+    <loc>http://localhost:1313/post/kubernetes-on-proxmox-01/</loc>
     <lastmod>2024-07-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/mysql/</loc>
+    <loc>http://localhost:1313/categories/mysql/</loc>
     <lastmod>2024-06-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</loc>
+    <loc>http://localhost:1313/post/deskminix300-memory-upgrade/</loc>
     <lastmod>2024-06-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/zbbix/</loc>
+    <loc>http://localhost:1313/categories/zbbix/</loc>
     <lastmod>2024-06-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/zabbix-install/</loc>
+    <loc>http://localhost:1313/post/zabbix-install/</loc>
     <lastmod>2024-06-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/hugo-stack-custom-lastupdated/</loc>
+    <loc>http://localhost:1313/post/hugo-stack-custom-lastupdated/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</loc>
+    <loc>http://localhost:1313/post/docker-compose-mysql-log/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/phpmyadmin/</loc>
+    <loc>http://localhost:1313/categories/phpmyadmin/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</loc>
+    <loc>http://localhost:1313/post/proxmox-ssd-lan/</loc>
     <lastmod>2024-05-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/</loc>
+    <loc>http://localhost:1313/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/</loc>
     <lastmod>2024-05-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/page/about/</loc>
+    <loc>http://localhost:1313/page/about/</loc>
     <lastmod>2024-07-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/categories/go/</loc>
+    <loc>http://localhost:1313/categories/go/</loc>
     <lastmod>2024-05-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/golang-source-build/</loc>
+    <loc>http://localhost:1313/post/golang-source-build/</loc>
     <lastmod>2024-05-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/page/</loc>
+    <loc>http://localhost:1313/page/</loc>
     <lastmod>2024-07-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/page/archives/</loc>
+    <loc>http://localhost:1313/page/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/page/search/</loc>
+    <loc>http://localhost:1313/page/search/</loc>
   </url><url>
-    <loc>https://tiisanamaou.github.io/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
   </url>
 </urlset>

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='なんのために？ 家庭内で普段使っているサブネットと、サーバー等のサブネットを分けてようと思ったため。
+しかし、そのままだと家庭内で使用しているサブネットからサーバーにアクセスできないので、サブネットを越えて通信させたかったので設定方法を調べた結果、スタティックルーティングという方法でルーティングさせて通信させることにした。
+環境 Ubuntu Server 24.04.1 ネットワーク図 家庭内のサブネット：192.168.10.0/24 サーバー等のサブネット：192.168.5.0/24 IPv4のフォワードを有効にする ネットワーク図上の&quot;VM2&quot;のIPv4のフォワードを有効にする 有効になっているか設定を確認する
+1 cat /proc/sys/net/ipv4/ip_forward 結果
+&ldquo;0&rdquo;：IPフォワーディングが無効になっている &ldquo;1&rdquo;：IPフォワーディングが有効になっている 一時的に有効化する 再起動をするとリセットされる
+1 echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward 永続的に有効化する 再起動をしてもリセットされないようにする
+下記の設定ファイルを編集する
+1 sudo nano /etc/sysctl.conf 下記を追加する
+1 net.ipv4.ip_forward=1 設定を反映する
+1 sudo sysctl -p ルーターにするVM2に設定する &ldquo;VM2&quot;についているNIC（ens18/ens19）の固定IPアドレスを設定する 設定ファイルをコピーする
+1 sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/99-config.yaml 設定ファイルを編集する
+1 sudo nano /etc/netplan/99-config.yaml 設定を反映させる
+1 sudo netplan apply 99-config.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 network: version: 2 renderer: networkd ethernets: ens18: dhcp4: false addresses: - 192.'>
+<title>スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする</title>
+
+<link rel='canonical' href='http://localhost:1313/post/static-routing/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする'>
+<meta property='og:description' content='なんのために？ 家庭内で普段使っているサブネットと、サーバー等のサブネットを分けてようと思ったため。
+しかし、そのままだと家庭内で使用しているサブネットからサーバーにアクセスできないので、サブネットを越えて通信させたかったので設定方法を調べた結果、スタティックルーティングという方法でルーティングさせて通信させることにした。
+環境 Ubuntu Server 24.04.1 ネットワーク図 家庭内のサブネット：192.168.10.0/24 サーバー等のサブネット：192.168.5.0/24 IPv4のフォワードを有効にする ネットワーク図上の&quot;VM2&quot;のIPv4のフォワードを有効にする 有効になっているか設定を確認する
+1 cat /proc/sys/net/ipv4/ip_forward 結果
+&ldquo;0&rdquo;：IPフォワーディングが無効になっている &ldquo;1&rdquo;：IPフォワーディングが有効になっている 一時的に有効化する 再起動をするとリセットされる
+1 echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward 永続的に有効化する 再起動をしてもリセットされないようにする
+下記の設定ファイルを編集する
+1 sudo nano /etc/sysctl.conf 下記を追加する
+1 net.ipv4.ip_forward=1 設定を反映する
+1 sudo sysctl -p ルーターにするVM2に設定する &ldquo;VM2&quot;についているNIC（ens18/ens19）の固定IPアドレスを設定する 設定ファイルをコピーする
+1 sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/99-config.yaml 設定ファイルを編集する
+1 sudo nano /etc/netplan/99-config.yaml 設定を反映させる
+1 sudo netplan apply 99-config.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 network: version: 2 renderer: networkd ethernets: ens18: dhcp4: false addresses: - 192.'>
+<meta property='og:url' content='http://localhost:1313/post/static-routing/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-01-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-01-02T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする">
+<meta name="twitter:description" content="なんのために？ 家庭内で普段使っているサブネットと、サーバー等のサブネットを分けてようと思ったため。
+しかし、そのままだと家庭内で使用しているサブネットからサーバーにアクセスできないので、サブネットを越えて通信させたかったので設定方法を調べた結果、スタティックルーティングという方法でルーティングさせて通信させることにした。
+環境 Ubuntu Server 24.04.1 ネットワーク図 家庭内のサブネット：192.168.10.0/24 サーバー等のサブネット：192.168.5.0/24 IPv4のフォワードを有効にする ネットワーク図上の&quot;VM2&quot;のIPv4のフォワードを有効にする 有効になっているか設定を確認する
+1 cat /proc/sys/net/ipv4/ip_forward 結果
+&ldquo;0&rdquo;：IPフォワーディングが無効になっている &ldquo;1&rdquo;：IPフォワーディングが有効になっている 一時的に有効化する 再起動をするとリセットされる
+1 echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward 永続的に有効化する 再起動をしてもリセットされないようにする
+下記の設定ファイルを編集する
+1 sudo nano /etc/sysctl.conf 下記を追加する
+1 net.ipv4.ip_forward=1 設定を反映する
+1 sudo sysctl -p ルーターにするVM2に設定する &ldquo;VM2&quot;についているNIC（ens18/ens19）の固定IPアドレスを設定する 設定ファイルをコピーする
+1 sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/99-config.yaml 設定ファイルを編集する
+1 sudo nano /etc/netplan/99-config.yaml 設定を反映させる
+1 sudo netplan apply 99-config.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 network: version: 2 renderer: networkd ethernets: ens18: dhcp4: false addresses: - 192.">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="http://localhost:1313/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/ubuntu/" >
+                Ubuntu
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/static-routing/">スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025/01/02</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="なんのために">なんのために？</h2>
+<p>家庭内で普段使っているサブネットと、サーバー等のサブネットを分けてようと思ったため。<br>
+しかし、そのままだと家庭内で使用しているサブネットからサーバーにアクセスできないので、サブネットを越えて通信させたかったので設定方法を調べた結果、スタティックルーティングという方法でルーティングさせて通信させることにした。</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu Server 24.04.1</li>
+<li>ネットワーク図
+<img src="../../post/static-routing/01.jpg"
+	width="1272"
+	height="940"
+	srcset="../../post/static-routing/01_hu1409723198811678751.jpg 480w, ../../post/static-routing/01_hu8771026579545558427.jpg 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="135"
+		data-flex-basis="324px"
+	
+>
+<ul>
+<li>家庭内のサブネット：192.168.10.0/24</li>
+<li>サーバー等のサブネット：192.168.5.0/24</li>
+</ul>
+</li>
+</ul>
+<h2 id="ipv4のフォワードを有効にする">IPv4のフォワードを有効にする</h2>
+<h3 id="ネットワーク図上のvm2のipv4のフォワードを有効にする">ネットワーク図上の&quot;VM2&quot;のIPv4のフォワードを有効にする</h3>
+<p>有効になっているか設定を確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cat /proc/sys/net/ipv4/ip_forward
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>結果</p>
+<ul>
+<li>&ldquo;0&rdquo;：IPフォワーディングが無効になっている</li>
+<li>&ldquo;1&rdquo;：IPフォワーディングが有効になっている</li>
+</ul>
+<h3 id="一時的に有効化する">一時的に有効化する</h3>
+<p>再起動をするとリセットされる</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="永続的に有効化する">永続的に有効化する</h3>
+<p>再起動をしてもリセットされないようにする<br>
+下記の設定ファイルを編集する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo nano /etc/sysctl.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下記を追加する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">net.ipv4.ip_forward=1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>設定を反映する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo sysctl -p
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ルーターにするvm2に設定する">ルーターにするVM2に設定する</h2>
+<h3 id="vm2についているnicens18ens19の固定ipアドレスを設定する">&ldquo;VM2&quot;についているNIC（ens18/ens19）の固定IPアドレスを設定する</h3>
+<p>設定ファイルをコピーする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/99-config.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>設定ファイルを編集する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo nano /etc/netplan/99-config.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>設定を反映させる</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo netplan apply
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>99-config.yaml</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">network:
+</span></span><span class="line"><span class="cl">    version: 2
+</span></span><span class="line"><span class="cl">    renderer: networkd
+</span></span><span class="line"><span class="cl">    ethernets:
+</span></span><span class="line"><span class="cl">      ens18:
+</span></span><span class="line"><span class="cl">        dhcp4: false
+</span></span><span class="line"><span class="cl">        addresses:
+</span></span><span class="line"><span class="cl">          - 192.168.5.110/24
+</span></span><span class="line"><span class="cl">        #routes:
+</span></span><span class="line"><span class="cl">          #- to: 192.168.5.0/24
+</span></span><span class="line"><span class="cl">            #scope: link
+</span></span><span class="line"><span class="cl">    　ens19:
+</span></span><span class="line"><span class="cl">        dhcp4: false
+</span></span><span class="line"><span class="cl">        addresses:
+</span></span><span class="line"><span class="cl">          - 192.168.10.110/24
+</span></span><span class="line"><span class="cl">        #routes:
+</span></span><span class="line"><span class="cl">          #- to: 192.168.10.0/24
+</span></span><span class="line"><span class="cl">            #scope: link
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="スタティックルートを設定する">スタティックルートを設定する</h3>
+<p>直接接続のためルーティング設定をしなくても自動的に設定される</p>
+<p>設定されているか確認をする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ip route
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">192.168.5.0/24 dev ens18 proto kernel scope link src 192.168.10.110
+</span></span><span class="line"><span class="cl">192.168.10.0/24 dev ens19 proto kernel scope link src 192.168.5.110
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="それぞれのサブネットにあるクライアントにスタティックルートを設定する">それぞれのサブネットにあるクライアントにスタティックルートを設定する</h2>
+<p>※OSはどちらもUbuntuServer24.04.1</p>
+<h3 id="一時的に追加する">一時的に追加する</h3>
+<p>&ldquo;ip route add&quot;コマンドで追加したスタティックルートは再起動をすると消えてしまう</p>
+<p>&ldquo;192.168.10.0/24&quot;にある&quot;VM1(192.168.10.50)&ldquo;のPCに設定</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo ip route add 192.168.5.0/24 via 192.168.10.35 dev eno1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>記載例：&ldquo;ip route add &lt;対象へのネットワーク&gt; via &lt;ゲートウェイ&gt; dev &lt;インターフェース名&gt;&rdquo;</li>
+</ul>
+<p>&ldquo;192.168.5.0/24&quot;にある&quot;VM3(192.168.5.108)&ldquo;のPCに設定</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo ip route add 192.168.10.0/24 via 192.168.5.110 dev ens18
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="永続的に追加する">永続的に追加する</h3>
+<p>netplanの設定ファイルにスタティックルートを追加する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">network:
+</span></span><span class="line"><span class="cl">    version: 2
+</span></span><span class="line"><span class="cl">    renderer: networkd
+</span></span><span class="line"><span class="cl">    ethernets:
+</span></span><span class="line"><span class="cl">      ens18:
+</span></span><span class="line"><span class="cl">        dhcp4: false
+</span></span><span class="line"><span class="cl">        addresses:
+</span></span><span class="line"><span class="cl">          - 192.168.10.50/24
+</span></span><span class="line"><span class="cl">        routes:
+</span></span><span class="line"><span class="cl">          - to: 192.168.5.0/24
+</span></span><span class="line"><span class="cl">            via: 192.168.10.110
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下記は&quot;192.168.5.0/24&quot;のサブネットへの通信をゲートウェイ&quot;192.168.10.110&quot;へ送るスタティックルートの設定の例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">routes:
+</span></span><span class="line"><span class="cl">  - to: 192.168.5.0/24
+</span></span><span class="line"><span class="cl">    via: 192.168.10.110
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>設定を反映させる</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo netplan apply
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ルーティングが設定されているか確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ip route
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="疎通しているかpingで確認する">疎通しているかpingで確認する</h2>
+<p>pingを飛ばして確認する</p>
+<ul>
+<li>&ldquo;VM1(192.168.10.50)&ldquo;から下記コマンドを実行する</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ping 192.168.5.108
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>実行結果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ping 192.168.5.108 
+</span></span><span class="line"><span class="cl">PING 192.168.5.108 (192.168.5.108) 56(84) bytes of data.
+</span></span><span class="line"><span class="cl">64 bytes from 192.168.5.108: icmp_seq=1 ttl=63 time=0.789 ms
+</span></span><span class="line"><span class="cl">64 bytes from 192.168.5.108: icmp_seq=2 ttl=63 time=0.991 ms
+</span></span><span class="line"><span class="cl">64 bytes from 192.168.5.108: icmp_seq=3 ttl=63 time=0.920 ms
+</span></span><span class="line"><span class="cl">64 bytes from 192.168.5.108: icmp_seq=4 ttl=63 time=0.933 ms
+</span></span><span class="line"><span class="cl">^C
+</span></span><span class="line"><span class="cl">--- 192.168.5.108 ping statistics ---
+</span></span><span class="line"><span class="cl">4 packets transmitted, 4 received, 0% packet loss, time 3041ms
+</span></span><span class="line"><span class="cl">rtt min/avg/max/mdev = 0.789/0.908/0.991/0.073 ms
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>問題なければ、サブネットを越えて通信ができた</p>
+<p>ネットワーク図
+<img src="../../post/static-routing/01.jpg"
+	width="1272"
+	height="940"
+	srcset="../../post/static-routing/01_hu1409723198811678751.jpg 480w, ../../post/static-routing/01_hu8771026579545558427.jpg 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="135"
+		data-flex-basis="324px"
+	
+></p>
+<h2 id="参考url">参考URL</h2>
+<ul>
+<li>Netplan documentation
+<ul>
+<li><a class="link" href="https://netplan.readthedocs.io/en/latest/netplan-yaml/#default-routes"  target="_blank" rel="noopener"
+    >https://netplan.readthedocs.io/en/latest/netplan-yaml/#default-routes</a></li>
+</ul>
+</li>
+<li>【Ubuntu18.04のネットワーク設定方法】Netplanの解説
+<ul>
+<li><a class="link" href="https://www.komee.org/entry/2018/06/13/170000"  target="_blank" rel="noopener"
+    >https://www.komee.org/entry/2018/06/13/170000</a></li>
+</ul>
+</li>
+<li>Ubuntu netplan書き方の基本設定とトラブル対処法
+<ul>
+<li><a class="link" href="https://hamagen.blog/ubuntu-netplan-write/"  target="_blank" rel="noopener"
+    >https://hamagen.blog/ubuntu-netplan-write/</a></li>
+</ul>
+</li>
+<li>サーバーをルーターにする設定「/proc/sys/net/ipv4/ip_forward」とは?
+<ul>
+<li><a class="link" href="https://note.com/minato_kame/n/n8002de5a9b03"  target="_blank" rel="noopener"
+    >https://note.com/minato_kame/n/n8002de5a9b03</a></li>
+</ul>
+</li>
+<li>VLAN の中で IP Forwarding を設定する(Akamai)
+<ul>
+<li><a class="link" href="https://qiita.com/110hideki/items/851291f0d33acc577a82#ip-forwarding-%E3%81%AE%E8%A8%AD%E5%AE%9A"  target="_blank" rel="noopener"
+    >https://qiita.com/110hideki/items/851291f0d33acc577a82#ip-forwarding-%E3%81%AE%E8%A8%AD%E5%AE%9A</a></li>
+</ul>
+</li>
+<li>ルーティングテーブルを表示・操作するコマンドを確認する
+<ul>
+<li><a class="link" href="https://takapi86.hatenablog.com/entry/2019/09/23/232240"  target="_blank" rel="noopener"
+    >https://takapi86.hatenablog.com/entry/2019/09/23/232240</a></li>
+</ul>
+</li>
+<li>【Linux】ip routeで表示されるdev,via,src,protoの意味と見方
+<ul>
+<li><a class="link" href="https://www.mtioutput.com/entry/iproute-cmd-howtosee"  target="_blank" rel="noopener"
+    >https://www.mtioutput.com/entry/iproute-cmd-howtosee</a></li>
+</ul>
+</li>
+<li>基本的なTCP/IP通信の仕組み（別セグメント間の通信）
+<ul>
+<li><a class="link" href="https://infrastructure-engineer.com/tcpip-basic-0002/"  target="_blank" rel="noopener"
+    >https://infrastructure-engineer.com/tcpip-basic-0002/</a></li>
+</ul>
+</li>
+<li>【Linux】静的ルーティングをコマンドで追加・削除・確認する方法
+<ul>
+<li><a class="link" href="https://infra-exp.com/linux_static_route/"  target="_blank" rel="noopener"
+    >https://infra-exp.com/linux_static_route/</a></li>
+</ul>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/ubuntu-server-disk-expansion/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">仮想マシン上のDiskの拡張手順</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/ubuntu-install-hugo/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">UbuntuにHugoをインストールする</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

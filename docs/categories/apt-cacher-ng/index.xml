@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Apt-Cacher-Ng on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/apt-cacher-ng/</link>
+        <link>http://localhost:1313/categories/apt-cacher-ng/</link>
         <description>Recent content in Apt-Cacher-Ng on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 10 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/apt-cacher-ng/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 10 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/apt-cacher-ng/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>aptのキャッシュをしてくれるapt-cacher-ngのインストール方法</title>
-        <link>https://tiisanamaou.github.io/post/apt-cacher-ng/</link>
+        <link>http://localhost:1313/post/apt-cacher-ng/</link>
         <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/apt-cacher-ng/</guid>
+        <guid>http://localhost:1313/post/apt-cacher-ng/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;複数のPCからaptを使用する際に毎回ダウンロードすると時間がかかるので、ローカルにキャッシュサーバーを立ててそこからダウンロードできるようにしたい&lt;br&gt;
 キャッシュサーバーではなくミラーサーバーでも良かったが、ミラーサーバーだと容量が必要になるので、今回はキャッシュサーバーを使用することにした&lt;/p&gt;

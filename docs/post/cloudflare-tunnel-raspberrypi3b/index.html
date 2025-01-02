@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Ubuntuにスワップを作成する（ラズパイ） ラズパイのスペックは下記の通りです
 Raspberry Pi 3B メモリ1GB SDカード32GB メモリが少ないのでDockerを使用するには少ないので、8GBのスワップメモリを作成します
 何も表示されない場合はスワップは作成されていない 1 sudo swapon --show ストレージの容量を確認します 1 df -h スワップ用のファイルを作成する 8GBのスワップを作成する 1 2 sudo fallocate -l 8G /swapfile ls -lh /swapfile スワップファイルを設定して、有効にします 1 2 3 sudo chmod 600 /swapfile sudo mkswap /swapfile sudo swapon /swapfile 再度確認をします 1 sudo swapon --show スワップが作成されています 1 2 3 mao@raspberrypi3:~$ sudo swapon --show NAME TYPE SIZE USED PRIO /swapfile file 8G 0B -2 スワップの永続設定をする 1 sudo nano /etc/fstab 下記を追記する 1 /swapfile none swap sw 0 0 UbuntuにDockerをインストールする 公式ドキュメントを参考にインストールする'>
 <title>CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/'>
+<link rel='canonical' href='http://localhost:1313/post/cloudflare-tunnel-raspberrypi3b/'>
 
 <link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする'>
 <meta property='og:description' content='Ubuntuにスワップを作成する（ラズパイ） ラズパイのスペックは下記の通りです
 Raspberry Pi 3B メモリ1GB SDカード32GB メモリが少ないのでDockerを使用するには少ないので、8GBのスワップメモリを作成します
 何も表示されない場合はスワップは作成されていない 1 sudo swapon --show ストレージの容量を確認します 1 df -h スワップ用のファイルを作成する 8GBのスワップを作成する 1 2 sudo fallocate -l 8G /swapfile ls -lh /swapfile スワップファイルを設定して、有効にします 1 2 3 sudo chmod 600 /swapfile sudo mkswap /swapfile sudo swapon /swapfile 再度確認をします 1 sudo swapon --show スワップが作成されています 1 2 3 mao@raspberrypi3:~$ sudo swapon --show NAME TYPE SIZE USED PRIO /swapfile file 8G 0B -2 スワップの永続設定をする 1 sudo nano /etc/fstab 下記を追記する 1 /swapfile none swap sw 0 0 UbuntuにDockerをインストールする 公式ドキュメントを参考にインストールする'>
-<meta property='og:url' content='https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/'>
+<meta property='og:url' content='http://localhost:1313/post/cloudflare-tunnel-raspberrypi3b/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-10-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-10-07T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする">
@@ -200,7 +200,7 @@ Raspberry Pi 3B メモリ1GB SDカード32GB メモリが少ないのでDocker�
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://tiisanamaou.github.io/" selected></option>
+                            <option value="http://localhost:1313/" selected></option>
                         
                     </select>
                 </li>
@@ -648,7 +648,7 @@ Raspberry Pi 3B メモリ1GB SDカード32GB メモリが少ないのでDocker�
     <section class="copyright">
         &copy; 
         
-        2024 onodera
+        2025 onodera
     </section>
     
     <section class="powerby">

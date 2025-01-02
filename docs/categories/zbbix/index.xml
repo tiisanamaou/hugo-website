@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Zbbix on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/zbbix/</link>
+        <link>http://localhost:1313/categories/zbbix/</link>
         <description>Recent content in Zbbix on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sat, 22 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/zbbix/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 22 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/zbbix/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Zbbix7.0LTSをUbuntuにインストールする</title>
-        <link>https://tiisanamaou.github.io/post/zabbix-install/</link>
+        <link>http://localhost:1313/post/zabbix-install/</link>
         <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/zabbix-install/</guid>
+        <guid>http://localhost:1313/post/zabbix-install/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 24.04&lt;/li&gt;

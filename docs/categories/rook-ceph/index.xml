@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Rook-Ceph on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/rook-ceph/</link>
+        <link>http://localhost:1313/categories/rook-ceph/</link>
         <description>Recent content in Rook-Ceph on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 15 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/rook-ceph/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 15 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/rook-ceph/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>KubernetesにRook-Cephをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</link>
+        <link>http://localhost:1313/post/kubernetes-rook-ceph/</link>
         <pubDate>Sun, 15 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</guid>
+        <guid>http://localhost:1313/post/kubernetes-rook-ceph/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0

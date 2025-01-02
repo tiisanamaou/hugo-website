@@ -2,17 +2,397 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>onodera memo</title>
-        <link>https://tiisanamaou.github.io/</link>
+        <link>http://localhost:1313/</link>
         <description>Recent content on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする</title>
+        <link>http://localhost:1313/post/static-routing/</link>
+        <pubDate>Thu, 02 Jan 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/static-routing/</guid>
+        <description>&lt;h2 id=&#34;なんのために&#34;&gt;なんのために？&lt;/h2&gt;
+&lt;p&gt;家庭内で普段使っているサブネットと、サーバー等のサブネットを分けてようと思ったため。&lt;br&gt;
+しかし、そのままだと家庭内で使用しているサブネットからサーバーにアクセスできないので、サブネットを越えて通信させたかったので設定方法を調べた結果、スタティックルーティングという方法でルーティングさせて通信させることにした。&lt;/p&gt;
+&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Ubuntu Server 24.04.1&lt;/li&gt;
+&lt;li&gt;ネットワーク図
+&lt;img src=&#34;./post/static-routing/01.jpg&#34;
+	width=&#34;1272&#34;
+	height=&#34;940&#34;
+	srcset=&#34;./post/static-routing/01_hu1409723198811678751.jpg 480w, ./post/static-routing/01_hu8771026579545558427.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;135&#34;
+		data-flex-basis=&#34;324px&#34;
+	
+&gt;
+&lt;ul&gt;
+&lt;li&gt;家庭内のサブネット：192.168.10.0/24&lt;/li&gt;
+&lt;li&gt;サーバー等のサブネット：192.168.5.0/24&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;ipv4のフォワードを有効にする&#34;&gt;IPv4のフォワードを有効にする&lt;/h2&gt;
+&lt;h3 id=&#34;ネットワーク図上のvm2のipv4のフォワードを有効にする&#34;&gt;ネットワーク図上の&amp;quot;VM2&amp;quot;のIPv4のフォワードを有効にする&lt;/h3&gt;
+&lt;p&gt;有効になっているか設定を確認する&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cat /proc/sys/net/ipv4/ip_forward
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;結果&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;0&amp;rdquo;：IPフォワーディングが無効になっている&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;1&amp;rdquo;：IPフォワーディングが有効になっている&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;一時的に有効化する&#34;&gt;一時的に有効化する&lt;/h3&gt;
+&lt;p&gt;再起動をするとリセットされる&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;永続的に有効化する&#34;&gt;永続的に有効化する&lt;/h3&gt;
+&lt;p&gt;再起動をしてもリセットされないようにする&lt;br&gt;
+下記の設定ファイルを編集する&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/sysctl.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;下記を追加する&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;net.ipv4.ip_forward=1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;設定を反映する&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo sysctl -p
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;ルーターにするvm2に設定する&#34;&gt;ルーターにするVM2に設定する&lt;/h2&gt;
+&lt;h3 id=&#34;vm2についているnicens18ens19の固定ipアドレスを設定する&#34;&gt;&amp;ldquo;VM2&amp;quot;についているNIC（ens18/ens19）の固定IPアドレスを設定する&lt;/h3&gt;
+&lt;p&gt;設定ファイルをコピーする&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/99-config.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;設定ファイルを編集する&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/netplan/99-config.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;設定を反映させる&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo netplan apply
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;99-config.yaml&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;network:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    version: 2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    renderer: networkd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ethernets:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      ens18:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        dhcp4: false
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        addresses:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          - 192.168.5.110/24
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        #routes:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          #- to: 192.168.5.0/24
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            #scope: link
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    　ens19:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        dhcp4: false
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        addresses:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          - 192.168.10.110/24
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        #routes:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          #- to: 192.168.10.0/24
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            #scope: link
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;スタティックルートを設定する&#34;&gt;スタティックルートを設定する&lt;/h3&gt;
+&lt;p&gt;直接接続のためルーティング設定をしなくても自動的に設定される&lt;/p&gt;
+&lt;p&gt;設定されているか確認をする&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ip route
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;192.168.5.0/24 dev ens18 proto kernel scope link src 192.168.10.110
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;192.168.10.0/24 dev ens19 proto kernel scope link src 192.168.5.110
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;それぞれのサブネットにあるクライアントにスタティックルートを設定する&#34;&gt;それぞれのサブネットにあるクライアントにスタティックルートを設定する&lt;/h2&gt;
+&lt;p&gt;※OSはどちらもUbuntuServer24.04.1&lt;/p&gt;
+&lt;h3 id=&#34;一時的に追加する&#34;&gt;一時的に追加する&lt;/h3&gt;
+&lt;p&gt;&amp;ldquo;ip route add&amp;quot;コマンドで追加したスタティックルートは再起動をすると消えてしまう&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;192.168.10.0/24&amp;quot;にある&amp;quot;VM1(192.168.10.50)&amp;ldquo;のPCに設定&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ip route add 192.168.5.0/24 via 192.168.10.35 dev eno1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;記載例：&amp;ldquo;ip route add &amp;lt;対象へのネットワーク&amp;gt; via &amp;lt;ゲートウェイ&amp;gt; dev &amp;lt;インターフェース名&amp;gt;&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;ldquo;192.168.5.0/24&amp;quot;にある&amp;quot;VM3(192.168.5.108)&amp;ldquo;のPCに設定&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ip route add 192.168.10.0/24 via 192.168.5.110 dev ens18
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;永続的に追加する&#34;&gt;永続的に追加する&lt;/h3&gt;
+&lt;p&gt;netplanの設定ファイルにスタティックルートを追加する&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;network:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    version: 2
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    renderer: networkd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ethernets:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      ens18:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        dhcp4: false
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        addresses:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          - 192.168.10.50/24
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        routes:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          - to: 192.168.5.0/24
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            via: 192.168.10.110
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;下記は&amp;quot;192.168.5.0/24&amp;quot;のサブネットへの通信をゲートウェイ&amp;quot;192.168.10.110&amp;quot;へ送るスタティックルートの設定の例&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;routes:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - to: 192.168.5.0/24
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    via: 192.168.10.110
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;設定を反映させる&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo netplan apply
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;ルーティングが設定されているか確認する&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ip route
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;疎通しているかpingで確認する&#34;&gt;疎通しているかpingで確認する&lt;/h2&gt;
+&lt;p&gt;pingを飛ばして確認する&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;VM1(192.168.10.50)&amp;ldquo;から下記コマンドを実行する&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ping 192.168.5.108
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;実行結果&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ping 192.168.5.108 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PING 192.168.5.108 (192.168.5.108) 56(84) bytes of data.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;64 bytes from 192.168.5.108: icmp_seq=1 ttl=63 time=0.789 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;64 bytes from 192.168.5.108: icmp_seq=2 ttl=63 time=0.991 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;64 bytes from 192.168.5.108: icmp_seq=3 ttl=63 time=0.920 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;64 bytes from 192.168.5.108: icmp_seq=4 ttl=63 time=0.933 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;^C
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;--- 192.168.5.108 ping statistics ---
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;4 packets transmitted, 4 received, 0% packet loss, time 3041ms
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rtt min/avg/max/mdev = 0.789/0.908/0.991/0.073 ms
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;問題なければ、サブネットを越えて通信ができた&lt;/p&gt;
+&lt;p&gt;ネットワーク図
+&lt;img src=&#34;./post/static-routing/01.jpg&#34;
+	width=&#34;1272&#34;
+	height=&#34;940&#34;
+	srcset=&#34;./post/static-routing/01_hu1409723198811678751.jpg 480w, ./post/static-routing/01_hu8771026579545558427.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;135&#34;
+		data-flex-basis=&#34;324px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;参考url&#34;&gt;参考URL&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Netplan documentation
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://netplan.readthedocs.io/en/latest/netplan-yaml/#default-routes&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://netplan.readthedocs.io/en/latest/netplan-yaml/#default-routes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;【Ubuntu18.04のネットワーク設定方法】Netplanの解説
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.komee.org/entry/2018/06/13/170000&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.komee.org/entry/2018/06/13/170000&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Ubuntu netplan書き方の基本設定とトラブル対処法
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://hamagen.blog/ubuntu-netplan-write/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://hamagen.blog/ubuntu-netplan-write/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;サーバーをルーターにする設定「/proc/sys/net/ipv4/ip_forward」とは?
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://note.com/minato_kame/n/n8002de5a9b03&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://note.com/minato_kame/n/n8002de5a9b03&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;VLAN の中で IP Forwarding を設定する(Akamai)
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://qiita.com/110hideki/items/851291f0d33acc577a82#ip-forwarding-%E3%81%AE%E8%A8%AD%E5%AE%9A&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://qiita.com/110hideki/items/851291f0d33acc577a82#ip-forwarding-%E3%81%AE%E8%A8%AD%E5%AE%9A&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ルーティングテーブルを表示・操作するコマンドを確認する
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://takapi86.hatenablog.com/entry/2019/09/23/232240&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://takapi86.hatenablog.com/entry/2019/09/23/232240&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;【Linux】ip routeで表示されるdev,via,src,protoの意味と見方
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.mtioutput.com/entry/iproute-cmd-howtosee&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.mtioutput.com/entry/iproute-cmd-howtosee&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;基本的なTCP/IP通信の仕組み（別セグメント間の通信）
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://infrastructure-engineer.com/tcpip-basic-0002/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://infrastructure-engineer.com/tcpip-basic-0002/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;【Linux】静的ルーティングをコマンドで追加・削除・確認する方法
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://infra-exp.com/linux_static_route/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://infra-exp.com/linux_static_route/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>2024年振り返りと2025年の目標</title>
-        <link>https://tiisanamaou.github.io/post/2024review-and-2025plan/</link>
+        <link>http://localhost:1313/post/2024review-and-2025plan/</link>
         <pubDate>Tue, 31 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/2024review-and-2025plan/</guid>
+        <guid>http://localhost:1313/post/2024review-and-2025plan/</guid>
         <description>&lt;h2 id=&#34;2024年振り返り&#34;&gt;2024年振り返り&lt;/h2&gt;
 &lt;p&gt;今年の目標としていた、基本情報と応用情報の合格は両方受験をして、基本情報技術者のみ合格することができました。&lt;/p&gt;
 &lt;p&gt;基本情報に合格できた理由は、先に応用を受験して落ちていたので、その反省から、勉強時間を増やして試験に望んだからだと思っています。&lt;br&gt;
@@ -28,10 +408,10 @@
         </item>
         <item>
         <title>ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする</title>
-        <link>https://tiisanamaou.github.io/post/internal-https-domain/</link>
+        <link>http://localhost:1313/post/internal-https-domain/</link>
         <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/internal-https-domain/</guid>
+        <guid>http://localhost:1313/post/internal-https-domain/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する&lt;/p&gt;
 &lt;p&gt;前回の記事で証明書を発行したので、今回はnginxに証明書をコピーし、HTTPSでアクセスできるようにする&lt;/p&gt;
@@ -288,10 +668,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>証明書発行手順（Let&#39;s Encrypt）</title>
-        <link>https://tiisanamaou.github.io/post/certbot-lets-encrypt/</link>
+        <link>http://localhost:1313/post/certbot-lets-encrypt/</link>
         <pubDate>Tue, 17 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/certbot-lets-encrypt/</guid>
+        <guid>http://localhost:1313/post/certbot-lets-encrypt/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する&lt;/p&gt;
 &lt;h2 id=&#34;証明書の発行準備&#34;&gt;証明書の発行準備&lt;/h2&gt;
@@ -807,10 +1187,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>aptのキャッシュをしてくれるapt-cacher-ngのインストール方法</title>
-        <link>https://tiisanamaou.github.io/post/apt-cacher-ng/</link>
+        <link>http://localhost:1313/post/apt-cacher-ng/</link>
         <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/apt-cacher-ng/</guid>
+        <guid>http://localhost:1313/post/apt-cacher-ng/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;複数のPCからaptを使用する際に毎回ダウンロードすると時間がかかるので、ローカルにキャッシュサーバーを立ててそこからダウンロードできるようにしたい&lt;br&gt;
 キャッシュサーバーではなくミラーサーバーでも良かったが、ミラーサーバーだと容量が必要になるので、今回はキャッシュサーバーを使用することにした&lt;/p&gt;
@@ -1027,10 +1407,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>仮想マシン上のDiskの拡張手順</title>
-        <link>https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/</link>
+        <link>http://localhost:1313/post/ubuntu-server-disk-expansion/</link>
         <pubDate>Sat, 09 Nov 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/</guid>
+        <guid>http://localhost:1313/post/ubuntu-server-disk-expansion/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です&lt;/p&gt;
 &lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
@@ -1447,10 +1827,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>Harborのインストールしてpushとpullをしてみる</title>
-        <link>https://tiisanamaou.github.io/post/harbor-install/</link>
+        <link>http://localhost:1313/post/harbor-install/</link>
         <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/harbor-install/</guid>
+        <guid>http://localhost:1313/post/harbor-install/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;harbor v2.11.1&lt;/li&gt;
@@ -2616,10 +2996,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする</title>
-        <link>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</link>
+        <link>http://localhost:1313/post/cloudflare-tunnel-raspberrypi3b/</link>
         <pubDate>Mon, 07 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</guid>
+        <guid>http://localhost:1313/post/cloudflare-tunnel-raspberrypi3b/</guid>
         <description>&lt;h2 id=&#34;ubuntuにスワップを作成するラズパイ&#34;&gt;Ubuntuにスワップを作成する（ラズパイ）&lt;/h2&gt;
 &lt;p&gt;ラズパイのスペックは下記の通りです&lt;/p&gt;
 &lt;ul&gt;
@@ -2950,10 +3330,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>基本情報技術者試験に合格しました</title>
-        <link>https://tiisanamaou.github.io/post/fe-passed-20240930/</link>
+        <link>http://localhost:1313/post/fe-passed-20240930/</link>
         <pubDate>Sat, 05 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/fe-passed-20240930/</guid>
+        <guid>http://localhost:1313/post/fe-passed-20240930/</guid>
         <description>&lt;h2 id=&#34;試験について&#34;&gt;試験について&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;基本情報技術者試験&lt;/li&gt;
@@ -3034,10 +3414,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesのCNIにCiliumを使用して構築する</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</link>
+        <link>http://localhost:1313/post/kubernetes-cni-cilium/</link>
         <pubDate>Mon, 16 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</guid>
+        <guid>http://localhost:1313/post/kubernetes-cni-cilium/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -3779,10 +4159,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesにRook-Cephをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</link>
+        <link>http://localhost:1313/post/kubernetes-rook-ceph/</link>
         <pubDate>Sun, 15 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</guid>
+        <guid>http://localhost:1313/post/kubernetes-rook-ceph/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -4395,10 +4775,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesにLonghornをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-longhorn/</link>
+        <link>http://localhost:1313/post/kubernetes-longhorn/</link>
         <pubDate>Sat, 14 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-longhorn/</guid>
+        <guid>http://localhost:1313/post/kubernetes-longhorn/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -4741,10 +5121,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>cri-oを使用してkubernetesを構築する</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-cri-o/</link>
+        <link>http://localhost:1313/post/kubernetes-cri-o/</link>
         <pubDate>Sun, 25 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-cri-o/</guid>
+        <guid>http://localhost:1313/post/kubernetes-cri-o/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0&lt;/li&gt;
@@ -7031,10 +7411,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesでTraefikを使用してIngressを使えるようにする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</link>
+        <link>http://localhost:1313/post/kubernetes-ingress-traefik/</link>
         <pubDate>Wed, 21 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</guid>
+        <guid>http://localhost:1313/post/kubernetes-ingress-traefik/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0&lt;/li&gt;
@@ -7416,10 +7796,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</link>
+        <link>http://localhost:1313/post/kubernetes-upgrade-v1-31-0/</link>
         <pubDate>Fri, 16 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</guid>
+        <guid>http://localhost:1313/post/kubernetes-upgrade-v1-31-0/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.3 → 1.30.4 → 1.31.0&lt;/li&gt;
@@ -8124,10 +8504,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>UbuntuにHugoをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</link>
+        <link>http://localhost:1313/post/ubuntu-install-hugo/</link>
         <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</guid>
+        <guid>http://localhost:1313/post/ubuntu-install-hugo/</guid>
         <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました&lt;br&gt;
 その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました&lt;/p&gt;
@@ -8208,10 +8588,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>NFS-serverを構築してPV(PersistentVolume)を作成する</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</link>
+        <link>http://localhost:1313/post/kubernetes-pv-pvc/</link>
         <pubDate>Wed, 14 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</guid>
+        <guid>http://localhost:1313/post/kubernetes-pv-pvc/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.3&lt;/li&gt;
@@ -8777,10 +9157,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>Kubernetesのクラスタをv1.30.2からv1.30.3へアップグレードをする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-30-3/</link>
+        <link>http://localhost:1313/post/kubernetes-upgrade-v1-30-3/</link>
         <pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-30-3/</guid>
+        <guid>http://localhost:1313/post/kubernetes-upgrade-v1-30-3/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2 → 1.30.3&lt;/li&gt;
@@ -11374,10 +11754,10 @@ Control-Planeで実行する&lt;/p&gt;
         </item>
         <item>
         <title>Kubernetesのダッシュボードをデプロイする＋LoadBalancerでIPアドレスを割り振る</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-dashboard/</link>
+        <link>http://localhost:1313/post/kubernetes-dashboard/</link>
         <pubDate>Mon, 12 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-dashboard/</guid>
+        <guid>http://localhost:1313/post/kubernetes-dashboard/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2&lt;/li&gt;
@@ -12070,10 +12450,10 @@ Control-Planeで実行する&lt;/p&gt;
         </item>
         <item>
         <title>KubernetesのLoadBalancerでIPアドレスを指定する方法</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-loadbalancer-ip/</link>
+        <link>http://localhost:1313/post/kubernetes-loadbalancer-ip/</link>
         <pubDate>Sun, 11 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-loadbalancer-ip/</guid>
+        <guid>http://localhost:1313/post/kubernetes-loadbalancer-ip/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2&lt;/li&gt;
@@ -12387,10 +12767,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>Ansibleを使ってKubernetesの初期設定をしてみた</title>
-        <link>https://tiisanamaou.github.io/post/ansible-k8s/</link>
+        <link>http://localhost:1313/post/ansible-k8s/</link>
         <pubDate>Sat, 27 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ansible-k8s/</guid>
+        <guid>http://localhost:1313/post/ansible-k8s/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ansible 2.16.9&lt;/li&gt;
@@ -12798,10 +13178,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>Ansibleを少し触ってみた</title>
-        <link>https://tiisanamaou.github.io/post/ansible/</link>
+        <link>http://localhost:1313/post/ansible/</link>
         <pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ansible/</guid>
+        <guid>http://localhost:1313/post/ansible/</guid>
         <description>&lt;h2 id=&#34;ansibleの拡張機能のインストール&#34;&gt;Ansibleの拡張機能のインストール&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;VScodeの拡張機能&amp;quot;redhat.ansible&amp;quot;があるのでインストールしておくと便利になる&lt;/li&gt;
@@ -13134,10 +13514,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（5）/HA構成</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</link>
+        <link>http://localhost:1313/post/kubernetes-on-proxmox-05/</link>
         <pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</guid>
+        <guid>http://localhost:1313/post/kubernetes-on-proxmox-05/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -13638,10 +14018,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（4）/クラスターを壊す</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</link>
+        <link>http://localhost:1313/post/kubernetes-on-proxmox-04/</link>
         <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</guid>
+        <guid>http://localhost:1313/post/kubernetes-on-proxmox-04/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -14015,10 +14395,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</link>
+        <link>http://localhost:1313/post/kubernetes-on-proxmox-03/</link>
         <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</guid>
+        <guid>http://localhost:1313/post/kubernetes-on-proxmox-03/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -14388,10 +14768,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（2）/Control-Plane・Worker-Nodeの設定</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</link>
+        <link>http://localhost:1313/post/kubernetes-on-proxmox-02/</link>
         <pubDate>Sat, 06 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</guid>
+        <guid>http://localhost:1313/post/kubernetes-on-proxmox-02/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -14774,10 +15154,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（1）</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</link>
+        <link>http://localhost:1313/post/kubernetes-on-proxmox-01/</link>
         <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</guid>
+        <guid>http://localhost:1313/post/kubernetes-on-proxmox-01/</guid>
         <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;k8sを勉強してみようと思い、デプロイ等の操作は書籍で触っていたら構築もしてみたくなったので、Proxmox上に仮想マシンを作成してk8sを構築してみた&lt;/p&gt;
 &lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
@@ -15948,10 +16328,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>ProxmoxがインストールされているDeskminix300のメモリを増設する</title>
-        <link>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</link>
+        <link>http://localhost:1313/post/deskminix300-memory-upgrade/</link>
         <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</guid>
+        <guid>http://localhost:1313/post/deskminix300-memory-upgrade/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox VE 8.2.4 x86_64&lt;/li&gt;
@@ -16072,10 +16452,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Zbbix7.0LTSをUbuntuにインストールする</title>
-        <link>https://tiisanamaou.github.io/post/zabbix-install/</link>
+        <link>http://localhost:1313/post/zabbix-install/</link>
         <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/zabbix-install/</guid>
+        <guid>http://localhost:1313/post/zabbix-install/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 24.04&lt;/li&gt;
@@ -16435,10 +16815,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Hugoで作成日時の横に更新日時を表示できるようにする</title>
-        <link>https://tiisanamaou.github.io/post/hugo-stack-custom-lastupdated/</link>
+        <link>http://localhost:1313/post/hugo-stack-custom-lastupdated/</link>
         <pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/hugo-stack-custom-lastupdated/</guid>
+        <guid>http://localhost:1313/post/hugo-stack-custom-lastupdated/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Windows 11 Home バージョン 23H2&lt;/li&gt;
@@ -16603,10 +16983,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>docker-composeで構築したMySQLのログをローカルに保存する</title>
-        <link>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</link>
+        <link>http://localhost:1313/post/docker-compose-mysql-log/</link>
         <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</guid>
+        <guid>http://localhost:1313/post/docker-compose-mysql-log/</guid>
         <description>&lt;h2 id=&#34;ファイルフォルダ構成&#34;&gt;ファイル・フォルダ構成&lt;/h2&gt;
 &lt;p&gt;以下のような構成になっています&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -16801,10 +17181,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Deskmini x300でSATA SSDからM.2 SSDに差し替えるとProxmoxのWebGUIにアクセスできなくなる</title>
-        <link>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</link>
+        <link>http://localhost:1313/post/proxmox-ssd-lan/</link>
         <pubDate>Sun, 26 May 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</guid>
+        <guid>http://localhost:1313/post/proxmox-ssd-lan/</guid>
         <description>&lt;h2 id=&#34;発生現象&#34;&gt;発生現象&lt;/h2&gt;
 &lt;p&gt;Deskmini x300(CPU:Ryzen7 5700G) に元々SATA SSDを差していたがデータをM.2 SSDにクローンをして差し替えると、有線LANが繋がらなくなる&lt;br&gt;
 結果、ProxmoxのWebGUIにアクセスできなくなる&lt;/p&gt;
@@ -16869,10 +17249,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>About</title>
-        <link>https://tiisanamaou.github.io/page/about/</link>
+        <link>http://localhost:1313/page/about/</link>
         <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/page/about/</guid>
+        <guid>http://localhost:1313/page/about/</guid>
         <description>&lt;h2 id=&#34;about-me&#34;&gt;about me&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;製品開発とDX・ITの部署に所属&lt;/li&gt;
@@ -16921,10 +17301,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Go言語をソースコードからビルドする</title>
-        <link>https://tiisanamaou.github.io/post/golang-source-build/</link>
+        <link>http://localhost:1313/post/golang-source-build/</link>
         <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/golang-source-build/</guid>
+        <guid>http://localhost:1313/post/golang-source-build/</guid>
         <description>&lt;h1 id=&#34;環境&#34;&gt;環境&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 23.10&lt;/li&gt;
@@ -17179,18 +17559,18 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Archives</title>
-        <link>https://tiisanamaou.github.io/page/archives/</link>
+        <link>http://localhost:1313/page/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/page/archives/</guid>
+        <guid>http://localhost:1313/page/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>https://tiisanamaou.github.io/page/search/</link>
+        <link>http://localhost:1313/page/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/page/search/</guid>
+        <guid>http://localhost:1313/page/search/</guid>
         <description></description>
         </item>
         
