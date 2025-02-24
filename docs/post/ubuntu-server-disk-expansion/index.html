@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='背景 Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です
-環境 Ubuntu Server 24.04 LTS Parted 3.6 ディスク容量：10GB→20GB 参考URL VMware上のUbuntu 22.04 ファイルシステム拡張 https://qiita.com/mcyang/items/a32b914db073f308a3cb 仮想マシンのDiskの拡張手順 下記の順番でコマンドを実行していけば、割り当てられたストレージの容量いっぱいに拡張される パーティションを拡張する 1 2 3 4 df -h sudo pvdisplay sudo apt install parted sudo parted /dev/sda 1 print free 1 2 3 4 (parted) print free Warning: Not all of the space available to /dev/sda appears to be used, you can fix the GPT to use all of the space (an extra 20971520 blocks) or continue with the current setting?'>
+環境 Ubuntu Server 24.04 LTS Parted 3.6 ディスク容量：10GB→20GB 参考URL VMware上のUbuntu 22.04 ファイルシステム拡張 https://qiita.com/mcyang/items/a32b914db073f308a3cb 仮想マシンのDiskの拡張手順 下記の順番でコマンドを実行していけば、割り当てられたストレージの容量いっぱいに拡張される パーティションを拡張する 1 sudo apt install lvm2 1 2 3 4 df -h sudo pvdisplay sudo apt install parted sudo parted /dev/sda 1 print free 1 2 3 4 (parted) print free Warning: Not all of the space available to /dev/sda appears to be used, you can fix the GPT to use all of the space (an extra 20971520 blocks) or continue with the current setting?'>
 <title>仮想マシン上のDiskの拡張手順</title>
 
-<link rel='canonical' href='http://localhost:1313/post/ubuntu-server-disk-expansion/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/'>
 
 <link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='仮想マシン上のDiskの拡張手順'>
 <meta property='og:description' content='背景 Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です
-環境 Ubuntu Server 24.04 LTS Parted 3.6 ディスク容量：10GB→20GB 参考URL VMware上のUbuntu 22.04 ファイルシステム拡張 https://qiita.com/mcyang/items/a32b914db073f308a3cb 仮想マシンのDiskの拡張手順 下記の順番でコマンドを実行していけば、割り当てられたストレージの容量いっぱいに拡張される パーティションを拡張する 1 2 3 4 df -h sudo pvdisplay sudo apt install parted sudo parted /dev/sda 1 print free 1 2 3 4 (parted) print free Warning: Not all of the space available to /dev/sda appears to be used, you can fix the GPT to use all of the space (an extra 20971520 blocks) or continue with the current setting?'>
-<meta property='og:url' content='http://localhost:1313/post/ubuntu-server-disk-expansion/'>
+環境 Ubuntu Server 24.04 LTS Parted 3.6 ディスク容量：10GB→20GB 参考URL VMware上のUbuntu 22.04 ファイルシステム拡張 https://qiita.com/mcyang/items/a32b914db073f308a3cb 仮想マシンのDiskの拡張手順 下記の順番でコマンドを実行していけば、割り当てられたストレージの容量いっぱいに拡張される パーティションを拡張する 1 sudo apt install lvm2 1 2 3 4 df -h sudo pvdisplay sudo apt install parted sudo parted /dev/sda 1 print free 1 2 3 4 (parted) print free Warning: Not all of the space available to /dev/sda appears to be used, you can fix the GPT to use all of the space (an extra 20971520 blocks) or continue with the current setting?'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/'>
 <meta property='og:site_name' content='onodera memo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-11-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-11-09T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-11-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-24T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="仮想マシン上のDiskの拡張手順">
 <meta name="twitter:description" content="背景 Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です
-環境 Ubuntu Server 24.04 LTS Parted 3.6 ディスク容量：10GB→20GB 参考URL VMware上のUbuntu 22.04 ファイルシステム拡張 https://qiita.com/mcyang/items/a32b914db073f308a3cb 仮想マシンのDiskの拡張手順 下記の順番でコマンドを実行していけば、割り当てられたストレージの容量いっぱいに拡張される パーティションを拡張する 1 2 3 4 df -h sudo pvdisplay sudo apt install parted sudo parted /dev/sda 1 print free 1 2 3 4 (parted) print free Warning: Not all of the space available to /dev/sda appears to be used, you can fix the GPT to use all of the space (an extra 20971520 blocks) or continue with the current setting?">
+環境 Ubuntu Server 24.04 LTS Parted 3.6 ディスク容量：10GB→20GB 参考URL VMware上のUbuntu 22.04 ファイルシステム拡張 https://qiita.com/mcyang/items/a32b914db073f308a3cb 仮想マシンのDiskの拡張手順 下記の順番でコマンドを実行していけば、割り当てられたストレージの容量いっぱいに拡張される パーティションを拡張する 1 sudo apt install lvm2 1 2 3 4 df -h sudo pvdisplay sudo apt install parted sudo parted /dev/sda 1 print free 1 2 3 4 (parted) print free Warning: Not all of the space available to /dev/sda appears to be used, you can fix the GPT to use all of the space (an extra 20971520 blocks) or continue with the current setting?">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
   
@@ -197,7 +197,7 @@
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="http://localhost:1313/" selected></option>
+                            <option value="https://tiisanamaou.github.io/" selected></option>
                         
                     </select>
                 </li>
@@ -274,7 +274,19 @@
         
 
         
-        
+        <div class="article-time--lastUpdated">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+            <time>
+                最終更新 2025/02/24
+            </time>
+        </div>
     </footer>
     
 
@@ -309,6 +321,14 @@
 </ul>
 <h3 id="パーティションを拡張する">パーティションを拡張する</h3>
 <div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt install lvm2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -354,6 +374,17 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">resizepart 3 100% 
 </span></span><span class="line"><span class="cl">print free
 </span></span><span class="line"><span class="cl">q
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>※UbuntuDesktopの場合は上記コマンド実行後、下記コマンドを実行するだけで容量が増える</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo resize2fs /dev/sda2
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="物理ボリュームを拡張する">物理ボリュームを拡張する</h3>

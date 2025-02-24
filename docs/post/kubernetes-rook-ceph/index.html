@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Kubernetes 1.31.0 Control-Plane：1台 Woker-Node：3台&#43;1台 cri-o v1.30.4 CNI(Container Networking Interface) Calico v3.28.0 Cilium v1.16.1 Rook-Ceph 1.15 参考URL https://rook.io/docs/rook/latest-release/Getting-Started/quickstart https://qiita.com/ohtsuka-shota/items/cc45d595f742f3625099 https://qiita.com/takuya_0301/items/5f6ad4fa197d0e4f9815 https://qiita.com/showchan33/items/f678665c5fddb3bf7551 https://qiita.com/t_ume/items/4ac37f746bf07146d5f9 https://zenn.dev/vampire_yuta/articles/367ee53b78d681 https://techstep.hatenablog.com/entry/2020/02/02/134702 CNIにCalicoを使用していると動作しない https://hidemium.hatenablog.com/entry/2023/01/21/083020 https://github.com/rook/rook/issues/7769 インストール インストール手順は公式ドキュメントを参考にする
 https://rook.io/docs/rook/latest-release/Getting-Started/quickstart マニフェストファイルをダウンロードする
 1 2 3 4 wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/crds.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/common.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/operator.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/cluster.yaml CNIがCaliicoの場合（上手く行かない） いくつかのPodが&quot;Pending&quot;になってしまう Rookをデプロイする 下記コマンドを実行して&quot;Rook&quot;をデプロイする
@@ -8,7 +8,7 @@ https://rook.io/docs/rook/latest-release/Getting-Started/quickstart マニフェ
 1 kubectl -n rook-ceph get pod 1 2 3 4 mao@cilium-control-plane-01:~$ kubectl -n rook-ceph get pod NAME READY STATUS RESTARTS AGE rook-ceph-operator-b777cf696-d2v8d 1/1 Running 0 2m19s mao@cilium-control-plane-01:~$ 1 kubectl get all -n rook-ceph 1 2 3 4 5 6 7 8 9 10 mao@cilium-control-plane-01:~$ kubectl get all -n rook-ceph NAME READY STATUS RESTARTS AGE pod/rook-ceph-operator-b777cf696-d2v8d 1/1 Running 0 3m6s NAME READY UP-TO-DATE AVAILABLE AGE deployment.'>
 <title>KubernetesにRook-Cephをインストールする</title>
 
-<link rel='canonical' href='http://localhost:1313/post/kubernetes-rook-ceph/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/kubernetes-rook-ceph/'>
 
 <link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='KubernetesにRook-Cephをインストールする'>
 <meta property='og:description' content='環境 Kubernetes 1.31.0 Control-Plane：1台 Woker-Node：3台&#43;1台 cri-o v1.30.4 CNI(Container Networking Interface) Calico v3.28.0 Cilium v1.16.1 Rook-Ceph 1.15 参考URL https://rook.io/docs/rook/latest-release/Getting-Started/quickstart https://qiita.com/ohtsuka-shota/items/cc45d595f742f3625099 https://qiita.com/takuya_0301/items/5f6ad4fa197d0e4f9815 https://qiita.com/showchan33/items/f678665c5fddb3bf7551 https://qiita.com/t_ume/items/4ac37f746bf07146d5f9 https://zenn.dev/vampire_yuta/articles/367ee53b78d681 https://techstep.hatenablog.com/entry/2020/02/02/134702 CNIにCalicoを使用していると動作しない https://hidemium.hatenablog.com/entry/2023/01/21/083020 https://github.com/rook/rook/issues/7769 インストール インストール手順は公式ドキュメントを参考にする
@@ -16,7 +16,7 @@ https://rook.io/docs/rook/latest-release/Getting-Started/quickstart マニフェ
 1 2 3 4 wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/crds.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/common.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/operator.yaml wget https://raw.githubusercontent.com/rook/rook/release-1.15/deploy/examples/cluster.yaml CNIがCaliicoの場合（上手く行かない） いくつかのPodが&quot;Pending&quot;になってしまう Rookをデプロイする 下記コマンドを実行して&quot;Rook&quot;をデプロイする
 1 kubectl create -f crds.yaml -f common.yaml -f operator.yaml デプロイされたか確認する
 1 kubectl -n rook-ceph get pod 1 2 3 4 mao@cilium-control-plane-01:~$ kubectl -n rook-ceph get pod NAME READY STATUS RESTARTS AGE rook-ceph-operator-b777cf696-d2v8d 1/1 Running 0 2m19s mao@cilium-control-plane-01:~$ 1 kubectl get all -n rook-ceph 1 2 3 4 5 6 7 8 9 10 mao@cilium-control-plane-01:~$ kubectl get all -n rook-ceph NAME READY STATUS RESTARTS AGE pod/rook-ceph-operator-b777cf696-d2v8d 1/1 Running 0 3m6s NAME READY UP-TO-DATE AVAILABLE AGE deployment.'>
-<meta property='og:url' content='http://localhost:1313/post/kubernetes-rook-ceph/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/kubernetes-rook-ceph/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-09-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-09-15T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="KubernetesにRook-Cephをインストールする">
@@ -206,7 +206,7 @@ https://rook.io/docs/rook/latest-release/Getting-Started/quickstart マニフェ
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="http://localhost:1313/" selected></option>
+                            <option value="https://tiisanamaou.github.io/" selected></option>
                         
                     </select>
                 </li>

@@ -1,6 +1,7 @@
 ---
 title: 仮想マシン上のDiskの拡張手順
 date: 2024-11-09
+lastmod: 2025-02-24
 slug: ubuntu-server-disk-expansion
 categories:
     - Ubuntu
@@ -23,6 +24,9 @@ Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足
 
 ### パーティションを拡張する
 ```
+sudo apt install lvm2
+```
+```
 df -h
 sudo pvdisplay
 sudo apt install parted
@@ -42,6 +46,11 @@ Fix/Ignore? Fix
 resizepart 3 100% 
 print free
 q
+```
+
+- ※UbuntuDesktopの場合は上記コマンド実行後、下記コマンドを実行するだけで容量が増える
+```
+sudo resize2fs /dev/sda2
 ```
 
 ### 物理ボリュームを拡張する

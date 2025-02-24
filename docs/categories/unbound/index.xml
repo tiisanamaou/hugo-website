@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Unbound on onodera memo</title>
-        <link>http://localhost:1313/categories/unbound/</link>
+        <link>https://tiisanamaou.github.io/categories/unbound/</link>
         <description>Recent content in Unbound on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Wed, 18 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/unbound/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 18 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/unbound/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする</title>
-        <link>http://localhost:1313/post/internal-https-domain/</link>
+        <link>https://tiisanamaou.github.io/post/internal-https-domain/</link>
         <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/internal-https-domain/</guid>
+        <guid>https://tiisanamaou.github.io/post/internal-https-domain/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する&lt;/p&gt;
 &lt;p&gt;前回の記事で証明書を発行したので、今回はnginxに証明書をコピーし、HTTPSでアクセスできるようにする&lt;/p&gt;

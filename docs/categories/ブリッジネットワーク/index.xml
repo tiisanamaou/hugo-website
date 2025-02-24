@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>ブリッジネットワーク on onodera memo</title>
-        <link>http://localhost:1313/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/</link>
+        <link>https://tiisanamaou.github.io/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/</link>
         <description>Recent content in ブリッジネットワーク on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 26 May 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 26 May 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Deskmini x300でSATA SSDからM.2 SSDに差し替えるとProxmoxのWebGUIにアクセスできなくなる</title>
-        <link>http://localhost:1313/post/proxmox-ssd-lan/</link>
+        <link>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</link>
         <pubDate>Sun, 26 May 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/proxmox-ssd-lan/</guid>
+        <guid>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</guid>
         <description>&lt;h2 id=&#34;発生現象&#34;&gt;発生現象&lt;/h2&gt;
 &lt;p&gt;Deskmini x300(CPU:Ryzen7 5700G) に元々SATA SSDを差していたがデータをM.2 SSDにクローンをして差し替えると、有線LANが繋がらなくなる&lt;br&gt;
 結果、ProxmoxのWebGUIにアクセスできなくなる&lt;/p&gt;

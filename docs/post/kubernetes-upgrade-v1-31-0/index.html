@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Kubernetes 1.30.3 → 1.30.4 → 1.31.0 Control-Plane 3台 Woker-Node 2台 参考URL https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/ https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/ 変更点の確認 https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#downloads-for-v1304 https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md 問題なさそうなのでアップグレードします
 現状の構成 v1.30.3を使用している
 1 2 3 4 5 6 7 8 mao@k8s-control-plane-01:~$ kubectl get nodes -o wide NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME k8s-control-plane-01 Ready control-plane 46d v1.30.3 192.168.10.41 &lt;none&gt; Ubuntu 24.04 LTS 6.8.0-40-generic containerd://1.7.18 k8s-control-plane-02 Ready control-plane 46d v1.30.3 192.168.10.44 &lt;none&gt; Ubuntu 24.04 LTS 6.8.0-40-generic containerd://1.7.18 k8s-control-plane-03 Ready control-plane 46d v1.'>
 <title>Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</title>
 
-<link rel='canonical' href='http://localhost:1313/post/kubernetes-upgrade-v1-31-0/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/'>
 
 <link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする'>
 <meta property='og:description' content='環境 Kubernetes 1.30.3 → 1.30.4 → 1.31.0 Control-Plane 3台 Woker-Node 2台 参考URL https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/ https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/ 変更点の確認 https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#downloads-for-v1304 https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md 問題なさそうなのでアップグレードします
 現状の構成 v1.30.3を使用している
 1 2 3 4 5 6 7 8 mao@k8s-control-plane-01:~$ kubectl get nodes -o wide NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME k8s-control-plane-01 Ready control-plane 46d v1.30.3 192.168.10.41 &lt;none&gt; Ubuntu 24.04 LTS 6.8.0-40-generic containerd://1.7.18 k8s-control-plane-02 Ready control-plane 46d v1.30.3 192.168.10.44 &lt;none&gt; Ubuntu 24.04 LTS 6.8.0-40-generic containerd://1.7.18 k8s-control-plane-03 Ready control-plane 46d v1.'>
-<meta property='og:url' content='http://localhost:1313/post/kubernetes-upgrade-v1-31-0/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-08-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-16T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする">
@@ -200,7 +200,7 @@
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="http://localhost:1313/" selected></option>
+                            <option value="https://tiisanamaou.github.io/" selected></option>
                         
                     </select>
                 </li>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on onodera memo</title>
-        <link>http://localhost:1313/post/</link>
+        <link>https://tiisanamaou.github.io/post/</link>
         <description>Recent content in Posts on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする</title>
-        <link>http://localhost:1313/post/static-routing/</link>
+        <link>https://tiisanamaou.github.io/post/static-routing/</link>
         <pubDate>Thu, 02 Jan 2025 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/static-routing/</guid>
+        <guid>https://tiisanamaou.github.io/post/static-routing/</guid>
         <description>&lt;h2 id=&#34;なんのために&#34;&gt;なんのために？&lt;/h2&gt;
 &lt;p&gt;家庭内で普段使っているサブネットと、サーバー等のサブネットを分けてようと思ったため。&lt;br&gt;
 しかし、そのままだと家庭内で使用しているサブネットからサーバーにアクセスできないので、サブネットを越えて通信させたかったので設定方法を調べた結果、スタティックルーティングという方法でルーティングさせて通信させることにした。&lt;/p&gt;
@@ -389,10 +389,10 @@
         </item>
         <item>
         <title>2024年振り返りと2025年の目標</title>
-        <link>http://localhost:1313/post/2024review-and-2025plan/</link>
+        <link>https://tiisanamaou.github.io/post/2024review-and-2025plan/</link>
         <pubDate>Tue, 31 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/2024review-and-2025plan/</guid>
+        <guid>https://tiisanamaou.github.io/post/2024review-and-2025plan/</guid>
         <description>&lt;h2 id=&#34;2024年振り返り&#34;&gt;2024年振り返り&lt;/h2&gt;
 &lt;p&gt;今年の目標としていた、基本情報と応用情報の合格は両方受験をして、基本情報技術者のみ合格することができました。&lt;/p&gt;
 &lt;p&gt;基本情報に合格できた理由は、先に応用を受験して落ちていたので、その反省から、勉強時間を増やして試験に望んだからだと思っています。&lt;br&gt;
@@ -408,10 +408,10 @@
         </item>
         <item>
         <title>ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする</title>
-        <link>http://localhost:1313/post/internal-https-domain/</link>
+        <link>https://tiisanamaou.github.io/post/internal-https-domain/</link>
         <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/internal-https-domain/</guid>
+        <guid>https://tiisanamaou.github.io/post/internal-https-domain/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する&lt;/p&gt;
 &lt;p&gt;前回の記事で証明書を発行したので、今回はnginxに証明書をコピーし、HTTPSでアクセスできるようにする&lt;/p&gt;
@@ -668,10 +668,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>証明書発行手順（Let&#39;s Encrypt）</title>
-        <link>http://localhost:1313/post/certbot-lets-encrypt/</link>
+        <link>https://tiisanamaou.github.io/post/certbot-lets-encrypt/</link>
         <pubDate>Tue, 17 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/certbot-lets-encrypt/</guid>
+        <guid>https://tiisanamaou.github.io/post/certbot-lets-encrypt/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する&lt;/p&gt;
 &lt;h2 id=&#34;証明書の発行準備&#34;&gt;証明書の発行準備&lt;/h2&gt;
@@ -1187,10 +1187,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>aptのキャッシュをしてくれるapt-cacher-ngのインストール方法</title>
-        <link>http://localhost:1313/post/apt-cacher-ng/</link>
+        <link>https://tiisanamaou.github.io/post/apt-cacher-ng/</link>
         <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/apt-cacher-ng/</guid>
+        <guid>https://tiisanamaou.github.io/post/apt-cacher-ng/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;複数のPCからaptを使用する際に毎回ダウンロードすると時間がかかるので、ローカルにキャッシュサーバーを立ててそこからダウンロードできるようにしたい&lt;br&gt;
 キャッシュサーバーではなくミラーサーバーでも良かったが、ミラーサーバーだと容量が必要になるので、今回はキャッシュサーバーを使用することにした&lt;/p&gt;
@@ -1407,10 +1407,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>仮想マシン上のDiskの拡張手順</title>
-        <link>http://localhost:1313/post/ubuntu-server-disk-expansion/</link>
+        <link>https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/</link>
         <pubDate>Sat, 09 Nov 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/ubuntu-server-disk-expansion/</guid>
+        <guid>https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です&lt;/p&gt;
 &lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
@@ -1434,6 +1434,14 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
 &lt;/ul&gt;
 &lt;h3 id=&#34;パーティションを拡張する&#34;&gt;パーティションを拡張する&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install lvm2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
@@ -1479,6 +1487,17 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;resizepart 3 100% 
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;print free
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;q
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;※UbuntuDesktopの場合は上記コマンド実行後、下記コマンドを実行するだけで容量が増える&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo resize2fs /dev/sda2
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h3 id=&#34;物理ボリュームを拡張する&#34;&gt;物理ボリュームを拡張する&lt;/h3&gt;
@@ -1827,10 +1846,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>Harborのインストールしてpushとpullをしてみる</title>
-        <link>http://localhost:1313/post/harbor-install/</link>
+        <link>https://tiisanamaou.github.io/post/harbor-install/</link>
         <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/harbor-install/</guid>
+        <guid>https://tiisanamaou.github.io/post/harbor-install/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;harbor v2.11.1&lt;/li&gt;
@@ -2996,10 +3015,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする</title>
-        <link>http://localhost:1313/post/cloudflare-tunnel-raspberrypi3b/</link>
+        <link>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</link>
         <pubDate>Mon, 07 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/cloudflare-tunnel-raspberrypi3b/</guid>
+        <guid>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</guid>
         <description>&lt;h2 id=&#34;ubuntuにスワップを作成するラズパイ&#34;&gt;Ubuntuにスワップを作成する（ラズパイ）&lt;/h2&gt;
 &lt;p&gt;ラズパイのスペックは下記の通りです&lt;/p&gt;
 &lt;ul&gt;
@@ -3330,10 +3349,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>基本情報技術者試験に合格しました</title>
-        <link>http://localhost:1313/post/fe-passed-20240930/</link>
+        <link>https://tiisanamaou.github.io/post/fe-passed-20240930/</link>
         <pubDate>Sat, 05 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/fe-passed-20240930/</guid>
+        <guid>https://tiisanamaou.github.io/post/fe-passed-20240930/</guid>
         <description>&lt;h2 id=&#34;試験について&#34;&gt;試験について&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;基本情報技術者試験&lt;/li&gt;
@@ -3414,10 +3433,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesのCNIにCiliumを使用して構築する</title>
-        <link>http://localhost:1313/post/kubernetes-cni-cilium/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</link>
         <pubDate>Mon, 16 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-cni-cilium/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -4159,10 +4178,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesにRook-Cephをインストールする</title>
-        <link>http://localhost:1313/post/kubernetes-rook-ceph/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</link>
         <pubDate>Sun, 15 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-rook-ceph/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -4775,10 +4794,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesにLonghornをインストールする</title>
-        <link>http://localhost:1313/post/kubernetes-longhorn/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-longhorn/</link>
         <pubDate>Sat, 14 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-longhorn/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-longhorn/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -5121,10 +5140,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>cri-oを使用してkubernetesを構築する</title>
-        <link>http://localhost:1313/post/kubernetes-cri-o/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-cri-o/</link>
         <pubDate>Sun, 25 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-cri-o/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-cri-o/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0&lt;/li&gt;
@@ -7411,10 +7430,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesでTraefikを使用してIngressを使えるようにする</title>
-        <link>http://localhost:1313/post/kubernetes-ingress-traefik/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</link>
         <pubDate>Wed, 21 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-ingress-traefik/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0&lt;/li&gt;
@@ -7796,10 +7815,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</title>
-        <link>http://localhost:1313/post/kubernetes-upgrade-v1-31-0/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</link>
         <pubDate>Fri, 16 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-upgrade-v1-31-0/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.3 → 1.30.4 → 1.31.0&lt;/li&gt;
@@ -8504,10 +8523,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>UbuntuにHugoをインストールする</title>
-        <link>http://localhost:1313/post/ubuntu-install-hugo/</link>
+        <link>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</link>
         <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/ubuntu-install-hugo/</guid>
+        <guid>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</guid>
         <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました&lt;br&gt;
 その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました&lt;/p&gt;
@@ -8588,10 +8607,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>NFS-serverを構築してPV(PersistentVolume)を作成する</title>
-        <link>http://localhost:1313/post/kubernetes-pv-pvc/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</link>
         <pubDate>Wed, 14 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-pv-pvc/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.3&lt;/li&gt;
@@ -9157,10 +9176,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>Kubernetesのクラスタをv1.30.2からv1.30.3へアップグレードをする</title>
-        <link>http://localhost:1313/post/kubernetes-upgrade-v1-30-3/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-30-3/</link>
         <pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-upgrade-v1-30-3/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-30-3/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2 → 1.30.3&lt;/li&gt;
@@ -11754,10 +11773,10 @@ Control-Planeで実行する&lt;/p&gt;
         </item>
         <item>
         <title>Kubernetesのダッシュボードをデプロイする＋LoadBalancerでIPアドレスを割り振る</title>
-        <link>http://localhost:1313/post/kubernetes-dashboard/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-dashboard/</link>
         <pubDate>Mon, 12 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-dashboard/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-dashboard/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2&lt;/li&gt;
@@ -12450,10 +12469,10 @@ Control-Planeで実行する&lt;/p&gt;
         </item>
         <item>
         <title>KubernetesのLoadBalancerでIPアドレスを指定する方法</title>
-        <link>http://localhost:1313/post/kubernetes-loadbalancer-ip/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-loadbalancer-ip/</link>
         <pubDate>Sun, 11 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-loadbalancer-ip/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-loadbalancer-ip/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2&lt;/li&gt;
@@ -12767,10 +12786,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>Ansibleを使ってKubernetesの初期設定をしてみた</title>
-        <link>http://localhost:1313/post/ansible-k8s/</link>
+        <link>https://tiisanamaou.github.io/post/ansible-k8s/</link>
         <pubDate>Sat, 27 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/ansible-k8s/</guid>
+        <guid>https://tiisanamaou.github.io/post/ansible-k8s/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ansible 2.16.9&lt;/li&gt;
@@ -13178,10 +13197,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>Ansibleを少し触ってみた</title>
-        <link>http://localhost:1313/post/ansible/</link>
+        <link>https://tiisanamaou.github.io/post/ansible/</link>
         <pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/ansible/</guid>
+        <guid>https://tiisanamaou.github.io/post/ansible/</guid>
         <description>&lt;h2 id=&#34;ansibleの拡張機能のインストール&#34;&gt;Ansibleの拡張機能のインストール&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;VScodeの拡張機能&amp;quot;redhat.ansible&amp;quot;があるのでインストールしておくと便利になる&lt;/li&gt;
@@ -13514,10 +13533,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（5）/HA構成</title>
-        <link>http://localhost:1313/post/kubernetes-on-proxmox-05/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</link>
         <pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-on-proxmox-05/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -14018,10 +14037,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（4）/クラスターを壊す</title>
-        <link>http://localhost:1313/post/kubernetes-on-proxmox-04/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</link>
         <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-on-proxmox-04/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -14395,10 +14414,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</title>
-        <link>http://localhost:1313/post/kubernetes-on-proxmox-03/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</link>
         <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-on-proxmox-03/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -14768,10 +14787,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（2）/Control-Plane・Worker-Nodeの設定</title>
-        <link>http://localhost:1313/post/kubernetes-on-proxmox-02/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</link>
         <pubDate>Sat, 06 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-on-proxmox-02/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -15154,10 +15173,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（1）</title>
-        <link>http://localhost:1313/post/kubernetes-on-proxmox-01/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</link>
         <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/kubernetes-on-proxmox-01/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</guid>
         <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;k8sを勉強してみようと思い、デプロイ等の操作は書籍で触っていたら構築もしてみたくなったので、Proxmox上に仮想マシンを作成してk8sを構築してみた&lt;/p&gt;
 &lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
@@ -16328,10 +16347,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>ProxmoxがインストールされているDeskminix300のメモリを増設する</title>
-        <link>http://localhost:1313/post/deskminix300-memory-upgrade/</link>
+        <link>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</link>
         <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/deskminix300-memory-upgrade/</guid>
+        <guid>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox VE 8.2.4 x86_64&lt;/li&gt;
@@ -16452,10 +16471,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Zbbix7.0LTSをUbuntuにインストールする</title>
-        <link>http://localhost:1313/post/zabbix-install/</link>
+        <link>https://tiisanamaou.github.io/post/zabbix-install/</link>
         <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/zabbix-install/</guid>
+        <guid>https://tiisanamaou.github.io/post/zabbix-install/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 24.04&lt;/li&gt;
@@ -16815,10 +16834,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Hugoで作成日時の横に更新日時を表示できるようにする</title>
-        <link>http://localhost:1313/post/hugo-stack-custom-lastupdated/</link>
+        <link>https://tiisanamaou.github.io/post/hugo-stack-custom-lastupdated/</link>
         <pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/hugo-stack-custom-lastupdated/</guid>
+        <guid>https://tiisanamaou.github.io/post/hugo-stack-custom-lastupdated/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Windows 11 Home バージョン 23H2&lt;/li&gt;
@@ -16983,10 +17002,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>docker-composeで構築したMySQLのログをローカルに保存する</title>
-        <link>http://localhost:1313/post/docker-compose-mysql-log/</link>
+        <link>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</link>
         <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/docker-compose-mysql-log/</guid>
+        <guid>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</guid>
         <description>&lt;h2 id=&#34;ファイルフォルダ構成&#34;&gt;ファイル・フォルダ構成&lt;/h2&gt;
 &lt;p&gt;以下のような構成になっています&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -17181,10 +17200,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Deskmini x300でSATA SSDからM.2 SSDに差し替えるとProxmoxのWebGUIにアクセスできなくなる</title>
-        <link>http://localhost:1313/post/proxmox-ssd-lan/</link>
+        <link>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</link>
         <pubDate>Sun, 26 May 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/proxmox-ssd-lan/</guid>
+        <guid>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</guid>
         <description>&lt;h2 id=&#34;発生現象&#34;&gt;発生現象&lt;/h2&gt;
 &lt;p&gt;Deskmini x300(CPU:Ryzen7 5700G) に元々SATA SSDを差していたがデータをM.2 SSDにクローンをして差し替えると、有線LANが繋がらなくなる&lt;br&gt;
 結果、ProxmoxのWebGUIにアクセスできなくなる&lt;/p&gt;
@@ -17249,10 +17268,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Go言語をソースコードからビルドする</title>
-        <link>http://localhost:1313/post/golang-source-build/</link>
+        <link>https://tiisanamaou.github.io/post/golang-source-build/</link>
         <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/post/golang-source-build/</guid>
+        <guid>https://tiisanamaou.github.io/post/golang-source-build/</guid>
         <description>&lt;h1 id=&#34;環境&#34;&gt;環境&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 23.10&lt;/li&gt;
