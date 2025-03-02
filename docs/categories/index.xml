@@ -7,10 +7,18 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Thu, 02 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 02 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>RaspberryPi</title>
+        <link>https://tiisanamaou.github.io/categories/raspberrypi/</link>
+        <pubDate>Sun, 02 Mar 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/raspberrypi/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Ubuntu</title>
         <link>https://tiisanamaou.github.io/categories/ubuntu/</link>
-        <pubDate>Thu, 02 Jan 2025 00:00:00 +0000</pubDate>
+        <pubDate>Sun, 02 Mar 2025 00:00:00 +0000</pubDate>
         
         <guid>https://tiisanamaou.github.io/categories/ubuntu/</guid>
         <description></description>
@@ -85,14 +93,6 @@
         <pubDate>Mon, 07 Oct 2024 00:00:00 +0000</pubDate>
         
         <guid>https://tiisanamaou.github.io/categories/cloudflaretunnel/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>RaspberryPi</title>
-        <link>https://tiisanamaou.github.io/categories/raspberrypi/</link>
-        <pubDate>Mon, 07 Oct 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://tiisanamaou.github.io/categories/raspberrypi/</guid>
         <description></description>
         </item>
         <item>
