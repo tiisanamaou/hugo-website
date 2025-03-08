@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 02 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 08 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Docker</title>
+        <link>https://tiisanamaou.github.io/categories/docker/</link>
+        <pubDate>Sat, 08 Mar 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/docker/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>RaspberryPi</title>
         <link>https://tiisanamaou.github.io/categories/raspberrypi/</link>
         <pubDate>Sun, 02 Mar 2025 00:00:00 +0000</pubDate>
@@ -69,14 +77,6 @@
         <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
         
         <guid>https://tiisanamaou.github.io/categories/apt-cacher-ng/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Docker</title>
-        <link>https://tiisanamaou.github.io/categories/docker/</link>
-        <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
-        
-        <guid>https://tiisanamaou.github.io/categories/docker/</guid>
         <description></description>
         </item>
         <item>

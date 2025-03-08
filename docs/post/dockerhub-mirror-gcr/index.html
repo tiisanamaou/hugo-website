@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='理由 2025年4月1日から認証されていないユーザーは、1時間あたり10pullに制限されるみたいなので回避策を試してみる
+https://docs.docker.com/docker-hub/usage/ 環境 Ubuntu 24.04.2 LTS Docker Engine Community Version 28.0.1 設定ファイルを作成する デフォルトでは設定ファイルがないのでファイルを作成する
+&ldquo;etc/docker/&ldquo;に&quot;daemon.json&quot;ファイルがあるか確認し、ない場合は下記の手順で設定ファイルを作成する 1 ls /etc/docker &ldquo;daemon.json&quot;ファイルを作成する
+1 2 touch daemon.json nano deamon.json 下記を追記する（参考URL）
+https://cloud.google.com/artifact-registry/docs/pull-cached-dockerhub-images?hl=ja 1 2 3 { &#34;registry-mirrors&#34;: [&#34;https://mirror.gcr.io&#34;] } 他の設定もある場合は下記のように&rdquo;,&ldquo;を入れる
+例 1 2 3 4 { &#34;insecure-registries&#34;: [&#34;192.168.10.17&#34;], &#34;registry-mirrors&#34;: [&#34;https://mirror.gcr.io&#34;] } 設定ファイルをコピーしてdockerを再起動する
+1 2 sudo cp -f ./daemon.json /etc/docker/daemon.json sudo systemctl restart docker 次回以降編集する場合または、すでに設定ファイルがある場合は、下記のように設定ファイルを編集してdockerを再起動する
+1 2 sudo nano /etc/docker/daemon.json sudo systemctl restart docker 設定が反映されているか確認する 下記コマンドで確認する'>
+<title>DockerHubのミラーを設定する</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/dockerhub-mirror-gcr/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='DockerHubのミラーを設定する'>
+<meta property='og:description' content='理由 2025年4月1日から認証されていないユーザーは、1時間あたり10pullに制限されるみたいなので回避策を試してみる
+https://docs.docker.com/docker-hub/usage/ 環境 Ubuntu 24.04.2 LTS Docker Engine Community Version 28.0.1 設定ファイルを作成する デフォルトでは設定ファイルがないのでファイルを作成する
+&ldquo;etc/docker/&ldquo;に&quot;daemon.json&quot;ファイルがあるか確認し、ない場合は下記の手順で設定ファイルを作成する 1 ls /etc/docker &ldquo;daemon.json&quot;ファイルを作成する
+1 2 touch daemon.json nano deamon.json 下記を追記する（参考URL）
+https://cloud.google.com/artifact-registry/docs/pull-cached-dockerhub-images?hl=ja 1 2 3 { &#34;registry-mirrors&#34;: [&#34;https://mirror.gcr.io&#34;] } 他の設定もある場合は下記のように&rdquo;,&ldquo;を入れる
+例 1 2 3 4 { &#34;insecure-registries&#34;: [&#34;192.168.10.17&#34;], &#34;registry-mirrors&#34;: [&#34;https://mirror.gcr.io&#34;] } 設定ファイルをコピーしてdockerを再起動する
+1 2 sudo cp -f ./daemon.json /etc/docker/daemon.json sudo systemctl restart docker 次回以降編集する場合または、すでに設定ファイルがある場合は、下記のように設定ファイルを編集してdockerを再起動する
+1 2 sudo nano /etc/docker/daemon.json sudo systemctl restart docker 設定が反映されているか確認する 下記コマンドで確認する'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/dockerhub-mirror-gcr/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-08T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="DockerHubのミラーを設定する">
+<meta name="twitter:description" content="理由 2025年4月1日から認証されていないユーザーは、1時間あたり10pullに制限されるみたいなので回避策を試してみる
+https://docs.docker.com/docker-hub/usage/ 環境 Ubuntu 24.04.2 LTS Docker Engine Community Version 28.0.1 設定ファイルを作成する デフォルトでは設定ファイルがないのでファイルを作成する
+&ldquo;etc/docker/&ldquo;に&quot;daemon.json&quot;ファイルがあるか確認し、ない場合は下記の手順で設定ファイルを作成する 1 ls /etc/docker &ldquo;daemon.json&quot;ファイルを作成する
+1 2 touch daemon.json nano deamon.json 下記を追記する（参考URL）
+https://cloud.google.com/artifact-registry/docs/pull-cached-dockerhub-images?hl=ja 1 2 3 { &#34;registry-mirrors&#34;: [&#34;https://mirror.gcr.io&#34;] } 他の設定もある場合は下記のように&rdquo;,&ldquo;を入れる
+例 1 2 3 4 { &#34;insecure-registries&#34;: [&#34;192.168.10.17&#34;], &#34;registry-mirrors&#34;: [&#34;https://mirror.gcr.io&#34;] } 設定ファイルをコピーしてdockerを再起動する
+1 2 sudo cp -f ./daemon.json /etc/docker/daemon.json sudo systemctl restart docker 次回以降編集する場合または、すでに設定ファイルがある場合は、下記のように設定ファイルを編集してdockerを再起動する
+1 2 sudo nano /etc/docker/daemon.json sudo systemctl restart docker 設定が反映されているか確認する 下記コマンドで確認する">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://tiisanamaou.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/docker/" >
+                Docker
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/dockerhub-mirror-gcr/">DockerHubのミラーを設定する</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025/03/08</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="理由">理由</h2>
+<p>2025年4月1日から認証されていないユーザーは、1時間あたり10pullに制限されるみたいなので回避策を試してみる</p>
+<ul>
+<li><a class="link" href="https://docs.docker.com/docker-hub/usage/"  target="_blank" rel="noopener"
+    >https://docs.docker.com/docker-hub/usage/</a></li>
+</ul>
+<h2 id="環境">環境</h2>
+<ul>
+<li>Ubuntu 24.04.2 LTS</li>
+<li>Docker Engine Community Version 28.0.1</li>
+</ul>
+<h2 id="設定ファイルを作成する">設定ファイルを作成する</h2>
+<p>デフォルトでは設定ファイルがないのでファイルを作成する</p>
+<ul>
+<li>&ldquo;etc/docker/&ldquo;に&quot;daemon.json&quot;ファイルがあるか確認し、ない場合は下記の手順で設定ファイルを作成する</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ls /etc/docker
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>&ldquo;daemon.json&quot;ファイルを作成する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">touch daemon.json
+</span></span><span class="line"><span class="cl">nano deamon.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下記を追記する（参考URL）</p>
+<ul>
+<li><a class="link" href="https://cloud.google.com/artifact-registry/docs/pull-cached-dockerhub-images?hl=ja"  target="_blank" rel="noopener"
+    >https://cloud.google.com/artifact-registry/docs/pull-cached-dockerhub-images?hl=ja</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;registry-mirrors&#34;: [&#34;https://mirror.gcr.io&#34;]
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>他の設定もある場合は下記のように&rdquo;,&ldquo;を入れる</p>
+<ul>
+<li>例</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    &#34;insecure-registries&#34;: [&#34;192.168.10.17&#34;],
+</span></span><span class="line"><span class="cl">    &#34;registry-mirrors&#34;: [&#34;https://mirror.gcr.io&#34;]
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>設定ファイルをコピーしてdockerを再起動する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo cp -f ./daemon.json /etc/docker/daemon.json
+</span></span><span class="line"><span class="cl">sudo systemctl restart docker
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>次回以降編集する場合または、すでに設定ファイルがある場合は、下記のように設定ファイルを編集してdockerを再起動する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo nano /etc/docker/daemon.json
+</span></span><span class="line"><span class="cl">sudo systemctl restart docker
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="設定が反映されているか確認する">設定が反映されているか確認する</h2>
+<p>下記コマンドで確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker system info
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>&ldquo;Registry Mirrors:&ldquo;の項目に追加されている</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">mao</span> <span class="p">(</span><span class="n">x86_64</span><span class="p">)</span> <span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">mao</span> 
+</span></span><span class="line"><span class="cl"><span class="o">&gt;</span> <span class="n">sudo</span> <span class="n">docker</span> <span class="n">system</span> <span class="n">info</span>
+</span></span><span class="line"><span class="cl"><span class="n">Client</span><span class="p">:</span> <span class="n">Docker</span> <span class="n">Engine</span> <span class="o">-</span> <span class="n">Community</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Version</span><span class="p">:</span>    <span class="mf">28.0</span><span class="o">.</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Context</span><span class="p">:</span>    <span class="n">default</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Debug</span> <span class="n">Mode</span><span class="p">:</span> <span class="bp">false</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Plugins</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">buildx</span><span class="p">:</span> <span class="n">Docker</span> <span class="n">Buildx</span> <span class="p">(</span><span class="n">Docker</span> <span class="n">Inc</span><span class="o">.</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Version</span><span class="p">:</span>  <span class="n">v0</span><span class="o">.</span><span class="mf">21.1</span>
+</span></span><span class="line"><span class="cl">    <span class="ne">Path</span><span class="p">:</span>     <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">cli</span><span class="o">-</span><span class="n">plugins</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">buildx</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Server</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Containers</span><span class="p">:</span> <span class="mi">19</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Running</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Paused</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Stopped</span><span class="p">:</span> <span class="mi">19</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Images</span><span class="p">:</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Server</span> <span class="n">Version</span><span class="p">:</span> <span class="mf">28.0</span><span class="o">.</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Storage</span> <span class="n">Driver</span><span class="p">:</span> <span class="n">overlay2</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Backing</span> <span class="n">Filesystem</span><span class="p">:</span> <span class="n">extfs</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Supports</span> <span class="n">d_type</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Using</span> <span class="n">metacopy</span><span class="p">:</span> <span class="bp">false</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Native</span> <span class="n">Overlay</span> <span class="n">Diff</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">  <span class="n">userxattr</span><span class="p">:</span> <span class="bp">false</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Logging</span> <span class="n">Driver</span><span class="p">:</span> <span class="n">json</span><span class="o">-</span><span class="n">file</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Cgroup</span> <span class="n">Driver</span><span class="p">:</span> <span class="n">systemd</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Cgroup</span> <span class="n">Version</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Plugins</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Volume</span><span class="p">:</span> <span class="n">local</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Network</span><span class="p">:</span> <span class="n">bridge</span> <span class="n">host</span> <span class="n">ipvlan</span> <span class="n">macvlan</span> <span class="n">null</span> <span class="n">overlay</span>
+</span></span><span class="line"><span class="cl">  <span class="n">Log</span><span class="p">:</span> <span class="n">awslogs</span> <span class="n">fluentd</span> <span class="n">gcplogs</span> <span class="n">gelf</span> <span class="n">journald</span> <span class="n">json</span><span class="o">-</span><span class="n">file</span> <span class="n">local</span> <span class="n">splunk</span> <span class="n">syslog</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Swarm</span><span class="p">:</span> <span class="n">inactive</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Runtimes</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">containerd</span><span class="o">.</span><span class="n">runc</span><span class="o">.</span><span class="n">v2</span> <span class="n">runc</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Default</span> <span class="n">Runtime</span><span class="p">:</span> <span class="n">runc</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Init</span> <span class="n">Binary</span><span class="p">:</span> <span class="n">docker</span><span class="o">-</span><span class="n">init</span>
+</span></span><span class="line"><span class="cl"> <span class="n">containerd</span> <span class="n">version</span><span class="p">:</span> <span class="n">bcc810d6b9066471b0b6fa75f557a15a1cbf31bb</span>
+</span></span><span class="line"><span class="cl"> <span class="n">runc</span> <span class="n">version</span><span class="p">:</span> <span class="n">v1</span><span class="o">.</span><span class="mf">2.4</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="n">g6c52b3f</span>
+</span></span><span class="line"><span class="cl"> <span class="n">init</span> <span class="n">version</span><span class="p">:</span> <span class="n">de40ad0</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Security</span> <span class="n">Options</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">apparmor</span>
+</span></span><span class="line"><span class="cl">  <span class="n">seccomp</span>
+</span></span><span class="line"><span class="cl">   <span class="n">Profile</span><span class="p">:</span> <span class="n">builtin</span>
+</span></span><span class="line"><span class="cl">  <span class="n">cgroupns</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Kernel</span> <span class="n">Version</span><span class="p">:</span> <span class="mf">6.8</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mi">55</span><span class="o">-</span><span class="n">generic</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Operating</span> <span class="n">System</span><span class="p">:</span> <span class="n">Ubuntu</span> <span class="mf">24.04</span><span class="o">.</span><span class="mi">2</span> <span class="n">LTS</span>
+</span></span><span class="line"><span class="cl"> <span class="n">OSType</span><span class="p">:</span> <span class="n">linux</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Architecture</span><span class="p">:</span> <span class="n">x86_64</span>
+</span></span><span class="line"><span class="cl"> <span class="n">CPUs</span><span class="p">:</span> <span class="mi">20</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Total</span> <span class="n">Memory</span><span class="p">:</span> <span class="mf">62.54</span><span class="n">GiB</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Name</span><span class="p">:</span> <span class="n">mao</span>
+</span></span><span class="line"><span class="cl"> <span class="n">ID</span><span class="p">:</span> <span class="o">******</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Docker</span> <span class="n">Root</span> <span class="n">Dir</span><span class="p">:</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">docker</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Debug</span> <span class="n">Mode</span><span class="p">:</span> <span class="bp">false</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Experimental</span><span class="p">:</span> <span class="bp">false</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Insecure</span> <span class="n">Registries</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.17</span>
+</span></span><span class="line"><span class="cl">  <span class="p">::</span><span class="mi">1</span><span class="o">/</span><span class="mi">128</span>
+</span></span><span class="line"><span class="cl">  <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">8</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Registry</span> <span class="n">Mirrors</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mirror</span><span class="o">.</span><span class="n">gcr</span><span class="o">.</span><span class="n">io</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"> <span class="n">Live</span> <span class="n">Restore</span> <span class="n">Enabled</span><span class="p">:</span> <span class="bp">false</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="参考url">参考URL</h2>
+<ul>
+<li>DockerHubのレート制限を受けないようにmirror.gcr.ioを使う
+<ul>
+<li><a class="link" href="https://blog.monophile.net/posts/20201101_docker_mirror_gcr_io.html"  target="_blank" rel="noopener"
+    >https://blog.monophile.net/posts/20201101_docker_mirror_gcr_io.html</a></li>
+</ul>
+</li>
+<li>キャッシュに保存された Docker Hub イメージの pull
+<ul>
+<li><a class="link" href="https://cloud.google.com/artifact-registry/docs/pull-cached-dockerhub-images?hl=ja"  target="_blank" rel="noopener"
+    >https://cloud.google.com/artifact-registry/docs/pull-cached-dockerhub-images?hl=ja</a></li>
+</ul>
+</li>
+<li>daemon.jsonでDockerエンジンのオプション指定 (/etc/docker, insecure-registries)
+<ul>
+<li><a class="link" href="https://devlights.hatenablog.com/entry/2021/11/30/010150"  target="_blank" rel="noopener"
+    >https://devlights.hatenablog.com/entry/2021/11/30/010150</a></li>
+</ul>
+</li>
+<li>dockerd daemon
+<ul>
+<li><a class="link" href="https://docs.docker.com/reference/cli/dockerd/#daemon-configuration-file"  target="_blank" rel="noopener"
+    >https://docs.docker.com/reference/cli/dockerd/#daemon-configuration-file</a></li>
+</ul>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/harbor-install/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Harborのインストールしてpushとpullをしてみる</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/docker-compose-mysql-log/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">docker-composeで構築したMySQLのログをローカルに保存する</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
