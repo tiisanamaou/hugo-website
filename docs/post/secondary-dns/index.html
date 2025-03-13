@@ -1,39 +1,24 @@
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=' WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました
-その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました
-環境 Ubuntu 24.04 LTS Intel Core i5-13500 (amd64) 参考URL https://gohugo.io/installation/linux/#prebuilt-binaries https://github.com/gohugoio/hugo/releases ダウンロード バイナリをダウンロードします
-1 wget https://github.com/gohugoio/hugo/releases/download/v0.132.1/hugo_extended_0.132.1_linux-amd64.tar.gz 展開・解凍 フォルダを作成して展開する
-1 2 mkdir hugo_extended_0.132.1_linux-amd64 tar -zxvf hugo_extended_0.132.1_linux-amd64.tar.gz -C ./hugo_extended_0.132.1_linux-amd64 パスの通っている場所へ移動し、バージョン確認 バイナリファイルを&quot;/usr/local/bin&quot;へ移動します
-その後バージョンの確認をします
-1 2 sudo mv hugo_extended_0.132.1_linux-amd64/hugo /usr/local/bin/hugo hugo version 1 2 3 mao@mao:~$ hugo version hugo v0.132.1-1bde700dfc0770bb11eb8445aff1ab5abdccb46e&#43;extended linux/amd64 BuildDate=2024-08-13T10:10:10Z VendorInfo=gohugoio mao@mao:~$ アンインストール アンインストールする際は下記のコマンドを実行し、バイナリの場所を確認して削除します
-1 2 3 mao@mao:~$ which hugo /usr/local/bin/hugo mao@mao:~$ sudo rm /usr/local/bin/hugo '>
-<title>UbuntuにHugoをインストールする</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='理由 ローカル内にあるDNSで名前解決して、そのDNSが落ちているときは別のDNSで通信自体はできるようにしたかった
+そこでセカンダリDNSをどのように追加したら良いのか調べた
+UbuntuDesktopのGUIの場合 &ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;&ldquo;Ethernet(eno1)&quot;&gt;&ldquo;IPv4&rdquo;&gt;&ldquo;DNS&rdquo; &ldquo;192.168.10.1, 192.168.10.109&rdquo; カンマ区切りで入れられる 先にあるのがプライマリで、その次がセカンダリになる UbuntuServerのCUI（Netplanファイル）の場合 追加前 1 2 3 4 5 6 7 8 9 10 11 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 追加後 1 2 3 4 5 6 7 8 9 10 11 12 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 - 192.168.10.109 &ldquo;resolvectl&quot;コマンドで確認する 追加前 1 2 3 4 5 6 7 8 9 10 11 mao@mao (x86_64) : /home/mao &gt; resolvectl Global Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported resolv.'>
+<title>セカンダリDNSの追加</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/post/ubuntu-install-hugo/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/secondary-dns/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='UbuntuにHugoをインストールする'>
-<meta property='og:description' content=' WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました
-その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました
-環境 Ubuntu 24.04 LTS Intel Core i5-13500 (amd64) 参考URL https://gohugo.io/installation/linux/#prebuilt-binaries https://github.com/gohugoio/hugo/releases ダウンロード バイナリをダウンロードします
-1 wget https://github.com/gohugoio/hugo/releases/download/v0.132.1/hugo_extended_0.132.1_linux-amd64.tar.gz 展開・解凍 フォルダを作成して展開する
-1 2 mkdir hugo_extended_0.132.1_linux-amd64 tar -zxvf hugo_extended_0.132.1_linux-amd64.tar.gz -C ./hugo_extended_0.132.1_linux-amd64 パスの通っている場所へ移動し、バージョン確認 バイナリファイルを&quot;/usr/local/bin&quot;へ移動します
-その後バージョンの確認をします
-1 2 sudo mv hugo_extended_0.132.1_linux-amd64/hugo /usr/local/bin/hugo hugo version 1 2 3 mao@mao:~$ hugo version hugo v0.132.1-1bde700dfc0770bb11eb8445aff1ab5abdccb46e&#43;extended linux/amd64 BuildDate=2024-08-13T10:10:10Z VendorInfo=gohugoio mao@mao:~$ アンインストール アンインストールする際は下記のコマンドを実行し、バイナリの場所を確認して削除します
-1 2 3 mao@mao:~$ which hugo /usr/local/bin/hugo mao@mao:~$ sudo rm /usr/local/bin/hugo '>
-<meta property='og:url' content='https://tiisanamaou.github.io/post/ubuntu-install-hugo/'>
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='セカンダリDNSの追加'>
+<meta property='og:description' content='理由 ローカル内にあるDNSで名前解決して、そのDNSが落ちているときは別のDNSで通信自体はできるようにしたかった
+そこでセカンダリDNSをどのように追加したら良いのか調べた
+UbuntuDesktopのGUIの場合 &ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;&ldquo;Ethernet(eno1)&quot;&gt;&ldquo;IPv4&rdquo;&gt;&ldquo;DNS&rdquo; &ldquo;192.168.10.1, 192.168.10.109&rdquo; カンマ区切りで入れられる 先にあるのがプライマリで、その次がセカンダリになる UbuntuServerのCUI（Netplanファイル）の場合 追加前 1 2 3 4 5 6 7 8 9 10 11 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 追加後 1 2 3 4 5 6 7 8 9 10 11 12 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 - 192.168.10.109 &ldquo;resolvectl&quot;コマンドで確認する 追加前 1 2 3 4 5 6 7 8 9 10 11 mao@mao (x86_64) : /home/mao &gt; resolvectl Global Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported resolv.'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/secondary-dns/'>
 <meta property='og:site_name' content='onodera memo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-08-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-15T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="UbuntuにHugoをインストールする">
-<meta name="twitter:description" content=" WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました
-その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました
-環境 Ubuntu 24.04 LTS Intel Core i5-13500 (amd64) 参考URL https://gohugo.io/installation/linux/#prebuilt-binaries https://github.com/gohugoio/hugo/releases ダウンロード バイナリをダウンロードします
-1 wget https://github.com/gohugoio/hugo/releases/download/v0.132.1/hugo_extended_0.132.1_linux-amd64.tar.gz 展開・解凍 フォルダを作成して展開する
-1 2 mkdir hugo_extended_0.132.1_linux-amd64 tar -zxvf hugo_extended_0.132.1_linux-amd64.tar.gz -C ./hugo_extended_0.132.1_linux-amd64 パスの通っている場所へ移動し、バージョン確認 バイナリファイルを&quot;/usr/local/bin&quot;へ移動します
-その後バージョンの確認をします
-1 2 sudo mv hugo_extended_0.132.1_linux-amd64/hugo /usr/local/bin/hugo hugo version 1 2 3 mao@mao:~$ hugo version hugo v0.132.1-1bde700dfc0770bb11eb8445aff1ab5abdccb46e&#43;extended linux/amd64 BuildDate=2024-08-13T10:10:10Z VendorInfo=gohugoio mao@mao:~$ アンインストール アンインストールする際は下記のコマンドを実行し、バイナリの場所を確認して削除します
-1 2 3 mao@mao:~$ which hugo /usr/local/bin/hugo mao@mao:~$ sudo rm /usr/local/bin/hugo ">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-13T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="セカンダリDNSの追加">
+<meta name="twitter:description" content="理由 ローカル内にあるDNSで名前解決して、そのDNSが落ちているときは別のDNSで通信自体はできるようにしたかった
+そこでセカンダリDNSをどのように追加したら良いのか調べた
+UbuntuDesktopのGUIの場合 &ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;&ldquo;Ethernet(eno1)&quot;&gt;&ldquo;IPv4&rdquo;&gt;&ldquo;DNS&rdquo; &ldquo;192.168.10.1, 192.168.10.109&rdquo; カンマ区切りで入れられる 先にあるのがプライマリで、その次がセカンダリになる UbuntuServerのCUI（Netplanファイル）の場合 追加前 1 2 3 4 5 6 7 8 9 10 11 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 追加後 1 2 3 4 5 6 7 8 9 10 11 12 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 - 192.168.10.109 &ldquo;resolvectl&quot;コマンドで確認する 追加前 1 2 3 4 5 6 7 8 9 10 11 mao@mao (x86_64) : /home/mao &gt; resolvectl Global Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported resolv.">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
   
@@ -256,10 +241,6 @@
     
     <header class="article-category">
         
-            <a href="../../categories/hugo/" >
-                Hugo
-            </a>
-        
             <a href="../../categories/ubuntu/" >
                 Ubuntu
             </a>
@@ -269,7 +250,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../post/ubuntu-install-hugo/">UbuntuにHugoをインストールする</a>
+            <a href="../../post/secondary-dns/">セカンダリDNSの追加</a>
         </h2>
     
         
@@ -291,7 +272,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">2024/08/15</time>
+                <time class="article-time--published">2025/03/13</time>
             </div>
         
 
@@ -308,83 +289,149 @@
     <section class="article-content">
     
     
-    <h2 id="heading"></h2>
-<p>WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました<br>
-その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました</p>
-<h2 id="環境">環境</h2>
+    <h2 id="理由">理由</h2>
+<p>ローカル内にあるDNSで名前解決して、そのDNSが落ちているときは別のDNSで通信自体はできるようにしたかった<br>
+そこでセカンダリDNSをどのように追加したら良いのか調べた</p>
+<h2 id="ubuntudesktopのguiの場合">UbuntuDesktopのGUIの場合</h2>
 <ul>
-<li>Ubuntu 24.04 LTS</li>
-<li>Intel Core i5-13500 (amd64)</li>
+<li>&ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;&ldquo;Ethernet(eno1)&quot;&gt;&ldquo;IPv4&rdquo;&gt;&ldquo;DNS&rdquo;</li>
+<li>&ldquo;192.168.10.1, 192.168.10.109&rdquo;</li>
+<li>カンマ区切りで入れられる</li>
+<li>先にあるのがプライマリで、その次がセカンダリになる</li>
 </ul>
-<h2 id="参考url">参考URL</h2>
+<h2 id="ubuntuserverのcuinetplanファイルの場合">UbuntuServerのCUI（Netplanファイル）の場合</h2>
 <ul>
-<li><a class="link" href="https://gohugo.io/installation/linux/#prebuilt-binaries"  target="_blank" rel="noopener"
-    >https://gohugo.io/installation/linux/#prebuilt-binaries</a></li>
-<li><a class="link" href="https://github.com/gohugoio/hugo/releases"  target="_blank" rel="noopener"
-    >https://github.com/gohugoio/hugo/releases</a></li>
+<li>追加前</li>
 </ul>
-<h2 id="ダウンロード">ダウンロード</h2>
-<p>バイナリをダウンロードします</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gohugoio</span><span class="o">/</span><span class="n">hugo</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v0</span><span class="o">.</span><span class="mf">132.1</span><span class="o">/</span><span class="n">hugo_extended_0</span><span class="o">.</span><span class="mf">132.1</span><span class="n">_linux</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">network:
+</span></span><span class="line"><span class="cl">  version: 2
+</span></span><span class="line"><span class="cl">  ethernets:
+</span></span><span class="line"><span class="cl">    eno1:
+</span></span><span class="line"><span class="cl">      renderer: NetworkManager
+</span></span><span class="line"><span class="cl">      match: {}
+</span></span><span class="line"><span class="cl">      addresses:
+</span></span><span class="line"><span class="cl">      - &#34;192.168.10.50/24&#34;
+</span></span><span class="line"><span class="cl">      nameservers:
+</span></span><span class="line"><span class="cl">        addresses:
+</span></span><span class="line"><span class="cl">        - 192.168.10.1
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="展開解凍">展開・解凍</h2>
-<p>フォルダを作成して展開する</p>
+</div><ul>
+<li>追加後</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mkdir hugo_extended_0.132.1_linux-amd64
-</span></span><span class="line"><span class="cl">tar -zxvf hugo_extended_0.132.1_linux-amd64.tar.gz -C ./hugo_extended_0.132.1_linux-amd64
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">network:
+</span></span><span class="line"><span class="cl">  version: 2
+</span></span><span class="line"><span class="cl">  ethernets:
+</span></span><span class="line"><span class="cl">    eno1:
+</span></span><span class="line"><span class="cl">      renderer: NetworkManager
+</span></span><span class="line"><span class="cl">      match: {}
+</span></span><span class="line"><span class="cl">      addresses:
+</span></span><span class="line"><span class="cl">      - &#34;192.168.10.50/24&#34;
+</span></span><span class="line"><span class="cl">      nameservers:
+</span></span><span class="line"><span class="cl">        addresses:
+</span></span><span class="line"><span class="cl">        - 192.168.10.1
+</span></span><span class="line"><span class="cl">        - 192.168.10.109
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="パスの通っている場所へ移動しバージョン確認">パスの通っている場所へ移動し、バージョン確認</h2>
-<p>バイナリファイルを&quot;/usr/local/bin&quot;へ移動します<br>
-その後バージョンの確認をします</p>
+</div><h2 id="resolvectlコマンドで確認する">&ldquo;resolvectl&quot;コマンドで確認する</h2>
+<ul>
+<li>追加前</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo mv hugo_extended_0.132.1_linux-amd64/hugo /usr/local/bin/hugo
-</span></span><span class="line"><span class="cl">hugo version
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@mao (x86_64) : /home/mao 
+</span></span><span class="line"><span class="cl">&gt; resolvectl
+</span></span><span class="line"><span class="cl">Global
+</span></span><span class="line"><span class="cl">         Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+</span></span><span class="line"><span class="cl">  resolv.conf mode: stub
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Link 2 (eno1)
+</span></span><span class="line"><span class="cl">    Current Scopes: DNS
+</span></span><span class="line"><span class="cl">         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+</span></span><span class="line"><span class="cl">Current DNS Server: 192.168.10.1
+</span></span><span class="line"><span class="cl">       DNS Servers: 192.168.10.1
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@mao:~$ hugo version
-</span></span><span class="line"><span class="cl">hugo v0.132.1-1bde700dfc0770bb11eb8445aff1ab5abdccb46e+extended linux/amd64 BuildDate=2024-08-13T10:10:10Z VendorInfo=gohugoio
-</span></span><span class="line"><span class="cl">mao@mao:~$ 
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="アンインストール">アンインストール</h2>
-<p>アンインストールする際は下記のコマンドを実行し、バイナリの場所を確認して削除します</p>
+</div><ul>
+<li>追加後</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@mao:~$ which hugo
-</span></span><span class="line"><span class="cl">/usr/local/bin/hugo
-</span></span><span class="line"><span class="cl">mao@mao:~$ sudo rm /usr/local/bin/hugo
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@mao (x86_64) : /home/mao 
+</span></span><span class="line"><span class="cl">&gt; resolvectl
+</span></span><span class="line"><span class="cl">Global
+</span></span><span class="line"><span class="cl">         Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+</span></span><span class="line"><span class="cl">  resolv.conf mode: stub
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Link 2 (eno1)
+</span></span><span class="line"><span class="cl">    Current Scopes: DNS
+</span></span><span class="line"><span class="cl">         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+</span></span><span class="line"><span class="cl">Current DNS Server: 192.168.10.1
+</span></span><span class="line"><span class="cl">       DNS Servers: 192.168.10.1 192.168.10.109
 </span></span></code></pre></td></tr></table>
 </div>
-</div>
+</div><p>&ldquo;DNS Servers&quot;の項目に追加されている</p>
+<h2 id="運用">運用</h2>
+<p>プライマリをローカルのDNSにすれば、ローカル内の名前解決を先にしてないものはパブリックのDNSに問い合わせる形にできる
+かつ、ローカルのDNSがダウンしていてもセカンダリのDNSに問い合わせる形にできる</p>
+
 </section>
 
 
@@ -408,19 +455,6 @@
     <h2 class="section-title">関連するコンテンツ</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
-            
-                
-<article class="">
-    <a href="../../post/secondary-dns/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">セカンダリDNSの追加</h2>
-        </div>
-    </a>
-</article>
-
             
                 
 <article class="">
@@ -463,12 +497,12 @@
             
                 
 <article class="">
-    <a href="../../post/hugo-stack-custom-lastupdated/">
+    <a href="../../post/ubuntu-install-hugo/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Hugoで作成日時の横に更新日時を表示できるようにする</h2>
+            <h2 class="article-title">UbuntuにHugoをインストールする</h2>
         </div>
     </a>
 </article>
