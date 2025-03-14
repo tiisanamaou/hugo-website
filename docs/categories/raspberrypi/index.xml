@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>RaspberryPi on onodera memo</title>
-        <link>https://tiisanamaou.github.io/hugo-website/categories/raspberrypi/</link>
+        <link>https://tiisanamaou.github.io/categories/raspberrypi/</link>
         <description>Recent content in RaspberryPi on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 02 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/raspberrypi/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 02 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/raspberrypi/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/</link>
+        <link>https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/</link>
         <pubDate>Sun, 02 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/</guid>
+        <guid>https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Raspberry Pi 5 Model B 8GB（この記事では&amp;quot;ラズパイ5&amp;quot;と記載）
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101.jpeg&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/IMG_3101.jpeg&#34;
 	width=&#34;3033&#34;
 	height=&#34;1706&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101_hu388408395844885668.jpeg 480w, ../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101_hu989902072451335048.jpeg 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/IMG_3101_hu388408395844885668.jpeg 480w, ../../post/raspberrypi5-usb-boot/IMG_3101_hu989902072451335048.jpeg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -35,10 +35,10 @@
 &lt;/ul&gt;
 &lt;h2 id=&#34;ラズパイ5を起動する準備&#34;&gt;ラズパイ5を起動する準備&lt;/h2&gt;
 &lt;p&gt;&amp;ldquo;Raspberry Pi Imager&amp;quot;を使用して、SSDにOSイメージを書き込みます
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/01.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/01.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/01_hu18349185550146412204.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/01_hu3991271285251654384.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/01_hu18349185550146412204.png 480w, ../../post/raspberrypi5-usb-boot/01_hu3991271285251654384.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -47,10 +47,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/02.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/02.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/02_hu15318412488673626808.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/02_hu15395653121560301826.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/02_hu15318412488673626808.png 480w, ../../post/raspberrypi5-usb-boot/02_hu15395653121560301826.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -59,10 +59,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/03.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/03.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/03_hu6530891841389365742.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/03_hu15180657205403992778.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/03_hu6530891841389365742.png 480w, ../../post/raspberrypi5-usb-boot/03_hu15180657205403992778.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -71,10 +71,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/04.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/04.png&#34;
 	width=&#34;1090&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/04_hu17461539892504002211.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/04_hu12816357779356958632.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/04_hu17461539892504002211.png 480w, ../../post/raspberrypi5-usb-boot/04_hu12816357779356958632.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -83,10 +83,10 @@
 		data-flex-basis=&#34;198px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/05.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/05.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/05_hu7668741584705019457.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/05_hu1949158256046923665.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/05_hu7668741584705019457.png 480w, ../../post/raspberrypi5-usb-boot/05_hu1949158256046923665.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -95,10 +95,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/06.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/06.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/06_hu1727275759890517064.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/06_hu551431132162333581.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/06_hu1727275759890517064.png 480w, ../../post/raspberrypi5-usb-boot/06_hu551431132162333581.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -107,10 +107,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/07.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/07.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/07_hu15726550552477110989.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/07_hu7979808115383182377.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/07_hu15726550552477110989.png 480w, ../../post/raspberrypi5-usb-boot/07_hu7979808115383182377.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -158,10 +158,10 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /boot/firmware/config.txt
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/09.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/raspberrypi5-usb-boot/09.png&#34;
 	width=&#34;1732&#34;
 	height=&#34;1258&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/09_hu14401635446077319656.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/09_hu187094411062462187.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/09_hu14401635446077319656.png 480w, ../../post/raspberrypi5-usb-boot/09_hu187094411062462187.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -223,10 +223,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mao@raspberrypi5:~$
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/08.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/raspberrypi5-usb-boot/08.png&#34;
 	width=&#34;1732&#34;
 	height=&#34;1258&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/08_hu2477809016159873592.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/08_hu5740919513528725357.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/08_hu2477809016159873592.png 480w, ../../post/raspberrypi5-usb-boot/08_hu5740919513528725357.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -341,10 +341,10 @@
         </item>
         <item>
         <title>CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/cloudflare-tunnel-raspberrypi3b/</link>
+        <link>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</link>
         <pubDate>Mon, 07 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/cloudflare-tunnel-raspberrypi3b/</guid>
+        <guid>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</guid>
         <description>&lt;h2 id=&#34;ubuntuにスワップを作成するラズパイ&#34;&gt;Ubuntuにスワップを作成する（ラズパイ）&lt;/h2&gt;
 &lt;p&gt;ラズパイのスペックは下記の通りです&lt;/p&gt;
 &lt;ul&gt;
@@ -546,10 +546,10 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;すると&amp;quot;Configure&amp;quot;ｔ表示された画面になります
-&lt;img src=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/01.png&#34;
+&lt;img src=&#34;../../post/cloudflare-tunnel-raspberrypi3b/01.png&#34;
 	width=&#34;2746&#34;
 	height=&#34;1854&#34;
-	srcset=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/01_hu10269101231633997555.png 480w, ../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/01_hu9079611263127604116.png 1024w&#34;
+	srcset=&#34;../../post/cloudflare-tunnel-raspberrypi3b/01_hu10269101231633997555.png 480w, ../../post/cloudflare-tunnel-raspberrypi3b/01_hu9079611263127604116.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -566,10 +566,10 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&amp;ldquo;Add public hostname for TunnelName&amp;quot;と表示された画面になります
-&lt;img src=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/02.png&#34;
+&lt;img src=&#34;../../post/cloudflare-tunnel-raspberrypi3b/02.png&#34;
 	width=&#34;3032&#34;
 	height=&#34;1854&#34;
-	srcset=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/02_hu17878355857062477510.png 480w, ../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/02_hu7770346448886141856.png 1024w&#34;
+	srcset=&#34;../../post/cloudflare-tunnel-raspberrypi3b/02_hu17878355857062477510.png 480w, ../../post/cloudflare-tunnel-raspberrypi3b/02_hu7770346448886141856.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -638,10 +638,10 @@
 下記の画像は&amp;quot;raspberrypi3b&amp;quot;をサブドメインとして設定した&lt;br&gt;
 503等がでると、cloudflaredは起動しているがdocker compose内での接続が上手く行っていない可能性がある&lt;br&gt;
 ※コンテナ名やポート番号が異なるなど
-&lt;img src=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/03.png&#34;
+&lt;img src=&#34;../../post/cloudflare-tunnel-raspberrypi3b/03.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/03_hu18080092092011390735.png 480w, ../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/03_hu207359769127267082.png 1024w&#34;
+	srcset=&#34;../../post/cloudflare-tunnel-raspberrypi3b/03_hu18080092092011390735.png 480w, ../../post/cloudflare-tunnel-raspberrypi3b/03_hu207359769127267082.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	

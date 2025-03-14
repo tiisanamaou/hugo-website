@@ -2,218 +2,218 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://tiisanamaou.github.io/hugo-website/</loc>
+    <loc>https://tiisanamaou.github.io/</loc>
     <lastmod>2025-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/</loc>
+    <loc>https://tiisanamaou.github.io/post/</loc>
     <lastmod>2025-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/</loc>
+    <loc>https://tiisanamaou.github.io/categories/</loc>
     <lastmod>2025-03-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/docker/</loc>
+    <loc>https://tiisanamaou.github.io/categories/docker/</loc>
     <lastmod>2025-03-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/harbor/</loc>
+    <loc>https://tiisanamaou.github.io/categories/harbor/</loc>
     <lastmod>2025-03-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/harbor-https-docker-pull/</loc>
+    <loc>https://tiisanamaou.github.io/post/harbor-https-docker-pull/</loc>
     <lastmod>2025-03-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/ubuntu/</loc>
+    <loc>https://tiisanamaou.github.io/categories/ubuntu/</loc>
     <lastmod>2025-03-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/secondary-dns/</loc>
+    <loc>https://tiisanamaou.github.io/post/secondary-dns/</loc>
     <lastmod>2025-03-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/dockerhub-mirror-gcr/</loc>
+    <loc>https://tiisanamaou.github.io/post/dockerhub-mirror-gcr/</loc>
     <lastmod>2025-03-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/raspberrypi/</loc>
+    <loc>https://tiisanamaou.github.io/categories/raspberrypi/</loc>
     <lastmod>2025-03-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/</loc>
+    <loc>https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/</loc>
     <lastmod>2025-03-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/static-routing/</loc>
+    <loc>https://tiisanamaou.github.io/post/static-routing/</loc>
     <lastmod>2025-01-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/2024review-and-2025plan/</loc>
+    <loc>https://tiisanamaou.github.io/post/2024review-and-2025plan/</loc>
     <lastmod>2024-12-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/%E6%8C%AF%E3%82%8A%E8%BF%94%E3%82%8A/</loc>
+    <loc>https://tiisanamaou.github.io/categories/%E6%8C%AF%E3%82%8A%E8%BF%94%E3%82%8A/</loc>
     <lastmod>2024-12-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/ssl/</loc>
+    <loc>https://tiisanamaou.github.io/categories/ssl/</loc>
     <lastmod>2024-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/unbound/</loc>
+    <loc>https://tiisanamaou.github.io/categories/unbound/</loc>
     <lastmod>2024-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/internal-https-domain/</loc>
+    <loc>https://tiisanamaou.github.io/post/internal-https-domain/</loc>
     <lastmod>2024-12-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/certbot/</loc>
+    <loc>https://tiisanamaou.github.io/categories/certbot/</loc>
     <lastmod>2024-12-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/lets-encrypt/</loc>
+    <loc>https://tiisanamaou.github.io/categories/lets-encrypt/</loc>
     <lastmod>2024-12-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/certbot-lets-encrypt/</loc>
+    <loc>https://tiisanamaou.github.io/post/certbot-lets-encrypt/</loc>
     <lastmod>2024-12-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/apt-cacher-ng/</loc>
+    <loc>https://tiisanamaou.github.io/categories/apt-cacher-ng/</loc>
     <lastmod>2024-11-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/apt-cacher-ng/</loc>
+    <loc>https://tiisanamaou.github.io/post/apt-cacher-ng/</loc>
     <lastmod>2024-11-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/ubuntu-server-disk-expansion/</loc>
+    <loc>https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/</loc>
     <lastmod>2025-02-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/harbor-install/</loc>
+    <loc>https://tiisanamaou.github.io/post/harbor-install/</loc>
     <lastmod>2024-10-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/cloudflaretunnel/</loc>
+    <loc>https://tiisanamaou.github.io/categories/cloudflaretunnel/</loc>
     <lastmod>2024-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/cloudflare-tunnel-raspberrypi3b/</loc>
+    <loc>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</loc>
     <lastmod>2024-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/fe-passed-20240930/</loc>
+    <loc>https://tiisanamaou.github.io/post/fe-passed-20240930/</loc>
     <lastmod>2024-10-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/%E8%A9%A6%E9%A8%93/</loc>
+    <loc>https://tiisanamaou.github.io/categories/%E8%A9%A6%E9%A8%93/</loc>
     <lastmod>2024-10-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/cilium/</loc>
+    <loc>https://tiisanamaou.github.io/categories/cilium/</loc>
     <lastmod>2024-09-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/kubernetes/</loc>
+    <loc>https://tiisanamaou.github.io/categories/kubernetes/</loc>
     <lastmod>2024-09-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-cni-cilium/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</loc>
     <lastmod>2024-09-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-rook-ceph/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</loc>
     <lastmod>2024-09-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/rook-ceph/</loc>
+    <loc>https://tiisanamaou.github.io/categories/rook-ceph/</loc>
     <lastmod>2024-09-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-longhorn/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-longhorn/</loc>
     <lastmod>2024-09-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/longhorn/</loc>
+    <loc>https://tiisanamaou.github.io/categories/longhorn/</loc>
     <lastmod>2024-09-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-cri-o/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-cri-o/</loc>
     <lastmod>2024-08-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/helm/</loc>
+    <loc>https://tiisanamaou.github.io/categories/helm/</loc>
     <lastmod>2024-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-ingress-traefik/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</loc>
     <lastmod>2024-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/traefik/</loc>
+    <loc>https://tiisanamaou.github.io/categories/traefik/</loc>
     <lastmod>2024-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-31-0/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</loc>
     <lastmod>2024-08-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/hugo/</loc>
+    <loc>https://tiisanamaou.github.io/categories/hugo/</loc>
     <lastmod>2024-08-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/ubuntu-install-hugo/</loc>
+    <loc>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</loc>
     <lastmod>2024-08-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-pv-pvc/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</loc>
     <lastmod>2024-08-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-30-3/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-30-3/</loc>
     <lastmod>2024-08-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-dashboard/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-dashboard/</loc>
     <lastmod>2024-08-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-loadbalancer-ip/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-loadbalancer-ip/</loc>
     <lastmod>2024-08-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/metallb/</loc>
+    <loc>https://tiisanamaou.github.io/categories/metallb/</loc>
     <lastmod>2024-08-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/ansible/</loc>
+    <loc>https://tiisanamaou.github.io/categories/ansible/</loc>
     <lastmod>2024-07-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/ansible-k8s/</loc>
+    <loc>https://tiisanamaou.github.io/post/ansible-k8s/</loc>
     <lastmod>2024-07-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/ansible/</loc>
+    <loc>https://tiisanamaou.github.io/post/ansible/</loc>
     <lastmod>2024-07-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-05/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</loc>
     <lastmod>2024-07-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/proxmox/</loc>
+    <loc>https://tiisanamaou.github.io/categories/proxmox/</loc>
     <lastmod>2024-07-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-04/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</loc>
     <lastmod>2024-07-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-03/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</loc>
     <lastmod>2024-07-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-02/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</loc>
     <lastmod>2024-07-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-01/</loc>
+    <loc>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</loc>
     <lastmod>2024-07-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/mysql/</loc>
+    <loc>https://tiisanamaou.github.io/categories/mysql/</loc>
     <lastmod>2024-06-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/deskminix300-memory-upgrade/</loc>
+    <loc>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</loc>
     <lastmod>2024-06-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/zbbix/</loc>
+    <loc>https://tiisanamaou.github.io/categories/zbbix/</loc>
     <lastmod>2024-06-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/zabbix-install/</loc>
+    <loc>https://tiisanamaou.github.io/post/zabbix-install/</loc>
     <lastmod>2024-06-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/hugo-stack-custom-lastupdated/</loc>
+    <loc>https://tiisanamaou.github.io/post/hugo-stack-custom-lastupdated/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/docker-compose-mysql-log/</loc>
+    <loc>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/phpmyadmin/</loc>
+    <loc>https://tiisanamaou.github.io/categories/phpmyadmin/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/proxmox-ssd-lan/</loc>
+    <loc>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</loc>
     <lastmod>2024-05-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/</loc>
+    <loc>https://tiisanamaou.github.io/categories/%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF/</loc>
     <lastmod>2024-05-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/page/about/</loc>
+    <loc>https://tiisanamaou.github.io/page/about/</loc>
     <lastmod>2024-07-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/categories/go/</loc>
+    <loc>https://tiisanamaou.github.io/categories/go/</loc>
     <lastmod>2024-05-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/post/golang-source-build/</loc>
+    <loc>https://tiisanamaou.github.io/post/golang-source-build/</loc>
     <lastmod>2024-05-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/page/</loc>
+    <loc>https://tiisanamaou.github.io/page/</loc>
     <lastmod>2024-07-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/page/archives/</loc>
+    <loc>https://tiisanamaou.github.io/page/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/page/search/</loc>
+    <loc>https://tiisanamaou.github.io/page/search/</loc>
   </url><url>
-    <loc>https://tiisanamaou.github.io/hugo-website/tags/</loc>
+    <loc>https://tiisanamaou.github.io/tags/</loc>
   </url>
 </urlset>

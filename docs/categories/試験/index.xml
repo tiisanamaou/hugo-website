@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>試験 on onodera memo</title>
-        <link>https://tiisanamaou.github.io/hugo-website/categories/%E8%A9%A6%E9%A8%93/</link>
+        <link>https://tiisanamaou.github.io/categories/%E8%A9%A6%E9%A8%93/</link>
         <description>Recent content in 試験 on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sat, 05 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/%E8%A9%A6%E9%A8%93/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 05 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/%E8%A9%A6%E9%A8%93/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>基本情報技術者試験に合格しました</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/fe-passed-20240930/</link>
+        <link>https://tiisanamaou.github.io/post/fe-passed-20240930/</link>
         <pubDate>Sat, 05 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/fe-passed-20240930/</guid>
+        <guid>https://tiisanamaou.github.io/post/fe-passed-20240930/</guid>
         <description>&lt;h2 id=&#34;試験について&#34;&gt;試験について&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;基本情報技術者試験&lt;/li&gt;
@@ -20,10 +20,10 @@
 &lt;li&gt;科目A_690点&lt;/li&gt;
 &lt;li&gt;科目B_625点&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/fe-passed-20240930/01.png&#34;
+&lt;p&gt;&lt;img src=&#34;../../post/fe-passed-20240930/01.png&#34;
 	width=&#34;970&#34;
 	height=&#34;548&#34;
-	srcset=&#34;../../hugo-website/post/fe-passed-20240930/01_hu2938400017597303036.png 480w, ../../hugo-website/post/fe-passed-20240930/01_hu13366500076814170027.png 1024w&#34;
+	srcset=&#34;../../post/fe-passed-20240930/01_hu2938400017597303036.png 480w, ../../post/fe-passed-20240930/01_hu13366500076814170027.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	

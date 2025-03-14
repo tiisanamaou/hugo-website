@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Proxmox on onodera memo</title>
-        <link>https://tiisanamaou.github.io/hugo-website/categories/proxmox/</link>
+        <link>https://tiisanamaou.github.io/categories/proxmox/</link>
         <description>Recent content in Proxmox on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Mon, 15 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/proxmox/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 15 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/proxmox/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>kubernetesをproxmox上に立ててみた（5）/HA構成</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-05/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</link>
         <pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-05/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -513,10 +513,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（4）/クラスターを壊す</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-04/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</link>
         <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-04/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -890,10 +890,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-03/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</link>
         <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-03/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -1263,10 +1263,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（2）/Control-Plane・Worker-Nodeの設定</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-02/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</link>
         <pubDate>Sat, 06 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-02/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -1649,10 +1649,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（1）</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-01/</link>
+        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</link>
         <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-01/</guid>
+        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</guid>
         <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;k8sを勉強してみようと思い、デプロイ等の操作は書籍で触っていたら構築もしてみたくなったので、Proxmox上に仮想マシンを作成してk8sを構築してみた&lt;/p&gt;
 &lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
@@ -2823,10 +2823,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>ProxmoxがインストールされているDeskminix300のメモリを増設する</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/deskminix300-memory-upgrade/</link>
+        <link>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</link>
         <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/deskminix300-memory-upgrade/</guid>
+        <guid>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox VE 8.2.4 x86_64&lt;/li&gt;
@@ -2947,10 +2947,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Deskmini x300でSATA SSDからM.2 SSDに差し替えるとProxmoxのWebGUIにアクセスできなくなる</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/proxmox-ssd-lan/</link>
+        <link>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</link>
         <pubDate>Sun, 26 May 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/proxmox-ssd-lan/</guid>
+        <guid>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</guid>
         <description>&lt;h2 id=&#34;発生現象&#34;&gt;発生現象&lt;/h2&gt;
 &lt;p&gt;Deskmini x300(CPU:Ryzen7 5700G) に元々SATA SSDを差していたがデータをM.2 SSDにクローンをして差し替えると、有線LANが繋がらなくなる&lt;br&gt;
 結果、ProxmoxのWebGUIにアクセスできなくなる&lt;/p&gt;
@@ -2959,10 +2959,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;h2 id=&#34;手順&#34;&gt;手順&lt;/h2&gt;
 &lt;h3 id=&#34;sata-ssdのとき&#34;&gt;SATA SSDのとき&lt;/h3&gt;
 &lt;p&gt;元々は500GBのSATA SSDを使用していた
-&lt;img src=&#34;../../hugo-website/post/proxmox-ssd-lan/01.png&#34;
+&lt;img src=&#34;../../post/proxmox-ssd-lan/01.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../../hugo-website/post/proxmox-ssd-lan/01_hu496782049234564471.png 480w, ../../hugo-website/post/proxmox-ssd-lan/01_hu5309739966525751733.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-ssd-lan/01_hu496782049234564471.png 480w, ../../post/proxmox-ssd-lan/01_hu5309739966525751733.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2972,10 +2972,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 	
 &gt;
 ネットワークの設定
-&lt;img src=&#34;../../hugo-website/post/proxmox-ssd-lan/02.png&#34;
+&lt;img src=&#34;../../post/proxmox-ssd-lan/02.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../../hugo-website/post/proxmox-ssd-lan/02_hu11372885925747122544.png 480w, ../../hugo-website/post/proxmox-ssd-lan/02_hu12415396578701522199.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-ssd-lan/02_hu11372885925747122544.png 480w, ../../post/proxmox-ssd-lan/02_hu12415396578701522199.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2986,10 +2986,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;h3 id=&#34;m2-ssdのとき&#34;&gt;M.2 SSDのとき&lt;/h3&gt;
 &lt;p&gt;M.2 SSDに差し替えた
-&lt;img src=&#34;../../hugo-website/post/proxmox-ssd-lan/03.png&#34;
+&lt;img src=&#34;../../post/proxmox-ssd-lan/03.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../../hugo-website/post/proxmox-ssd-lan/03_hu17608978437788127665.png 480w, ../../hugo-website/post/proxmox-ssd-lan/03_hu281737308782487125.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-ssd-lan/03_hu17608978437788127665.png 480w, ../../post/proxmox-ssd-lan/03_hu281737308782487125.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2999,10 +2999,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 	
 &gt;
 元々「enp1s0」だったが「enp2s0」にすると通信可能になった
-&lt;img src=&#34;../../hugo-website/post/proxmox-ssd-lan/04.png&#34;
+&lt;img src=&#34;../../post/proxmox-ssd-lan/04.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../../hugo-website/post/proxmox-ssd-lan/04_hu1971104256836174357.png 480w, ../../hugo-website/post/proxmox-ssd-lan/04_hu10968881571680934050.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-ssd-lan/04_hu1971104256836174357.png 480w, ../../post/proxmox-ssd-lan/04_hu10968881571680934050.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
