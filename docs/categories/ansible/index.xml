@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Ansible on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/ansible/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/categories/ansible/</link>
         <description>Recent content in Ansible on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sat, 27 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/ansible/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 27 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/ansible/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Ansibleを使ってKubernetesの初期設定をしてみた</title>
-        <link>https://tiisanamaou.github.io/post/ansible-k8s/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/ansible-k8s/</link>
         <pubDate>Sat, 27 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ansible-k8s/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/ansible-k8s/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ansible 2.16.9&lt;/li&gt;
@@ -420,10 +420,10 @@
         </item>
         <item>
         <title>Ansibleを少し触ってみた</title>
-        <link>https://tiisanamaou.github.io/post/ansible/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/ansible/</link>
         <pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ansible/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/ansible/</guid>
         <description>&lt;h2 id=&#34;ansibleの拡張機能のインストール&#34;&gt;Ansibleの拡張機能のインストール&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;VScodeの拡張機能&amp;quot;redhat.ansible&amp;quot;があるのでインストールしておくと便利になる&lt;/li&gt;
@@ -740,10 +740,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;無事nginxが起動しています&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/ansible/2024-07-15_141453.png&#34;
+&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/ansible/2024-07-15_141453.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;1013&#34;
-	srcset=&#34;../../post/ansible/2024-07-15_141453_hu12930034088221878227.png 480w, ../../post/ansible/2024-07-15_141453_hu7300550148481746709.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/ansible/2024-07-15_141453_hu12930034088221878227.png 480w, ../../hugo-website/post/ansible/2024-07-15_141453_hu7300550148481746709.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	

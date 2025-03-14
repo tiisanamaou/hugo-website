@@ -11,9 +11,9 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
 traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 mao@mao (x86_64) : /home/mao &gt; traceroute harbor.'>
 <title>Harborにhttpsでアクセスしてdocker pullできるようにする</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/post/harbor-https-docker-pull/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/hugo-website/post/harbor-https-docker-pull/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Harborにhttpsでアクセスしてdocker pullできるようにする'>
+<link rel="stylesheet" href="../../hugo-website/scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Harborにhttpsでアクセスしてdocker pullできるようにする'>
 <meta property='og:description' content='環境 Harbor Version v2.11.1-6b7ecba1 Let&rsquo;s Encrypt Unbound 1.19.2 Docker Engine Community 28.0.1 証明書の発行 証明書発行手順（Let&#39;s Encrypt） を参照
 Harborの設定 証明書ファイルをサーバーにアップロードする
 設定ファイルを編集する
@@ -22,7 +22,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
 1 sudo docker compose up -d DNS設定 DNS（Unbound）に追加する キャッシュされるまで時間がかかる？
 900s? 1 2 sudo systemctl restart unbound sudo unbound-control reload DNSに登録されているか確認する
 traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 mao@mao (x86_64) : /home/mao &gt; traceroute harbor.'>
-<meta property='og:url' content='https://tiisanamaou.github.io/post/harbor-https-docker-pull/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/hugo-website/post/harbor-https-docker-pull/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-14T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Harborにhttpsでアクセスしてdocker pullできるようにする">
@@ -76,13 +76,13 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
         
             
             <figure class="site-avatar">
-                <a href="../../">
+                <a href="../../hugo-website/">
                 
                     
                     
                     
                         
-                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                        <img src="../../hugo-website/img/avatar_hu16581378458422906.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -93,7 +93,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h1 class="site-name"><a href="../../hugo-website">onodera memo</a></h1>
             <h2 class="site-description">メモ兼ブログ</h2>
         </div>
     </header><ol class="social-menu">
@@ -123,7 +123,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
         
         
         <li >
-            <a href='../../' >
+            <a href='../../hugo-website/' >
                 
                 
                 
@@ -143,7 +143,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
         
         
         <li >
-            <a href='../../page/about/' >
+            <a href='../../hugo-website/page/about/' >
                 
                 
                 
@@ -162,7 +162,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
         
         
         <li >
-            <a href='../../page/archives/' >
+            <a href='../../hugo-website/page/archives/' >
                 
                 
                 
@@ -182,7 +182,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
         
         
         <li >
-            <a href='../../page/search/' >
+            <a href='../../hugo-website/page/search/' >
                 
                 
                 
@@ -215,7 +215,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://tiisanamaou.github.io/" selected></option>
+                            <option value="https://tiisanamaou.github.io/hugo-website/" selected></option>
                         
                     </select>
                 </li>
@@ -256,11 +256,11 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
     
     <header class="article-category">
         
-            <a href="../../categories/harbor/" >
+            <a href="../../hugo-website/categories/harbor/" >
                 Harbor
             </a>
         
-            <a href="../../categories/docker/" >
+            <a href="../../hugo-website/categories/docker/" >
                 Docker
             </a>
         
@@ -269,7 +269,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../post/harbor-https-docker-pull/">Harborにhttpsでアクセスしてdocker pullできるようにする</a>
+            <a href="../../hugo-website/post/harbor-https-docker-pull/">Harborにhttpsでアクセスしてdocker pullできるようにする</a>
         </h2>
     
         
@@ -618,7 +618,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
             
                 
 <article class="">
-    <a href="../../post/harbor-install/">
+    <a href="../../hugo-website/post/harbor-install/">
         
         
 
@@ -631,7 +631,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
             
                 
 <article class="">
-    <a href="../../post/dockerhub-mirror-gcr/">
+    <a href="../../hugo-website/post/dockerhub-mirror-gcr/">
         
         
 
@@ -644,7 +644,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
             
                 
 <article class="">
-    <a href="../../post/docker-compose-mysql-log/">
+    <a href="../../hugo-website/post/docker-compose-mysql-log/">
         
         
 
@@ -762,7 +762,7 @@ traceroute dig 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+            </script><script type="text/javascript" src="../../hugo-website/ts/main.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

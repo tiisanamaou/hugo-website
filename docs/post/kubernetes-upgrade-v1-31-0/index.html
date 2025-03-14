@@ -6,13 +6,13 @@
 1 2 3 4 5 6 7 8 mao@k8s-control-plane-01:~$ kubectl get nodes -o wide NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME k8s-control-plane-01 Ready control-plane 46d v1.30.3 192.168.10.41 &lt;none&gt; Ubuntu 24.04 LTS 6.8.0-40-generic containerd://1.7.18 k8s-control-plane-02 Ready control-plane 46d v1.30.3 192.168.10.44 &lt;none&gt; Ubuntu 24.04 LTS 6.8.0-40-generic containerd://1.7.18 k8s-control-plane-03 Ready control-plane 46d v1.'>
 <title>Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-31-0/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする'>
+<link rel="stylesheet" href="../../hugo-website/scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする'>
 <meta property='og:description' content='環境 Kubernetes 1.30.3 → 1.30.4 → 1.31.0 Control-Plane 3台 Woker-Node 2台 参考URL https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/ https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/ 変更点の確認 https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#downloads-for-v1304 https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md 問題なさそうなのでアップグレードします
 現状の構成 v1.30.3を使用している
 1 2 3 4 5 6 7 8 mao@k8s-control-plane-01:~$ kubectl get nodes -o wide NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME k8s-control-plane-01 Ready control-plane 46d v1.30.3 192.168.10.41 &lt;none&gt; Ubuntu 24.04 LTS 6.8.0-40-generic containerd://1.7.18 k8s-control-plane-02 Ready control-plane 46d v1.30.3 192.168.10.44 &lt;none&gt; Ubuntu 24.04 LTS 6.8.0-40-generic containerd://1.7.18 k8s-control-plane-03 Ready control-plane 46d v1.'>
-<meta property='og:url' content='https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-31-0/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-08-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-16T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする">
@@ -61,13 +61,13 @@
         
             
             <figure class="site-avatar">
-                <a href="../../">
+                <a href="../../hugo-website/">
                 
                     
                     
                     
                         
-                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                        <img src="../../hugo-website/img/avatar_hu16581378458422906.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -78,7 +78,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h1 class="site-name"><a href="../../hugo-website">onodera memo</a></h1>
             <h2 class="site-description">メモ兼ブログ</h2>
         </div>
     </header><ol class="social-menu">
@@ -108,7 +108,7 @@
         
         
         <li >
-            <a href='../../' >
+            <a href='../../hugo-website/' >
                 
                 
                 
@@ -128,7 +128,7 @@
         
         
         <li >
-            <a href='../../page/about/' >
+            <a href='../../hugo-website/page/about/' >
                 
                 
                 
@@ -147,7 +147,7 @@
         
         
         <li >
-            <a href='../../page/archives/' >
+            <a href='../../hugo-website/page/archives/' >
                 
                 
                 
@@ -167,7 +167,7 @@
         
         
         <li >
-            <a href='../../page/search/' >
+            <a href='../../hugo-website/page/search/' >
                 
                 
                 
@@ -200,7 +200,7 @@
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://tiisanamaou.github.io/" selected></option>
+                            <option value="https://tiisanamaou.github.io/hugo-website/" selected></option>
                         
                     </select>
                 </li>
@@ -241,7 +241,7 @@
     
     <header class="article-category">
         
-            <a href="../../categories/kubernetes/" >
+            <a href="../../hugo-website/categories/kubernetes/" >
                 Kubernetes
             </a>
         
@@ -250,7 +250,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../post/kubernetes-upgrade-v1-31-0/">Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</a>
+            <a href="../../hugo-website/post/kubernetes-upgrade-v1-31-0/">Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</a>
         </h2>
     
         
@@ -1016,7 +1016,7 @@
             
                 
 <article class="">
-    <a href="../../post/kubernetes-cni-cilium/">
+    <a href="../../hugo-website/post/kubernetes-cni-cilium/">
         
         
 
@@ -1029,7 +1029,7 @@
             
                 
 <article class="">
-    <a href="../../post/kubernetes-rook-ceph/">
+    <a href="../../hugo-website/post/kubernetes-rook-ceph/">
         
         
 
@@ -1042,7 +1042,7 @@
             
                 
 <article class="">
-    <a href="../../post/kubernetes-longhorn/">
+    <a href="../../hugo-website/post/kubernetes-longhorn/">
         
         
 
@@ -1055,7 +1055,7 @@
             
                 
 <article class="">
-    <a href="../../post/kubernetes-cri-o/">
+    <a href="../../hugo-website/post/kubernetes-cri-o/">
         
         
 
@@ -1068,7 +1068,7 @@
             
                 
 <article class="">
-    <a href="../../post/kubernetes-ingress-traefik/">
+    <a href="../../hugo-website/post/kubernetes-ingress-traefik/">
         
         
 
@@ -1186,7 +1186,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+            </script><script type="text/javascript" src="../../hugo-website/ts/main.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

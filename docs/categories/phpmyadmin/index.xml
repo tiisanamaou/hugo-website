@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Phpmyadmin on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/phpmyadmin/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/categories/phpmyadmin/</link>
         <description>Recent content in Phpmyadmin on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 02 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/phpmyadmin/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 02 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/phpmyadmin/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>docker-composeで構築したMySQLのログをローカルに保存する</title>
-        <link>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/docker-compose-mysql-log/</link>
         <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/docker-compose-mysql-log/</guid>
         <description>&lt;h2 id=&#34;ファイルフォルダ構成&#34;&gt;ファイル・フォルダ構成&lt;/h2&gt;
 &lt;p&gt;以下のような構成になっています&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;

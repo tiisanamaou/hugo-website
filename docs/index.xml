@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>onodera memo</title>
-        <link>https://tiisanamaou.github.io/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/</link>
         <description>Recent content on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Harborにhttpsでアクセスしてdocker pullできるようにする</title>
-        <link>https://tiisanamaou.github.io/post/harbor-https-docker-pull/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/harbor-https-docker-pull/</link>
         <pubDate>Fri, 14 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/harbor-https-docker-pull/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/harbor-https-docker-pull/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Harbor Version v2.11.1-6b7ecba1&lt;/li&gt;
@@ -21,7 +21,7 @@
 &lt;li&gt;Docker Engine Community 28.0.1&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;証明書の発行&#34;&gt;証明書の発行&lt;/h2&gt;
-&lt;p&gt;&lt;a title=&#34;証明書発行手順（Let&amp;#39;s Encrypt）&#34; href=&#34;https://tiisanamaou.github.io/post/certbot-lets-encrypt/&#34;&gt;証明書発行手順（Let&amp;#39;s Encrypt）&lt;/a&gt; を参照&lt;/p&gt;
+&lt;p&gt;&lt;a title=&#34;証明書発行手順（Let&amp;#39;s Encrypt）&#34; href=&#34;https://tiisanamaou.github.io/hugo-website/post/certbot-lets-encrypt/&#34;&gt;証明書発行手順（Let&amp;#39;s Encrypt）&lt;/a&gt; を参照&lt;/p&gt;
 &lt;h2 id=&#34;harborの設定&#34;&gt;Harborの設定&lt;/h2&gt;
 &lt;p&gt;証明書ファイルをサーバーにアップロードする&lt;/p&gt;
 &lt;p&gt;設定ファイルを編集する&lt;/p&gt;
@@ -300,10 +300,10 @@
         </item>
         <item>
         <title>セカンダリDNSの追加</title>
-        <link>https://tiisanamaou.github.io/post/secondary-dns/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/secondary-dns/</link>
         <pubDate>Thu, 13 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/secondary-dns/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/secondary-dns/</guid>
         <description>&lt;h2 id=&#34;理由&#34;&gt;理由&lt;/h2&gt;
 &lt;p&gt;ローカル内にあるDNSで名前解決して、そのDNSが落ちているときは別のDNSで通信自体はできるようにしたかった&lt;br&gt;
 そこでセカンダリDNSをどのように追加したら良いのか調べた&lt;/p&gt;
@@ -450,10 +450,10 @@
         </item>
         <item>
         <title>DockerHubのミラーを設定する</title>
-        <link>https://tiisanamaou.github.io/post/dockerhub-mirror-gcr/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/dockerhub-mirror-gcr/</link>
         <pubDate>Sat, 08 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/dockerhub-mirror-gcr/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/dockerhub-mirror-gcr/</guid>
         <description>&lt;h2 id=&#34;理由&#34;&gt;理由&lt;/h2&gt;
 &lt;p&gt;2025年4月1日から認証されていないユーザーは、1時間あたり10pullに制限されるみたいなので回避策を試してみる&lt;/p&gt;
 &lt;ul&gt;
@@ -718,17 +718,17 @@
         </item>
         <item>
         <title>ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）</title>
-        <link>https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/</link>
         <pubDate>Sun, 02 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Raspberry Pi 5 Model B 8GB（この記事では&amp;quot;ラズパイ5&amp;quot;と記載）
-&lt;img src=&#34;./post/raspberrypi5-usb-boot/IMG_3101.jpeg&#34;
+&lt;img src=&#34;./hugo-website/post/raspberrypi5-usb-boot/IMG_3101.jpeg&#34;
 	width=&#34;3033&#34;
 	height=&#34;1706&#34;
-	srcset=&#34;./post/raspberrypi5-usb-boot/IMG_3101_hu388408395844885668.jpeg 480w, ./post/raspberrypi5-usb-boot/IMG_3101_hu989902072451335048.jpeg 1024w&#34;
+	srcset=&#34;./hugo-website/post/raspberrypi5-usb-boot/IMG_3101_hu388408395844885668.jpeg 480w, ./hugo-website/post/raspberrypi5-usb-boot/IMG_3101_hu989902072451335048.jpeg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -744,10 +744,10 @@
 &lt;/ul&gt;
 &lt;h2 id=&#34;ラズパイ5を起動する準備&#34;&gt;ラズパイ5を起動する準備&lt;/h2&gt;
 &lt;p&gt;&amp;ldquo;Raspberry Pi Imager&amp;quot;を使用して、SSDにOSイメージを書き込みます
-&lt;img src=&#34;./post/raspberrypi5-usb-boot/01.png&#34;
+&lt;img src=&#34;./hugo-website/post/raspberrypi5-usb-boot/01.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;./post/raspberrypi5-usb-boot/01_hu18349185550146412204.png 480w, ./post/raspberrypi5-usb-boot/01_hu3991271285251654384.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/raspberrypi5-usb-boot/01_hu18349185550146412204.png 480w, ./hugo-website/post/raspberrypi5-usb-boot/01_hu3991271285251654384.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -756,10 +756,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/raspberrypi5-usb-boot/02.png&#34;
+&lt;img src=&#34;./hugo-website/post/raspberrypi5-usb-boot/02.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;./post/raspberrypi5-usb-boot/02_hu15318412488673626808.png 480w, ./post/raspberrypi5-usb-boot/02_hu15395653121560301826.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/raspberrypi5-usb-boot/02_hu15318412488673626808.png 480w, ./hugo-website/post/raspberrypi5-usb-boot/02_hu15395653121560301826.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -768,10 +768,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/raspberrypi5-usb-boot/03.png&#34;
+&lt;img src=&#34;./hugo-website/post/raspberrypi5-usb-boot/03.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;./post/raspberrypi5-usb-boot/03_hu6530891841389365742.png 480w, ./post/raspberrypi5-usb-boot/03_hu15180657205403992778.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/raspberrypi5-usb-boot/03_hu6530891841389365742.png 480w, ./hugo-website/post/raspberrypi5-usb-boot/03_hu15180657205403992778.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -780,10 +780,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/raspberrypi5-usb-boot/04.png&#34;
+&lt;img src=&#34;./hugo-website/post/raspberrypi5-usb-boot/04.png&#34;
 	width=&#34;1090&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;./post/raspberrypi5-usb-boot/04_hu17461539892504002211.png 480w, ./post/raspberrypi5-usb-boot/04_hu12816357779356958632.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/raspberrypi5-usb-boot/04_hu17461539892504002211.png 480w, ./hugo-website/post/raspberrypi5-usb-boot/04_hu12816357779356958632.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -792,10 +792,10 @@
 		data-flex-basis=&#34;198px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/raspberrypi5-usb-boot/05.png&#34;
+&lt;img src=&#34;./hugo-website/post/raspberrypi5-usb-boot/05.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;./post/raspberrypi5-usb-boot/05_hu7668741584705019457.png 480w, ./post/raspberrypi5-usb-boot/05_hu1949158256046923665.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/raspberrypi5-usb-boot/05_hu7668741584705019457.png 480w, ./hugo-website/post/raspberrypi5-usb-boot/05_hu1949158256046923665.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -804,10 +804,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/raspberrypi5-usb-boot/06.png&#34;
+&lt;img src=&#34;./hugo-website/post/raspberrypi5-usb-boot/06.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;./post/raspberrypi5-usb-boot/06_hu1727275759890517064.png 480w, ./post/raspberrypi5-usb-boot/06_hu551431132162333581.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/raspberrypi5-usb-boot/06_hu1727275759890517064.png 480w, ./hugo-website/post/raspberrypi5-usb-boot/06_hu551431132162333581.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -816,10 +816,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/raspberrypi5-usb-boot/07.png&#34;
+&lt;img src=&#34;./hugo-website/post/raspberrypi5-usb-boot/07.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;./post/raspberrypi5-usb-boot/07_hu15726550552477110989.png 480w, ./post/raspberrypi5-usb-boot/07_hu7979808115383182377.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/raspberrypi5-usb-boot/07_hu15726550552477110989.png 480w, ./hugo-website/post/raspberrypi5-usb-boot/07_hu7979808115383182377.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -867,10 +867,10 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /boot/firmware/config.txt
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;./post/raspberrypi5-usb-boot/09.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;./hugo-website/post/raspberrypi5-usb-boot/09.png&#34;
 	width=&#34;1732&#34;
 	height=&#34;1258&#34;
-	srcset=&#34;./post/raspberrypi5-usb-boot/09_hu14401635446077319656.png 480w, ./post/raspberrypi5-usb-boot/09_hu187094411062462187.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/raspberrypi5-usb-boot/09_hu14401635446077319656.png 480w, ./hugo-website/post/raspberrypi5-usb-boot/09_hu187094411062462187.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -932,10 +932,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mao@raspberrypi5:~$
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;./post/raspberrypi5-usb-boot/08.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;./hugo-website/post/raspberrypi5-usb-boot/08.png&#34;
 	width=&#34;1732&#34;
 	height=&#34;1258&#34;
-	srcset=&#34;./post/raspberrypi5-usb-boot/08_hu2477809016159873592.png 480w, ./post/raspberrypi5-usb-boot/08_hu5740919513528725357.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/raspberrypi5-usb-boot/08_hu2477809016159873592.png 480w, ./hugo-website/post/raspberrypi5-usb-boot/08_hu5740919513528725357.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1050,10 +1050,10 @@
         </item>
         <item>
         <title>スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする</title>
-        <link>https://tiisanamaou.github.io/post/static-routing/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/static-routing/</link>
         <pubDate>Thu, 02 Jan 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/static-routing/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/static-routing/</guid>
         <description>&lt;h2 id=&#34;なんのために&#34;&gt;なんのために？&lt;/h2&gt;
 &lt;p&gt;家庭内で普段使っているサブネットと、サーバー等のサブネットを分けてようと思ったため。&lt;br&gt;
 しかし、そのままだと家庭内で使用しているサブネットからサーバーにアクセスできないので、サブネットを越えて通信させたかったので設定方法を調べた結果、スタティックルーティングという方法でルーティングさせて通信させることにした。&lt;/p&gt;
@@ -1061,10 +1061,10 @@
 &lt;ul&gt;
 &lt;li&gt;Ubuntu Server 24.04.1&lt;/li&gt;
 &lt;li&gt;ネットワーク図
-&lt;img src=&#34;./post/static-routing/01.jpg&#34;
+&lt;img src=&#34;./hugo-website/post/static-routing/01.jpg&#34;
 	width=&#34;1272&#34;
 	height=&#34;940&#34;
-	srcset=&#34;./post/static-routing/01_hu1409723198811678751.jpg 480w, ./post/static-routing/01_hu8771026579545558427.jpg 1024w&#34;
+	srcset=&#34;./hugo-website/post/static-routing/01_hu1409723198811678751.jpg 480w, ./hugo-website/post/static-routing/01_hu8771026579545558427.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1357,10 +1357,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;問題なければ、サブネットを越えて通信ができた&lt;/p&gt;
 &lt;p&gt;ネットワーク図
-&lt;img src=&#34;./post/static-routing/01.jpg&#34;
+&lt;img src=&#34;./hugo-website/post/static-routing/01.jpg&#34;
 	width=&#34;1272&#34;
 	height=&#34;940&#34;
-	srcset=&#34;./post/static-routing/01_hu1409723198811678751.jpg 480w, ./post/static-routing/01_hu8771026579545558427.jpg 1024w&#34;
+	srcset=&#34;./hugo-website/post/static-routing/01_hu1409723198811678751.jpg 480w, ./hugo-website/post/static-routing/01_hu8771026579545558427.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1430,10 +1430,10 @@
         </item>
         <item>
         <title>2024年振り返りと2025年の目標</title>
-        <link>https://tiisanamaou.github.io/post/2024review-and-2025plan/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/2024review-and-2025plan/</link>
         <pubDate>Tue, 31 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/2024review-and-2025plan/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/2024review-and-2025plan/</guid>
         <description>&lt;h2 id=&#34;2024年振り返り&#34;&gt;2024年振り返り&lt;/h2&gt;
 &lt;p&gt;今年の目標としていた、基本情報と応用情報の合格は両方受験をして、基本情報技術者のみ合格することができました。&lt;/p&gt;
 &lt;p&gt;基本情報に合格できた理由は、先に応用を受験して落ちていたので、その反省から、勉強時間を増やして試験に望んだからだと思っています。&lt;br&gt;
@@ -1449,10 +1449,10 @@
         </item>
         <item>
         <title>ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする</title>
-        <link>https://tiisanamaou.github.io/post/internal-https-domain/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/internal-https-domain/</link>
         <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/internal-https-domain/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/internal-https-domain/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する&lt;/p&gt;
 &lt;p&gt;前回の記事で証明書を発行したので、今回はnginxに証明書をコピーし、HTTPSでアクセスできるようにする&lt;/p&gt;
@@ -1669,10 +1669,10 @@
     &gt;https://internal.onodera-program.com&lt;/a&gt;&amp;rdquo;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;証明書の警告等が表示されずにアクセスできればOK
-&lt;img src=&#34;./post/internal-https-domain/01.png&#34;
+&lt;img src=&#34;./hugo-website/post/internal-https-domain/01.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;./post/internal-https-domain/01_hu691474266513723903.png 480w, ./post/internal-https-domain/01_hu3924183182512349873.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/internal-https-domain/01_hu691474266513723903.png 480w, ./hugo-website/post/internal-https-domain/01_hu3924183182512349873.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1709,10 +1709,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>証明書発行手順（Let&#39;s Encrypt）</title>
-        <link>https://tiisanamaou.github.io/post/certbot-lets-encrypt/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/certbot-lets-encrypt/</link>
         <pubDate>Tue, 17 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/certbot-lets-encrypt/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/certbot-lets-encrypt/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する&lt;/p&gt;
 &lt;h2 id=&#34;証明書の発行準備&#34;&gt;証明書の発行準備&lt;/h2&gt;
@@ -2228,10 +2228,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>aptのキャッシュをしてくれるapt-cacher-ngのインストール方法</title>
-        <link>https://tiisanamaou.github.io/post/apt-cacher-ng/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/apt-cacher-ng/</link>
         <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/apt-cacher-ng/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/apt-cacher-ng/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;複数のPCからaptを使用する際に毎回ダウンロードすると時間がかかるので、ローカルにキャッシュサーバーを立ててそこからダウンロードできるようにしたい&lt;br&gt;
 キャッシュサーバーではなくミラーサーバーでも良かったが、ミラーサーバーだと容量が必要になるので、今回はキャッシュサーバーを使用することにした&lt;/p&gt;
@@ -2448,10 +2448,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>仮想マシン上のDiskの拡張手順</title>
-        <link>https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/ubuntu-server-disk-expansion/</link>
         <pubDate>Sat, 09 Nov 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/ubuntu-server-disk-expansion/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です&lt;/p&gt;
 &lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
@@ -2887,10 +2887,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>Harborのインストールしてpushとpullをしてみる</title>
-        <link>https://tiisanamaou.github.io/post/harbor-install/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/harbor-install/</link>
         <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/harbor-install/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/harbor-install/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;harbor v2.11.1&lt;/li&gt;
@@ -3565,10 +3565,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
 &lt;li&gt;&amp;ldquo;Project Name&amp;quot;を今回は&amp;quot;homelab&amp;quot;にする&lt;/li&gt;
 &lt;li&gt;&amp;ldquo;Public&amp;quot;にチェックを入れておく
 &amp;ldquo;OK&amp;quot;を押すとプロジェクトを作成される
-&lt;img src=&#34;./post/harbor-install/01.png&#34;
+&lt;img src=&#34;./hugo-website/post/harbor-install/01.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;./post/harbor-install/01_hu6319719390084239471.png 480w, ./post/harbor-install/01_hu808380550738303184.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/harbor-install/01_hu6319719390084239471.png 480w, ./hugo-website/post/harbor-install/01_hu808380550738303184.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3577,10 +3577,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
 		data-flex-basis=&#34;248px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/harbor-install/02.png&#34;
+&lt;img src=&#34;./hugo-website/post/harbor-install/02.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;./post/harbor-install/02_hu6027280624597969458.png 480w, ./post/harbor-install/02_hu17759964401822453956.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/harbor-install/02_hu6027280624597969458.png 480w, ./hugo-website/post/harbor-install/02_hu17759964401822453956.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3885,10 +3885,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;WebUI上でもイメージがpushされているか確認する
-&lt;img src=&#34;./post/harbor-install/03.png&#34;
+&lt;img src=&#34;./hugo-website/post/harbor-install/03.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;./post/harbor-install/03_hu9716855960618926802.png 480w, ./post/harbor-install/03_hu9765072620685919439.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/harbor-install/03_hu9716855960618926802.png 480w, ./hugo-website/post/harbor-install/03_hu9765072620685919439.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4056,10 +4056,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする</title>
-        <link>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/cloudflare-tunnel-raspberrypi3b/</link>
         <pubDate>Mon, 07 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/cloudflare-tunnel-raspberrypi3b/</guid>
         <description>&lt;h2 id=&#34;ubuntuにスワップを作成するラズパイ&#34;&gt;Ubuntuにスワップを作成する（ラズパイ）&lt;/h2&gt;
 &lt;p&gt;ラズパイのスペックは下記の通りです&lt;/p&gt;
 &lt;ul&gt;
@@ -4261,10 +4261,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;すると&amp;quot;Configure&amp;quot;ｔ表示された画面になります
-&lt;img src=&#34;./post/cloudflare-tunnel-raspberrypi3b/01.png&#34;
+&lt;img src=&#34;./hugo-website/post/cloudflare-tunnel-raspberrypi3b/01.png&#34;
 	width=&#34;2746&#34;
 	height=&#34;1854&#34;
-	srcset=&#34;./post/cloudflare-tunnel-raspberrypi3b/01_hu10269101231633997555.png 480w, ./post/cloudflare-tunnel-raspberrypi3b/01_hu9079611263127604116.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/cloudflare-tunnel-raspberrypi3b/01_hu10269101231633997555.png 480w, ./hugo-website/post/cloudflare-tunnel-raspberrypi3b/01_hu9079611263127604116.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4281,10 +4281,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&amp;ldquo;Add public hostname for TunnelName&amp;quot;と表示された画面になります
-&lt;img src=&#34;./post/cloudflare-tunnel-raspberrypi3b/02.png&#34;
+&lt;img src=&#34;./hugo-website/post/cloudflare-tunnel-raspberrypi3b/02.png&#34;
 	width=&#34;3032&#34;
 	height=&#34;1854&#34;
-	srcset=&#34;./post/cloudflare-tunnel-raspberrypi3b/02_hu17878355857062477510.png 480w, ./post/cloudflare-tunnel-raspberrypi3b/02_hu7770346448886141856.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/cloudflare-tunnel-raspberrypi3b/02_hu17878355857062477510.png 480w, ./hugo-website/post/cloudflare-tunnel-raspberrypi3b/02_hu7770346448886141856.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4353,10 +4353,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
 下記の画像は&amp;quot;raspberrypi3b&amp;quot;をサブドメインとして設定した&lt;br&gt;
 503等がでると、cloudflaredは起動しているがdocker compose内での接続が上手く行っていない可能性がある&lt;br&gt;
 ※コンテナ名やポート番号が異なるなど
-&lt;img src=&#34;./post/cloudflare-tunnel-raspberrypi3b/03.png&#34;
+&lt;img src=&#34;./hugo-website/post/cloudflare-tunnel-raspberrypi3b/03.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;./post/cloudflare-tunnel-raspberrypi3b/03_hu18080092092011390735.png 480w, ./post/cloudflare-tunnel-raspberrypi3b/03_hu207359769127267082.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/cloudflare-tunnel-raspberrypi3b/03_hu18080092092011390735.png 480w, ./hugo-website/post/cloudflare-tunnel-raspberrypi3b/03_hu207359769127267082.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4390,10 +4390,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
         </item>
         <item>
         <title>基本情報技術者試験に合格しました</title>
-        <link>https://tiisanamaou.github.io/post/fe-passed-20240930/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/fe-passed-20240930/</link>
         <pubDate>Sat, 05 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/fe-passed-20240930/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/fe-passed-20240930/</guid>
         <description>&lt;h2 id=&#34;試験について&#34;&gt;試験について&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;基本情報技術者試験&lt;/li&gt;
@@ -4401,10 +4401,10 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
 &lt;li&gt;科目A_690点&lt;/li&gt;
 &lt;li&gt;科目B_625点&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;./post/fe-passed-20240930/01.png&#34;
+&lt;p&gt;&lt;img src=&#34;./hugo-website/post/fe-passed-20240930/01.png&#34;
 	width=&#34;970&#34;
 	height=&#34;548&#34;
-	srcset=&#34;./post/fe-passed-20240930/01_hu2938400017597303036.png 480w, ./post/fe-passed-20240930/01_hu13366500076814170027.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/fe-passed-20240930/01_hu2938400017597303036.png 480w, ./hugo-website/post/fe-passed-20240930/01_hu13366500076814170027.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -4474,10 +4474,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesのCNIにCiliumを使用して構築する</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-cni-cilium/</link>
         <pubDate>Mon, 16 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-cni-cilium/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -5161,10 +5161,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
 &lt;/div&gt;&lt;p&gt;&amp;ldquo;EXTERNAL-IP&amp;quot;に記載されているIPアドレスにアクセスする&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&amp;ldquo;192.168.10.60&amp;rdquo;
-&lt;img src=&#34;./post/kubernetes-cni-cilium/01.png&#34;
+&lt;img src=&#34;./hugo-website/post/kubernetes-cni-cilium/01.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;./post/kubernetes-cni-cilium/01_hu11500502075219993612.png 480w, ./post/kubernetes-cni-cilium/01_hu12033771165010904826.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/kubernetes-cni-cilium/01_hu11500502075219993612.png 480w, ./hugo-website/post/kubernetes-cni-cilium/01_hu12033771165010904826.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -5219,10 +5219,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesにRook-Cephをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-rook-ceph/</link>
         <pubDate>Sun, 15 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-rook-ceph/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -5818,10 +5818,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
 &lt;ul&gt;
 &lt;li&gt;admin&lt;/li&gt;
 &lt;li&gt;Fd)q*/TcDC.x-YaM+t1X
-&lt;img src=&#34;./post/kubernetes-rook-ceph/02.png&#34;
+&lt;img src=&#34;./hugo-website/post/kubernetes-rook-ceph/02.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;./post/kubernetes-rook-ceph/02_hu15446191455530301373.png 480w, ./post/kubernetes-rook-ceph/02_hu5782053400455899655.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/kubernetes-rook-ceph/02_hu15446191455530301373.png 480w, ./hugo-website/post/kubernetes-rook-ceph/02_hu5782053400455899655.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -5835,10 +5835,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesにLonghornをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-longhorn/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-longhorn/</link>
         <pubDate>Sat, 14 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-longhorn/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-longhorn/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -6152,10 +6152,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
 &lt;/div&gt;
 &lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;&amp;ldquo;192.168.10.60&amp;quot;にアクセスするとDashboardが表示されます
-&lt;img src=&#34;./post/kubernetes-longhorn/01.png&#34;
+&lt;img src=&#34;./hugo-website/post/kubernetes-longhorn/01.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2146&#34;
-	srcset=&#34;./post/kubernetes-longhorn/01_hu4513655758661995381.png 480w, ./post/kubernetes-longhorn/01_hu9363439163950720526.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/kubernetes-longhorn/01_hu4513655758661995381.png 480w, ./hugo-website/post/kubernetes-longhorn/01_hu9363439163950720526.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -6164,10 +6164,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
 		data-flex-basis=&#34;249px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/kubernetes-longhorn/02.png&#34;
+&lt;img src=&#34;./hugo-website/post/kubernetes-longhorn/02.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2146&#34;
-	srcset=&#34;./post/kubernetes-longhorn/02_hu2474963238826714173.png 480w, ./post/kubernetes-longhorn/02_hu5641418462319161842.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/kubernetes-longhorn/02_hu2474963238826714173.png 480w, ./hugo-website/post/kubernetes-longhorn/02_hu5641418462319161842.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -6181,10 +6181,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>cri-oを使用してkubernetesを構築する</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-cri-o/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-cri-o/</link>
         <pubDate>Sun, 25 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-cri-o/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-cri-o/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0&lt;/li&gt;
@@ -8471,10 +8471,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>KubernetesでTraefikを使用してIngressを使えるようにする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-ingress-traefik/</link>
         <pubDate>Wed, 21 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-ingress-traefik/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0&lt;/li&gt;
@@ -8856,10 +8856,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-31-0/</link>
         <pubDate>Fri, 16 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-31-0/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.3 → 1.30.4 → 1.31.0&lt;/li&gt;
@@ -9564,10 +9564,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>UbuntuにHugoをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/ubuntu-install-hugo/</link>
         <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/ubuntu-install-hugo/</guid>
         <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました&lt;br&gt;
 その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました&lt;/p&gt;
@@ -9648,10 +9648,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>NFS-serverを構築してPV(PersistentVolume)を作成する</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-pv-pvc/</link>
         <pubDate>Wed, 14 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-pv-pvc/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.3&lt;/li&gt;
@@ -10217,10 +10217,10 @@ LPIC1はKubernetesを触っていて、Linuxをより知りたいと思ったか
         </item>
         <item>
         <title>Kubernetesのクラスタをv1.30.2からv1.30.3へアップグレードをする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-30-3/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-30-3/</link>
         <pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-30-3/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-30-3/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2 → 1.30.3&lt;/li&gt;
@@ -12814,10 +12814,10 @@ Control-Planeで実行する&lt;/p&gt;
         </item>
         <item>
         <title>Kubernetesのダッシュボードをデプロイする＋LoadBalancerでIPアドレスを割り振る</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-dashboard/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-dashboard/</link>
         <pubDate>Mon, 12 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-dashboard/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-dashboard/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2&lt;/li&gt;
@@ -13179,10 +13179,10 @@ Control-Planeで実行する&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;ログイン画面
-&lt;img src=&#34;./post/kubernetes-dashboard/01.png&#34;
+&lt;img src=&#34;./hugo-website/post/kubernetes-dashboard/01.png&#34;
 	width=&#34;2232&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;./post/kubernetes-dashboard/01_hu16175041694654104009.png 480w, ./post/kubernetes-dashboard/01_hu3444295497349472481.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/kubernetes-dashboard/01_hu16175041694654104009.png 480w, ./hugo-website/post/kubernetes-dashboard/01_hu3444295497349472481.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -13510,10 +13510,10 @@ Control-Planeで実行する&lt;/p&gt;
         </item>
         <item>
         <title>KubernetesのLoadBalancerでIPアドレスを指定する方法</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-loadbalancer-ip/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-loadbalancer-ip/</link>
         <pubDate>Sun, 11 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-loadbalancer-ip/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-loadbalancer-ip/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2&lt;/li&gt;
@@ -13827,10 +13827,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>Ansibleを使ってKubernetesの初期設定をしてみた</title>
-        <link>https://tiisanamaou.github.io/post/ansible-k8s/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/ansible-k8s/</link>
         <pubDate>Sat, 27 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ansible-k8s/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/ansible-k8s/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ansible 2.16.9&lt;/li&gt;
@@ -14238,10 +14238,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>Ansibleを少し触ってみた</title>
-        <link>https://tiisanamaou.github.io/post/ansible/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/ansible/</link>
         <pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ansible/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/ansible/</guid>
         <description>&lt;h2 id=&#34;ansibleの拡張機能のインストール&#34;&gt;Ansibleの拡張機能のインストール&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;VScodeの拡張機能&amp;quot;redhat.ansible&amp;quot;があるのでインストールしておくと便利になる&lt;/li&gt;
@@ -14558,10 +14558,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;無事nginxが起動しています&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;./post/ansible/2024-07-15_141453.png&#34;
+&lt;p&gt;&lt;img src=&#34;./hugo-website/post/ansible/2024-07-15_141453.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;1013&#34;
-	srcset=&#34;./post/ansible/2024-07-15_141453_hu12930034088221878227.png 480w, ./post/ansible/2024-07-15_141453_hu7300550148481746709.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/ansible/2024-07-15_141453_hu12930034088221878227.png 480w, ./hugo-website/post/ansible/2024-07-15_141453_hu7300550148481746709.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -14574,10 +14574,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（5）/HA構成</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-05/</link>
         <pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-05/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -15078,10 +15078,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（4）/クラスターを壊す</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-04/</link>
         <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-04/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -15455,10 +15455,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-03/</link>
         <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-03/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -15828,10 +15828,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（2）/Control-Plane・Worker-Nodeの設定</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-02/</link>
         <pubDate>Sat, 06 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-02/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -16214,10 +16214,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（1）</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-01/</link>
         <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-01/</guid>
         <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;k8sを勉強してみようと思い、デプロイ等の操作は書籍で触っていたら構築もしてみたくなったので、Proxmox上に仮想マシンを作成してk8sを構築してみた&lt;/p&gt;
 &lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
@@ -17388,10 +17388,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>ProxmoxがインストールされているDeskminix300のメモリを増設する</title>
-        <link>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/deskminix300-memory-upgrade/</link>
         <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/deskminix300-memory-upgrade/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/deskminix300-memory-upgrade/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox VE 8.2.4 x86_64&lt;/li&gt;
@@ -17512,10 +17512,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Zbbix7.0LTSをUbuntuにインストールする</title>
-        <link>https://tiisanamaou.github.io/post/zabbix-install/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/zabbix-install/</link>
         <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/zabbix-install/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/zabbix-install/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 24.04&lt;/li&gt;
@@ -17668,10 +17668,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;/div&gt;&lt;p&gt;初期設定をします&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ブラウザの画面
-&lt;img src=&#34;./post/zabbix-install/01.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/01.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;871&#34;
-	srcset=&#34;./post/zabbix-install/01_hu343266485472931490.png 480w, ./post/zabbix-install/01_hu5121833886027354980.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/01_hu343266485472931490.png 480w, ./hugo-website/post/zabbix-install/01_hu5121833886027354980.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17680,10 +17680,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;450px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/02.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/02.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;873&#34;
-	srcset=&#34;./post/zabbix-install/02_hu10666836766311526.png 480w, ./post/zabbix-install/02_hu10375538763685858810.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/02_hu10666836766311526.png 480w, ./hugo-website/post/zabbix-install/02_hu10375538763685858810.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17692,10 +17692,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;449px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/03.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/03.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;869&#34;
-	srcset=&#34;./post/zabbix-install/03_hu18269163236536557831.png 480w, ./post/zabbix-install/03_hu15269692372595282966.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/03_hu18269163236536557831.png 480w, ./hugo-website/post/zabbix-install/03_hu15269692372595282966.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17704,10 +17704,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;451px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/04.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/04.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;872&#34;
-	srcset=&#34;./post/zabbix-install/04_hu17179030422005907279.png 480w, ./post/zabbix-install/04_hu16515843148162553554.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/04_hu17179030422005907279.png 480w, ./hugo-website/post/zabbix-install/04_hu16515843148162553554.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17716,10 +17716,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;450px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/05.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/05.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;867&#34;
-	srcset=&#34;./post/zabbix-install/05_hu9958553295460789890.png 480w, ./post/zabbix-install/05_hu487411830379726136.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/05_hu9958553295460789890.png 480w, ./hugo-website/post/zabbix-install/05_hu487411830379726136.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17728,10 +17728,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;452px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/06.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/06.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;869&#34;
-	srcset=&#34;./post/zabbix-install/06_hu13010207013419345098.png 480w, ./post/zabbix-install/06_hu917551996788464442.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/06_hu13010207013419345098.png 480w, ./hugo-website/post/zabbix-install/06_hu917551996788464442.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17740,10 +17740,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;451px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/07.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/07.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;865&#34;
-	srcset=&#34;./post/zabbix-install/07_hu9454290979891422738.png 480w, ./post/zabbix-install/07_hu15533925128882896873.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/07_hu9454290979891422738.png 480w, ./hugo-website/post/zabbix-install/07_hu15533925128882896873.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17752,10 +17752,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;453px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/08.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/08.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;862&#34;
-	srcset=&#34;./post/zabbix-install/08_hu8271027365262809427.png 480w, ./post/zabbix-install/08_hu14179104953795987916.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/08_hu8271027365262809427.png 480w, ./hugo-website/post/zabbix-install/08_hu14179104953795987916.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17764,10 +17764,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;455px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/09.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/09.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;865&#34;
-	srcset=&#34;./post/zabbix-install/09_hu9310590401101850340.png 480w, ./post/zabbix-install/09_hu12895722092073322958.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/09_hu9310590401101850340.png 480w, ./hugo-website/post/zabbix-install/09_hu12895722092073322958.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17776,10 +17776,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;453px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/10.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/10.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;863&#34;
-	srcset=&#34;./post/zabbix-install/10_hu9156968716482468896.png 480w, ./post/zabbix-install/10_hu9775681582622124974.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/10_hu9156968716482468896.png 480w, ./hugo-website/post/zabbix-install/10_hu9775681582622124974.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17788,10 +17788,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;454px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/11.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/11.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;867&#34;
-	srcset=&#34;./post/zabbix-install/11_hu14115536853693425487.png 480w, ./post/zabbix-install/11_hu16242963419528483436.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/11_hu14115536853693425487.png 480w, ./hugo-website/post/zabbix-install/11_hu16242963419528483436.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17800,10 +17800,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 		data-flex-basis=&#34;452px&#34;
 	
 &gt;
-&lt;img src=&#34;./post/zabbix-install/12.png&#34;
+&lt;img src=&#34;./hugo-website/post/zabbix-install/12.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;872&#34;
-	srcset=&#34;./post/zabbix-install/12_hu12275565631899537804.png 480w, ./post/zabbix-install/12_hu4208988460715170478.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/12_hu12275565631899537804.png 480w, ./hugo-website/post/zabbix-install/12_hu4208988460715170478.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17818,10 +17818,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;li&gt;Username：Admin&lt;/li&gt;
 &lt;li&gt;Password：zabbix&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;./post/zabbix-install/13.png&#34;
+&lt;p&gt;&lt;img src=&#34;./hugo-website/post/zabbix-install/13.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;869&#34;
-	srcset=&#34;./post/zabbix-install/13_hu17224606301935855281.png 480w, ./post/zabbix-install/13_hu8403113770331667886.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/zabbix-install/13_hu17224606301935855281.png 480w, ./hugo-website/post/zabbix-install/13_hu8403113770331667886.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -17875,10 +17875,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Hugoで作成日時の横に更新日時を表示できるようにする</title>
-        <link>https://tiisanamaou.github.io/post/hugo-stack-custom-lastupdated/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/hugo-stack-custom-lastupdated/</link>
         <pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/hugo-stack-custom-lastupdated/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/hugo-stack-custom-lastupdated/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Windows 11 Home バージョン 23H2&lt;/li&gt;
@@ -18026,10 +18026,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hugo server -D
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;./post/hugo-stack-custom-lastupdated/01.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;./hugo-website/post/hugo-stack-custom-lastupdated/01.png&#34;
 	width=&#34;1635&#34;
 	height=&#34;821&#34;
-	srcset=&#34;./post/hugo-stack-custom-lastupdated/01_hu8716384922368734750.png 480w, ./post/hugo-stack-custom-lastupdated/01_hu13428729857795784562.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/hugo-stack-custom-lastupdated/01_hu8716384922368734750.png 480w, ./hugo-website/post/hugo-stack-custom-lastupdated/01_hu13428729857795784562.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -18043,10 +18043,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>docker-composeで構築したMySQLのログをローカルに保存する</title>
-        <link>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/docker-compose-mysql-log/</link>
         <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/docker-compose-mysql-log/</guid>
         <description>&lt;h2 id=&#34;ファイルフォルダ構成&#34;&gt;ファイル・フォルダ構成&lt;/h2&gt;
 &lt;p&gt;以下のような構成になっています&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -18241,10 +18241,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Deskmini x300でSATA SSDからM.2 SSDに差し替えるとProxmoxのWebGUIにアクセスできなくなる</title>
-        <link>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/proxmox-ssd-lan/</link>
         <pubDate>Sun, 26 May 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/proxmox-ssd-lan/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/proxmox-ssd-lan/</guid>
         <description>&lt;h2 id=&#34;発生現象&#34;&gt;発生現象&lt;/h2&gt;
 &lt;p&gt;Deskmini x300(CPU:Ryzen7 5700G) に元々SATA SSDを差していたがデータをM.2 SSDにクローンをして差し替えると、有線LANが繋がらなくなる&lt;br&gt;
 結果、ProxmoxのWebGUIにアクセスできなくなる&lt;/p&gt;
@@ -18253,10 +18253,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;h2 id=&#34;手順&#34;&gt;手順&lt;/h2&gt;
 &lt;h3 id=&#34;sata-ssdのとき&#34;&gt;SATA SSDのとき&lt;/h3&gt;
 &lt;p&gt;元々は500GBのSATA SSDを使用していた
-&lt;img src=&#34;./post/proxmox-ssd-lan/01.png&#34;
+&lt;img src=&#34;./hugo-website/post/proxmox-ssd-lan/01.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;./post/proxmox-ssd-lan/01_hu496782049234564471.png 480w, ./post/proxmox-ssd-lan/01_hu5309739966525751733.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/proxmox-ssd-lan/01_hu496782049234564471.png 480w, ./hugo-website/post/proxmox-ssd-lan/01_hu5309739966525751733.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -18266,10 +18266,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 	
 &gt;
 ネットワークの設定
-&lt;img src=&#34;./post/proxmox-ssd-lan/02.png&#34;
+&lt;img src=&#34;./hugo-website/post/proxmox-ssd-lan/02.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;./post/proxmox-ssd-lan/02_hu11372885925747122544.png 480w, ./post/proxmox-ssd-lan/02_hu12415396578701522199.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/proxmox-ssd-lan/02_hu11372885925747122544.png 480w, ./hugo-website/post/proxmox-ssd-lan/02_hu12415396578701522199.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -18280,10 +18280,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;h3 id=&#34;m2-ssdのとき&#34;&gt;M.2 SSDのとき&lt;/h3&gt;
 &lt;p&gt;M.2 SSDに差し替えた
-&lt;img src=&#34;./post/proxmox-ssd-lan/03.png&#34;
+&lt;img src=&#34;./hugo-website/post/proxmox-ssd-lan/03.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;./post/proxmox-ssd-lan/03_hu17608978437788127665.png 480w, ./post/proxmox-ssd-lan/03_hu281737308782487125.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/proxmox-ssd-lan/03_hu17608978437788127665.png 480w, ./hugo-website/post/proxmox-ssd-lan/03_hu281737308782487125.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -18293,10 +18293,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 	
 &gt;
 元々「enp1s0」だったが「enp2s0」にすると通信可能になった
-&lt;img src=&#34;./post/proxmox-ssd-lan/04.png&#34;
+&lt;img src=&#34;./hugo-website/post/proxmox-ssd-lan/04.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;./post/proxmox-ssd-lan/04_hu1971104256836174357.png 480w, ./post/proxmox-ssd-lan/04_hu10968881571680934050.png 1024w&#34;
+	srcset=&#34;./hugo-website/post/proxmox-ssd-lan/04_hu1971104256836174357.png 480w, ./hugo-website/post/proxmox-ssd-lan/04_hu10968881571680934050.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -18309,10 +18309,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>About</title>
-        <link>https://tiisanamaou.github.io/page/about/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/page/about/</link>
         <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/page/about/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/page/about/</guid>
         <description>&lt;h2 id=&#34;about-me&#34;&gt;about me&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;製品開発とDX・ITの部署に所属&lt;/li&gt;
@@ -18361,10 +18361,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Go言語をソースコードからビルドする</title>
-        <link>https://tiisanamaou.github.io/post/golang-source-build/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/golang-source-build/</link>
         <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/golang-source-build/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/golang-source-build/</guid>
         <description>&lt;h1 id=&#34;環境&#34;&gt;環境&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 23.10&lt;/li&gt;
@@ -18619,18 +18619,18 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>Archives</title>
-        <link>https://tiisanamaou.github.io/page/archives/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/page/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/page/archives/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/page/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>https://tiisanamaou.github.io/page/search/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/page/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/page/search/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/page/search/</guid>
         <description></description>
         </item>
         

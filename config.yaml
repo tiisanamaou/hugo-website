@@ -1,4 +1,5 @@
-baseurl: https://tiisanamaou.github.io
+baseurl: https://tiisanamaou.github.io/hugo-website
+#baseurl: https://tiisanamaou.github.io
 languageCode: ja
 theme: hugo-theme-stack
 paginate: 3

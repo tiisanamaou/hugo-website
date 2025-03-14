@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Longhorn on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/longhorn/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/categories/longhorn/</link>
         <description>Recent content in Longhorn on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sat, 14 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/longhorn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 14 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/longhorn/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>KubernetesにLonghornをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-longhorn/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-longhorn/</link>
         <pubDate>Sat, 14 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-longhorn/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-longhorn/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -326,10 +326,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;&amp;ldquo;192.168.10.60&amp;quot;にアクセスするとDashboardが表示されます
-&lt;img src=&#34;../../post/kubernetes-longhorn/01.png&#34;
+&lt;img src=&#34;../../hugo-website/post/kubernetes-longhorn/01.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2146&#34;
-	srcset=&#34;../../post/kubernetes-longhorn/01_hu4513655758661995381.png 480w, ../../post/kubernetes-longhorn/01_hu9363439163950720526.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/kubernetes-longhorn/01_hu4513655758661995381.png 480w, ../../hugo-website/post/kubernetes-longhorn/01_hu9363439163950720526.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -338,10 +338,10 @@
 		data-flex-basis=&#34;249px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/kubernetes-longhorn/02.png&#34;
+&lt;img src=&#34;../../hugo-website/post/kubernetes-longhorn/02.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2146&#34;
-	srcset=&#34;../../post/kubernetes-longhorn/02_hu2474963238826714173.png 480w, ../../post/kubernetes-longhorn/02_hu5641418462319161842.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/kubernetes-longhorn/02_hu2474963238826714173.png 480w, ../../hugo-website/post/kubernetes-longhorn/02_hu5641418462319161842.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	

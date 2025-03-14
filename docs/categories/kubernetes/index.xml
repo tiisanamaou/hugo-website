@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Kubernetes on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/kubernetes/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/categories/kubernetes/</link>
         <description>Recent content in Kubernetes on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Mon, 16 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 16 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>KubernetesのCNIにCiliumを使用して構築する</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-cni-cilium/</link>
         <pubDate>Mon, 16 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-cni-cilium/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -696,10 +696,10 @@
 &lt;/div&gt;&lt;p&gt;&amp;ldquo;EXTERNAL-IP&amp;quot;に記載されているIPアドレスにアクセスする&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&amp;ldquo;192.168.10.60&amp;rdquo;
-&lt;img src=&#34;../../post/kubernetes-cni-cilium/01.png&#34;
+&lt;img src=&#34;../../hugo-website/post/kubernetes-cni-cilium/01.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../post/kubernetes-cni-cilium/01_hu11500502075219993612.png 480w, ../../post/kubernetes-cni-cilium/01_hu12033771165010904826.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/kubernetes-cni-cilium/01_hu11500502075219993612.png 480w, ../../hugo-website/post/kubernetes-cni-cilium/01_hu12033771165010904826.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -754,10 +754,10 @@
         </item>
         <item>
         <title>KubernetesにRook-Cephをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-rook-ceph/</link>
         <pubDate>Sun, 15 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-rook-ceph/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-rook-ceph/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -1353,10 +1353,10 @@
 &lt;ul&gt;
 &lt;li&gt;admin&lt;/li&gt;
 &lt;li&gt;Fd)q*/TcDC.x-YaM+t1X
-&lt;img src=&#34;../../post/kubernetes-rook-ceph/02.png&#34;
+&lt;img src=&#34;../../hugo-website/post/kubernetes-rook-ceph/02.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../post/kubernetes-rook-ceph/02_hu15446191455530301373.png 480w, ../../post/kubernetes-rook-ceph/02_hu5782053400455899655.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/kubernetes-rook-ceph/02_hu15446191455530301373.png 480w, ../../hugo-website/post/kubernetes-rook-ceph/02_hu5782053400455899655.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1370,10 +1370,10 @@
         </item>
         <item>
         <title>KubernetesにLonghornをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-longhorn/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-longhorn/</link>
         <pubDate>Sat, 14 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-longhorn/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-longhorn/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0
@@ -1687,10 +1687,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;&amp;ldquo;192.168.10.60&amp;quot;にアクセスするとDashboardが表示されます
-&lt;img src=&#34;../../post/kubernetes-longhorn/01.png&#34;
+&lt;img src=&#34;../../hugo-website/post/kubernetes-longhorn/01.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2146&#34;
-	srcset=&#34;../../post/kubernetes-longhorn/01_hu4513655758661995381.png 480w, ../../post/kubernetes-longhorn/01_hu9363439163950720526.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/kubernetes-longhorn/01_hu4513655758661995381.png 480w, ../../hugo-website/post/kubernetes-longhorn/01_hu9363439163950720526.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1699,10 +1699,10 @@
 		data-flex-basis=&#34;249px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/kubernetes-longhorn/02.png&#34;
+&lt;img src=&#34;../../hugo-website/post/kubernetes-longhorn/02.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2146&#34;
-	srcset=&#34;../../post/kubernetes-longhorn/02_hu2474963238826714173.png 480w, ../../post/kubernetes-longhorn/02_hu5641418462319161842.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/kubernetes-longhorn/02_hu2474963238826714173.png 480w, ../../hugo-website/post/kubernetes-longhorn/02_hu5641418462319161842.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1716,10 +1716,10 @@
         </item>
         <item>
         <title>cri-oを使用してkubernetesを構築する</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-cri-o/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-cri-o/</link>
         <pubDate>Sun, 25 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-cri-o/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-cri-o/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0&lt;/li&gt;
@@ -4006,10 +4006,10 @@
         </item>
         <item>
         <title>KubernetesでTraefikを使用してIngressを使えるようにする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-ingress-traefik/</link>
         <pubDate>Wed, 21 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-ingress-traefik/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0&lt;/li&gt;
@@ -4391,10 +4391,10 @@
         </item>
         <item>
         <title>Kubernetesのクラスタをv1.30.3からv1.31.0へアップグレードをする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-31-0/</link>
         <pubDate>Fri, 16 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-31-0/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.3 → 1.30.4 → 1.31.0&lt;/li&gt;
@@ -5099,10 +5099,10 @@
         </item>
         <item>
         <title>NFS-serverを構築してPV(PersistentVolume)を作成する</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-pv-pvc/</link>
         <pubDate>Wed, 14 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-pv-pvc/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-pv-pvc/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.3&lt;/li&gt;
@@ -5668,10 +5668,10 @@
         </item>
         <item>
         <title>Kubernetesのクラスタをv1.30.2からv1.30.3へアップグレードをする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-30-3/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-30-3/</link>
         <pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-30-3/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-upgrade-v1-30-3/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2 → 1.30.3&lt;/li&gt;
@@ -8265,10 +8265,10 @@ Control-Planeで実行する&lt;/p&gt;
         </item>
         <item>
         <title>Kubernetesのダッシュボードをデプロイする＋LoadBalancerでIPアドレスを割り振る</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-dashboard/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-dashboard/</link>
         <pubDate>Mon, 12 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-dashboard/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-dashboard/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2&lt;/li&gt;
@@ -8630,10 +8630,10 @@ Control-Planeで実行する&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;ログイン画面
-&lt;img src=&#34;../../post/kubernetes-dashboard/01.png&#34;
+&lt;img src=&#34;../../hugo-website/post/kubernetes-dashboard/01.png&#34;
 	width=&#34;2232&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/kubernetes-dashboard/01_hu16175041694654104009.png 480w, ../../post/kubernetes-dashboard/01_hu3444295497349472481.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/kubernetes-dashboard/01_hu16175041694654104009.png 480w, ../../hugo-website/post/kubernetes-dashboard/01_hu3444295497349472481.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -8961,10 +8961,10 @@ Control-Planeで実行する&lt;/p&gt;
         </item>
         <item>
         <title>KubernetesのLoadBalancerでIPアドレスを指定する方法</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-loadbalancer-ip/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-loadbalancer-ip/</link>
         <pubDate>Sun, 11 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-loadbalancer-ip/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-loadbalancer-ip/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.30.2&lt;/li&gt;
@@ -9278,10 +9278,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>Ansibleを使ってKubernetesの初期設定をしてみた</title>
-        <link>https://tiisanamaou.github.io/post/ansible-k8s/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/ansible-k8s/</link>
         <pubDate>Sat, 27 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ansible-k8s/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/ansible-k8s/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ansible 2.16.9&lt;/li&gt;
@@ -9689,10 +9689,10 @@ MetalLBのページでは&amp;quot;metadata&amp;quot;を使用した方法が推
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（5）/HA構成</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-05/</link>
         <pubDate>Mon, 15 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-05/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-05/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -10193,10 +10193,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（4）/クラスターを壊す</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-04/</link>
         <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-04/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-04/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -10570,10 +10570,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-03/</link>
         <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-03/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-03/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -10943,10 +10943,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（2）/Control-Plane・Worker-Nodeの設定</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-02/</link>
         <pubDate>Sat, 06 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-02/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-02/</guid>
         <description>&lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
@@ -11329,10 +11329,10 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         </item>
         <item>
         <title>kubernetesをproxmox上に立ててみた（1）</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-01/</link>
         <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-on-proxmox-01/</guid>
         <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;k8sを勉強してみようと思い、デプロイ等の操作は書籍で触っていたら構築もしてみたくなったので、Proxmox上に仮想マシンを作成してk8sを構築してみた&lt;/p&gt;
 &lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
