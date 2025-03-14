@@ -1,0 +1,7 @@
+{{- $path := .Get 0 -}}
+{{- with .Site.GetPage $path -}}
+<a title="{{ .Title }}" href="{{ .Permalink }}">{{ .LinkTitle | default .Title }}</a>
+{{- else -}}
+  <!-- Page not found: {{ $path }} -->
+  {{ errorf }}
+{{- end -}}
