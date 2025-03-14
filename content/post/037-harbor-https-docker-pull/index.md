@@ -14,7 +14,7 @@ categories:
 - Docker Engine Community 28.0.1
 
 ## 証明書の発行
-{{< link-corss-ref "post/030-certbot-let's-encrypt/index.md" >}} を参照
+{{< link-corss-ref "/post/030-certbot-let's-encrypt/index.md" >}} を参照
 
 ## Harborの設定
 証明書ファイルをサーバーにアップロードする
