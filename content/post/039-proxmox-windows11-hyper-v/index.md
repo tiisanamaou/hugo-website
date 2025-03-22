@@ -135,3 +135,11 @@ Windows11のインストールが終わったらHyper-Vをインストールし�
 
 ダブルクリックで開けます
 ![](40.png)
+
+## qemu-guest-agentをインストールする
+virtio-win-0.1.266のドライブ直下に下記の2つのファイルがあるのでインストールします
+- virtio-win-gt-x64.msi
+- virtio-win-guest-tools.exe
+
+上記をインストールすると、Proxmoxの管理コンソールからコントロールやIPアドレスがわかるようになります
+![](41.png)
