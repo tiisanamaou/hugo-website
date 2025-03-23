@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Promox 8.3.0 kernel: 6.8.12-8-pve pve-manager: 8.3.4 Windows11 24H2 virtio-win-0.1.266 Hyper-Vで仮想マシンの作成をする インストールするOSのISOイメージをダウンロードしておきます
+今回はUbuntu24.04.2を使用します
+&ldquo;Hyper-Vマネージャ&quot;を起動します
+&ldquo;新規&rdquo;&gt;&ldquo;仮想マシン&quot;をクリックします 次へをクリックします &ldquo;第2世代&quot;を選択肢します メモリを割り当てます ネットワークは一旦接続せずに使用します &ldquo;仮想ハードディスクを作成する&quot;を選択します
+名前、場所、容量を設定します &ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&quot;を選択し、&ldquo;イメージファイル&quot;の右の&quot;参照&quot;をクリックしてISOファイルを選択します 確認の画面になり、問題なければ&quot;完了&quot;をクリックします 名前が&quot;新しい仮想マシン&quot;となっているので右クリックして名前を変更します 右クリックまたは右のメニューから&quot;起動&quot;をクリックします 右のメニューの接続をクリックします
+起動できていません 一度&quot;停止&quot;をクリックして仮想マシンを止めます
+右クリックをして&quot;設定&quot;をクリックします
+&ldquo;セキュリティ&quot;の&quot;セキュアブートを有効にする&quot;のチェックを外し&quot;適用&quot;をクリックします 起動させます
+右のメニューの&quot;接続&quot;をクリックすると仮想マシンの画面が表示されます
+Ubuntuのインストール画面が表示されているので、通常のUbuntuと同じようにインストールを進めます インストールが終われば完了です 参考URL Proxmox VEの構築とVMをたてるまで https://zenn.dev/no292nukegara/articles/81f2cb6af34772 Proxmox VE7.xでwindows11VMを作成する https://zenn.dev/northeggman/articles/49c6b73c03c81c Proxmox VE で Windows 11 VM を立てる https://akam1o.hatenablog.jp/entry/2024/03/05/234501 ProxmoxでVMコンソールの解像度を変更する https://qiita.com/minoden_works/items/a4c94eb7728c946d3efe '>
+<title>Proxmox上にWindows11をインストールしてHyper-V使えるようにする（2/2）</title>
+
+<link rel='canonical' href='http://localhost:1313/post/proxmox-windows11-hyper-v-2/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Proxmox上にWindows11をインストールしてHyper-V使えるようにする（2/2）'>
+<meta property='og:description' content='環境 Promox 8.3.0 kernel: 6.8.12-8-pve pve-manager: 8.3.4 Windows11 24H2 virtio-win-0.1.266 Hyper-Vで仮想マシンの作成をする インストールするOSのISOイメージをダウンロードしておきます
+今回はUbuntu24.04.2を使用します
+&ldquo;Hyper-Vマネージャ&quot;を起動します
+&ldquo;新規&rdquo;&gt;&ldquo;仮想マシン&quot;をクリックします 次へをクリックします &ldquo;第2世代&quot;を選択肢します メモリを割り当てます ネットワークは一旦接続せずに使用します &ldquo;仮想ハードディスクを作成する&quot;を選択します
+名前、場所、容量を設定します &ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&quot;を選択し、&ldquo;イメージファイル&quot;の右の&quot;参照&quot;をクリックしてISOファイルを選択します 確認の画面になり、問題なければ&quot;完了&quot;をクリックします 名前が&quot;新しい仮想マシン&quot;となっているので右クリックして名前を変更します 右クリックまたは右のメニューから&quot;起動&quot;をクリックします 右のメニューの接続をクリックします
+起動できていません 一度&quot;停止&quot;をクリックして仮想マシンを止めます
+右クリックをして&quot;設定&quot;をクリックします
+&ldquo;セキュリティ&quot;の&quot;セキュアブートを有効にする&quot;のチェックを外し&quot;適用&quot;をクリックします 起動させます
+右のメニューの&quot;接続&quot;をクリックすると仮想マシンの画面が表示されます
+Ubuntuのインストール画面が表示されているので、通常のUbuntuと同じようにインストールを進めます インストールが終われば完了です 参考URL Proxmox VEの構築とVMをたてるまで https://zenn.dev/no292nukegara/articles/81f2cb6af34772 Proxmox VE7.xでwindows11VMを作成する https://zenn.dev/northeggman/articles/49c6b73c03c81c Proxmox VE で Windows 11 VM を立てる https://akam1o.hatenablog.jp/entry/2024/03/05/234501 ProxmoxでVMコンソールの解像度を変更する https://qiita.com/minoden_works/items/a4c94eb7728c946d3efe '>
+<meta property='og:url' content='http://localhost:1313/post/proxmox-windows11-hyper-v-2/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-22T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Proxmox上にWindows11をインストールしてHyper-V使えるようにする（2/2）">
+<meta name="twitter:description" content="環境 Promox 8.3.0 kernel: 6.8.12-8-pve pve-manager: 8.3.4 Windows11 24H2 virtio-win-0.1.266 Hyper-Vで仮想マシンの作成をする インストールするOSのISOイメージをダウンロードしておきます
+今回はUbuntu24.04.2を使用します
+&ldquo;Hyper-Vマネージャ&quot;を起動します
+&ldquo;新規&rdquo;&gt;&ldquo;仮想マシン&quot;をクリックします 次へをクリックします &ldquo;第2世代&quot;を選択肢します メモリを割り当てます ネットワークは一旦接続せずに使用します &ldquo;仮想ハードディスクを作成する&quot;を選択します
+名前、場所、容量を設定します &ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&quot;を選択し、&ldquo;イメージファイル&quot;の右の&quot;参照&quot;をクリックしてISOファイルを選択します 確認の画面になり、問題なければ&quot;完了&quot;をクリックします 名前が&quot;新しい仮想マシン&quot;となっているので右クリックして名前を変更します 右クリックまたは右のメニューから&quot;起動&quot;をクリックします 右のメニューの接続をクリックします
+起動できていません 一度&quot;停止&quot;をクリックして仮想マシンを止めます
+右クリックをして&quot;設定&quot;をクリックします
+&ldquo;セキュリティ&quot;の&quot;セキュアブートを有効にする&quot;のチェックを外し&quot;適用&quot;をクリックします 起動させます
+右のメニューの&quot;接続&quot;をクリックすると仮想マシンの画面が表示されます
+Ubuntuのインストール画面が表示されているので、通常のUbuntuと同じようにインストールを進めます インストールが終われば完了です 参考URL Proxmox VEの構築とVMをたてるまで https://zenn.dev/no292nukegara/articles/81f2cb6af34772 Proxmox VE7.xでwindows11VMを作成する https://zenn.dev/northeggman/articles/49c6b73c03c81c Proxmox VE で Windows 11 VM を立てる https://akam1o.hatenablog.jp/entry/2024/03/05/234501 ProxmoxでVMコンソールの解像度を変更する https://qiita.com/minoden_works/items/a4c94eb7728c946d3efe ">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="http://localhost:1313/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/proxmox/" >
+                Proxmox
+            </a>
+        
+            <a href="../../categories/windows/" >
+                Windows
+            </a>
+        
+            <a href="../../categories/hyper-v/" >
+                Hyper-V
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/proxmox-windows11-hyper-v-2/">Proxmox上にWindows11をインストールしてHyper-V使えるようにする（2/2）</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025/03/22</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="環境">環境</h2>
+<ul>
+<li>Promox 8.3.0
+<ul>
+<li>kernel: 6.8.12-8-pve</li>
+<li>pve-manager: 8.3.4</li>
+</ul>
+</li>
+<li>Windows11 24H2</li>
+<li>virtio-win-0.1.266</li>
+</ul>
+<h2 id="hyper-vで仮想マシンの作成をする">Hyper-Vで仮想マシンの作成をする</h2>
+<p>インストールするOSのISOイメージをダウンロードしておきます<br>
+今回はUbuntu24.04.2を使用します</p>
+<p>&ldquo;Hyper-Vマネージャ&quot;を起動します</p>
+<p>&ldquo;新規&rdquo;&gt;&ldquo;仮想マシン&quot;をクリックします
+<img src="../../post/proxmox-windows11-hyper-v-2/01.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/01_hu17120588613040416750.png 480w, ../../post/proxmox-windows11-hyper-v-2/01_hu15071346453873279724.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>次へをクリックします
+<img src="../../post/proxmox-windows11-hyper-v-2/02.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/02_hu13656881172387976257.png 480w, ../../post/proxmox-windows11-hyper-v-2/02_hu797200753843395967.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>&ldquo;第2世代&quot;を選択肢します
+<img src="../../post/proxmox-windows11-hyper-v-2/03.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/03_hu3452473821545404592.png 480w, ../../post/proxmox-windows11-hyper-v-2/03_hu18329729632948036117.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>メモリを割り当てます
+<img src="../../post/proxmox-windows11-hyper-v-2/04.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/04_hu15105737047261305371.png 480w, ../../post/proxmox-windows11-hyper-v-2/04_hu3589788642652013644.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>ネットワークは一旦接続せずに使用します
+<img src="../../post/proxmox-windows11-hyper-v-2/05.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/05_hu14491766133772856780.png 480w, ../../post/proxmox-windows11-hyper-v-2/05_hu7279983931213877268.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>&ldquo;仮想ハードディスクを作成する&quot;を選択します<br>
+名前、場所、容量を設定します
+<img src="../../post/proxmox-windows11-hyper-v-2/06.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/06_hu14266800446552932926.png 480w, ../../post/proxmox-windows11-hyper-v-2/06_hu14762900502169238462.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>&ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&quot;を選択し、&ldquo;イメージファイル&quot;の右の&quot;参照&quot;をクリックしてISOファイルを選択します
+<img src="../../post/proxmox-windows11-hyper-v-2/07.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/07_hu9472369804718990787.png 480w, ../../post/proxmox-windows11-hyper-v-2/07_hu193943043125944067.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-2/08.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/08_hu1233221778419716328.png 480w, ../../post/proxmox-windows11-hyper-v-2/08_hu400511061484735672.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>確認の画面になり、問題なければ&quot;完了&quot;をクリックします
+<img src="../../post/proxmox-windows11-hyper-v-2/09.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/09_hu14175495325438156435.png 480w, ../../post/proxmox-windows11-hyper-v-2/09_hu6742115761426486988.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>名前が&quot;新しい仮想マシン&quot;となっているので右クリックして名前を変更します
+<img src="../../post/proxmox-windows11-hyper-v-2/10.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/10_hu18085786937753149912.png 480w, ../../post/proxmox-windows11-hyper-v-2/10_hu3597753105214942677.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-2/11.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/11_hu11460881376821456023.png 480w, ../../post/proxmox-windows11-hyper-v-2/11_hu16947737192192449581.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>右クリックまたは右のメニューから&quot;起動&quot;をクリックします
+<img src="../../post/proxmox-windows11-hyper-v-2/12.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/12_hu8640673965379753353.png 480w, ../../post/proxmox-windows11-hyper-v-2/12_hu15192693643802606045.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-2/13.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/13_hu4415648095572423516.png 480w, ../../post/proxmox-windows11-hyper-v-2/13_hu17877168198113888928.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>右のメニューの接続をクリックします<br>
+起動できていません
+<img src="../../post/proxmox-windows11-hyper-v-2/14.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/14_hu13500573814995019592.png 480w, ../../post/proxmox-windows11-hyper-v-2/14_hu17324421826010431187.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>一度&quot;停止&quot;をクリックして仮想マシンを止めます</p>
+<p>右クリックをして&quot;設定&quot;をクリックします<br>
+&ldquo;セキュリティ&quot;の&quot;セキュアブートを有効にする&quot;のチェックを外し&quot;適用&quot;をクリックします
+<img src="../../post/proxmox-windows11-hyper-v-2/15.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/15_hu7309302715986555422.png 480w, ../../post/proxmox-windows11-hyper-v-2/15_hu2695670645038302413.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-2/16.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/16_hu6363379118753185813.png 480w, ../../post/proxmox-windows11-hyper-v-2/16_hu11335363782303130670.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>起動させます<br>
+右のメニューの&quot;接続&quot;をクリックすると仮想マシンの画面が表示されます<br>
+Ubuntuのインストール画面が表示されているので、通常のUbuntuと同じようにインストールを進めます
+<img src="../../post/proxmox-windows11-hyper-v-2/17.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/17_hu15239534747411530848.png 480w, ../../post/proxmox-windows11-hyper-v-2/17_hu14805342908840826334.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>インストールが終われば完了です
+<img src="../../post/proxmox-windows11-hyper-v-2/18.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-2/18_hu8578197077212963692.png 480w, ../../post/proxmox-windows11-hyper-v-2/18_hu11969979726330422102.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<h2 id="参考url">参考URL</h2>
+<ul>
+<li>Proxmox VEの構築とVMをたてるまで
+<ul>
+<li><a class="link" href="https://zenn.dev/no292nukegara/articles/81f2cb6af34772"  target="_blank" rel="noopener"
+    >https://zenn.dev/no292nukegara/articles/81f2cb6af34772</a></li>
+</ul>
+</li>
+<li>Proxmox VE7.xでwindows11VMを作成する
+<ul>
+<li><a class="link" href="https://zenn.dev/northeggman/articles/49c6b73c03c81c"  target="_blank" rel="noopener"
+    >https://zenn.dev/northeggman/articles/49c6b73c03c81c</a></li>
+</ul>
+</li>
+<li>Proxmox VE で Windows 11 VM を立てる
+<ul>
+<li><a class="link" href="https://akam1o.hatenablog.jp/entry/2024/03/05/234501"  target="_blank" rel="noopener"
+    >https://akam1o.hatenablog.jp/entry/2024/03/05/234501</a></li>
+</ul>
+</li>
+<li>ProxmoxでVMコンソールの解像度を変更する
+<ul>
+<li><a class="link" href="https://qiita.com/minoden_works/items/a4c94eb7728c946d3efe"  target="_blank" rel="noopener"
+    >https://qiita.com/minoden_works/items/a4c94eb7728c946d3efe</a></li>
+</ul>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-05/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（5）/HA構成</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-04/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（4）/クラスターを壊す</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-03/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-02/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（2）/Control-Plane・Worker-Nodeの設定</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-01/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（1）</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Promox 8.3.0 kernel: 6.8.12-8-pve pve-manager: 8.3.4 Windows11 24H2 virtio-win-0.1.266 準備 Windows11
+https://www.microsoft.com/ja-jp/software-download/windows11 virtio（vitrio-win-0.1.266.iso）
+https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/ 上記は両方ともPromoxにISOとしてアップロードする
+Windows11のVM構築 ISOイメージはWindows11を選択する
+ゲストOSを&quot;Microsoft Windows&quot;にし、バージョンを&quot;11/2022/2025&quot;にする
+その下にある&quot;VirtIOドライバ用の追加ドライブを追加&quot;にチェックを入れる
+ISOイメージを選択する（&ldquo;vitrio-win-0.1.266.iso&rdquo;）
+&ldquo;EFIストレージ&quot;を保存する場所を選択する
+&ldquo;Qemuエージェント&quot;にチェックを入れる
+&ldquo;TPM追加&quot;にチェックを入れる
+&ldquo;TPMストレージ&quot;を保存する場所を選択する
+&ldquo;バージョン&quot;は&quot;v2.0&quot;を選択する
+ディスクは100GBくらい確保しておく CPUの項目では&quot;種別&quot;を&quot;host&quot;にする メモリは16GBにする ネットワークはそのまま 確認に画面になり、問題なければ&quot;完了&quot;を押す Windows11インストール 設定を進めていきます プロダクトキーは後で入力するので&quot;プロダクトキーがありません&quot;を選択する &ldquo;Windows 11 Pro&quot;を選択する &ldquo;Windows 11 をインストールする場所の選択&quot;の画面になったら、上のメニューの&quot;Load Driver&quot;か下の&quot;ハードウェアが表示されませんか？ドライバーを読み込み、ハードウェアにアクセスします。&ldquo;をクリックする 画面が変わったら&quot;参照&quot;をクリックし、&ldquo;virtio-win-0.1.226&quot;を選択します &ldquo;amd64&rdquo;&gt;&ldquo;w11&quot;を選択し、OKをクリックします &ldquo;VirtIO SCSI pass-through controller&quot;を選択して、&ldquo;インストール&quot;をクリックします するとディスクが表示されます 続けて他のドライバーもインストールします 上のメニューの&quot;Load Driver&quot;をクリックします（&ldquo;適用される通知とライセンス条項&quot;が表示されたら&quot;同意する&quot;をクリックします） &ldquo;参照&quot;をクリックし、&ldquo;virtio-win-0.1.226&quot;を選択します &ldquo;NetKVM&rdquo;&gt;&ldquo;w11&rdquo;&gt;&ldquo;amd64&quot;を選択し、OKをクリックします &ldquo;VirtIO Ethernet Adapter&quot;を選択して&quot;インストール&quot;をクリックします 同じ手順で &ldquo;Balloon&rdquo;&gt;&ldquo;w11&rdquo;&gt;&ldquo;amd64&quot;を選択し、OKをクリックします &ldquo;VirtIO Balloon Driver&quot;を選択して&quot;インストール&quot;をクリックします 次へを押します &ldquo;インストール準備完了&quot;が表示されたら&quot;インストール&quot;をクリックします インストールが始まります ここから先は通常のWindows11と同じようにセットアップしていきます ここまででWindows11のインストールは完了です
+Hyper-Vのインストール Windows11のインストールが終わったらHyper-Vをインストールしていきます
+コントロールパネルを開き、&ldquo;プログラム&quot;をクリックします &ldquo;Windowsの機能の有効化または無効化&quot;をクリックし、&ldquo;Hyper-V&quot;にチェックを入れ、&ldquo;OK&quot;をクリックします'>
+<title>Proxmox上にWindows11をインストールしてHyper-V使えるようにする（1/2）</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/proxmox-windows11-hyper-v-1/'>
+
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Proxmox上にWindows11をインストールしてHyper-V使えるようにする（1/2）'>
+<meta property='og:description' content='環境 Promox 8.3.0 kernel: 6.8.12-8-pve pve-manager: 8.3.4 Windows11 24H2 virtio-win-0.1.266 準備 Windows11
+https://www.microsoft.com/ja-jp/software-download/windows11 virtio（vitrio-win-0.1.266.iso）
+https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/ 上記は両方ともPromoxにISOとしてアップロードする
+Windows11のVM構築 ISOイメージはWindows11を選択する
+ゲストOSを&quot;Microsoft Windows&quot;にし、バージョンを&quot;11/2022/2025&quot;にする
+その下にある&quot;VirtIOドライバ用の追加ドライブを追加&quot;にチェックを入れる
+ISOイメージを選択する（&ldquo;vitrio-win-0.1.266.iso&rdquo;）
+&ldquo;EFIストレージ&quot;を保存する場所を選択する
+&ldquo;Qemuエージェント&quot;にチェックを入れる
+&ldquo;TPM追加&quot;にチェックを入れる
+&ldquo;TPMストレージ&quot;を保存する場所を選択する
+&ldquo;バージョン&quot;は&quot;v2.0&quot;を選択する
+ディスクは100GBくらい確保しておく CPUの項目では&quot;種別&quot;を&quot;host&quot;にする メモリは16GBにする ネットワークはそのまま 確認に画面になり、問題なければ&quot;完了&quot;を押す Windows11インストール 設定を進めていきます プロダクトキーは後で入力するので&quot;プロダクトキーがありません&quot;を選択する &ldquo;Windows 11 Pro&quot;を選択する &ldquo;Windows 11 をインストールする場所の選択&quot;の画面になったら、上のメニューの&quot;Load Driver&quot;か下の&quot;ハードウェアが表示されませんか？ドライバーを読み込み、ハードウェアにアクセスします。&ldquo;をクリックする 画面が変わったら&quot;参照&quot;をクリックし、&ldquo;virtio-win-0.1.226&quot;を選択します &ldquo;amd64&rdquo;&gt;&ldquo;w11&quot;を選択し、OKをクリックします &ldquo;VirtIO SCSI pass-through controller&quot;を選択して、&ldquo;インストール&quot;をクリックします するとディスクが表示されます 続けて他のドライバーもインストールします 上のメニューの&quot;Load Driver&quot;をクリックします（&ldquo;適用される通知とライセンス条項&quot;が表示されたら&quot;同意する&quot;をクリックします） &ldquo;参照&quot;をクリックし、&ldquo;virtio-win-0.1.226&quot;を選択します &ldquo;NetKVM&rdquo;&gt;&ldquo;w11&rdquo;&gt;&ldquo;amd64&quot;を選択し、OKをクリックします &ldquo;VirtIO Ethernet Adapter&quot;を選択して&quot;インストール&quot;をクリックします 同じ手順で &ldquo;Balloon&rdquo;&gt;&ldquo;w11&rdquo;&gt;&ldquo;amd64&quot;を選択し、OKをクリックします &ldquo;VirtIO Balloon Driver&quot;を選択して&quot;インストール&quot;をクリックします 次へを押します &ldquo;インストール準備完了&quot;が表示されたら&quot;インストール&quot;をクリックします インストールが始まります ここから先は通常のWindows11と同じようにセットアップしていきます ここまででWindows11のインストールは完了です
+Hyper-Vのインストール Windows11のインストールが終わったらHyper-Vをインストールしていきます
+コントロールパネルを開き、&ldquo;プログラム&quot;をクリックします &ldquo;Windowsの機能の有効化または無効化&quot;をクリックし、&ldquo;Hyper-V&quot;にチェックを入れ、&ldquo;OK&quot;をクリックします'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/proxmox-windows11-hyper-v-1/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-23T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-23T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Proxmox上にWindows11をインストールしてHyper-V使えるようにする（1/2）">
+<meta name="twitter:description" content="環境 Promox 8.3.0 kernel: 6.8.12-8-pve pve-manager: 8.3.4 Windows11 24H2 virtio-win-0.1.266 準備 Windows11
+https://www.microsoft.com/ja-jp/software-download/windows11 virtio（vitrio-win-0.1.266.iso）
+https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/ 上記は両方ともPromoxにISOとしてアップロードする
+Windows11のVM構築 ISOイメージはWindows11を選択する
+ゲストOSを&quot;Microsoft Windows&quot;にし、バージョンを&quot;11/2022/2025&quot;にする
+その下にある&quot;VirtIOドライバ用の追加ドライブを追加&quot;にチェックを入れる
+ISOイメージを選択する（&ldquo;vitrio-win-0.1.266.iso&rdquo;）
+&ldquo;EFIストレージ&quot;を保存する場所を選択する
+&ldquo;Qemuエージェント&quot;にチェックを入れる
+&ldquo;TPM追加&quot;にチェックを入れる
+&ldquo;TPMストレージ&quot;を保存する場所を選択する
+&ldquo;バージョン&quot;は&quot;v2.0&quot;を選択する
+ディスクは100GBくらい確保しておく CPUの項目では&quot;種別&quot;を&quot;host&quot;にする メモリは16GBにする ネットワークはそのまま 確認に画面になり、問題なければ&quot;完了&quot;を押す Windows11インストール 設定を進めていきます プロダクトキーは後で入力するので&quot;プロダクトキーがありません&quot;を選択する &ldquo;Windows 11 Pro&quot;を選択する &ldquo;Windows 11 をインストールする場所の選択&quot;の画面になったら、上のメニューの&quot;Load Driver&quot;か下の&quot;ハードウェアが表示されませんか？ドライバーを読み込み、ハードウェアにアクセスします。&ldquo;をクリックする 画面が変わったら&quot;参照&quot;をクリックし、&ldquo;virtio-win-0.1.226&quot;を選択します &ldquo;amd64&rdquo;&gt;&ldquo;w11&quot;を選択し、OKをクリックします &ldquo;VirtIO SCSI pass-through controller&quot;を選択して、&ldquo;インストール&quot;をクリックします するとディスクが表示されます 続けて他のドライバーもインストールします 上のメニューの&quot;Load Driver&quot;をクリックします（&ldquo;適用される通知とライセンス条項&quot;が表示されたら&quot;同意する&quot;をクリックします） &ldquo;参照&quot;をクリックし、&ldquo;virtio-win-0.1.226&quot;を選択します &ldquo;NetKVM&rdquo;&gt;&ldquo;w11&rdquo;&gt;&ldquo;amd64&quot;を選択し、OKをクリックします &ldquo;VirtIO Ethernet Adapter&quot;を選択して&quot;インストール&quot;をクリックします 同じ手順で &ldquo;Balloon&rdquo;&gt;&ldquo;w11&rdquo;&gt;&ldquo;amd64&quot;を選択し、OKをクリックします &ldquo;VirtIO Balloon Driver&quot;を選択して&quot;インストール&quot;をクリックします 次へを押します &ldquo;インストール準備完了&quot;が表示されたら&quot;インストール&quot;をクリックします インストールが始まります ここから先は通常のWindows11と同じようにセットアップしていきます ここまででWindows11のインストールは完了です
+Hyper-Vのインストール Windows11のインストールが終わったらHyper-Vをインストールしていきます
+コントロールパネルを開き、&ldquo;プログラム&quot;をクリックします &ldquo;Windowsの機能の有効化または無効化&quot;をクリックし、&ldquo;Hyper-V&quot;にチェックを入れ、&ldquo;OK&quot;をクリックします">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://tiisanamaou.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/proxmox/" >
+                Proxmox
+            </a>
+        
+            <a href="../../categories/windows/" >
+                Windows
+            </a>
+        
+            <a href="../../categories/hyper-v/" >
+                Hyper-V
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/proxmox-windows11-hyper-v-1/">Proxmox上にWindows11をインストールしてHyper-V使えるようにする（1/2）</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025/03/23</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="環境">環境</h2>
+<ul>
+<li>Promox 8.3.0
+<ul>
+<li>kernel: 6.8.12-8-pve</li>
+<li>pve-manager: 8.3.4</li>
+</ul>
+</li>
+<li>Windows11 24H2</li>
+<li>virtio-win-0.1.266</li>
+</ul>
+<h2 id="準備">準備</h2>
+<p>Windows11</p>
+<ul>
+<li><a class="link" href="https://www.microsoft.com/ja-jp/software-download/windows11"  target="_blank" rel="noopener"
+    >https://www.microsoft.com/ja-jp/software-download/windows11</a></li>
+</ul>
+<p>virtio（vitrio-win-0.1.266.iso）</p>
+<ul>
+<li><a class="link" href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/"  target="_blank" rel="noopener"
+    >https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/</a></li>
+</ul>
+<p>上記は両方ともPromoxにISOとしてアップロードする</p>
+<h2 id="windows11のvm構築">Windows11のVM構築</h2>
+<p>ISOイメージはWindows11を選択する<br>
+ゲストOSを&quot;Microsoft Windows&quot;にし、バージョンを&quot;11/2022/2025&quot;にする<br>
+その下にある&quot;VirtIOドライバ用の追加ドライブを追加&quot;にチェックを入れる<br>
+ISOイメージを選択する（&ldquo;vitrio-win-0.1.266.iso&rdquo;）<br>
+<img src="../../post/proxmox-windows11-hyper-v-1/01.png"
+	width="2230"
+	height="2148"
+	srcset="../../post/proxmox-windows11-hyper-v-1/01_hu16568087287162351103.png 480w, ../../post/proxmox-windows11-hyper-v-1/01_hu3827896952389136102.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="249px"
+	
+></p>
+<p>&ldquo;EFIストレージ&quot;を保存する場所を選択する<br>
+&ldquo;Qemuエージェント&quot;にチェックを入れる<br>
+&ldquo;TPM追加&quot;にチェックを入れる<br>
+&ldquo;TPMストレージ&quot;を保存する場所を選択する<br>
+&ldquo;バージョン&quot;は&quot;v2.0&quot;を選択する<br>
+<img src="../../post/proxmox-windows11-hyper-v-1/02.png"
+	width="2230"
+	height="2148"
+	srcset="../../post/proxmox-windows11-hyper-v-1/02_hu2084739536405562602.png 480w, ../../post/proxmox-windows11-hyper-v-1/02_hu4250746503249324598.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="249px"
+	
+></p>
+<p>ディスクは100GBくらい確保しておく
+<img src="../../post/proxmox-windows11-hyper-v-1/03.png"
+	width="2624"
+	height="2024"
+	srcset="../../post/proxmox-windows11-hyper-v-1/03_hu11080441516099269215.png 480w, ../../post/proxmox-windows11-hyper-v-1/03_hu18438878221151421082.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="129"
+		data-flex-basis="311px"
+	
+></p>
+<p>CPUの項目では&quot;種別&quot;を&quot;host&quot;にする
+<img src="../../post/proxmox-windows11-hyper-v-1/04.png"
+	width="2624"
+	height="2024"
+	srcset="../../post/proxmox-windows11-hyper-v-1/04_hu16831543682694780988.png 480w, ../../post/proxmox-windows11-hyper-v-1/04_hu1124545718895445200.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="129"
+		data-flex-basis="311px"
+	
+></p>
+<p>メモリは16GBにする
+<img src="../../post/proxmox-windows11-hyper-v-1/05.png"
+	width="2624"
+	height="2024"
+	srcset="../../post/proxmox-windows11-hyper-v-1/05_hu189000913732182012.png 480w, ../../post/proxmox-windows11-hyper-v-1/05_hu9910058968839890440.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="129"
+		data-flex-basis="311px"
+	
+></p>
+<p>ネットワークはそのまま
+<img src="../../post/proxmox-windows11-hyper-v-1/06.png"
+	width="2624"
+	height="2024"
+	srcset="../../post/proxmox-windows11-hyper-v-1/06_hu11510097404763682559.png 480w, ../../post/proxmox-windows11-hyper-v-1/06_hu1776911603418352554.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="129"
+		data-flex-basis="311px"
+	
+></p>
+<p>確認に画面になり、問題なければ&quot;完了&quot;を押す
+<img src="../../post/proxmox-windows11-hyper-v-1/07.png"
+	width="2624"
+	height="2024"
+	srcset="../../post/proxmox-windows11-hyper-v-1/07_hu13270587273798123366.png 480w, ../../post/proxmox-windows11-hyper-v-1/07_hu9535246278528606424.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="129"
+		data-flex-basis="311px"
+	
+></p>
+<h2 id="windows11インストール">Windows11インストール</h2>
+<p>設定を進めていきます
+<img src="../../post/proxmox-windows11-hyper-v-1/08.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/08_hu8798421130633516371.png 480w, ../../post/proxmox-windows11-hyper-v-1/08_hu4536672546223975743.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/09.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/09_hu2739211732298759034.png 480w, ../../post/proxmox-windows11-hyper-v-1/09_hu4502519477527462287.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/10.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/10_hu8162389395020595143.png 480w, ../../post/proxmox-windows11-hyper-v-1/10_hu4737210140357412361.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>プロダクトキーは後で入力するので&quot;プロダクトキーがありません&quot;を選択する
+<img src="../../post/proxmox-windows11-hyper-v-1/11.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/11_hu15889763251445315998.png 480w, ../../post/proxmox-windows11-hyper-v-1/11_hu11658670806689058065.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>&ldquo;Windows 11 Pro&quot;を選択する
+<img src="../../post/proxmox-windows11-hyper-v-1/12.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/12_hu13315150500954512533.png 480w, ../../post/proxmox-windows11-hyper-v-1/12_hu11501307869888582233.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/13.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/13_hu2484821345026272796.png 480w, ../../post/proxmox-windows11-hyper-v-1/13_hu15107321812433799247.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>&ldquo;Windows 11 をインストールする場所の選択&quot;の画面になったら、上のメニューの&quot;Load Driver&quot;か下の&quot;ハードウェアが表示されませんか？ドライバーを読み込み、ハードウェアにアクセスします。&ldquo;をクリックする
+<img src="../../post/proxmox-windows11-hyper-v-1/14.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/14_hu8838499902199536805.png 480w, ../../post/proxmox-windows11-hyper-v-1/14_hu9360937630697710124.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>画面が変わったら&quot;参照&quot;をクリックし、&ldquo;virtio-win-0.1.226&quot;を選択します
+<img src="../../post/proxmox-windows11-hyper-v-1/15.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/15_hu14670972026975465692.png 480w, ../../post/proxmox-windows11-hyper-v-1/15_hu10687898782502040299.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/16.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/16_hu17183343199111366340.png 480w, ../../post/proxmox-windows11-hyper-v-1/16_hu13192877134574834423.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>&ldquo;amd64&rdquo;&gt;&ldquo;w11&quot;を選択し、OKをクリックします
+&ldquo;VirtIO SCSI pass-through controller&quot;を選択して、&ldquo;インストール&quot;をクリックします
+するとディスクが表示されます
+<img src="../../post/proxmox-windows11-hyper-v-1/17.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/17_hu1866695538352898009.png 480w, ../../post/proxmox-windows11-hyper-v-1/17_hu17629977887582199017.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/18.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/18_hu1908663840125603642.png 480w, ../../post/proxmox-windows11-hyper-v-1/18_hu16158071949863644958.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>続けて他のドライバーもインストールします
+<img src="../../post/proxmox-windows11-hyper-v-1/19.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/19_hu9629273888212015299.png 480w, ../../post/proxmox-windows11-hyper-v-1/19_hu15918780626221917064.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+上のメニューの&quot;Load Driver&quot;をクリックします（&ldquo;適用される通知とライセンス条項&quot;が表示されたら&quot;同意する&quot;をクリックします）
+<img src="../../post/proxmox-windows11-hyper-v-1/20.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/20_hu28025176328201462.png 480w, ../../post/proxmox-windows11-hyper-v-1/20_hu7600634280580343836.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+&ldquo;参照&quot;をクリックし、&ldquo;virtio-win-0.1.226&quot;を選択します
+&ldquo;NetKVM&rdquo;&gt;&ldquo;w11&rdquo;&gt;&ldquo;amd64&quot;を選択し、OKをクリックします
+&ldquo;VirtIO Ethernet Adapter&quot;を選択して&quot;インストール&quot;をクリックします
+<img src="../../post/proxmox-windows11-hyper-v-1/21.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/21_hu3515605435882267595.png 480w, ../../post/proxmox-windows11-hyper-v-1/21_hu17605037193599618388.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/22.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/22_hu16750789248371250216.png 480w, ../../post/proxmox-windows11-hyper-v-1/22_hu16243914273110973473.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/23.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/23_hu11449288605124926240.png 480w, ../../post/proxmox-windows11-hyper-v-1/23_hu7219403887428766569.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>同じ手順で
+&ldquo;Balloon&rdquo;&gt;&ldquo;w11&rdquo;&gt;&ldquo;amd64&quot;を選択し、OKをクリックします
+&ldquo;VirtIO Balloon Driver&quot;を選択して&quot;インストール&quot;をクリックします
+<img src="../../post/proxmox-windows11-hyper-v-1/24.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/24_hu18341104997570962361.png 480w, ../../post/proxmox-windows11-hyper-v-1/24_hu12223985323593043854.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/25.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/25_hu3585628565774499982.png 480w, ../../post/proxmox-windows11-hyper-v-1/25_hu3277547657583694978.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/26.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/26_hu11984486034426228267.png 480w, ../../post/proxmox-windows11-hyper-v-1/26_hu3497147391958690206.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>次へを押します
+&ldquo;インストール準備完了&quot;が表示されたら&quot;インストール&quot;をクリックします
+インストールが始まります
+<img src="../../post/proxmox-windows11-hyper-v-1/27.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/27_hu4901010088995446173.png 480w, ../../post/proxmox-windows11-hyper-v-1/27_hu2779529585012340175.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/28.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/28_hu16181481874756464165.png 480w, ../../post/proxmox-windows11-hyper-v-1/28_hu8275328860434580160.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>ここから先は通常のWindows11と同じようにセットアップしていきます
+<img src="../../post/proxmox-windows11-hyper-v-1/29.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/29_hu11746322317264300309.png 480w, ../../post/proxmox-windows11-hyper-v-1/29_hu13346077450875666645.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/30.png"
+	width="2784"
+	height="1950"
+	srcset="../../post/proxmox-windows11-hyper-v-1/30_hu11072420210184004937.png 480w, ../../post/proxmox-windows11-hyper-v-1/30_hu14331121653635065262.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>ここまででWindows11のインストールは完了です</p>
+<h2 id="hyper-vのインストール">Hyper-Vのインストール</h2>
+<p>Windows11のインストールが終わったらHyper-Vをインストールしていきます</p>
+<p>コントロールパネルを開き、&ldquo;プログラム&quot;をクリックします
+<img src="../../post/proxmox-windows11-hyper-v-1/31.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-1/31_hu687042299732173334.png 480w, ../../post/proxmox-windows11-hyper-v-1/31_hu1688068326492378598.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>&ldquo;Windowsの機能の有効化または無効化&quot;をクリックし、&ldquo;Hyper-V&quot;にチェックを入れ、&ldquo;OK&quot;をクリックします<br>
+再起動をします
+<img src="../../post/proxmox-windows11-hyper-v-1/32.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-1/32_hu6416321284925781062.png 480w, ../../post/proxmox-windows11-hyper-v-1/32_hu15734429426554401472.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/33.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-1/33_hu11081856322053223547.png 480w, ../../post/proxmox-windows11-hyper-v-1/33_hu10064894317693883084.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/34.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-1/34_hu775718672667538480.png 480w, ../../post/proxmox-windows11-hyper-v-1/34_hu4478394634835327905.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/35.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-1/35_hu15889635883420949982.png 480w, ../../post/proxmox-windows11-hyper-v-1/35_hu13501977674745098173.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>タスクバーのWindowsマークをクリックして&quot;すべて&rdquo;&gt;&ldquo;Windowsツール&quot;をクリックします
+<img src="../../post/proxmox-windows11-hyper-v-1/37.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-1/37_hu688284052074689496.png 480w, ../../post/proxmox-windows11-hyper-v-1/37_hu11141928887561782716.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>&ldquo;Hyper-Vマネージャ&quot;を右クリックして&quot;ショートカットの作成&quot;をします（デスクトップに作成しておきます）
+<img src="../../post/proxmox-windows11-hyper-v-1/38.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-1/38_hu7554399122781759768.png 480w, ../../post/proxmox-windows11-hyper-v-1/38_hu5422805644283392499.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+>
+<img src="../../post/proxmox-windows11-hyper-v-1/39.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-1/39_hu16160316826063215691.png 480w, ../../post/proxmox-windows11-hyper-v-1/39_hu14173249029844772465.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>ダブルクリックで開けます
+<img src="../../post/proxmox-windows11-hyper-v-1/40.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-1/40_hu17519058420127540728.png 480w, ../../post/proxmox-windows11-hyper-v-1/40_hu1005746902110798055.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<h2 id="qemu-guest-agentをインストールする">qemu-guest-agentをインストールする</h2>
+<p>virtio-win-0.1.266のドライブ直下に下記の2つのファイルがあるのでインストールします</p>
+<ul>
+<li>virtio-win-gt-x64.msi</li>
+<li>virtio-win-guest-tools.exe</li>
+</ul>
+<p>上記をインストールすると、Proxmoxの管理コンソールからコントロールやIPアドレスがわかるようになります
+<img src="../../post/proxmox-windows11-hyper-v-1/41.png"
+	width="2317"
+	height="1318"
+	srcset="../../post/proxmox-windows11-hyper-v-1/41_hu7741472227768092791.png 480w, ../../post/proxmox-windows11-hyper-v-1/41_hu10845010356028722454.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-05/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（5）/HA構成</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-04/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（4）/クラスターを壊す</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-03/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（3）/LoadBalancerの設定</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-02/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（2）/Control-Plane・Worker-Nodeの設定</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-on-proxmox-01/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">kubernetesをproxmox上に立ててみた（1）</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
