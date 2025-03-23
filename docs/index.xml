@@ -19183,7 +19183,19 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         <description>&lt;h2 id=&#34;about-me&#34;&gt;about me&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;製品開発とDX・ITの部署に所属&lt;/li&gt;
-&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;製品開発（2019年〜）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;製品の開発（企画〜製品化）&lt;/li&gt;
+&lt;li&gt;お問い合わせ対応&lt;/li&gt;
+&lt;li&gt;生産技術の対応&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;DX・IT（2020年〜）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;自社ECの運用&lt;/li&gt;
+&lt;li&gt;WindowsServerの運用管理&lt;/li&gt;
+&lt;li&gt;Microsoft365の運用管理&lt;/li&gt;
+&lt;li&gt;社内LAN、複合機、電話回線、インターネット回線、ドメインの管理&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
@@ -19197,24 +19209,19 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;li&gt;Windows11 Home&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;ノートPC
-&lt;ul&gt;
-&lt;li&gt;Windows11 Home&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
 &lt;li&gt;MacbookPro 14inch
 &lt;ul&gt;
-&lt;li&gt;MacOS 12.4&lt;/li&gt;
+&lt;li&gt;macOS 15.3.1&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;自作PC
 &lt;ul&gt;
-&lt;li&gt;Ubuntu 24.04&lt;/li&gt;
+&lt;li&gt;Ubuntu 24.04.2&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;ミニPC
 &lt;ul&gt;
-&lt;li&gt;Proxmox 8.2.4&lt;/li&gt;
+&lt;li&gt;Proxmox 8.3.0&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
