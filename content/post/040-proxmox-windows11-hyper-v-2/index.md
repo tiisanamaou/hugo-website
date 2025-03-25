@@ -1,6 +1,6 @@
 ---
 title: Proxmox上にWindows11をインストールしてHyper-V使えるようにする（2/2）
-date: 2025-03-24
+date: 2025-03-25
 slug: proxmox-windows11-hyper-v-2
 categories:
     - Proxmox

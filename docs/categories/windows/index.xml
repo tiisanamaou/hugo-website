@@ -7,7 +7,293 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 23 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/windows/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 25 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/windows/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Proxmox上にWindows11をインストールしてHyper-V使えるようにする（2/2）</title>
+        <link>https://tiisanamaou.github.io/post/proxmox-windows11-hyper-v-2/</link>
+        <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/post/proxmox-windows11-hyper-v-2/</guid>
+        <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Promox 8.3.0
+&lt;ul&gt;
+&lt;li&gt;kernel: 6.8.12-8-pve&lt;/li&gt;
+&lt;li&gt;pve-manager: 8.3.4&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Windows11 24H2&lt;/li&gt;
+&lt;li&gt;virtio-win-0.1.266&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;hyper-vで仮想マシンの作成をする&#34;&gt;Hyper-Vで仮想マシンの作成をする&lt;/h2&gt;
+&lt;p&gt;インストールするOSのISOイメージをダウンロードしておきます&lt;br&gt;
+今回はUbuntu24.04.2を使用します&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Hyper-Vマネージャ&amp;quot;を起動します&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;新規&amp;rdquo;&amp;gt;&amp;ldquo;仮想マシン&amp;quot;をクリックします
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/01.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/01_hu17120588613040416750.png 480w, ../../post/proxmox-windows11-hyper-v-2/01_hu15071346453873279724.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;次へをクリックします
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/02.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/02_hu13656881172387976257.png 480w, ../../post/proxmox-windows11-hyper-v-2/02_hu797200753843395967.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;第2世代&amp;quot;を選択肢します
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/03.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/03_hu3452473821545404592.png 480w, ../../post/proxmox-windows11-hyper-v-2/03_hu18329729632948036117.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;メモリを割り当てます
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/04.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/04_hu15105737047261305371.png 480w, ../../post/proxmox-windows11-hyper-v-2/04_hu3589788642652013644.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ネットワークは一旦接続せずに使用します
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/05.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/05_hu14491766133772856780.png 480w, ../../post/proxmox-windows11-hyper-v-2/05_hu7279983931213877268.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;仮想ハードディスクを作成する&amp;quot;を選択します&lt;br&gt;
+名前、場所、容量を設定します
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/06.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/06_hu14266800446552932926.png 480w, ../../post/proxmox-windows11-hyper-v-2/06_hu14762900502169238462.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&amp;quot;を選択し、&amp;ldquo;イメージファイル&amp;quot;の右の&amp;quot;参照&amp;quot;をクリックしてISOファイルを選択します
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/07.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/07_hu9472369804718990787.png 480w, ../../post/proxmox-windows11-hyper-v-2/07_hu193943043125944067.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/08.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/08_hu1233221778419716328.png 480w, ../../post/proxmox-windows11-hyper-v-2/08_hu400511061484735672.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;確認の画面になり、問題なければ&amp;quot;完了&amp;quot;をクリックします
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/09.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/09_hu14175495325438156435.png 480w, ../../post/proxmox-windows11-hyper-v-2/09_hu6742115761426486988.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;名前が&amp;quot;新しい仮想マシン&amp;quot;となっているので右クリックして名前を変更します
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/10.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/10_hu18085786937753149912.png 480w, ../../post/proxmox-windows11-hyper-v-2/10_hu3597753105214942677.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/11.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/11_hu11460881376821456023.png 480w, ../../post/proxmox-windows11-hyper-v-2/11_hu16947737192192449581.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;右クリックまたは右のメニューから&amp;quot;起動&amp;quot;をクリックします
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/12.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/12_hu8640673965379753353.png 480w, ../../post/proxmox-windows11-hyper-v-2/12_hu15192693643802606045.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/13.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/13_hu4415648095572423516.png 480w, ../../post/proxmox-windows11-hyper-v-2/13_hu17877168198113888928.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;右のメニューの接続をクリックします&lt;br&gt;
+起動できていません
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/14.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/14_hu13500573814995019592.png 480w, ../../post/proxmox-windows11-hyper-v-2/14_hu17324421826010431187.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;一度&amp;quot;停止&amp;quot;をクリックして仮想マシンを止めます&lt;/p&gt;
+&lt;p&gt;右クリックをして&amp;quot;設定&amp;quot;をクリックします&lt;br&gt;
+&amp;ldquo;セキュリティ&amp;quot;の&amp;quot;セキュアブートを有効にする&amp;quot;のチェックを外し&amp;quot;適用&amp;quot;をクリックします
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/15.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/15_hu7309302715986555422.png 480w, ../../post/proxmox-windows11-hyper-v-2/15_hu2695670645038302413.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/16.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/16_hu6363379118753185813.png 480w, ../../post/proxmox-windows11-hyper-v-2/16_hu11335363782303130670.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;起動させます&lt;br&gt;
+右のメニューの&amp;quot;接続&amp;quot;をクリックすると仮想マシンの画面が表示されます&lt;br&gt;
+Ubuntuのインストール画面が表示されているので、通常のUbuntuと同じようにインストールを進めます
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/17.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/17_hu15239534747411530848.png 480w, ../../post/proxmox-windows11-hyper-v-2/17_hu14805342908840826334.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;インストールが終われば完了です
+&lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/18.png&#34;
+	width=&#34;2317&#34;
+	height=&#34;1318&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/18_hu8578197077212963692.png 480w, ../../post/proxmox-windows11-hyper-v-2/18_hu11969979726330422102.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;参考url&#34;&gt;参考URL&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Proxmox VEの構築とVMをたてるまで
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://zenn.dev/no292nukegara/articles/81f2cb6af34772&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://zenn.dev/no292nukegara/articles/81f2cb6af34772&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Proxmox VE7.xでwindows11VMを作成する
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://zenn.dev/northeggman/articles/49c6b73c03c81c&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://zenn.dev/northeggman/articles/49c6b73c03c81c&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Proxmox VE で Windows 11 VM を立てる
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://akam1o.hatenablog.jp/entry/2024/03/05/234501&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://akam1o.hatenablog.jp/entry/2024/03/05/234501&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ProxmoxでVMコンソールの解像度を変更する
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://qiita.com/minoden_works/items/a4c94eb7728c946d3efe&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://qiita.com/minoden_works/items/a4c94eb7728c946d3efe&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>Proxmox上にWindows11をインストールしてHyper-V使えるようにする（1/2）</title>
         <link>https://tiisanamaou.github.io/post/proxmox-windows11-hyper-v-1/</link>
         <pubDate>Sun, 23 Mar 2025 00:00:00 +0000</pubDate>
