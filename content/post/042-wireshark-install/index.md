@@ -1,6 +1,6 @@
 ---
 title: WireSharkをUbuntuDesktopで使う
-date: 2025-03-26
+date: 2025-03-27
 slug: wireshark-install
 categories:
     - WireShark

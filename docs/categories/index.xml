@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Tue, 25 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 27 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>WireShark</title>
+        <link>https://tiisanamaou.github.io/categories/wireshark/</link>
+        <pubDate>Thu, 27 Mar 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/wireshark/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Hyper-V</title>
         <link>https://tiisanamaou.github.io/categories/hyper-v/</link>
         <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
