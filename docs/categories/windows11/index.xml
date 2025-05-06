@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Windows11 on onodera memo</title>
+        <link>https://tiisanamaou.github.io/categories/windows11/</link>
+        <description>Recent content in Windows11 on onodera memo</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja</language>
+        <copyright>onodera</copyright>
+        <lastBuildDate>Tue, 06 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/windows11/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Proxmox上のWindows11にUSBパススルーをしてラズパイピコにプログラムを書き込む</title>
+        <link>https://tiisanamaou.github.io/post/windows11-on-proxmox-usb-passthrough/</link>
+        <pubDate>Tue, 06 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/post/windows11-on-proxmox-usb-passthrough/</guid>
+        <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;ファームウェア
+&lt;ul&gt;
+&lt;li&gt;RPI_PICO2-20250415-v1.25.0.uf2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Thonny 4.1.7&lt;/li&gt;
+&lt;li&gt;Raspberry Pi Pico(ラズパイピコ)&lt;/li&gt;
+&lt;li&gt;Windows11 Pro 24H2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;proxmox上からusbポートをパススルー設定をする&#34;&gt;Proxmox上からUSBポートをパススルー設定をする&lt;/h2&gt;
+&lt;p&gt;本体のUSBに差し込みます&lt;/p&gt;
+&lt;p&gt;対象のVMの「ハードウェア」に「追加」＞「USBデバイス」＞「USBポートを使用」から製造者が「Raspberry Pi」になっているポートを選択します
+「追加」を押します
+&lt;img src=&#34;../../post/windows11-on-proxmox-usb-passthrough/01.png&#34;
+	width=&#34;1324&#34;
+	height=&#34;689&#34;
+	srcset=&#34;../../post/windows11-on-proxmox-usb-passthrough/01_hu16641508950556328741.png 480w, ../../post/windows11-on-proxmox-usb-passthrough/01_hu10559336437134142749.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;192&#34;
+		data-flex-basis=&#34;461px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;すると一覧にUSBデバイスが追加されます&lt;/p&gt;
+&lt;h2 id=&#34;windows11上から接続されているか確認する&#34;&gt;WIndows11上から接続されているか確認する&lt;/h2&gt;
+&lt;p&gt;Windows11上でデバイスマネージャーを開き「ほかのデバイス」に「RP2 Boot」が表示されていれば認識されています
+&lt;img src=&#34;../../post/windows11-on-proxmox-usb-passthrough/02.png&#34;
+	width=&#34;2322&#34;
+	height=&#34;1322&#34;
+	srcset=&#34;../../post/windows11-on-proxmox-usb-passthrough/02_hu2641242717114900754.png 480w, ../../post/windows11-on-proxmox-usb-passthrough/02_hu13095272580686090257.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;エクスプローラー側からUSBメモリ等と同じように「RPI-RP2」として認識されているかを確認する
+&lt;img src=&#34;../../post/windows11-on-proxmox-usb-passthrough/03.png&#34;
+	width=&#34;2322&#34;
+	height=&#34;1322&#34;
+	srcset=&#34;../../post/windows11-on-proxmox-usb-passthrough/03_hu10770827740516421656.png 480w, ../../post/windows11-on-proxmox-usb-passthrough/03_hu8044894960490459335.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;thonnyをインストールする&#34;&gt;Thonnyをインストールする&lt;/h2&gt;
+&lt;p&gt;今回はzipをダウンロードして使用します&lt;br&gt;
+下記のURLからダウンロードします&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://thonny.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://thonny.org/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ダウンロードしたファイルを展開します&lt;br&gt;
+ファイルの中にある「thonny.exe」をダブルクリックして起動します&lt;br&gt;
+この段階ではまだ認識されていません&lt;/p&gt;
+&lt;h2 id=&#34;プログラムを書き込めるようにする準備&#34;&gt;プログラムを書き込めるようにする準備&lt;/h2&gt;
+&lt;p&gt;ラズパイピコにファームウェアをアップロードします&lt;/p&gt;
+&lt;p&gt;ファームウェアは下記のURLからダウンロードします&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#drag-and-drop-micropython&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.raspberrypi.com/documentation/microcontrollers/micropython.html#drag-and-drop-micropython&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;今回は「Pico」を選択します&lt;/li&gt;
+&lt;li&gt;拡張子は「.uf2」&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ラズパピピコがUSBメモリと同じように認識されているので、ダウンロードしたファームウェアをコピーします&lt;br&gt;
+すると自動的に再認識されます&lt;/p&gt;
+&lt;p&gt;thonny上の右下から「Raspberry Pi Pico」を選択します&lt;br&gt;
+これでプログラムが書き込めるようになりました
+&lt;img src=&#34;../../post/windows11-on-proxmox-usb-passthrough/04.png&#34;
+	width=&#34;2322&#34;
+	height=&#34;1322&#34;
+	srcset=&#34;../../post/windows11-on-proxmox-usb-passthrough/04_hu4429248300013878312.png 480w, ../../post/windows11-on-proxmox-usb-passthrough/04_hu15417934381330033570.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;プログラムを書き込み&#34;&gt;プログラムを書き込み&lt;/h2&gt;
+&lt;p&gt;ラズパイピコ上のLEDを0.5秒間隔で点滅させるプログラムです&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;from machine import Pin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;from time import sleep
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;led = Pin(&amp;#39;LED&amp;#39;, Pin.OUT)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;while True:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    led.on()
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    sleep(0.5)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    led.off()
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    sleep(0.5)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;「ファイル」「保存」を押すと保存先が表示されるので「Raspberry Pi Pico」を選択します&lt;br&gt;
+「実行」「現在のスクリプトを実行」を押すと書き込んだプログラムが動きLEDが点滅します&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
