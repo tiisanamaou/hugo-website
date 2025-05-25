@@ -8,6 +8,109 @@
         <language>ja</language>
         <copyright>onodera</copyright>
         <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Ubuntu24.04.2LTSにOBSをインストールする</title>
+        <link>https://tiisanamaou.github.io/post/ubuntu-obs-install/</link>
+        <pubDate>Sun, 25 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/post/ubuntu-obs-install/</guid>
+        <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Ubuntu 24.04.2 LTS&lt;/li&gt;
+&lt;li&gt;Linux 6.8.0-60-generic&lt;/li&gt;
+&lt;li&gt;Intel® Core™ i5-13500 × 20&lt;/li&gt;
+&lt;li&gt;Intel® UHD Graphics 770 (ADL-S GT1)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;ffmpegのインストールされているか確認する&#34;&gt;&amp;ldquo;ffmpeg&amp;quot;のインストールされているか確認する&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt list ffmpeg --installed
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt list ffmpeg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;gt; sudo apt list ffmpeg --installed 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[sudo] password for mao: 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Listing... Done
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;gt; sudo apt list ffmpeg            
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Listing... Done
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ffmpeg/noble 7:6.1.1-3ubuntu5 amd64
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;ffmpegのインストールをする&#34;&gt;&amp;ldquo;ffmpeg&amp;quot;のインストールをする&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install ffmpeg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;obsをインストールする&#34;&gt;&amp;ldquo;OBS&amp;quot;をインストールする&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo add-apt-repository ppa:obsproject/obs-studio
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install obs-studio
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;設定の変更&#34;&gt;設定の変更&lt;/h2&gt;
+&lt;p&gt;&amp;ldquo;Settings&amp;quot;をクリックして、&amp;ldquo;Output&amp;quot;の&amp;quot;Output Mode&amp;quot;を&amp;quot;Advanced&amp;quot;にする
+&lt;img src=&#34;./post/ubuntu-obs-install/01.png&#34;
+	width=&#34;1974&#34;
+	height=&#34;1526&#34;
+	srcset=&#34;./post/ubuntu-obs-install/01_hu13254537414836105850.png 480w, ./post/ubuntu-obs-install/01_hu1290175797097815417.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;129&#34;
+		data-flex-basis=&#34;310px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ファイルの保存場所を変更する&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Recording&amp;quot;タブの&amp;quot;Recording Path&amp;quot;を自分の保存したい場所にする&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;保存時の拡張子を変更する&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Recording Format&amp;quot;を&amp;quot;MPEG-4(.mp4)&amp;ldquo;にする&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;エンコーダーを変更する&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Video Encoder&amp;quot;を&amp;quot;x264&amp;quot;にする&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;エラーになって録画ができない&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://obsproject.com/forum/threads/trying-to-record-results-in-couldnt-initialize-muxer-os_process_pipe_write-for-info-structure-failed.182163/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://obsproject.com/forum/threads/trying-to-record-results-in-couldnt-initialize-muxer-os_process_pipe_write-for-info-structure-failed.182163/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Settings&amp;quot;をクリックして、&amp;ldquo;Audio&amp;quot;の&amp;quot;Sample Rate&amp;quot;を&amp;quot;44.1 kHz&amp;quot;にする&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;参考url&#34;&gt;参考URL&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://obsproject.com/ja/download&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://obsproject.com/ja/download&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>Proxmox上のWindows11にUSBパススルーをしてラズパイピコにプログラムを書き込む</title>
         <link>https://tiisanamaou.github.io/post/windows11-on-proxmox-usb-passthrough/</link>
         <pubDate>Tue, 06 May 2025 00:00:00 +0000</pubDate>

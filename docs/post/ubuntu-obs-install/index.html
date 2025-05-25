@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='理由 ローカル内にあるDNSで名前解決して、そのDNSが落ちているときは別のDNSで通信自体はできるようにしたかった
-そこでセカンダリDNSをどのように追加したら良いのか調べた
-UbuntuDesktopのGUIの場合 &ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;&ldquo;Ethernet(eno1)&quot;&gt;&ldquo;IPv4&rdquo;&gt;&ldquo;DNS&rdquo; &ldquo;192.168.10.1, 192.168.10.109&rdquo; カンマ区切りで入れられる 先にあるのがプライマリで、その次がセカンダリになる UbuntuServerのCUI（Netplanファイル）の場合 追加前 1 2 3 4 5 6 7 8 9 10 11 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 追加後 1 2 3 4 5 6 7 8 9 10 11 12 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 - 192.168.10.109 &ldquo;resolvectl&quot;コマンドで確認する 追加前 1 2 3 4 5 6 7 8 9 10 11 mao@mao (x86_64) : /home/mao &gt; resolvectl Global Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported resolv.'>
-<title>セカンダリDNSの追加</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Ubuntu 24.04.2 LTS Linux 6.8.0-60-generic Intel® Core™ i5-13500 × 20 Intel® UHD Graphics 770 (ADL-S GT1) &ldquo;ffmpeg&quot;のインストールされているか確認する 1 2 sudo apt list ffmpeg --installed sudo apt list ffmpeg 1 2 3 4 5 6 &gt; sudo apt list ffmpeg --installed [sudo] password for mao: Listing... Done &gt; sudo apt list ffmpeg Listing... Done ffmpeg/noble 7:6.1.1-3ubuntu5 amd64 &ldquo;ffmpeg&quot;のインストールをする 1 sudo apt install ffmpeg &ldquo;OBS&quot;をインストールする 1 2 3 sudo add-apt-repository ppa:obsproject/obs-studio sudo apt update sudo apt install obs-studio 設定の変更 &ldquo;Settings&quot;をクリックして、&ldquo;Output&quot;の&quot;Output Mode&quot;を&quot;Advanced&quot;にする ファイルの保存場所を変更する'>
+<title>Ubuntu24.04.2LTSにOBSをインストールする</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/post/secondary-dns/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/ubuntu-obs-install/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='セカンダリDNSの追加'>
-<meta property='og:description' content='理由 ローカル内にあるDNSで名前解決して、そのDNSが落ちているときは別のDNSで通信自体はできるようにしたかった
-そこでセカンダリDNSをどのように追加したら良いのか調べた
-UbuntuDesktopのGUIの場合 &ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;&ldquo;Ethernet(eno1)&quot;&gt;&ldquo;IPv4&rdquo;&gt;&ldquo;DNS&rdquo; &ldquo;192.168.10.1, 192.168.10.109&rdquo; カンマ区切りで入れられる 先にあるのがプライマリで、その次がセカンダリになる UbuntuServerのCUI（Netplanファイル）の場合 追加前 1 2 3 4 5 6 7 8 9 10 11 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 追加後 1 2 3 4 5 6 7 8 9 10 11 12 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 - 192.168.10.109 &ldquo;resolvectl&quot;コマンドで確認する 追加前 1 2 3 4 5 6 7 8 9 10 11 mao@mao (x86_64) : /home/mao &gt; resolvectl Global Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported resolv.'>
-<meta property='og:url' content='https://tiisanamaou.github.io/post/secondary-dns/'>
+<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Ubuntu24.04.2LTSにOBSをインストールする'>
+<meta property='og:description' content='環境 Ubuntu 24.04.2 LTS Linux 6.8.0-60-generic Intel® Core™ i5-13500 × 20 Intel® UHD Graphics 770 (ADL-S GT1) &ldquo;ffmpeg&quot;のインストールされているか確認する 1 2 sudo apt list ffmpeg --installed sudo apt list ffmpeg 1 2 3 4 5 6 &gt; sudo apt list ffmpeg --installed [sudo] password for mao: Listing... Done &gt; sudo apt list ffmpeg Listing... Done ffmpeg/noble 7:6.1.1-3ubuntu5 amd64 &ldquo;ffmpeg&quot;のインストールをする 1 sudo apt install ffmpeg &ldquo;OBS&quot;をインストールする 1 2 3 sudo add-apt-repository ppa:obsproject/obs-studio sudo apt update sudo apt install obs-studio 設定の変更 &ldquo;Settings&quot;をクリックして、&ldquo;Output&quot;の&quot;Output Mode&quot;を&quot;Advanced&quot;にする ファイルの保存場所を変更する'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/ubuntu-obs-install/'>
 <meta property='og:site_name' content='onodera memo'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-13T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-13T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="セカンダリDNSの追加">
-<meta name="twitter:description" content="理由 ローカル内にあるDNSで名前解決して、そのDNSが落ちているときは別のDNSで通信自体はできるようにしたかった
-そこでセカンダリDNSをどのように追加したら良いのか調べた
-UbuntuDesktopのGUIの場合 &ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;&ldquo;Ethernet(eno1)&quot;&gt;&ldquo;IPv4&rdquo;&gt;&ldquo;DNS&rdquo; &ldquo;192.168.10.1, 192.168.10.109&rdquo; カンマ区切りで入れられる 先にあるのがプライマリで、その次がセカンダリになる UbuntuServerのCUI（Netplanファイル）の場合 追加前 1 2 3 4 5 6 7 8 9 10 11 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 追加後 1 2 3 4 5 6 7 8 9 10 11 12 network: version: 2 ethernets: eno1: renderer: NetworkManager match: {} addresses: - &#34;192.168.10.50/24&#34; nameservers: addresses: - 192.168.10.1 - 192.168.10.109 &ldquo;resolvectl&quot;コマンドで確認する 追加前 1 2 3 4 5 6 7 8 9 10 11 mao@mao (x86_64) : /home/mao &gt; resolvectl Global Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported resolv.">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-25T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-25T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Ubuntu24.04.2LTSにOBSをインストールする">
+<meta name="twitter:description" content="環境 Ubuntu 24.04.2 LTS Linux 6.8.0-60-generic Intel® Core™ i5-13500 × 20 Intel® UHD Graphics 770 (ADL-S GT1) &ldquo;ffmpeg&quot;のインストールされているか確認する 1 2 sudo apt list ffmpeg --installed sudo apt list ffmpeg 1 2 3 4 5 6 &gt; sudo apt list ffmpeg --installed [sudo] password for mao: Listing... Done &gt; sudo apt list ffmpeg Listing... Done ffmpeg/noble 7:6.1.1-3ubuntu5 amd64 &ldquo;ffmpeg&quot;のインストールをする 1 sudo apt install ffmpeg &ldquo;OBS&quot;をインストールする 1 2 3 sudo add-apt-repository ppa:obsproject/obs-studio sudo apt update sudo apt install obs-studio 設定の変更 &ldquo;Settings&quot;をクリックして、&ldquo;Output&quot;の&quot;Output Mode&quot;を&quot;Advanced&quot;にする ファイルの保存場所を変更する">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
   
@@ -250,7 +244,7 @@ UbuntuDesktopのGUIの場合 &ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../post/secondary-dns/">セカンダリDNSの追加</a>
+            <a href="../../post/ubuntu-obs-install/">Ubuntu24.04.2LTSにOBSをインストールする</a>
         </h2>
     
         
@@ -272,7 +266,7 @@ UbuntuDesktopのGUIの場合 &ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">2025/03/13</time>
+                <time class="article-time--published">2025/05/25</time>
             </div>
         
 
@@ -289,148 +283,101 @@ UbuntuDesktopのGUIの場合 &ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;
     <section class="article-content">
     
     
-    <h2 id="理由">理由</h2>
-<p>ローカル内にあるDNSで名前解決して、そのDNSが落ちているときは別のDNSで通信自体はできるようにしたかった<br>
-そこでセカンダリDNSをどのように追加したら良いのか調べた</p>
-<h2 id="ubuntudesktopのguiの場合">UbuntuDesktopのGUIの場合</h2>
+    <h2 id="環境">環境</h2>
 <ul>
-<li>&ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;&ldquo;Ethernet(eno1)&quot;&gt;&ldquo;IPv4&rdquo;&gt;&ldquo;DNS&rdquo;</li>
-<li>&ldquo;192.168.10.1, 192.168.10.109&rdquo;</li>
-<li>カンマ区切りで入れられる</li>
-<li>先にあるのがプライマリで、その次がセカンダリになる</li>
+<li>Ubuntu 24.04.2 LTS</li>
+<li>Linux 6.8.0-60-generic</li>
+<li>Intel® Core™ i5-13500 × 20</li>
+<li>Intel® UHD Graphics 770 (ADL-S GT1)</li>
 </ul>
-<h2 id="ubuntuserverのcuinetplanファイルの場合">UbuntuServerのCUI（Netplanファイル）の場合</h2>
+<h2 id="ffmpegのインストールされているか確認する">&ldquo;ffmpeg&quot;のインストールされているか確認する</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt list ffmpeg --installed
+</span></span><span class="line"><span class="cl">sudo apt list ffmpeg
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&gt; sudo apt list ffmpeg --installed 
+</span></span><span class="line"><span class="cl">[sudo] password for mao: 
+</span></span><span class="line"><span class="cl">Listing... Done
+</span></span><span class="line"><span class="cl">&gt; sudo apt list ffmpeg            
+</span></span><span class="line"><span class="cl">Listing... Done
+</span></span><span class="line"><span class="cl">ffmpeg/noble 7:6.1.1-3ubuntu5 amd64
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ffmpegのインストールをする">&ldquo;ffmpeg&quot;のインストールをする</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt install ffmpeg
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="obsをインストールする">&ldquo;OBS&quot;をインストールする</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo add-apt-repository ppa:obsproject/obs-studio
+</span></span><span class="line"><span class="cl">sudo apt update
+</span></span><span class="line"><span class="cl">sudo apt install obs-studio
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="設定の変更">設定の変更</h2>
+<p>&ldquo;Settings&quot;をクリックして、&ldquo;Output&quot;の&quot;Output Mode&quot;を&quot;Advanced&quot;にする
+<img src="../../post/ubuntu-obs-install/01.png"
+	width="1974"
+	height="1526"
+	srcset="../../post/ubuntu-obs-install/01_hu13254537414836105850.png 480w, ../../post/ubuntu-obs-install/01_hu1290175797097815417.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="129"
+		data-flex-basis="310px"
+	
+></p>
+<p>ファイルの保存場所を変更する</p>
 <ul>
-<li>追加前</li>
+<li>&ldquo;Recording&quot;タブの&quot;Recording Path&quot;を自分の保存したい場所にする</li>
 </ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">network:
-</span></span><span class="line"><span class="cl">  version: 2
-</span></span><span class="line"><span class="cl">  ethernets:
-</span></span><span class="line"><span class="cl">    eno1:
-</span></span><span class="line"><span class="cl">      renderer: NetworkManager
-</span></span><span class="line"><span class="cl">      match: {}
-</span></span><span class="line"><span class="cl">      addresses:
-</span></span><span class="line"><span class="cl">      - &#34;192.168.10.50/24&#34;
-</span></span><span class="line"><span class="cl">      nameservers:
-</span></span><span class="line"><span class="cl">        addresses:
-</span></span><span class="line"><span class="cl">        - 192.168.10.1
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>追加後</li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">network:
-</span></span><span class="line"><span class="cl">  version: 2
-</span></span><span class="line"><span class="cl">  ethernets:
-</span></span><span class="line"><span class="cl">    eno1:
-</span></span><span class="line"><span class="cl">      renderer: NetworkManager
-</span></span><span class="line"><span class="cl">      match: {}
-</span></span><span class="line"><span class="cl">      addresses:
-</span></span><span class="line"><span class="cl">      - &#34;192.168.10.50/24&#34;
-</span></span><span class="line"><span class="cl">      nameservers:
-</span></span><span class="line"><span class="cl">        addresses:
-</span></span><span class="line"><span class="cl">        - 192.168.10.1
-</span></span><span class="line"><span class="cl">        - 192.168.10.109
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="resolvectlコマンドで確認する">&ldquo;resolvectl&quot;コマンドで確認する</h2>
+<p>保存時の拡張子を変更する</p>
 <ul>
-<li>追加前</li>
+<li>&ldquo;Recording Format&quot;を&quot;MPEG-4(.mp4)&ldquo;にする</li>
 </ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@mao (x86_64) : /home/mao 
-</span></span><span class="line"><span class="cl">&gt; resolvectl
-</span></span><span class="line"><span class="cl">Global
-</span></span><span class="line"><span class="cl">         Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
-</span></span><span class="line"><span class="cl">  resolv.conf mode: stub
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Link 2 (eno1)
-</span></span><span class="line"><span class="cl">    Current Scopes: DNS
-</span></span><span class="line"><span class="cl">         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
-</span></span><span class="line"><span class="cl">Current DNS Server: 192.168.10.1
-</span></span><span class="line"><span class="cl">       DNS Servers: 192.168.10.1
-</span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>追加後</li>
+<p>エンコーダーを変更する</p>
+<ul>
+<li>&ldquo;Video Encoder&quot;を&quot;x264&quot;にする</li>
 </ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@mao (x86_64) : /home/mao 
-</span></span><span class="line"><span class="cl">&gt; resolvectl
-</span></span><span class="line"><span class="cl">Global
-</span></span><span class="line"><span class="cl">         Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
-</span></span><span class="line"><span class="cl">  resolv.conf mode: stub
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">Link 2 (eno1)
-</span></span><span class="line"><span class="cl">    Current Scopes: DNS
-</span></span><span class="line"><span class="cl">         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
-</span></span><span class="line"><span class="cl">Current DNS Server: 192.168.10.1
-</span></span><span class="line"><span class="cl">       DNS Servers: 192.168.10.1 192.168.10.109
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>&ldquo;DNS Servers&quot;の項目に追加されている</p>
-<h2 id="運用">運用</h2>
-<p>プライマリをローカルのDNSにすれば、ローカル内の名前解決を先にしてないものはパブリックのDNSに問い合わせる形にできる
-かつ、ローカルのDNSがダウンしていてもセカンダリのDNSに問い合わせる形にできる</p>
+<p>エラーになって録画ができない</p>
+<ul>
+<li><a class="link" href="https://obsproject.com/forum/threads/trying-to-record-results-in-couldnt-initialize-muxer-os_process_pipe_write-for-info-structure-failed.182163/"  target="_blank" rel="noopener"
+    >https://obsproject.com/forum/threads/trying-to-record-results-in-couldnt-initialize-muxer-os_process_pipe_write-for-info-structure-failed.182163/</a></li>
+<li>&ldquo;Settings&quot;をクリックして、&ldquo;Audio&quot;の&quot;Sample Rate&quot;を&quot;44.1 kHz&quot;にする</li>
+</ul>
+<h2 id="参考url">参考URL</h2>
+<ul>
+<li><a class="link" href="https://obsproject.com/ja/download"  target="_blank" rel="noopener"
+    >https://obsproject.com/ja/download</a></li>
+</ul>
 
 </section>
 
@@ -458,12 +405,12 @@ UbuntuDesktopのGUIの場合 &ldquo;Settings&rdquo;&gt;&ldquo;Network&rdquo;&gt;
             
                 
 <article class="">
-    <a href="../../post/ubuntu-obs-install/">
+    <a href="../../post/secondary-dns/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Ubuntu24.04.2LTSにOBSをインストールする</h2>
+            <h2 class="article-title">セカンダリDNSの追加</h2>
         </div>
     </a>
 </article>
