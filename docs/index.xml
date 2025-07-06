@@ -7,7 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sat, 02 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Cursorのインストール方法のメモ</title>
         <link>https://tiisanamaou.github.io/post/cursor-install/</link>
         <pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate>
@@ -268,19 +268,6 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
-        </item>
-        <item>
-        <title>「つくって、壊して、直して学ぶ　Kubernetes入門」を読みました</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-book/</link>
-        <pubDate>Fri, 27 Jun 2025 00:00:00 +0000</pubDate>
-        
-        <guid>https://tiisanamaou.github.io/post/kubernetes-book/</guid>
-        <description>&lt;h2 id=&#34;私のレベル&#34;&gt;私のレベル&lt;/h2&gt;
-&lt;p&gt;Kubernetes初心者（用語を少し知っているレベル）&lt;/p&gt;
-&lt;h2 id=&#34;感想&#34;&gt;感想&lt;/h2&gt;
-&lt;p&gt;「つくって、壊して、直して学ぶ　Kubernetes入門」を読みました
-一通りやってみて使い方がわかった&lt;/p&gt;
-</description>
         </item>
         <item>
         <title>Ubuntu24.04.2LTSにOBSをインストールする</title>

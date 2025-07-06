@@ -3,10 +3,10 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://tiisanamaou.github.io/</loc>
-    <lastmod>2025-08-02T00:00:00+00:00</lastmod>
+    <lastmod>2026-08-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/post/</loc>
-    <lastmod>2025-08-02T00:00:00+00:00</lastmod>
+    <lastmod>2026-08-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/categories/</loc>
     <lastmod>2025-07-06T00:00:00+00:00</lastmod>
@@ -16,15 +16,6 @@
   </url><url>
     <loc>https://tiisanamaou.github.io/post/cursor-install/</loc>
     <lastmod>2025-07-06T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://tiisanamaou.github.io/post/kubernetes-book/</loc>
-    <lastmod>2025-06-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://tiisanamaou.github.io/categories/book/</loc>
-    <lastmod>2025-06-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://tiisanamaou.github.io/categories/kubernetes/</loc>
-    <lastmod>2025-06-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/categories/ubuntu/</loc>
     <lastmod>2025-05-25T00:00:00+00:00</lastmod>
@@ -141,6 +132,9 @@
     <lastmod>2024-10-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/categories/cilium/</loc>
+    <lastmod>2024-09-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/categories/kubernetes/</loc>
     <lastmod>2024-09-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/post/kubernetes-cni-cilium/</loc>

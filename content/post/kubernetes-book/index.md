@@ -1,6 +1,6 @@
 ---
 title: 「つくって、壊して、直して学ぶ　Kubernetes入門」を読みました
-date: 2025-06-27
+date: 2026-06-27
 slug: kubernetes-book
 categories:
     - Kubernetes
