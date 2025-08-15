@@ -807,17 +807,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;W: Target Translations (pve-no-subscription/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list:8 and /etc/apt/sources.list.d/proxmox.sources:1
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;エラーを解消する下記のやり方はng&#34;&gt;エラーを解消する（下記のやり方はNG）&lt;/h3&gt;
-&lt;p&gt;コメントアウトする&lt;/p&gt;
+&lt;/div&gt;&lt;h3 id=&#34;エラーを解消する&#34;&gt;エラーを解消する&lt;/h3&gt;
+&lt;p&gt;&amp;ldquo;apt modernize-sources&amp;quot;コマンド実行する&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano /etc/apt/sources.list
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
@@ -830,40 +822,84 @@
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# cat /etc/apt/sources.list&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#deb http://ftp.jp.debian.org/debian trixie main contrib&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@pve:~# apt modernize-sources
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;The following files need modernizing:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - /etc/apt/sources.list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - /etc/apt/sources.list.d/ceph.list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  - /etc/apt/sources.list.d/pve-enterprise.list
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#deb http://ftp.jp.debian.org/debian trixie-updates main contrib&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Modernizing will replace .list files with the new .sources format,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;add Signed-By values where they can be determined automatically,
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;and save the old files into .list.bak files.
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# security updates&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#deb http://security.debian.org trixie-security main contrib&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;This command supports the &amp;#39;signed-by&amp;#39; and &amp;#39;trusted&amp;#39; options. If you
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;have specified other options inside [] brackets, please transfer them
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;manually to the output files; see sources.list(5) for a mapping.
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#deb http://download.proxmox.com/debian/pve trixie pve-no-subscription&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;For a simulation, respond N in the following prompt.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Rewrite 3 sources? [Y/n] Y
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Modernizing /etc/apt/sources.list...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- Writing /etc/apt/sources.list.d/debian.sources
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- Writing /etc/apt/sources.list.d/proxmox.sources
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Modernizing /etc/apt/sources.list.d/ceph.list...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Modernizing /etc/apt/sources.list.d/pve-enterprise.list...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@pve:~#
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;エラーが解消された&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;エラーがでなくなった&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# apt update&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Hit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;download&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;proxmox&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trixie&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InRelease&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Reading&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;lists&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;...&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Done&lt;/span&gt;          
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Building&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dependency&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tree&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;...&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Done&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Reading&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;state&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;information&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;...&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Done&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mi&#34;&gt;97&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;packages&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;be&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;upgraded&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Run&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;apt list --upgradable&amp;#39;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;see&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;them&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Hit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;security&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;org&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trixie&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;security&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InRelease&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Hit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ftp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;jp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;org&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trixie&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InRelease&lt;/span&gt;                      
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Hit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ftp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;jp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;org&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trixie&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;updates&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InRelease&lt;/span&gt;              
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Hit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;download&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;proxmox&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trixie&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InRelease&lt;/span&gt;               
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;be&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;upgraded&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Run&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;apt list --upgradable&amp;#39;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;see&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;it&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# nano /etc/apt/sources.list&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# nano /etc/apt/sources.list.d/proxmox.sources&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# apt update&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Hit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ftp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;jp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;org&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trixie&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InRelease&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Hit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ftp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;jp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;org&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trixie&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;updates&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InRelease&lt;/span&gt;                     
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Hit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;security&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;org&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trixie&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;security&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InRelease&lt;/span&gt;                         
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Hit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;download&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;proxmox&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;com&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;debian&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;trixie&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InRelease&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;be&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;upgraded&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Run&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;apt list --upgradable&amp;#39;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;see&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;it&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pve&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;proxmox9へアップグレードする&#34;&gt;Proxmox9へアップグレードする&lt;/h2&gt;
@@ -1449,7 +1485,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/01.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/01_hu17120588613040416750.png 480w, ../../post/proxmox-windows11-hyper-v-2/01_hu15071346453873279724.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/01_hu_21c1d81081b49e0.png 480w, ../../post/proxmox-windows11-hyper-v-2/01_hu_16b106898b2e4bb0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1462,7 +1498,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/02.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/02_hu13656881172387976257.png 480w, ../../post/proxmox-windows11-hyper-v-2/02_hu797200753843395967.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/02_hu_fdef0092c6e8ec0c.png 480w, ../../post/proxmox-windows11-hyper-v-2/02_hu_a3f87e0513bb6c88.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1475,7 +1511,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/03.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/03_hu3452473821545404592.png 480w, ../../post/proxmox-windows11-hyper-v-2/03_hu18329729632948036117.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/03_hu_f91b83bab349691a.png 480w, ../../post/proxmox-windows11-hyper-v-2/03_hu_68d8de0a3cebe727.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1488,7 +1524,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/04.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/04_hu15105737047261305371.png 480w, ../../post/proxmox-windows11-hyper-v-2/04_hu3589788642652013644.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/04_hu_f0e03cf3ee9241a1.png 480w, ../../post/proxmox-windows11-hyper-v-2/04_hu_c13af9bd687438f7.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1501,7 +1537,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/05.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/05_hu14491766133772856780.png 480w, ../../post/proxmox-windows11-hyper-v-2/05_hu7279983931213877268.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/05_hu_878c59e0597cebf8.png 480w, ../../post/proxmox-windows11-hyper-v-2/05_hu_95a022ca7ef3cc29.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1515,7 +1551,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/06.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/06_hu14266800446552932926.png 480w, ../../post/proxmox-windows11-hyper-v-2/06_hu14762900502169238462.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/06_hu_6f1fba652cb39efb.png 480w, ../../post/proxmox-windows11-hyper-v-2/06_hu_70ce4fc225449894.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1528,7 +1564,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/07.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/07_hu9472369804718990787.png 480w, ../../post/proxmox-windows11-hyper-v-2/07_hu193943043125944067.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/07_hu_c6240cf0b51675d.png 480w, ../../post/proxmox-windows11-hyper-v-2/07_hu_63fc0bd5ed92c2ad.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1540,7 +1576,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/08.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/08_hu1233221778419716328.png 480w, ../../post/proxmox-windows11-hyper-v-2/08_hu400511061484735672.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/08_hu_91c9ef436ff76413.png 480w, ../../post/proxmox-windows11-hyper-v-2/08_hu_297dcd3f5ce6688f.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1553,7 +1589,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/09.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/09_hu14175495325438156435.png 480w, ../../post/proxmox-windows11-hyper-v-2/09_hu6742115761426486988.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/09_hu_c87dee7aa1579c8f.png 480w, ../../post/proxmox-windows11-hyper-v-2/09_hu_20d2ccdc0471221c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1566,7 +1602,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/10.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/10_hu18085786937753149912.png 480w, ../../post/proxmox-windows11-hyper-v-2/10_hu3597753105214942677.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/10_hu_a1032746da67853e.png 480w, ../../post/proxmox-windows11-hyper-v-2/10_hu_90f3679607159c01.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1578,7 +1614,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/11.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/11_hu11460881376821456023.png 480w, ../../post/proxmox-windows11-hyper-v-2/11_hu16947737192192449581.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/11_hu_21e420fe6b25d218.png 480w, ../../post/proxmox-windows11-hyper-v-2/11_hu_84cc874e8c7dafde.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1591,7 +1627,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/12.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/12_hu8640673965379753353.png 480w, ../../post/proxmox-windows11-hyper-v-2/12_hu15192693643802606045.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/12_hu_690511e6ebfdac5c.png 480w, ../../post/proxmox-windows11-hyper-v-2/12_hu_48d2af18e0f41e22.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1603,7 +1639,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/13.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/13_hu4415648095572423516.png 480w, ../../post/proxmox-windows11-hyper-v-2/13_hu17877168198113888928.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/13_hu_d3eed5c09cb95f54.png 480w, ../../post/proxmox-windows11-hyper-v-2/13_hu_6811d5b6587c9f99.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1617,7 +1653,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/14.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/14_hu13500573814995019592.png 480w, ../../post/proxmox-windows11-hyper-v-2/14_hu17324421826010431187.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/14_hu_3be09604c72bd41d.png 480w, ../../post/proxmox-windows11-hyper-v-2/14_hu_e425e7977dd27179.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1632,7 +1668,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/15.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/15_hu7309302715986555422.png 480w, ../../post/proxmox-windows11-hyper-v-2/15_hu2695670645038302413.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/15_hu_dbc0c0eb22081e54.png 480w, ../../post/proxmox-windows11-hyper-v-2/15_hu_bc195c4bb758f30e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1644,7 +1680,7 @@ VMをバックアップする&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/16.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/16_hu6363379118753185813.png 480w, ../../post/proxmox-windows11-hyper-v-2/16_hu11335363782303130670.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/16_hu_bea611383f9b7226.png 480w, ../../post/proxmox-windows11-hyper-v-2/16_hu_52b64caa8527b3e1.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1659,7 +1695,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/17.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/17_hu15239534747411530848.png 480w, ../../post/proxmox-windows11-hyper-v-2/17_hu14805342908840826334.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/17_hu_750a0db1388ddc76.png 480w, ../../post/proxmox-windows11-hyper-v-2/17_hu_203ef35c2b3a0a47.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1672,7 +1708,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-2/18.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/18_hu8578197077212963692.png 480w, ../../post/proxmox-windows11-hyper-v-2/18_hu11969979726330422102.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-2/18_hu_5b6da488e575479a.png 480w, ../../post/proxmox-windows11-hyper-v-2/18_hu_b9f0b76c584599a9.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1747,7 +1783,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/01.png&#34;
 	width=&#34;2230&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/01_hu16568087287162351103.png 480w, ../../post/proxmox-windows11-hyper-v-1/01_hu3827896952389136102.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/01_hu_2ad5458e0203134d.png 480w, ../../post/proxmox-windows11-hyper-v-1/01_hu_edb44040ff5cf7cd.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1764,7 +1800,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/02.png&#34;
 	width=&#34;2230&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/02_hu2084739536405562602.png 480w, ../../post/proxmox-windows11-hyper-v-1/02_hu4250746503249324598.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/02_hu_f83a174fa60a1b90.png 480w, ../../post/proxmox-windows11-hyper-v-1/02_hu_936d96ee04c2b49b.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1777,7 +1813,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/03.png&#34;
 	width=&#34;2624&#34;
 	height=&#34;2024&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/03_hu11080441516099269215.png 480w, ../../post/proxmox-windows11-hyper-v-1/03_hu18438878221151421082.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/03_hu_dca1cfed16a4a7e0.png 480w, ../../post/proxmox-windows11-hyper-v-1/03_hu_475ccdd4fcf2b9a4.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1790,7 +1826,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/04.png&#34;
 	width=&#34;2624&#34;
 	height=&#34;2024&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/04_hu16831543682694780988.png 480w, ../../post/proxmox-windows11-hyper-v-1/04_hu1124545718895445200.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/04_hu_f3a264410b0b811a.png 480w, ../../post/proxmox-windows11-hyper-v-1/04_hu_51a2c518b96e40c3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1803,7 +1839,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/05.png&#34;
 	width=&#34;2624&#34;
 	height=&#34;2024&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/05_hu189000913732182012.png 480w, ../../post/proxmox-windows11-hyper-v-1/05_hu9910058968839890440.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/05_hu_8768fffa070d88bc.png 480w, ../../post/proxmox-windows11-hyper-v-1/05_hu_bf2a06df97dc2027.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1816,7 +1852,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/06.png&#34;
 	width=&#34;2624&#34;
 	height=&#34;2024&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/06_hu11510097404763682559.png 480w, ../../post/proxmox-windows11-hyper-v-1/06_hu1776911603418352554.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/06_hu_557a051d580f09c2.png 480w, ../../post/proxmox-windows11-hyper-v-1/06_hu_8509ac3799d949f1.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1829,7 +1865,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/07.png&#34;
 	width=&#34;2624&#34;
 	height=&#34;2024&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/07_hu13270587273798123366.png 480w, ../../post/proxmox-windows11-hyper-v-1/07_hu9535246278528606424.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/07_hu_56a9719b5a3af2bd.png 480w, ../../post/proxmox-windows11-hyper-v-1/07_hu_e456a311c64959e4.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1843,7 +1879,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/08.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/08_hu8798421130633516371.png 480w, ../../post/proxmox-windows11-hyper-v-1/08_hu4536672546223975743.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/08_hu_d9c594c5af48402c.png 480w, ../../post/proxmox-windows11-hyper-v-1/08_hu_6bce4b82e9d6f1ec.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1855,7 +1891,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/09.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/09_hu2739211732298759034.png 480w, ../../post/proxmox-windows11-hyper-v-1/09_hu4502519477527462287.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/09_hu_be33f67385fb9aad.png 480w, ../../post/proxmox-windows11-hyper-v-1/09_hu_e23ac44eddbcb868.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1867,7 +1903,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/10.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/10_hu8162389395020595143.png 480w, ../../post/proxmox-windows11-hyper-v-1/10_hu4737210140357412361.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/10_hu_c2b0e5db99722c89.png 480w, ../../post/proxmox-windows11-hyper-v-1/10_hu_1bdd7176cf84824c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1880,7 +1916,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/11.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/11_hu15889763251445315998.png 480w, ../../post/proxmox-windows11-hyper-v-1/11_hu11658670806689058065.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/11_hu_b3bc88a97e0f717f.png 480w, ../../post/proxmox-windows11-hyper-v-1/11_hu_5d5eeee4fccb2e97.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1893,7 +1929,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/12.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/12_hu13315150500954512533.png 480w, ../../post/proxmox-windows11-hyper-v-1/12_hu11501307869888582233.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/12_hu_25170688702b8bff.png 480w, ../../post/proxmox-windows11-hyper-v-1/12_hu_2771210b79f0127d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1905,7 +1941,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/13.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/13_hu2484821345026272796.png 480w, ../../post/proxmox-windows11-hyper-v-1/13_hu15107321812433799247.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/13_hu_925ae826edbd3255.png 480w, ../../post/proxmox-windows11-hyper-v-1/13_hu_4dfceddc240e14d5.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1918,7 +1954,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/14.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/14_hu8838499902199536805.png 480w, ../../post/proxmox-windows11-hyper-v-1/14_hu9360937630697710124.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/14_hu_89647635f2439d9d.png 480w, ../../post/proxmox-windows11-hyper-v-1/14_hu_71102e3428987fc9.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1931,7 +1967,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/15.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/15_hu14670972026975465692.png 480w, ../../post/proxmox-windows11-hyper-v-1/15_hu10687898782502040299.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/15_hu_29e3b69deb06290b.png 480w, ../../post/proxmox-windows11-hyper-v-1/15_hu_bda0f919b3c8239c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1943,7 +1979,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/16.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/16_hu17183343199111366340.png 480w, ../../post/proxmox-windows11-hyper-v-1/16_hu13192877134574834423.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/16_hu_739cee5bf96a2d64.png 480w, ../../post/proxmox-windows11-hyper-v-1/16_hu_f91aa56bdd4d6a93.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1958,7 +1994,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/17.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/17_hu1866695538352898009.png 480w, ../../post/proxmox-windows11-hyper-v-1/17_hu17629977887582199017.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/17_hu_243d432d7a7653a6.png 480w, ../../post/proxmox-windows11-hyper-v-1/17_hu_84420379726cb8a5.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1970,7 +2006,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/18.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/18_hu1908663840125603642.png 480w, ../../post/proxmox-windows11-hyper-v-1/18_hu16158071949863644958.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/18_hu_f5f78da625a09ee4.png 480w, ../../post/proxmox-windows11-hyper-v-1/18_hu_c099b67f2f7079b1.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1983,7 +2019,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/19.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/19_hu9629273888212015299.png 480w, ../../post/proxmox-windows11-hyper-v-1/19_hu15918780626221917064.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/19_hu_9297f819799443cf.png 480w, ../../post/proxmox-windows11-hyper-v-1/19_hu_becfa83e0413eaa1.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1996,7 +2032,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/20.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/20_hu28025176328201462.png 480w, ../../post/proxmox-windows11-hyper-v-1/20_hu7600634280580343836.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/20_hu_8a21d96bf2628062.png 480w, ../../post/proxmox-windows11-hyper-v-1/20_hu_edc91497f427d4f7.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2011,7 +2047,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/21.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/21_hu3515605435882267595.png 480w, ../../post/proxmox-windows11-hyper-v-1/21_hu17605037193599618388.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/21_hu_c8c5b4bb9c95cc3a.png 480w, ../../post/proxmox-windows11-hyper-v-1/21_hu_2d6d1acea4fd26a5.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2023,7 +2059,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/22.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/22_hu16750789248371250216.png 480w, ../../post/proxmox-windows11-hyper-v-1/22_hu16243914273110973473.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/22_hu_dc705928061cd090.png 480w, ../../post/proxmox-windows11-hyper-v-1/22_hu_317e4a36ef763ec7.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2035,7 +2071,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/23.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/23_hu11449288605124926240.png 480w, ../../post/proxmox-windows11-hyper-v-1/23_hu7219403887428766569.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/23_hu_1e9f55756e795ef7.png 480w, ../../post/proxmox-windows11-hyper-v-1/23_hu_33b1b9fbca2d44be.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2050,7 +2086,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/24.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/24_hu18341104997570962361.png 480w, ../../post/proxmox-windows11-hyper-v-1/24_hu12223985323593043854.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/24_hu_edeff3e36bc6cc02.png 480w, ../../post/proxmox-windows11-hyper-v-1/24_hu_c0e839d3554b765.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2062,7 +2098,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/25.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/25_hu3585628565774499982.png 480w, ../../post/proxmox-windows11-hyper-v-1/25_hu3277547657583694978.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/25_hu_c25b564dc2d67754.png 480w, ../../post/proxmox-windows11-hyper-v-1/25_hu_eaa0f4db5b2903be.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2074,7 +2110,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/26.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/26_hu11984486034426228267.png 480w, ../../post/proxmox-windows11-hyper-v-1/26_hu3497147391958690206.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/26_hu_97381ef2a368104.png 480w, ../../post/proxmox-windows11-hyper-v-1/26_hu_ffa844d03642cc16.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2089,7 +2125,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/27.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/27_hu4901010088995446173.png 480w, ../../post/proxmox-windows11-hyper-v-1/27_hu2779529585012340175.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/27_hu_36aa4c49972d3949.png 480w, ../../post/proxmox-windows11-hyper-v-1/27_hu_f382a7c58b891c18.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2101,7 +2137,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/28.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/28_hu16181481874756464165.png 480w, ../../post/proxmox-windows11-hyper-v-1/28_hu8275328860434580160.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/28_hu_57c8e66de22c845a.png 480w, ../../post/proxmox-windows11-hyper-v-1/28_hu_e464794b39772bb0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2114,7 +2150,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/29.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/29_hu11746322317264300309.png 480w, ../../post/proxmox-windows11-hyper-v-1/29_hu13346077450875666645.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/29_hu_7639f0bbbae8b493.png 480w, ../../post/proxmox-windows11-hyper-v-1/29_hu_741f18f4e8cd756.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2126,7 +2162,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/30.png&#34;
 	width=&#34;2784&#34;
 	height=&#34;1950&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/30_hu11072420210184004937.png 480w, ../../post/proxmox-windows11-hyper-v-1/30_hu14331121653635065262.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/30_hu_bbc01a25556fd13c.png 480w, ../../post/proxmox-windows11-hyper-v-1/30_hu_7d5c7b2f14f88d56.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2142,7 +2178,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/31.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/31_hu687042299732173334.png 480w, ../../post/proxmox-windows11-hyper-v-1/31_hu1688068326492378598.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/31_hu_304c1c745397c0a8.png 480w, ../../post/proxmox-windows11-hyper-v-1/31_hu_ac0fec008373b060.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2156,7 +2192,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/32.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/32_hu6416321284925781062.png 480w, ../../post/proxmox-windows11-hyper-v-1/32_hu15734429426554401472.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/32_hu_b49797cf4a4891f2.png 480w, ../../post/proxmox-windows11-hyper-v-1/32_hu_111386723c87a63d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2168,7 +2204,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/33.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/33_hu11081856322053223547.png 480w, ../../post/proxmox-windows11-hyper-v-1/33_hu10064894317693883084.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/33_hu_8935f2c70600ff04.png 480w, ../../post/proxmox-windows11-hyper-v-1/33_hu_5f67ed359f43e532.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2180,7 +2216,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/34.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/34_hu775718672667538480.png 480w, ../../post/proxmox-windows11-hyper-v-1/34_hu4478394634835327905.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/34_hu_db19322ea18f815.png 480w, ../../post/proxmox-windows11-hyper-v-1/34_hu_b653881d20d89c71.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2192,7 +2228,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/35.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/35_hu15889635883420949982.png 480w, ../../post/proxmox-windows11-hyper-v-1/35_hu13501977674745098173.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/35_hu_3a9fa7fba2ac901.png 480w, ../../post/proxmox-windows11-hyper-v-1/35_hu_2c35ea1ef67cefd2.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2205,7 +2241,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/37.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/37_hu688284052074689496.png 480w, ../../post/proxmox-windows11-hyper-v-1/37_hu11141928887561782716.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/37_hu_fc52caad58478de1.png 480w, ../../post/proxmox-windows11-hyper-v-1/37_hu_fa1373229ea39e8b.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2218,7 +2254,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/38.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/38_hu7554399122781759768.png 480w, ../../post/proxmox-windows11-hyper-v-1/38_hu5422805644283392499.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/38_hu_45a6c24466a6bdb9.png 480w, ../../post/proxmox-windows11-hyper-v-1/38_hu_bf6b10e2e9002a6b.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2230,7 +2266,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/39.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/39_hu16160316826063215691.png 480w, ../../post/proxmox-windows11-hyper-v-1/39_hu14173249029844772465.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/39_hu_369d6c89e2802867.png 480w, ../../post/proxmox-windows11-hyper-v-1/39_hu_981ad3b970faffd.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2243,7 +2279,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/40.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/40_hu17519058420127540728.png 480w, ../../post/proxmox-windows11-hyper-v-1/40_hu1005746902110798055.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/40_hu_147b82430636cd5d.png 480w, ../../post/proxmox-windows11-hyper-v-1/40_hu_102edbddf21a15ff.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2262,7 +2298,7 @@ ISOイメージを選択する（&amp;ldquo;vitrio-win-0.1.266.iso&amp;rdquo;）
 &lt;img src=&#34;../../post/proxmox-windows11-hyper-v-1/41.png&#34;
 	width=&#34;2317&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/41_hu7741472227768092791.png 480w, ../../post/proxmox-windows11-hyper-v-1/41_hu10845010356028722454.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-windows11-hyper-v-1/41_hu_d6f6a689a228ce5f.png 480w, ../../post/proxmox-windows11-hyper-v-1/41_hu_da6b3fe30803ac99.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3919,7 +3955,7 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
         <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
         
         <guid>https://tiisanamaou.github.io/post/kubernetes-on-proxmox-01/</guid>
-        <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
+        <description>&lt;h2&gt;&lt;/h2&gt;
 &lt;p&gt;k8sを勉強してみようと思い、デプロイ等の操作は書籍で触っていたら構築もしてみたくなったので、Proxmox上に仮想マシンを作成してk8sを構築してみた&lt;/p&gt;
 &lt;h2 id=&#34;開発環境&#34;&gt;開発環境&lt;/h2&gt;
 &lt;ul&gt;
@@ -5228,7 +5264,7 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-ssd-lan/01.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../../post/proxmox-ssd-lan/01_hu496782049234564471.png 480w, ../../post/proxmox-ssd-lan/01_hu5309739966525751733.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-ssd-lan/01_hu_22d061f52dce514.png 480w, ../../post/proxmox-ssd-lan/01_hu_11f9e196d8de9169.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -5241,7 +5277,7 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-ssd-lan/02.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../../post/proxmox-ssd-lan/02_hu11372885925747122544.png 480w, ../../post/proxmox-ssd-lan/02_hu12415396578701522199.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-ssd-lan/02_hu_b7e6ccf5d94082bb.png 480w, ../../post/proxmox-ssd-lan/02_hu_18e2c95a4ef95dfa.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -5255,7 +5291,7 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-ssd-lan/03.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../../post/proxmox-ssd-lan/03_hu17608978437788127665.png 480w, ../../post/proxmox-ssd-lan/03_hu281737308782487125.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-ssd-lan/03_hu_b6cefa59d2cbff63.png 480w, ../../post/proxmox-ssd-lan/03_hu_421d495df3458157.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -5268,7 +5304,7 @@ Control-PlaneがクラスタにJoinするために必要な情報&lt;/p&gt;
 &lt;img src=&#34;../../post/proxmox-ssd-lan/04.png&#34;
 	width=&#34;3700&#34;
 	height=&#34;2096&#34;
-	srcset=&#34;../../post/proxmox-ssd-lan/04_hu1971104256836174357.png 480w, ../../post/proxmox-ssd-lan/04_hu10968881571680934050.png 1024w&#34;
+	srcset=&#34;../../post/proxmox-ssd-lan/04_hu_10488d928d9f1a16.png 480w, ../../post/proxmox-ssd-lan/04_hu_712aefe6f9f6330d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	

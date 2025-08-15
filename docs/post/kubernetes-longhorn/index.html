@@ -8,12 +8,13 @@ https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/ インストール手順
 1 wget https://raw.githubusercontent.com/longhorn/longhorn/v1.7.0/deploy/longhorn.yaml 4724行目あたり Dashboardを外部からアクセスできるように&quot;type: LoadBalancer&quot;する 1 2 - type: ClusterIP &#43; type: LoadBalancer デプロイする
 1 2 kubectl apply -f longhorn.yaml kubectl delete -f longhorn.yaml インストールの進行状況を確認する
 1 2 3 kubectl get pods \ --namespace longhorn-system \ --watch デプロイができているか確認する
-1 2 kubectl -n longhorn-system get pod kubectl -n longhorn-system get svc Podがすぐ&quot;Evicted&quot;になってしまう（解決済み） 試したこと（どれも解決しなかった）'>
+1 2 kubectl -n longhorn-system get pod kubectl -n longhorn-system get svc Podがすぐ&quot;Evicted&quot;になってしまう（解決済み） 試したこと（どれも解決しなかった）
+'>
 <title>KubernetesにLonghornをインストールする</title>
 
 <link rel='canonical' href='https://tiisanamaou.github.io/post/kubernetes-longhorn/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='KubernetesにLonghornをインストールする'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='KubernetesにLonghornをインストールする'>
 <meta property='og:description' content='環境 Kubernetes 1.31.0 Control-Plane：1台 Woker-Node：3台&#43;1台 cri-o v1.30.4 Longhorn 1.7.0 参考URL インストール手順
 https://longhorn.io/docs/1.7.0/deploy/install/install-with-kubectl/ インストール要件
 https://longhorn.io/docs/1.7.0/deploy/install/#installation-requirements https://longhorn.io/docs/1.7.0/advanced-resources/longhornctl/install-longhornctl/ Dashboardも表示できるようにする
@@ -21,7 +22,8 @@ https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/ インストール手順
 1 wget https://raw.githubusercontent.com/longhorn/longhorn/v1.7.0/deploy/longhorn.yaml 4724行目あたり Dashboardを外部からアクセスできるように&quot;type: LoadBalancer&quot;する 1 2 - type: ClusterIP &#43; type: LoadBalancer デプロイする
 1 2 kubectl apply -f longhorn.yaml kubectl delete -f longhorn.yaml インストールの進行状況を確認する
 1 2 3 kubectl get pods \ --namespace longhorn-system \ --watch デプロイができているか確認する
-1 2 kubectl -n longhorn-system get pod kubectl -n longhorn-system get svc Podがすぐ&quot;Evicted&quot;になってしまう（解決済み） 試したこと（どれも解決しなかった）'>
+1 2 kubectl -n longhorn-system get pod kubectl -n longhorn-system get svc Podがすぐ&quot;Evicted&quot;になってしまう（解決済み） 試したこと（どれも解決しなかった）
+'>
 <meta property='og:url' content='https://tiisanamaou.github.io/post/kubernetes-longhorn/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-09-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-09-14T00:00:00&#43;00:00'/>
@@ -33,11 +35,9 @@ https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/ インストール手順
 1 wget https://raw.githubusercontent.com/longhorn/longhorn/v1.7.0/deploy/longhorn.yaml 4724行目あたり Dashboardを外部からアクセスできるように&quot;type: LoadBalancer&quot;する 1 2 - type: ClusterIP &#43; type: LoadBalancer デプロイする
 1 2 kubectl apply -f longhorn.yaml kubectl delete -f longhorn.yaml インストールの進行状況を確認する
 1 2 3 kubectl get pods \ --namespace longhorn-system \ --watch デプロイができているか確認する
-1 2 kubectl -n longhorn-system get pod kubectl -n longhorn-system get svc Podがすぐ&quot;Evicted&quot;になってしまう（解決済み） 試したこと（どれも解決しなかった）">
+1 2 kubectl -n longhorn-system get pod kubectl -n longhorn-system get svc Podがすぐ&quot;Evicted&quot;になってしまう（解決済み） 試したこと（どれも解決しなかった）
+">
     <link rel="shortcut icon" href="img/favicon.ico" />
-
-  
-
 
     </head>
     <body class="
@@ -82,7 +82,7 @@ https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/ インストール手順
                     
                     
                         
-                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -624,7 +624,7 @@ https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/ インストール手順
 <img src="../../post/kubernetes-longhorn/01.png"
 	width="2228"
 	height="2146"
-	srcset="../../post/kubernetes-longhorn/01_hu4513655758661995381.png 480w, ../../post/kubernetes-longhorn/01_hu9363439163950720526.png 1024w"
+	srcset="../../post/kubernetes-longhorn/01_hu_9063a62dbdbb14a1.png 480w, ../../post/kubernetes-longhorn/01_hu_b2c8e6e01fc200a7.png 1024w"
 	loading="lazy"
 	
 	
@@ -636,7 +636,7 @@ https://longhorn.io/docs/1.7.0/deploy/accessing-the-ui/ インストール手順
 <img src="../../post/kubernetes-longhorn/02.png"
 	width="2228"
 	height="2146"
-	srcset="../../post/kubernetes-longhorn/02_hu2474963238826714173.png 480w, ../../post/kubernetes-longhorn/02_hu5641418462319161842.png 1024w"
+	srcset="../../post/kubernetes-longhorn/02_hu_3c3dd26eb231dca9.png 480w, ../../post/kubernetes-longhorn/02_hu_6d27badb0bb54ece.png 1024w"
 	loading="lazy"
 	
 	

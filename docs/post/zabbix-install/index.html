@@ -2,24 +2,24 @@
 <html lang="ja" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Ubuntu 24.04 Zbbix 7.0 Ubuntu MySQL Nginx 手順 このページの通りにインストールをしていく(&ldquo;https://www.zabbix.com/jp/download?zabbix=7.0&os_distribution=ubuntu&os_version=24.04&components=server_frontend_agent&db=mysql&ws=nginx&#34;) ただし、MySQLは別でインストールをする必要がある 以下に公式手順をコピペしたものを記載しています
-Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1&#43;ubuntu24.04_all.deb dpkg -i zabbix-release_7.0-1&#43;ubuntu24.04_all.deb apt update Zabbixサーバー、フロントエンド、エージェントをインストールする 1 apt install zabbix-server-mysql zabbix-frontend-php zabbix-nginx-conf zabbix-sql-scripts zabbix-agent MySQLをインストールする 1 sudo apt install mysql-server 初期データベースを作成する 1 2 mysql -uroot -p password 1 2 3 4 5 mysql&gt; create database zabbix character set utf8mb4 collate utf8mb4_bin; mysql&gt; create user zabbix@localhost identified by &#39;password&#39;; mysql&gt; grant all privileges on zabbix.'>
+Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1&#43;ubuntu24.04_all.deb dpkg -i zabbix-release_7.0-1&#43;ubuntu24.04_all.deb apt update Zabbixサーバー、フロントエンド、エージェントをインストールする 1 apt install zabbix-server-mysql zabbix-frontend-php zabbix-nginx-conf zabbix-sql-scripts zabbix-agent MySQLをインストールする 1 sudo apt install mysql-server 初期データベースを作成する 1 2 mysql -uroot -p password 1 2 3 4 5 mysql&gt; create database zabbix character set utf8mb4 collate utf8mb4_bin; mysql&gt; create user zabbix@localhost identified by &#39;password&#39;; mysql&gt; grant all privileges on zabbix.* to zabbix@localhost; mysql&gt; set global log_bin_trust_function_creators = 1; mysql&gt; quit; Zabbix サーバー ホストで初期スキーマとデータをインポートします。新しく作成したパスワードを入力するよう求められます。 1 zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix データベース スキーマをインポートした後、log_bin_trust_function_creators オプションを無効にします。
+'>
 <title>Zbbix7.0LTSをUbuntuにインストールする</title>
 
 <link rel='canonical' href='https://tiisanamaou.github.io/post/zabbix-install/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Zbbix7.0LTSをUbuntuにインストールする'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Zbbix7.0LTSをUbuntuにインストールする'>
 <meta property='og:description' content='環境 Ubuntu 24.04 Zbbix 7.0 Ubuntu MySQL Nginx 手順 このページの通りにインストールをしていく(&ldquo;https://www.zabbix.com/jp/download?zabbix=7.0&os_distribution=ubuntu&os_version=24.04&components=server_frontend_agent&db=mysql&ws=nginx&#34;) ただし、MySQLは別でインストールをする必要がある 以下に公式手順をコピペしたものを記載しています
-Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1&#43;ubuntu24.04_all.deb dpkg -i zabbix-release_7.0-1&#43;ubuntu24.04_all.deb apt update Zabbixサーバー、フロントエンド、エージェントをインストールする 1 apt install zabbix-server-mysql zabbix-frontend-php zabbix-nginx-conf zabbix-sql-scripts zabbix-agent MySQLをインストールする 1 sudo apt install mysql-server 初期データベースを作成する 1 2 mysql -uroot -p password 1 2 3 4 5 mysql&gt; create database zabbix character set utf8mb4 collate utf8mb4_bin; mysql&gt; create user zabbix@localhost identified by &#39;password&#39;; mysql&gt; grant all privileges on zabbix.'>
+Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1&#43;ubuntu24.04_all.deb dpkg -i zabbix-release_7.0-1&#43;ubuntu24.04_all.deb apt update Zabbixサーバー、フロントエンド、エージェントをインストールする 1 apt install zabbix-server-mysql zabbix-frontend-php zabbix-nginx-conf zabbix-sql-scripts zabbix-agent MySQLをインストールする 1 sudo apt install mysql-server 初期データベースを作成する 1 2 mysql -uroot -p password 1 2 3 4 5 mysql&gt; create database zabbix character set utf8mb4 collate utf8mb4_bin; mysql&gt; create user zabbix@localhost identified by &#39;password&#39;; mysql&gt; grant all privileges on zabbix.* to zabbix@localhost; mysql&gt; set global log_bin_trust_function_creators = 1; mysql&gt; quit; Zabbix サーバー ホストで初期スキーマとデータをインポートします。新しく作成したパスワードを入力するよう求められます。 1 zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix データベース スキーマをインポートした後、log_bin_trust_function_creators オプションを無効にします。
+'>
 <meta property='og:url' content='https://tiisanamaou.github.io/post/zabbix-install/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-06-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-22T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Zbbix7.0LTSをUbuntuにインストールする">
 <meta name="twitter:description" content="環境 Ubuntu 24.04 Zbbix 7.0 Ubuntu MySQL Nginx 手順 このページの通りにインストールをしていく(&ldquo;https://www.zabbix.com/jp/download?zabbix=7.0&os_distribution=ubuntu&os_version=24.04&components=server_frontend_agent&db=mysql&ws=nginx&#34;) ただし、MySQLは別でインストールをする必要がある 以下に公式手順をコピペしたものを記載しています
-Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1&#43;ubuntu24.04_all.deb dpkg -i zabbix-release_7.0-1&#43;ubuntu24.04_all.deb apt update Zabbixサーバー、フロントエンド、エージェントをインストールする 1 apt install zabbix-server-mysql zabbix-frontend-php zabbix-nginx-conf zabbix-sql-scripts zabbix-agent MySQLをインストールする 1 sudo apt install mysql-server 初期データベースを作成する 1 2 mysql -uroot -p password 1 2 3 4 5 mysql&gt; create database zabbix character set utf8mb4 collate utf8mb4_bin; mysql&gt; create user zabbix@localhost identified by &#39;password&#39;; mysql&gt; grant all privileges on zabbix.">
+Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1&#43;ubuntu24.04_all.deb dpkg -i zabbix-release_7.0-1&#43;ubuntu24.04_all.deb apt update Zabbixサーバー、フロントエンド、エージェントをインストールする 1 apt install zabbix-server-mysql zabbix-frontend-php zabbix-nginx-conf zabbix-sql-scripts zabbix-agent MySQLをインストールする 1 sudo apt install mysql-server 初期データベースを作成する 1 2 mysql -uroot -p password 1 2 3 4 5 mysql&gt; create database zabbix character set utf8mb4 collate utf8mb4_bin; mysql&gt; create user zabbix@localhost identified by &#39;password&#39;; mysql&gt; grant all privileges on zabbix.* to zabbix@localhost; mysql&gt; set global log_bin_trust_function_creators = 1; mysql&gt; quit; Zabbix サーバー ホストで初期スキーマとデータをインポートします。新しく作成したパスワードを入力するよう求められます。 1 zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix データベース スキーマをインポートした後、log_bin_trust_function_creators オプションを無効にします。
+">
     <link rel="shortcut icon" href="img/favicon.ico" />
-
-  
-
 
     </head>
     <body class="
@@ -64,7 +64,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
                     
                     
                         
-                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -445,7 +445,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/01.png"
 	width="1635"
 	height="871"
-	srcset="../../post/zabbix-install/01_hu343266485472931490.png 480w, ../../post/zabbix-install/01_hu5121833886027354980.png 1024w"
+	srcset="../../post/zabbix-install/01_hu_6a902bae895641f.png 480w, ../../post/zabbix-install/01_hu_2c97eaeb56a50ccb.png 1024w"
 	loading="lazy"
 	
 	
@@ -457,7 +457,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/02.png"
 	width="1635"
 	height="873"
-	srcset="../../post/zabbix-install/02_hu10666836766311526.png 480w, ../../post/zabbix-install/02_hu10375538763685858810.png 1024w"
+	srcset="../../post/zabbix-install/02_hu_b9e5b8eefd50a2ed.png 480w, ../../post/zabbix-install/02_hu_95a4731ab673eab5.png 1024w"
 	loading="lazy"
 	
 	
@@ -469,7 +469,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/03.png"
 	width="1635"
 	height="869"
-	srcset="../../post/zabbix-install/03_hu18269163236536557831.png 480w, ../../post/zabbix-install/03_hu15269692372595282966.png 1024w"
+	srcset="../../post/zabbix-install/03_hu_7a2d60d3183ca973.png 480w, ../../post/zabbix-install/03_hu_973b547fedb85aa4.png 1024w"
 	loading="lazy"
 	
 	
@@ -481,7 +481,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/04.png"
 	width="1635"
 	height="872"
-	srcset="../../post/zabbix-install/04_hu17179030422005907279.png 480w, ../../post/zabbix-install/04_hu16515843148162553554.png 1024w"
+	srcset="../../post/zabbix-install/04_hu_50dea837b83f145c.png 480w, ../../post/zabbix-install/04_hu_5196f03b604ee78a.png 1024w"
 	loading="lazy"
 	
 	
@@ -493,7 +493,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/05.png"
 	width="1635"
 	height="867"
-	srcset="../../post/zabbix-install/05_hu9958553295460789890.png 480w, ../../post/zabbix-install/05_hu487411830379726136.png 1024w"
+	srcset="../../post/zabbix-install/05_hu_fe7de9f76bc8acf7.png 480w, ../../post/zabbix-install/05_hu_12aa98b0ab7a29b4.png 1024w"
 	loading="lazy"
 	
 	
@@ -505,7 +505,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/06.png"
 	width="1635"
 	height="869"
-	srcset="../../post/zabbix-install/06_hu13010207013419345098.png 480w, ../../post/zabbix-install/06_hu917551996788464442.png 1024w"
+	srcset="../../post/zabbix-install/06_hu_fa7b57c8994aaa4f.png 480w, ../../post/zabbix-install/06_hu_2939d9cdcaf30f54.png 1024w"
 	loading="lazy"
 	
 	
@@ -517,7 +517,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/07.png"
 	width="1635"
 	height="865"
-	srcset="../../post/zabbix-install/07_hu9454290979891422738.png 480w, ../../post/zabbix-install/07_hu15533925128882896873.png 1024w"
+	srcset="../../post/zabbix-install/07_hu_757d3f345e0f2e4a.png 480w, ../../post/zabbix-install/07_hu_28afa259e1bcf05a.png 1024w"
 	loading="lazy"
 	
 	
@@ -529,7 +529,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/08.png"
 	width="1635"
 	height="862"
-	srcset="../../post/zabbix-install/08_hu8271027365262809427.png 480w, ../../post/zabbix-install/08_hu14179104953795987916.png 1024w"
+	srcset="../../post/zabbix-install/08_hu_fb1f3712c94c2a06.png 480w, ../../post/zabbix-install/08_hu_ac6779626b931ded.png 1024w"
 	loading="lazy"
 	
 	
@@ -541,7 +541,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/09.png"
 	width="1635"
 	height="865"
-	srcset="../../post/zabbix-install/09_hu9310590401101850340.png 480w, ../../post/zabbix-install/09_hu12895722092073322958.png 1024w"
+	srcset="../../post/zabbix-install/09_hu_cc12d57c5dc559b3.png 480w, ../../post/zabbix-install/09_hu_16859eb93dc7fddd.png 1024w"
 	loading="lazy"
 	
 	
@@ -553,7 +553,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/10.png"
 	width="1635"
 	height="863"
-	srcset="../../post/zabbix-install/10_hu9156968716482468896.png 480w, ../../post/zabbix-install/10_hu9775681582622124974.png 1024w"
+	srcset="../../post/zabbix-install/10_hu_6f9d37099ace5b4d.png 480w, ../../post/zabbix-install/10_hu_f1d2a2eb0a77a933.png 1024w"
 	loading="lazy"
 	
 	
@@ -565,7 +565,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/11.png"
 	width="1635"
 	height="867"
-	srcset="../../post/zabbix-install/11_hu14115536853693425487.png 480w, ../../post/zabbix-install/11_hu16242963419528483436.png 1024w"
+	srcset="../../post/zabbix-install/11_hu_fc1085f2f5fb8b00.png 480w, ../../post/zabbix-install/11_hu_8dc8838de0ccc181.png 1024w"
 	loading="lazy"
 	
 	
@@ -577,7 +577,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <img src="../../post/zabbix-install/12.png"
 	width="1635"
 	height="872"
-	srcset="../../post/zabbix-install/12_hu12275565631899537804.png 480w, ../../post/zabbix-install/12_hu4208988460715170478.png 1024w"
+	srcset="../../post/zabbix-install/12_hu_2b3938cb5ff8bf2e.png 480w, ../../post/zabbix-install/12_hu_42c69e9f6a6dd866.png 1024w"
 	loading="lazy"
 	
 	
@@ -595,7 +595,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <p><img src="../../post/zabbix-install/13.png"
 	width="1635"
 	height="869"
-	srcset="../../post/zabbix-install/13_hu17224606301935855281.png 480w, ../../post/zabbix-install/13_hu8403113770331667886.png 1024w"
+	srcset="../../post/zabbix-install/13_hu_ae5eab7fc87b3631.png 480w, ../../post/zabbix-install/13_hu_892b04f5702ab91e.png 1024w"
 	loading="lazy"
 	
 	

@@ -51,8 +51,7 @@
 &lt;li&gt;1.20 &amp;lt;= Go &amp;lt;= 1.21: a Go 1.17 compiler.&lt;/li&gt;
 &lt;li&gt;1.22 &amp;lt;= Go &amp;lt;= 1.23: a Go 1.20 compiler.&lt;/li&gt;
 &lt;li&gt;Going forward, Go version 1.N will require a Go 1.M compiler, where M is N-2 rounded down to an even number. Example: Go 1.24 and 1.25 require Go 1.22.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
 &lt;h1 id=&#34;2build-go14&#34;&gt;2：build go1.4&lt;/h1&gt;
 &lt;p&gt;go1.4-bootstrapをビルドする&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;

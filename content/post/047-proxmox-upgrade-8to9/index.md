@@ -403,35 +403,53 @@ W: Target Packages (pve-no-subscription/binary-all/Packages) is configured multi
 W: Target Translations (pve-no-subscription/i18n/Translation-en) is configured multiple times in /etc/apt/sources.list:8 and /etc/apt/sources.list.d/proxmox.sources:1
 ```
 
-### エラーを解消する（下記のやり方はNG）
-
-コメントアウトする
+### エラーを解消する
+"apt modernize-sources"コマンド実行する
 ```
-nano /etc/apt/sources.list
-```
-```
-root@pve:~# cat /etc/apt/sources.list
-#deb http://ftp.jp.debian.org/debian trixie main contrib
+root@pve:~# apt modernize-sources
+The following files need modernizing:
+  - /etc/apt/sources.list
+  - /etc/apt/sources.list.d/ceph.list
+  - /etc/apt/sources.list.d/pve-enterprise.list
 
-#deb http://ftp.jp.debian.org/debian trixie-updates main contrib
+Modernizing will replace .list files with the new .sources format,
+add Signed-By values where they can be determined automatically,
+and save the old files into .list.bak files.
 
-# security updates
-#deb http://security.debian.org trixie-security main contrib
+This command supports the 'signed-by' and 'trusted' options. If you
+have specified other options inside [] brackets, please transfer them
+manually to the output files; see sources.list(5) for a mapping.
 
-#deb http://download.proxmox.com/debian/pve trixie pve-no-subscription
+For a simulation, respond N in the following prompt.
+Rewrite 3 sources? [Y/n] Y
+Modernizing /etc/apt/sources.list...
+- Writing /etc/apt/sources.list.d/debian.sources
+- Writing /etc/apt/sources.list.d/proxmox.sources
+
+Modernizing /etc/apt/sources.list.d/ceph.list...
+
+Modernizing /etc/apt/sources.list.d/pve-enterprise.list...
 
 root@pve:~#
 ```
 
-エラーが解消された
+エラーがでなくなった
 ```
 root@pve:~# apt update
-Hit:1 http://download.proxmox.com/debian/pve trixie InRelease
-Reading package lists... Done          
-Building dependency tree... Done
-Reading state information... Done
-97 packages can be upgraded. Run 'apt list --upgradable' to see them.
-root@pve:~# 
+Hit:1 http://security.debian.org trixie-security InRelease
+Hit:2 http://ftp.jp.debian.org/debian trixie InRelease                      
+Hit:3 http://ftp.jp.debian.org/debian trixie-updates InRelease              
+Hit:4 http://download.proxmox.com/debian/pve trixie InRelease               
+1 package can be upgraded. Run 'apt list --upgradable' to see it.
+root@pve:~# nano /etc/apt/sources.list
+root@pve:~# nano /etc/apt/sources.list.d/proxmox.sources
+root@pve:~# apt update
+Hit:1 http://ftp.jp.debian.org/debian trixie InRelease
+Hit:2 http://ftp.jp.debian.org/debian trixie-updates InRelease                     
+Hit:3 http://security.debian.org trixie-security InRelease                         
+Hit:4 http://download.proxmox.com/debian/pve trixie InRelease
+1 package can be upgraded. Run 'apt list --upgradable' to see it.
+root@pve:~#
 ```
 
 ## Proxmox9へアップグレードする

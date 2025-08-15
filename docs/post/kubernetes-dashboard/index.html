@@ -4,16 +4,20 @@
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='環境 Kubernetes 1.30.2 Helm v3.15.3 kubernetes-dashboard-7.5.0 Helmの導入 参考URL
 https://helm.sh/ja/docs/intro/install/ https://github.com/helm/helm/releases https://qiita.com/loftkun/items/bcfe1f205cde4d74a384 今回はバイナリを使用する方法でインストールします
 バイナリをダウンロードします
-1 wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz 1 2 3 4 5 6 7 8 9 10 11 12 13 mao@k8s-control-plane-01:~$ wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz --2024-08-08 09:11:52-- https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz Resolving get.helm.sh (get.helm.sh)... 152.199.39.108, 2606:2800:247:1cb7:261b:1f9c:2074:3c Connecting to get.helm.sh (get.helm.sh)|152.199.39.108|:443... connected. HTTP request sent, awaiting response... 200 OK Length: 16626424 (16M) [application/x-tar] Saving to: ‘helm-v3.15.3-linux-amd64.tar.gz’ helm-v3.15.3-linux-am 100%[======================&gt;] 15.86M 102MB/s in 0.2s 2024-08-08 09:11:52 (102 MB/s) - ‘helm-v3.'>
+1 wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz 1 2 3 4 5 6 7 8 9 10 11 12 13 mao@k8s-control-plane-01:~$ wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz --2024-08-08 09:11:52-- https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz Resolving get.helm.sh (get.helm.sh)... 152.199.39.108, 2606:2800:247:1cb7:261b:1f9c:2074:3c Connecting to get.helm.sh (get.helm.sh)|152.199.39.108|:443... connected. HTTP request sent, awaiting response... 200 OK Length: 16626424 (16M) [application/x-tar] Saving to: ‘helm-v3.15.3-linux-amd64.tar.gz’ helm-v3.15.3-linux-am 100%[======================&gt;] 15.86M 102MB/s in 0.2s 2024-08-08 09:11:52 (102 MB/s) - ‘helm-v3.15.3-linux-amd64.tar.gz’ saved [16626424/16626424] mao@k8s-control-plane-01:~$ 圧縮されているので展開します
+展開するとバイナリファイルが出てきます
+'>
 <title>Kubernetesのダッシュボードをデプロイする＋LoadBalancerでIPアドレスを割り振る</title>
 
 <link rel='canonical' href='https://tiisanamaou.github.io/post/kubernetes-dashboard/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Kubernetesのダッシュボードをデプロイする＋LoadBalancerでIPアドレスを割り振る'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Kubernetesのダッシュボードをデプロイする＋LoadBalancerでIPアドレスを割り振る'>
 <meta property='og:description' content='環境 Kubernetes 1.30.2 Helm v3.15.3 kubernetes-dashboard-7.5.0 Helmの導入 参考URL
 https://helm.sh/ja/docs/intro/install/ https://github.com/helm/helm/releases https://qiita.com/loftkun/items/bcfe1f205cde4d74a384 今回はバイナリを使用する方法でインストールします
 バイナリをダウンロードします
-1 wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz 1 2 3 4 5 6 7 8 9 10 11 12 13 mao@k8s-control-plane-01:~$ wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz --2024-08-08 09:11:52-- https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz Resolving get.helm.sh (get.helm.sh)... 152.199.39.108, 2606:2800:247:1cb7:261b:1f9c:2074:3c Connecting to get.helm.sh (get.helm.sh)|152.199.39.108|:443... connected. HTTP request sent, awaiting response... 200 OK Length: 16626424 (16M) [application/x-tar] Saving to: ‘helm-v3.15.3-linux-amd64.tar.gz’ helm-v3.15.3-linux-am 100%[======================&gt;] 15.86M 102MB/s in 0.2s 2024-08-08 09:11:52 (102 MB/s) - ‘helm-v3.'>
+1 wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz 1 2 3 4 5 6 7 8 9 10 11 12 13 mao@k8s-control-plane-01:~$ wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz --2024-08-08 09:11:52-- https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz Resolving get.helm.sh (get.helm.sh)... 152.199.39.108, 2606:2800:247:1cb7:261b:1f9c:2074:3c Connecting to get.helm.sh (get.helm.sh)|152.199.39.108|:443... connected. HTTP request sent, awaiting response... 200 OK Length: 16626424 (16M) [application/x-tar] Saving to: ‘helm-v3.15.3-linux-amd64.tar.gz’ helm-v3.15.3-linux-am 100%[======================&gt;] 15.86M 102MB/s in 0.2s 2024-08-08 09:11:52 (102 MB/s) - ‘helm-v3.15.3-linux-amd64.tar.gz’ saved [16626424/16626424] mao@k8s-control-plane-01:~$ 圧縮されているので展開します
+展開するとバイナリファイルが出てきます
+'>
 <meta property='og:url' content='https://tiisanamaou.github.io/post/kubernetes-dashboard/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-08-12T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-12T00:00:00&#43;00:00'/>
@@ -21,11 +25,10 @@ https://helm.sh/ja/docs/intro/install/ https://github.com/helm/helm/releases htt
 <meta name="twitter:description" content="環境 Kubernetes 1.30.2 Helm v3.15.3 kubernetes-dashboard-7.5.0 Helmの導入 参考URL
 https://helm.sh/ja/docs/intro/install/ https://github.com/helm/helm/releases https://qiita.com/loftkun/items/bcfe1f205cde4d74a384 今回はバイナリを使用する方法でインストールします
 バイナリをダウンロードします
-1 wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz 1 2 3 4 5 6 7 8 9 10 11 12 13 mao@k8s-control-plane-01:~$ wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz --2024-08-08 09:11:52-- https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz Resolving get.helm.sh (get.helm.sh)... 152.199.39.108, 2606:2800:247:1cb7:261b:1f9c:2074:3c Connecting to get.helm.sh (get.helm.sh)|152.199.39.108|:443... connected. HTTP request sent, awaiting response... 200 OK Length: 16626424 (16M) [application/x-tar] Saving to: ‘helm-v3.15.3-linux-amd64.tar.gz’ helm-v3.15.3-linux-am 100%[======================&gt;] 15.86M 102MB/s in 0.2s 2024-08-08 09:11:52 (102 MB/s) - ‘helm-v3.">
+1 wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz 1 2 3 4 5 6 7 8 9 10 11 12 13 mao@k8s-control-plane-01:~$ wget https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz --2024-08-08 09:11:52-- https://get.helm.sh/helm-v3.15.3-linux-amd64.tar.gz Resolving get.helm.sh (get.helm.sh)... 152.199.39.108, 2606:2800:247:1cb7:261b:1f9c:2074:3c Connecting to get.helm.sh (get.helm.sh)|152.199.39.108|:443... connected. HTTP request sent, awaiting response... 200 OK Length: 16626424 (16M) [application/x-tar] Saving to: ‘helm-v3.15.3-linux-amd64.tar.gz’ helm-v3.15.3-linux-am 100%[======================&gt;] 15.86M 102MB/s in 0.2s 2024-08-08 09:11:52 (102 MB/s) - ‘helm-v3.15.3-linux-amd64.tar.gz’ saved [16626424/16626424] mao@k8s-control-plane-01:~$ 圧縮されているので展開します
+展開するとバイナリファイルが出てきます
+">
     <link rel="shortcut icon" href="img/favicon.ico" />
-
-  
-
 
     </head>
     <body class="
@@ -70,7 +73,7 @@ https://helm.sh/ja/docs/intro/install/ https://github.com/helm/helm/releases htt
                     
                     
                         
-                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -660,7 +663,7 @@ https://helm.sh/ja/docs/intro/install/ https://github.com/helm/helm/releases htt
 <img src="../../post/kubernetes-dashboard/01.png"
 	width="2232"
 	height="2142"
-	srcset="../../post/kubernetes-dashboard/01_hu16175041694654104009.png 480w, ../../post/kubernetes-dashboard/01_hu3444295497349472481.png 1024w"
+	srcset="../../post/kubernetes-dashboard/01_hu_6a514b18471d3842.png 480w, ../../post/kubernetes-dashboard/01_hu_42f26f816e6c1106.png 1024w"
 	loading="lazy"
 	
 	

@@ -13,12 +13,13 @@
 1 sudo sysctl -p ルーターにするVM2に設定する &ldquo;VM2&quot;についているNIC（ens18/ens19）の固定IPアドレスを設定する 設定ファイルをコピーする
 1 sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/99-config.yaml 設定ファイルを編集する
 1 sudo nano /etc/netplan/99-config.yaml 設定を反映させる
-1 sudo netplan apply 99-config.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 network: version: 2 renderer: networkd ethernets: ens18: dhcp4: false addresses: - 192.'>
+1 sudo netplan apply 99-config.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 network: version: 2 renderer: networkd ethernets: ens18: dhcp4: false addresses: - 192.168.5.110/24 #routes: #- to: 192.168.5.0/24 #scope: link ens19: dhcp4: false addresses: - 192.168.10.110/24 #routes: #- to: 192.168.10.0/24 #scope: link スタティックルートを設定する 直接接続のためルーティング設定をしなくても自動的に設定される
+'>
 <title>スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする</title>
 
 <link rel='canonical' href='https://tiisanamaou.github.io/post/static-routing/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする'>
 <meta property='og:description' content='なんのために？ 家庭内で普段使っているサブネットと、サーバー等のサブネットを分けてようと思ったため。
 しかし、そのままだと家庭内で使用しているサブネットからサーバーにアクセスできないので、サブネットを越えて通信させたかったので設定方法を調べた結果、スタティックルーティングという方法でルーティングさせて通信させることにした。
 環境 Ubuntu Server 24.04.1 ネットワーク図 家庭内のサブネット：192.168.10.0/24 サーバー等のサブネット：192.168.5.0/24 IPv4のフォワードを有効にする ネットワーク図上の&quot;VM2&quot;のIPv4のフォワードを有効にする 有効になっているか設定を確認する
@@ -31,7 +32,8 @@
 1 sudo sysctl -p ルーターにするVM2に設定する &ldquo;VM2&quot;についているNIC（ens18/ens19）の固定IPアドレスを設定する 設定ファイルをコピーする
 1 sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/99-config.yaml 設定ファイルを編集する
 1 sudo nano /etc/netplan/99-config.yaml 設定を反映させる
-1 sudo netplan apply 99-config.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 network: version: 2 renderer: networkd ethernets: ens18: dhcp4: false addresses: - 192.'>
+1 sudo netplan apply 99-config.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 network: version: 2 renderer: networkd ethernets: ens18: dhcp4: false addresses: - 192.168.5.110/24 #routes: #- to: 192.168.5.0/24 #scope: link ens19: dhcp4: false addresses: - 192.168.10.110/24 #routes: #- to: 192.168.10.0/24 #scope: link スタティックルートを設定する 直接接続のためルーティング設定をしなくても自動的に設定される
+'>
 <meta property='og:url' content='https://tiisanamaou.github.io/post/static-routing/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-01-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-01-02T00:00:00&#43;00:00'/>
@@ -48,11 +50,9 @@
 1 sudo sysctl -p ルーターにするVM2に設定する &ldquo;VM2&quot;についているNIC（ens18/ens19）の固定IPアドレスを設定する 設定ファイルをコピーする
 1 sudo cp /etc/netplan/50-cloud-init.yaml /etc/netplan/99-config.yaml 設定ファイルを編集する
 1 sudo nano /etc/netplan/99-config.yaml 設定を反映させる
-1 sudo netplan apply 99-config.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 network: version: 2 renderer: networkd ethernets: ens18: dhcp4: false addresses: - 192.">
+1 sudo netplan apply 99-config.yaml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 network: version: 2 renderer: networkd ethernets: ens18: dhcp4: false addresses: - 192.168.5.110/24 #routes: #- to: 192.168.5.0/24 #scope: link ens19: dhcp4: false addresses: - 192.168.10.110/24 #routes: #- to: 192.168.10.0/24 #scope: link スタティックルートを設定する 直接接続のためルーティング設定をしなくても自動的に設定される
+">
     <link rel="shortcut icon" href="img/favicon.ico" />
-
-  
-
 
     </head>
     <body class="
@@ -97,7 +97,7 @@
                     
                     
                         
-                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -329,7 +329,7 @@
 <img src="../../post/static-routing/01.jpg"
 	width="1272"
 	height="940"
-	srcset="../../post/static-routing/01_hu1409723198811678751.jpg 480w, ../../post/static-routing/01_hu8771026579545558427.jpg 1024w"
+	srcset="../../post/static-routing/01_hu_4e85095b3b6c1249.jpg 480w, ../../post/static-routing/01_hu_b5f2197545d9dc28.jpg 1024w"
 	loading="lazy"
 	
 	
@@ -625,7 +625,7 @@
 <img src="../../post/static-routing/01.jpg"
 	width="1272"
 	height="940"
-	srcset="../../post/static-routing/01_hu1409723198811678751.jpg 480w, ../../post/static-routing/01_hu8771026579545558427.jpg 1024w"
+	srcset="../../post/static-routing/01_hu_4e85095b3b6c1249.jpg 480w, ../../post/static-routing/01_hu_b5f2197545d9dc28.jpg 1024w"
 	loading="lazy"
 	
 	

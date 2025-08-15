@@ -5,27 +5,17 @@
 今回はUbuntu24.04.2を使用します
 &ldquo;Hyper-Vマネージャ&quot;を起動します
 &ldquo;新規&rdquo;&gt;&ldquo;仮想マシン&quot;をクリックします 次へをクリックします &ldquo;第2世代&quot;を選択肢します メモリを割り当てます ネットワークは一旦接続せずに使用します &ldquo;仮想ハードディスクを作成する&quot;を選択します
-名前、場所、容量を設定します &ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&quot;を選択し、&ldquo;イメージファイル&quot;の右の&quot;参照&quot;をクリックしてISOファイルを選択します 確認の画面になり、問題なければ&quot;完了&quot;をクリックします 名前が&quot;新しい仮想マシン&quot;となっているので右クリックして名前を変更します 右クリックまたは右のメニューから&quot;起動&quot;をクリックします 右のメニューの接続をクリックします
-起動できていません 一度&quot;停止&quot;をクリックして仮想マシンを止めます
-右クリックをして&quot;設定&quot;をクリックします
-&ldquo;セキュリティ&quot;の&quot;セキュアブートを有効にする&quot;のチェックを外し&quot;適用&quot;をクリックします 起動させます
-右のメニューの&quot;接続&quot;をクリックすると仮想マシンの画面が表示されます
-Ubuntuのインストール画面が表示されているので、通常のUbuntuと同じようにインストールを進めます インストールが終われば完了です 参考URL Proxmox VEの構築とVMをたてるまで https://zenn.dev/no292nukegara/articles/81f2cb6af34772 Proxmox VE7.xでwindows11VMを作成する https://zenn.dev/northeggman/articles/49c6b73c03c81c Proxmox VE で Windows 11 VM を立てる https://akam1o.hatenablog.jp/entry/2024/03/05/234501 ProxmoxでVMコンソールの解像度を変更する https://qiita.com/minoden_works/items/a4c94eb7728c946d3efe '>
+名前、場所、容量を設定します &ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&quot;を選択し、&ldquo;イメージファイル&quot;の右の&quot;参照&quot;をクリックしてISOファイルを選択します 確認の画面になり、問題なければ&quot;完了&quot;をクリックします 名前が&quot;新しい仮想マシン&quot;となっているので右クリックして名前を変更します '>
 <title>Proxmox上にWindows11をインストールしてHyper-V使えるようにする（2/2）</title>
 
 <link rel='canonical' href='https://tiisanamaou.github.io/post/proxmox-windows11-hyper-v-2/'>
 
-<link rel="stylesheet" href="../../scss/style.min.d4d4e29b7285e290d59d35be6d50206bd68616b705cbc5f5f9b288dcc2a2eb41.css"><meta property='og:title' content='Proxmox上にWindows11をインストールしてHyper-V使えるようにする（2/2）'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Proxmox上にWindows11をインストールしてHyper-V使えるようにする（2/2）'>
 <meta property='og:description' content='環境 Promox 8.3.0 kernel: 6.8.12-8-pve pve-manager: 8.3.4 Windows11 24H2 virtio-win-0.1.266 Hyper-Vで仮想マシンの作成をする インストールするOSのISOイメージをダウンロードしておきます
 今回はUbuntu24.04.2を使用します
 &ldquo;Hyper-Vマネージャ&quot;を起動します
 &ldquo;新規&rdquo;&gt;&ldquo;仮想マシン&quot;をクリックします 次へをクリックします &ldquo;第2世代&quot;を選択肢します メモリを割り当てます ネットワークは一旦接続せずに使用します &ldquo;仮想ハードディスクを作成する&quot;を選択します
-名前、場所、容量を設定します &ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&quot;を選択し、&ldquo;イメージファイル&quot;の右の&quot;参照&quot;をクリックしてISOファイルを選択します 確認の画面になり、問題なければ&quot;完了&quot;をクリックします 名前が&quot;新しい仮想マシン&quot;となっているので右クリックして名前を変更します 右クリックまたは右のメニューから&quot;起動&quot;をクリックします 右のメニューの接続をクリックします
-起動できていません 一度&quot;停止&quot;をクリックして仮想マシンを止めます
-右クリックをして&quot;設定&quot;をクリックします
-&ldquo;セキュリティ&quot;の&quot;セキュアブートを有効にする&quot;のチェックを外し&quot;適用&quot;をクリックします 起動させます
-右のメニューの&quot;接続&quot;をクリックすると仮想マシンの画面が表示されます
-Ubuntuのインストール画面が表示されているので、通常のUbuntuと同じようにインストールを進めます インストールが終われば完了です 参考URL Proxmox VEの構築とVMをたてるまで https://zenn.dev/no292nukegara/articles/81f2cb6af34772 Proxmox VE7.xでwindows11VMを作成する https://zenn.dev/northeggman/articles/49c6b73c03c81c Proxmox VE で Windows 11 VM を立てる https://akam1o.hatenablog.jp/entry/2024/03/05/234501 ProxmoxでVMコンソールの解像度を変更する https://qiita.com/minoden_works/items/a4c94eb7728c946d3efe '>
+名前、場所、容量を設定します &ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&quot;を選択し、&ldquo;イメージファイル&quot;の右の&quot;参照&quot;をクリックしてISOファイルを選択します 確認の画面になり、問題なければ&quot;完了&quot;をクリックします 名前が&quot;新しい仮想マシン&quot;となっているので右クリックして名前を変更します '>
 <meta property='og:url' content='https://tiisanamaou.github.io/post/proxmox-windows11-hyper-v-2/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-25T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-25T00:00:00&#43;00:00'/>
@@ -34,16 +24,8 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 今回はUbuntu24.04.2を使用します
 &ldquo;Hyper-Vマネージャ&quot;を起動します
 &ldquo;新規&rdquo;&gt;&ldquo;仮想マシン&quot;をクリックします 次へをクリックします &ldquo;第2世代&quot;を選択肢します メモリを割り当てます ネットワークは一旦接続せずに使用します &ldquo;仮想ハードディスクを作成する&quot;を選択します
-名前、場所、容量を設定します &ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&quot;を選択し、&ldquo;イメージファイル&quot;の右の&quot;参照&quot;をクリックしてISOファイルを選択します 確認の画面になり、問題なければ&quot;完了&quot;をクリックします 名前が&quot;新しい仮想マシン&quot;となっているので右クリックして名前を変更します 右クリックまたは右のメニューから&quot;起動&quot;をクリックします 右のメニューの接続をクリックします
-起動できていません 一度&quot;停止&quot;をクリックして仮想マシンを止めます
-右クリックをして&quot;設定&quot;をクリックします
-&ldquo;セキュリティ&quot;の&quot;セキュアブートを有効にする&quot;のチェックを外し&quot;適用&quot;をクリックします 起動させます
-右のメニューの&quot;接続&quot;をクリックすると仮想マシンの画面が表示されます
-Ubuntuのインストール画面が表示されているので、通常のUbuntuと同じようにインストールを進めます インストールが終われば完了です 参考URL Proxmox VEの構築とVMをたてるまで https://zenn.dev/no292nukegara/articles/81f2cb6af34772 Proxmox VE7.xでwindows11VMを作成する https://zenn.dev/northeggman/articles/49c6b73c03c81c Proxmox VE で Windows 11 VM を立てる https://akam1o.hatenablog.jp/entry/2024/03/05/234501 ProxmoxでVMコンソールの解像度を変更する https://qiita.com/minoden_works/items/a4c94eb7728c946d3efe ">
+名前、場所、容量を設定します &ldquo;ブートCD/DVD-ROMからオペレーティングシステムをインストールする&quot;を選択し、&ldquo;イメージファイル&quot;の右の&quot;参照&quot;をクリックしてISOファイルを選択します 確認の画面になり、問題なければ&quot;完了&quot;をクリックします 名前が&quot;新しい仮想マシン&quot;となっているので右クリックして名前を変更します ">
     <link rel="shortcut icon" href="img/favicon.ico" />
-
-  
-
 
     </head>
     <body class="
@@ -88,7 +70,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
                     
                     
                         
-                        <img src="../../img/avatar_hu16581378458422906.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -337,7 +319,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/01.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/01_hu17120588613040416750.png 480w, ../../post/proxmox-windows11-hyper-v-2/01_hu15071346453873279724.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/01_hu_21c1d81081b49e0.png 480w, ../../post/proxmox-windows11-hyper-v-2/01_hu_16b106898b2e4bb0.png 1024w"
 	loading="lazy"
 	
 	
@@ -350,7 +332,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/02.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/02_hu13656881172387976257.png 480w, ../../post/proxmox-windows11-hyper-v-2/02_hu797200753843395967.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/02_hu_fdef0092c6e8ec0c.png 480w, ../../post/proxmox-windows11-hyper-v-2/02_hu_a3f87e0513bb6c88.png 1024w"
 	loading="lazy"
 	
 	
@@ -363,7 +345,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/03.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/03_hu3452473821545404592.png 480w, ../../post/proxmox-windows11-hyper-v-2/03_hu18329729632948036117.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/03_hu_f91b83bab349691a.png 480w, ../../post/proxmox-windows11-hyper-v-2/03_hu_68d8de0a3cebe727.png 1024w"
 	loading="lazy"
 	
 	
@@ -376,7 +358,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/04.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/04_hu15105737047261305371.png 480w, ../../post/proxmox-windows11-hyper-v-2/04_hu3589788642652013644.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/04_hu_f0e03cf3ee9241a1.png 480w, ../../post/proxmox-windows11-hyper-v-2/04_hu_c13af9bd687438f7.png 1024w"
 	loading="lazy"
 	
 	
@@ -389,7 +371,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/05.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/05_hu14491766133772856780.png 480w, ../../post/proxmox-windows11-hyper-v-2/05_hu7279983931213877268.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/05_hu_878c59e0597cebf8.png 480w, ../../post/proxmox-windows11-hyper-v-2/05_hu_95a022ca7ef3cc29.png 1024w"
 	loading="lazy"
 	
 	
@@ -403,7 +385,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/06.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/06_hu14266800446552932926.png 480w, ../../post/proxmox-windows11-hyper-v-2/06_hu14762900502169238462.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/06_hu_6f1fba652cb39efb.png 480w, ../../post/proxmox-windows11-hyper-v-2/06_hu_70ce4fc225449894.png 1024w"
 	loading="lazy"
 	
 	
@@ -416,7 +398,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/07.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/07_hu9472369804718990787.png 480w, ../../post/proxmox-windows11-hyper-v-2/07_hu193943043125944067.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/07_hu_c6240cf0b51675d.png 480w, ../../post/proxmox-windows11-hyper-v-2/07_hu_63fc0bd5ed92c2ad.png 1024w"
 	loading="lazy"
 	
 	
@@ -428,7 +410,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/08.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/08_hu1233221778419716328.png 480w, ../../post/proxmox-windows11-hyper-v-2/08_hu400511061484735672.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/08_hu_91c9ef436ff76413.png 480w, ../../post/proxmox-windows11-hyper-v-2/08_hu_297dcd3f5ce6688f.png 1024w"
 	loading="lazy"
 	
 	
@@ -441,7 +423,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/09.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/09_hu14175495325438156435.png 480w, ../../post/proxmox-windows11-hyper-v-2/09_hu6742115761426486988.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/09_hu_c87dee7aa1579c8f.png 480w, ../../post/proxmox-windows11-hyper-v-2/09_hu_20d2ccdc0471221c.png 1024w"
 	loading="lazy"
 	
 	
@@ -454,7 +436,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/10.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/10_hu18085786937753149912.png 480w, ../../post/proxmox-windows11-hyper-v-2/10_hu3597753105214942677.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/10_hu_a1032746da67853e.png 480w, ../../post/proxmox-windows11-hyper-v-2/10_hu_90f3679607159c01.png 1024w"
 	loading="lazy"
 	
 	
@@ -466,7 +448,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/11.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/11_hu11460881376821456023.png 480w, ../../post/proxmox-windows11-hyper-v-2/11_hu16947737192192449581.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/11_hu_21e420fe6b25d218.png 480w, ../../post/proxmox-windows11-hyper-v-2/11_hu_84cc874e8c7dafde.png 1024w"
 	loading="lazy"
 	
 	
@@ -479,7 +461,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/12.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/12_hu8640673965379753353.png 480w, ../../post/proxmox-windows11-hyper-v-2/12_hu15192693643802606045.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/12_hu_690511e6ebfdac5c.png 480w, ../../post/proxmox-windows11-hyper-v-2/12_hu_48d2af18e0f41e22.png 1024w"
 	loading="lazy"
 	
 	
@@ -491,7 +473,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/13.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/13_hu4415648095572423516.png 480w, ../../post/proxmox-windows11-hyper-v-2/13_hu17877168198113888928.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/13_hu_d3eed5c09cb95f54.png 480w, ../../post/proxmox-windows11-hyper-v-2/13_hu_6811d5b6587c9f99.png 1024w"
 	loading="lazy"
 	
 	
@@ -505,7 +487,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/14.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/14_hu13500573814995019592.png 480w, ../../post/proxmox-windows11-hyper-v-2/14_hu17324421826010431187.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/14_hu_3be09604c72bd41d.png 480w, ../../post/proxmox-windows11-hyper-v-2/14_hu_e425e7977dd27179.png 1024w"
 	loading="lazy"
 	
 	
@@ -520,7 +502,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/15.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/15_hu7309302715986555422.png 480w, ../../post/proxmox-windows11-hyper-v-2/15_hu2695670645038302413.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/15_hu_dbc0c0eb22081e54.png 480w, ../../post/proxmox-windows11-hyper-v-2/15_hu_bc195c4bb758f30e.png 1024w"
 	loading="lazy"
 	
 	
@@ -532,7 +514,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/16.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/16_hu6363379118753185813.png 480w, ../../post/proxmox-windows11-hyper-v-2/16_hu11335363782303130670.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/16_hu_bea611383f9b7226.png 480w, ../../post/proxmox-windows11-hyper-v-2/16_hu_52b64caa8527b3e1.png 1024w"
 	loading="lazy"
 	
 	
@@ -547,7 +529,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/17.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/17_hu15239534747411530848.png 480w, ../../post/proxmox-windows11-hyper-v-2/17_hu14805342908840826334.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/17_hu_750a0db1388ddc76.png 480w, ../../post/proxmox-windows11-hyper-v-2/17_hu_203ef35c2b3a0a47.png 1024w"
 	loading="lazy"
 	
 	
@@ -560,7 +542,7 @@ Ubuntuのインストール画面が表示されているので、通常のUbunt
 <img src="../../post/proxmox-windows11-hyper-v-2/18.png"
 	width="2317"
 	height="1318"
-	srcset="../../post/proxmox-windows11-hyper-v-2/18_hu8578197077212963692.png 480w, ../../post/proxmox-windows11-hyper-v-2/18_hu11969979726330422102.png 1024w"
+	srcset="../../post/proxmox-windows11-hyper-v-2/18_hu_5b6da488e575479a.png 480w, ../../post/proxmox-windows11-hyper-v-2/18_hu_b9f0b76c584599a9.png 1024w"
 	loading="lazy"
 	
 	
