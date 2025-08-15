@@ -2,7 +2,8 @@
 baseurl: https://tiisanamaou.github.io
 languageCode: ja
 theme: hugo-theme-stack
-paginate: 3
+#paginate: 3
+#pagination.pagerSize: 3
 title: onodera memo
 copyright: onodera
 
@@ -13,7 +14,8 @@ relativeURLs: true
 googleAnalytics:
 
 # ページに表示させるpost数
-paginate: 7
+#paginate: 7
+pagination.pagerSize: 7
 
 # Theme i18n support
 # Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw
