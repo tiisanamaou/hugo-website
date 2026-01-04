@@ -8,6 +8,52 @@
         <language>ja</language>
         <copyright>onodera</copyright>
         <lastBuildDate>Sun, 02 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>2025年振り返りと2026年の目標</title>
+        <link>https://tiisanamaou.github.io/post/2025review-and-2026plan/</link>
+        <pubDate>Sun, 04 Jan 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/post/2025review-and-2026plan/</guid>
+        <description>&lt;h2 id=&#34;2024年振り返り&#34;&gt;2024年振り返り&lt;/h2&gt;
+&lt;p&gt;2025年の目標として掲げていた「応用情報技術者試験合格」、「LPIC1合格」、「1つ山に登る」、「自分で基板から作ったIoT関係のものを作る」はどれも達成できなかった。&lt;/p&gt;
+&lt;p&gt;一つは意志が弱くそこまで本気でやらない状況が続いてしまった。&lt;br&gt;
+あとは計画を何も立てずに過ごしてしまった、かつその状況に危機感を覚えずに過ごしてしまったこと。&lt;/p&gt;
+&lt;p&gt;できたこととしては、IoT関係の部分は回路の仮組みまではできている状況なので引き続き継続して進めていきたい。&lt;br&gt;
+応用情報はチャレンジしたが不合格となってしまった、前回の反省からしっかりと勉強したが合格には届かなかった。&lt;/p&gt;
+&lt;p&gt;2025年に目標までではないが、したいこととして上げていた「Kubernetes上でアプリケーションを動かす」に関しては全くKubernetesに触ってすらいなかった。&lt;br&gt;
+ブログ記事の数に関しても年の後半に全然書かなくなってしまい15個しか作成できなかった。&lt;br&gt;
+2026年こそは30個を超える記事をアプトプットしていきたい。&lt;/p&gt;
+&lt;h2 id=&#34;2026年の目標&#34;&gt;2026年の目標&lt;/h2&gt;
+&lt;p&gt;2026年の目標は「応用情報技術者試験合格」、「FP3級合格」、「高尾山に登る」、「温湿度CO2濃度センサー基板を作ってWEB画面から見れるようにする」、「AtCoderで緑以上になる」を頑張っていきます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;応用情報技術者試験合格
+&lt;ul&gt;
+&lt;li&gt;IT全般の知識を身に着けたい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;FP3級合格
+&lt;ul&gt;
+&lt;li&gt;資産に関する知識のため&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;高尾山に登る
+&lt;ul&gt;
+&lt;li&gt;体力作りのため&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;温湿度CO2濃度センサー基板を作ってWEB画面から見れるようにする
+&lt;ul&gt;
+&lt;li&gt;部屋の状況管理と電子工作が好きだから&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;AtCoderで緑以上になる
+&lt;ul&gt;
+&lt;li&gt;アルゴリズムやプログラムの力を身につけるため&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>Proxmoxを8から9へバージョンアップする</title>
         <link>https://tiisanamaou.github.io/post/proxmox-upgrade-8to9/</link>
         <pubDate>Fri, 15 Aug 2025 00:00:00 +0000</pubDate>
