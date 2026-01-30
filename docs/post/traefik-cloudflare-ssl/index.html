@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='VM準備 &ldquo;qemu-guest-agent&quot;と&quot;nano&quot;をインストールする
+1 sudo apt install qemu-guest-agent nano &ldquo;Docker&quot;をインストールする
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 # Add Docker&#39;s official GPG key: sudo apt update sudo apt install ca-certificates curl sudo install -m 0755 -d /etc/apt/keyrings sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc sudo chmod a&#43;r /etc/apt/keyrings/docker.asc # Add the repository to Apt sources: sudo tee /etc/apt/sources.list.d/docker.sources &lt;&lt;EOF Types: deb URIs: https://download.docker.com/linux/ubuntu Suites: $(. /etc/os-release &amp;&amp; echo &#34;${UBUNTU_CODENAME:-$VERSION_CODENAME}&#34;) Components: stable Signed-By: /etc/apt/keyrings/docker.asc EOF sudo apt update 1 sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin バージョン確認
+'>
+<title>TraefikとCloudflareでワイルドカードSSL証明書を発行する</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/traefik-cloudflare-ssl/'>
+
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='TraefikとCloudflareでワイルドカードSSL証明書を発行する'>
+<meta property='og:description' content='VM準備 &ldquo;qemu-guest-agent&quot;と&quot;nano&quot;をインストールする
+1 sudo apt install qemu-guest-agent nano &ldquo;Docker&quot;をインストールする
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 # Add Docker&#39;s official GPG key: sudo apt update sudo apt install ca-certificates curl sudo install -m 0755 -d /etc/apt/keyrings sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc sudo chmod a&#43;r /etc/apt/keyrings/docker.asc # Add the repository to Apt sources: sudo tee /etc/apt/sources.list.d/docker.sources &lt;&lt;EOF Types: deb URIs: https://download.docker.com/linux/ubuntu Suites: $(. /etc/os-release &amp;&amp; echo &#34;${UBUNTU_CODENAME:-$VERSION_CODENAME}&#34;) Components: stable Signed-By: /etc/apt/keyrings/docker.asc EOF sudo apt update 1 sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin バージョン確認
+'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/traefik-cloudflare-ssl/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-01-30T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-01-30T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="TraefikとCloudflareでワイルドカードSSL証明書を発行する">
+<meta name="twitter:description" content="VM準備 &ldquo;qemu-guest-agent&quot;と&quot;nano&quot;をインストールする
+1 sudo apt install qemu-guest-agent nano &ldquo;Docker&quot;をインストールする
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 # Add Docker&#39;s official GPG key: sudo apt update sudo apt install ca-certificates curl sudo install -m 0755 -d /etc/apt/keyrings sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc sudo chmod a&#43;r /etc/apt/keyrings/docker.asc # Add the repository to Apt sources: sudo tee /etc/apt/sources.list.d/docker.sources &lt;&lt;EOF Types: deb URIs: https://download.docker.com/linux/ubuntu Suites: $(. /etc/os-release &amp;&amp; echo &#34;${UBUNTU_CODENAME:-$VERSION_CODENAME}&#34;) Components: stable Signed-By: /etc/apt/keyrings/docker.asc EOF sudo apt update 1 sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin バージョン確認
+">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://tiisanamaou.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/traefik/" >
+                Traefik
+            </a>
+        
+            <a href="../../categories/cloudflare/" >
+                Cloudflare
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/traefik-cloudflare-ssl/">TraefikとCloudflareでワイルドカードSSL証明書を発行する</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2026/01/30</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="vm準備">VM準備</h2>
+<p>&ldquo;qemu-guest-agent&quot;と&quot;nano&quot;をインストールする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt install qemu-guest-agent nano
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>&ldquo;Docker&quot;をインストールする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># Add Docker&#39;s official GPG key:</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">ca</span><span class="o">-</span><span class="n">certificates</span> <span class="n">curl</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">install</span> <span class="o">-</span><span class="n">m</span> <span class="mi">0755</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">curl</span> <span class="o">-</span><span class="n">fsSL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">gpg</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">asc</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">r</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">asc</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Add the repository to Apt sources:</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sources</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span>
+</span></span><span class="line"><span class="cl"><span class="n">Types</span><span class="p">:</span> <span class="n">deb</span>
+</span></span><span class="line"><span class="cl"><span class="n">URIs</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">ubuntu</span>
+</span></span><span class="line"><span class="cl"><span class="n">Suites</span><span class="p">:</span> <span class="o">$</span><span class="p">(</span><span class="o">.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">os</span><span class="o">-</span><span class="n">release</span> <span class="o">&amp;&amp;</span> <span class="n">echo</span> <span class="s2">&#34;${UBUNTU_CODENAME:-$VERSION_CODENAME}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Components</span><span class="p">:</span> <span class="n">stable</span>
+</span></span><span class="line"><span class="cl"><span class="n">Signed</span><span class="o">-</span><span class="n">By</span><span class="p">:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">asc</span>
+</span></span><span class="line"><span class="cl"><span class="n">EOF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>バージョン確認</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@traefik-server:~$ sudo docker version
+</span></span><span class="line"><span class="cl">Client: Docker Engine - Community
+</span></span><span class="line"><span class="cl"> Version:           29.1.3
+</span></span><span class="line"><span class="cl"> API version:       1.52
+</span></span><span class="line"><span class="cl"> Go version:        go1.25.5
+</span></span><span class="line"><span class="cl"> Git commit:        f52814d
+</span></span><span class="line"><span class="cl"> Built:             Fri Dec 12 14:49:32 2025
+</span></span><span class="line"><span class="cl"> OS/Arch:           linux/amd64
+</span></span><span class="line"><span class="cl"> Context:           default
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Server: Docker Engine - Community
+</span></span><span class="line"><span class="cl"> Engine:
+</span></span><span class="line"><span class="cl">  Version:          29.1.3
+</span></span><span class="line"><span class="cl">  API version:      1.52 (minimum version 1.44)
+</span></span><span class="line"><span class="cl">  Go version:       go1.25.5
+</span></span><span class="line"><span class="cl">  Git commit:       fbf3ed2
+</span></span><span class="line"><span class="cl">  Built:            Fri Dec 12 14:49:32 2025
+</span></span><span class="line"><span class="cl">  OS/Arch:          linux/amd64
+</span></span><span class="line"><span class="cl">  Experimental:     false
+</span></span><span class="line"><span class="cl"> containerd:
+</span></span><span class="line"><span class="cl">  Version:          v2.2.1
+</span></span><span class="line"><span class="cl">  GitCommit:        dea7da592f5d1d2b7755e3a161be07f43fad8f75
+</span></span><span class="line"><span class="cl"> runc:
+</span></span><span class="line"><span class="cl">  Version:          1.3.4
+</span></span><span class="line"><span class="cl">  GitCommit:        v1.3.4-0-gd6d73eb8
+</span></span><span class="line"><span class="cl"> docker-init:
+</span></span><span class="line"><span class="cl">  Version:          0.19.0
+</span></span><span class="line"><span class="cl">  GitCommit:        de40ad0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="traefikの設定">Traefikの設定</h2>
+<p>設定ファイルの一部をAI(Claude Opus 4.5,Gemini 3 Flash)に生成してもらっています</p>
+<h3 id="ファイル構成">ファイル構成</h3>
+<p>フォルダ構成は下記の通り</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">traefik-docker/
+</span></span><span class="line"><span class="cl">├── .env                  # 環境変数
+</span></span><span class="line"><span class="cl">├── compose-nginx.yaml    # nginxサンプルアプリ設定（個別）
+</span></span><span class="line"><span class="cl">├── compose.yaml          # Traefik本体の設定
+</span></span><span class="line"><span class="cl">├── dynamic.yaml          # Traefikの動的設定
+</span></span><span class="line"><span class="cl">└── traefik.yaml          # Traefikの静的設定
+</span></span><span class="line"><span class="cl">└── acme.json             # 取得したSSL証明書が保存されるファイル
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="ファイルの中身">ファイルの中身</h3>
+<ul>
+<li>compose.yaml</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">services</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">traefik</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">image</span><span class="p">:</span> <span class="n">traefik</span><span class="p">:</span><span class="mf">3.6</span><span class="o">.</span><span class="mi">5</span>
+</span></span><span class="line"><span class="cl">    <span class="n">container_name</span><span class="p">:</span> <span class="n">traefik</span>
+</span></span><span class="line"><span class="cl">    <span class="n">restart</span><span class="p">:</span> <span class="n">unless</span><span class="o">-</span><span class="n">stopped</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ports</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># HTTP</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;80:80&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># HTTPS</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;443:443&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># ダッシュボード（開発環境のみ）</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;8080:8080&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">volumes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># 静的設定ファイル</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="o">./</span><span class="n">traefik</span><span class="o">.</span><span class="n">yaml</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">traefik</span><span class="o">/</span><span class="n">traefik</span><span class="o">.</span><span class="n">yaml</span><span class="p">:</span><span class="n">ro</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># 動的設定ファイル</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="o">./</span><span class="n">dynamic</span><span class="o">.</span><span class="n">yaml</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">traefik</span><span class="o">/</span><span class="n">dynamic</span><span class="o">.</span><span class="n">yaml</span><span class="p">:</span><span class="n">ro</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># Let&#39;s Encrypt 証明書保存先</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="o">./</span><span class="n">acme</span><span class="o">.</span><span class="n">json</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">traefik</span><span class="o">/</span><span class="n">acme</span><span class="o">.</span><span class="n">json</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># Docker ソケット（Docker プロバイダー使用時）</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="n">ro</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># カスタム証明書（任意）</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># - ./certs:/etc/traefik/certs:ro</span>
+</span></span><span class="line"><span class="cl">    <span class="n">networks</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">traefik</span><span class="o">-</span><span class="n">public</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 環境変数設定（Cloudflare DNS チャレンジ用）</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># .env ファイルから読み込み、明示的に設定</span>
+</span></span><span class="line"><span class="cl">    <span class="n">env_file</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="o">.</span><span class="n">env</span>
+</span></span><span class="line"><span class="cl">    <span class="n">environment</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">CF_DNS_API_TOKEN</span><span class="p">:</span> <span class="o">$</span><span class="p">{</span><span class="n">CF_DNS_API_TOKEN</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="n">TZ</span><span class="p">:</span> <span class="s2">&#34;Asia/Tokyo&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">labels</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">traefik</span><span class="o">.</span><span class="n">enable</span><span class="o">=</span><span class="bp">true</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">traefik</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">network</span><span class="o">=</span><span class="n">traefik</span><span class="o">-</span><span class="n">public</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">traefik</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">services</span><span class="o">.</span><span class="n">traefik</span><span class="o">-</span><span class="n">dashboard</span><span class="o">.</span><span class="n">loadbalancer</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">port</span><span class="o">=</span><span class="mi">8080</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">traefik</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">routers</span><span class="o">.</span><span class="n">traefik</span><span class="o">-</span><span class="n">dashboard</span><span class="o">-</span><span class="n">http</span><span class="o">.</span><span class="n">entrypoints</span><span class="o">=</span><span class="n">http</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">#- traefik.http.routers.traefik-dashboard-http.rule=Host(`traefik.local`)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">command</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;--api.dashboard=true&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;--api.insecure=true&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;--providers.docker=true&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;--entrypoints.http.address=:80&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;--providers.docker.exposedByDefault=false&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">networks</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">traefik</span><span class="o">-</span><span class="n">public</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">name</span><span class="p">:</span> <span class="n">traefik</span><span class="o">-</span><span class="n">public</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>.env</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># ============================================================
+</span></span><span class="line"><span class="cl"># Cloudflare 認証設定
+</span></span><span class="line"><span class="cl"># ============================================================
+</span></span><span class="line"><span class="cl">CF_DNS_API_TOKEN=*****
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>traefik.yaml<br>
+SSL証明書をステージング用と本番用を切り替えられるように記載している</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># ============================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Traefik 静的設定ファイル (traefik.yml)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ============================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># このファイルはTraefikの起動時に読み込まれる静的設定です。</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 変更を反映するにはTraefikの再起動が必要です。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># グローバル設定</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="n">global</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 匿名の使用統計を送信するかどうか</span>
+</span></span><span class="line"><span class="cl">  <span class="n">checkNewVersion</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 新バージョンのチェックを行うかどうか</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sendAnonymousUsage</span><span class="p">:</span> <span class="bp">false</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># API / ダッシュボード設定</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="n">api</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># ダッシュボードを有効にする</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dashboard</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># APIを有効にする（本番環境では false 推奨）</span>
+</span></span><span class="line"><span class="cl">  <span class="n">insecure</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># デバッグモードを有効にする</span>
+</span></span><span class="line"><span class="cl">  <span class="n">debug</span><span class="p">:</span> <span class="bp">false</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ログ設定</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="nb">log</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># ログレベル: DEBUG, INFO, WARN, ERROR, FATAL, PANIC</span>
+</span></span><span class="line"><span class="cl">  <span class="n">level</span><span class="p">:</span> <span class="n">INFO</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># ログ出力先（省略時は標準出力）</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># filePath: &#34;/var/log/traefik/traefik.log&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># ログフォーマット: common, json</span>
+</span></span><span class="line"><span class="cl">  <span class="n">format</span><span class="p">:</span> <span class="n">common</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># アクセスログ設定</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="n">accessLog</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># アクセスログ出力先（省略時は標準出力）</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># filePath: &#34;/var/log/traefik/access.log&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># ログフォーマット: common, json</span>
+</span></span><span class="line"><span class="cl">  <span class="n">format</span><span class="p">:</span> <span class="n">common</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># バッファリングサイズ（パフォーマンス向上のため）</span>
+</span></span><span class="line"><span class="cl">  <span class="n">bufferingSize</span><span class="p">:</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># フィルタリング設定</span>
+</span></span><span class="line"><span class="cl">  <span class="n">filters</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ステータスコードでフィルタ</span>
+</span></span><span class="line"><span class="cl">    <span class="n">statusCodes</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;200-299&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;400-499&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;500-599&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 最小リクエスト時間でフィルタ（ms）</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># minDuration: &#34;10ms&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># エントリーポイント設定</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># エントリーポイントは外部からのトラフィックを受け付けるポートです</span>
+</span></span><span class="line"><span class="cl"><span class="n">entryPoints</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># HTTP エントリーポイント</span>
+</span></span><span class="line"><span class="cl">  <span class="n">web</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">address</span><span class="p">:</span> <span class="s2">&#34;:80&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># HTTPからHTTPSへのリダイレクト設定</span>
+</span></span><span class="line"><span class="cl">    <span class="n">http</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">redirections</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">entryPoint</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">          <span class="n">to</span><span class="p">:</span> <span class="n">websecure</span>
+</span></span><span class="line"><span class="cl">          <span class="n">scheme</span><span class="p">:</span> <span class="n">https</span>
+</span></span><span class="line"><span class="cl">          <span class="n">permanent</span><span class="p">:</span> <span class="bp">true</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># HTTPS エントリーポイント</span>
+</span></span><span class="line"><span class="cl">  <span class="n">websecure</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">address</span><span class="p">:</span> <span class="s2">&#34;:443&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">http</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="n">tls</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># デフォルトの証明書リゾルバー</span>
+</span></span><span class="line"><span class="cl">        <span class="n">certResolver</span><span class="p">:</span> <span class="n">letsencrypt</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># TLSオプション（任意）</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># options: default</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># カスタムポート例（API用など）</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># api:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#   address: &#34;:8080&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 証明書リゾルバー設定 (Let&#39;s Encrypt / ACME + Cloudflare)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="n">certificatesResolvers</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># Cloudflare DNS-01 チャレンジ（ワイルドカード証明書対応）</span>
+</span></span><span class="line"><span class="cl">  <span class="n">letsencrypt</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">acme</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># Let&#39;s Encrypt アカウント用メールアドレス</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">#email: &#34;your-email@example.com&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">email</span><span class="p">:</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># 証明書の保存先</span>
+</span></span><span class="line"><span class="cl">      <span class="n">storage</span><span class="p">:</span> <span class="s2">&#34;/etc/traefik/acme.json&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># 本番用エンドポイント（テスト完了後にこちらを使用）</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># caServer: &#34;https://acme-v02.api.letsencrypt.org/directory&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># テスト用エンドポイント（レート制限回避、最初はこちらで動作確認）</span>
+</span></span><span class="line"><span class="cl">      <span class="n">caServer</span><span class="p">:</span> <span class="s2">&#34;https://acme-staging-v02.api.letsencrypt.org/directory&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># Cloudflare DNS-01 チャレンジ設定</span>
+</span></span><span class="line"><span class="cl">      <span class="n">dnsChallenge</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Cloudflare プロバイダーを使用</span>
+</span></span><span class="line"><span class="cl">        <span class="n">provider</span><span class="p">:</span> <span class="n">cloudflare</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># DNS レコード伝播の待機時間（秒）</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Cloudflareは通常速いため短めでOK</span>
+</span></span><span class="line"><span class="cl">        <span class="n">delayBeforeCheck</span><span class="p">:</span> <span class="s2">&#34;10s&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 使用するDNSリゾルバー（任意）</span>
+</span></span><span class="line"><span class="cl">        <span class="n">resolvers</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">          <span class="o">-</span> <span class="s2">&#34;1.1.1.1:53&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="o">-</span> <span class="s2">&#34;8.8.8.8:53&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># ワイルドカード証明書を取得する場合はこれが必須</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 環境変数 CF_API_EMAIL, CF_DNS_API_TOKEN が必要</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># 証明書の自動更新設定</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># 証明書の有効期限チェック間隔（デフォルト: 24時間）</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># 1日1回、証明書の有効期限をチェック</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">#certificatesDuration: 2160  # 証明書の有効期限（時間）デフォルト90日</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># プロバイダー設定</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 動的設定の読み込み元を指定します</span>
+</span></span><span class="line"><span class="cl"><span class="n">providers</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># ファイルプロバイダー（動的設定ファイル）</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#file:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 動的設定ファイルのパス</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#filename: &#34;/etc/traefik/dynamic.yml&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># または設定ファイルが格納されたディレクトリを指定</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># directory: &#34;/etc/traefik/config/&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ファイル変更の監視</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#watch: true</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># Docker プロバイダー</span>
+</span></span><span class="line"><span class="cl">  <span class="n">docker</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Docker ソケットへのパス</span>
+</span></span><span class="line"><span class="cl">    <span class="n">endpoint</span><span class="p">:</span> <span class="s2">&#34;unix:///var/run/docker.sock&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 明示的にラベル設定されたコンテナのみ公開</span>
+</span></span><span class="line"><span class="cl">    <span class="n">exposedByDefault</span><span class="p">:</span> <span class="bp">false</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Docker ネットワーク名</span>
+</span></span><span class="line"><span class="cl">    <span class="n">network</span><span class="p">:</span> <span class="n">traefik</span><span class="o">-</span><span class="n">network</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Swarm モードを有効にする場合</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># swarmMode: true</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ヘルスチェック / Ping</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="n">ping</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># ヘルスチェックエンドポイントのエントリーポイント</span>
+</span></span><span class="line"><span class="cl">  <span class="n">entryPoint</span><span class="p">:</span> <span class="n">web</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># サーバートランスポート設定</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="n">serversTransport</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># バックエンドへの接続時にTLS証明書を検証しない（開発環境用）</span>
+</span></span><span class="line"><span class="cl">  <span class="n">insecureSkipVerify</span><span class="p">:</span> <span class="bp">false</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># ルート証明書の追加</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># rootCAs:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">#   - &#34;/etc/traefik/certs/ca.crt&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 最大アイドル接続数</span>
+</span></span><span class="line"><span class="cl">  <span class="n">maxIdleConnsPerHost</span><span class="p">:</span> <span class="mi">200</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>dynamic.yaml</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># ------------------------------------------------------------
+</span></span><span class="line"><span class="cl"># HTTP 設定
+</span></span><span class="line"><span class="cl"># ------------------------------------------------------------
+</span></span><span class="line"><span class="cl">http:
+</span></span><span class="line"><span class="cl">  # ==========================================================
+</span></span><span class="line"><span class="cl">  # ルーター設定
+</span></span><span class="line"><span class="cl">  # ==========================================================
+</span></span><span class="line"><span class="cl">  # ルーターはリクエストをサービスに振り分けるルールを定義します
+</span></span><span class="line"><span class="cl">  routers:
+</span></span><span class="line"><span class="cl">    # ----------------------------------------------------------
+</span></span><span class="line"><span class="cl">    # 例1: シンプルなWebアプリケーション
+</span></span><span class="line"><span class="cl">    # ----------------------------------------------------------
+</span></span><span class="line"><span class="cl">    webapp:
+</span></span><span class="line"><span class="cl">      # ルールの定義（Host, PathPrefix, Headers などを組み合わせ可能）
+</span></span><span class="line"><span class="cl">      rule: &#34;Host(`*.example.dev`)&#34;
+</span></span><span class="line"><span class="cl">      # 使用するエントリーポイント
+</span></span><span class="line"><span class="cl">      entryPoints:
+</span></span><span class="line"><span class="cl">        - websecure
+</span></span><span class="line"><span class="cl">      # 振り分け先のサービス
+</span></span><span class="line"><span class="cl">      service: webapp-service
+</span></span><span class="line"><span class="cl">      # 適用するミドルウェア（複数指定可能）
+</span></span><span class="line"><span class="cl">      middlewares:
+</span></span><span class="line"><span class="cl">        - security-headers
+</span></span><span class="line"><span class="cl">      # TLS設定
+</span></span><span class="line"><span class="cl">      tls:
+</span></span><span class="line"><span class="cl">        certResolver: letsencrypt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>acme.json<br>
+上記ファイルは空ファイルを作成して下記コマンドを実行して権限を付与する<br>
+※SSLの証明書情報はファイルの中に記載される</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">touch acme.json
+</span></span><span class="line"><span class="cl">chmod 600 acme.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>compose-nginx.yaml<br>
+サンプルアプリケーションを想定</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">services</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">nginx</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">image</span><span class="p">:</span> <span class="n">nginx</span><span class="p">:</span><span class="mf">1.29</span><span class="o">.</span><span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">container_name</span><span class="p">:</span> <span class="n">nginx</span><span class="o">-</span><span class="n">sample</span>
+</span></span><span class="line"><span class="cl">    <span class="n">restart</span><span class="p">:</span> <span class="n">unless</span><span class="o">-</span><span class="n">stopped</span>
+</span></span><span class="line"><span class="cl">    <span class="n">networks</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="n">traefik</span><span class="o">-</span><span class="n">network</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># カスタムHTMLを配置する場合は以下のコメントを解除</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># volumes:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#   - ./html:/usr/share/nginx/html:ro</span>
+</span></span><span class="line"><span class="cl">    <span class="n">labels</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># Traefik で公開する</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;traefik.enable=true&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># ルーター設定（実際のドメインに変更してください）</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;traefik.http.routers.nginx.rule=Host(`nginx.example.dev`)&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;traefik.http.routers.nginx.entrypoints=websecure&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;traefik.http.routers.nginx.tls.certresolver=letsencrypt&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># ワイルドカード証明書の設定</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;traefik.http.routers.nginx.tls.domains[0].main=example.dev&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;traefik.http.routers.nginx.tls.domains[0].sans=*.example.dev&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># サービス設定</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;traefik.http.services.nginx.loadbalancer.server.port=80&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># ミドルウェア適用</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="s2">&#34;traefik.http.routers.nginx.middlewares=security-headers@file&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">networks</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 外部ネットワークとしてTraefikのネットワークを参照</span>
+</span></span><span class="line"><span class="cl">  <span class="n">traefik</span><span class="o">-</span><span class="n">network</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">external</span><span class="p">:</span> <span class="bp">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="起動">起動</h3>
+<p>下記コマンドを実行する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo docker compose up -d
+</span></span><span class="line"><span class="cl">sudo docker compose down -v
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Dashboardへは下記のようなURLからアクセスできる</p>
+<ul>
+<li>&ldquo;http://IP:8080/dashboard/&rdquo;</li>
+</ul>
+<h2 id="ssl証明書">SSL証明書</h2>
+<p>この時点では&quot;acme.json&quot;に証明書情報は記載されない<br>
+SSL証明書を使用するアプリケーションを追加した際に記載される</p>
+<p>コマンドを実行してnginxを起動します</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">docker compose -f compose.nginx.yaml up -d 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>DNSにドメイン名とIPを登録してhttpsでアクセスできるか確認します<br>
+アクセスできれば問題なく実行できています<br>
+アクセスする際に信頼できない証明書のエラーがでるが、ステージング用の証明書を使用しているので、一旦無視する</p>
+<h2 id="本番環境のssl証明書を使用する">本番環境のSSL証明書を使用する</h2>
+<p>&ldquo;traefik.yaml&quot;に記載されているステージング用をコメントアウトして、本番用のコメントアウトを解除する</p>
+<ul>
+<li>ステージング用</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 本番用エンドポイント（テスト完了後にこちらを使用）
+</span></span><span class="line"><span class="cl"># caServer: &#34;https://acme-v02.api.letsencrypt.org/directory&#34;
+</span></span><span class="line"><span class="cl"># テスト用エンドポイント（レート制限回避、最初はこちらで動作確認）
+</span></span><span class="line"><span class="cl">caServer: &#34;https://acme-staging-v02.api.letsencrypt.org/directory&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>本番用</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 本番用エンドポイント（テスト完了後にこちらを使用）
+</span></span><span class="line"><span class="cl">caServer: &#34;https://acme-v02.api.letsencrypt.org/directory&#34;
+</span></span><span class="line"><span class="cl"># テスト用エンドポイント（レート制限回避、最初はこちらで動作確認）
+</span></span><span class="line"><span class="cl"># caServer: &#34;https://acme-staging-v02.api.letsencrypt.org/directory&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>これで警告が出ることなく接続できます</p>
+<p>あとは必要なアプリケーションを実行していけばhttpsで接続できるようになります</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/kubernetes-ingress-traefik/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">KubernetesでTraefikを使用してIngressを使えるようにする</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2026 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

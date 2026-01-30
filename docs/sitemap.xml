@@ -8,10 +8,19 @@
     <loc>https://tiisanamaou.github.io/post/</loc>
     <lastmod>2026-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://tiisanamaou.github.io/post/2025review-and-2026plan/</loc>
-    <lastmod>2026-01-04T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://tiisanamaou.github.io/categories/</loc>
+    <lastmod>2026-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/categories/cloudflare/</loc>
+    <lastmod>2026-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/categories/traefik/</loc>
+    <lastmod>2026-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/post/traefik-cloudflare-ssl/</loc>
+    <lastmod>2026-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://tiisanamaou.github.io/post/2025review-and-2026plan/</loc>
     <lastmod>2026-01-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/categories/%E6%8C%AF%E3%82%8A%E8%BF%94%E3%82%8A/</loc>
@@ -171,9 +180,6 @@
     <lastmod>2024-08-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</loc>
-    <lastmod>2024-08-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://tiisanamaou.github.io/categories/traefik/</loc>
     <lastmod>2024-08-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://tiisanamaou.github.io/post/kubernetes-upgrade-v1-31-0/</loc>
