@@ -435,9 +435,9 @@ caServer: "https://acme-v02.api.letsencrypt.org/directory"
 あとは必要なアプリケーションを実行していけばhttpsで接続できるようになります
 
 ## 参考URL
-https://tech.natsuneko.blog/entry/2024/01/09/generate-lets-encrypt-dns-challenge-tls-certificate-via-cloudflare-dns-using-traefik
-https://doc.traefik.io/traefik/reference/install-configuration/tls/certificate-resolvers/acme/
-https://note.com/dtreaction/n/n4202c0b6c1f0
-https://go-acme.github.io/lego/dns/cloudflare/index.html
-https://qiita.com/everylittle/items/ae0a72658fea3061f129
-https://zenn.dev/shimakaze_soft/articles/a91d9ec8b14a21
+- https://tech.natsuneko.blog/entry/2024/01/09/generate-lets-encrypt-dns-challenge-tls-certificate-via-cloudflare-dns-using-traefik
+- https://doc.traefik.io/traefik/reference/install-configuration/tls/certificate-resolvers/acme/
+- https://note.com/dtreaction/n/n4202c0b6c1f0
+- https://go-acme.github.io/lego/dns/cloudflare/index.html
+- https://qiita.com/everylittle/items/ae0a72658fea3061f129
+- https://zenn.dev/shimakaze_soft/articles/a91d9ec8b14a21

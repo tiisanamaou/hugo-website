@@ -838,18 +838,20 @@ SSL証明書を使用するアプリケーションを追加した際に記載�
 &lt;/div&gt;&lt;p&gt;これで警告が出ることなく接続できます&lt;/p&gt;
 &lt;p&gt;あとは必要なアプリケーションを実行していけばhttpsで接続できるようになります&lt;/p&gt;
 &lt;h2 id=&#34;参考url&#34;&gt;参考URL&lt;/h2&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://tech.natsuneko.blog/entry/2024/01/09/generate-lets-encrypt-dns-challenge-tls-certificate-via-cloudflare-dns-using-traefik&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://tech.natsuneko.blog/entry/2024/01/09/generate-lets-encrypt-dns-challenge-tls-certificate-via-cloudflare-dns-using-traefik&lt;/a&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://doc.traefik.io/traefik/reference/install-configuration/tls/certificate-resolvers/acme/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://doc.traefik.io/traefik/reference/install-configuration/tls/certificate-resolvers/acme/&lt;/a&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://note.com/dtreaction/n/n4202c0b6c1f0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://note.com/dtreaction/n/n4202c0b6c1f0&lt;/a&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://go-acme.github.io/lego/dns/cloudflare/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://go-acme.github.io/lego/dns/cloudflare/index.html&lt;/a&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://qiita.com/everylittle/items/ae0a72658fea3061f129&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://qiita.com/everylittle/items/ae0a72658fea3061f129&lt;/a&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://zenn.dev/shimakaze_soft/articles/a91d9ec8b14a21&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://zenn.dev/shimakaze_soft/articles/a91d9ec8b14a21&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://tech.natsuneko.blog/entry/2024/01/09/generate-lets-encrypt-dns-challenge-tls-certificate-via-cloudflare-dns-using-traefik&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://tech.natsuneko.blog/entry/2024/01/09/generate-lets-encrypt-dns-challenge-tls-certificate-via-cloudflare-dns-using-traefik&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://doc.traefik.io/traefik/reference/install-configuration/tls/certificate-resolvers/acme/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://doc.traefik.io/traefik/reference/install-configuration/tls/certificate-resolvers/acme/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://note.com/dtreaction/n/n4202c0b6c1f0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://note.com/dtreaction/n/n4202c0b6c1f0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://go-acme.github.io/lego/dns/cloudflare/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://go-acme.github.io/lego/dns/cloudflare/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://qiita.com/everylittle/items/ae0a72658fea3061f129&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://qiita.com/everylittle/items/ae0a72658fea3061f129&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://zenn.dev/shimakaze_soft/articles/a91d9ec8b14a21&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://zenn.dev/shimakaze_soft/articles/a91d9ec8b14a21&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         </item>
         <item>
