@@ -7,7 +7,178 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 08 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/cloudflare/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 20 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/cloudflare/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Cloudflare Pagesを使ってWebページを公開する</title>
+        <link>https://tiisanamaou.github.io/post/cloudflare-pages/</link>
+        <pubDate>Fri, 20 Mar 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/post/cloudflare-pages/</guid>
+        <description>&lt;h2 id=&#34;cloudflareとgithubの連携&#34;&gt;CloudflareとGithubの連携&lt;/h2&gt;
+&lt;p&gt;Cloudflareのダッシュボードページを開きます&lt;br&gt;
+右上の&amp;quot;追加&amp;quot;を押し、&amp;ldquo;Pages&amp;quot;を押します
+&lt;img src=&#34;../../post/cloudflare-pages/01.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/01_hu_5fe493dcd6fff459.png 480w, ../../post/cloudflare-pages/01_hu_128234a7b8afdc2e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;
+&lt;img src=&#34;../../post/cloudflare-pages/02.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/02_hu_ed8850e54ac1f270.png 480w, ../../post/cloudflare-pages/02_hu_10bad60b4e9f15f6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;ページが変わり、&amp;ldquo;既存のGitリポジトリをインポートする&amp;quot;を押します
+&lt;img src=&#34;../../post/cloudflare-pages/03.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/03_hu_2eacc1f5cc4a7de3.png 480w, ../../post/cloudflare-pages/03_hu_624caa43d3531bc9.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;アカウントからサイトをデプロイするという画面になったら、下の方にある&amp;quot;Githubに接続&amp;quot;を押します
+&lt;img src=&#34;../../post/cloudflare-pages/04.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/04_hu_1d54605b0f6d04f.png 480w, ../../post/cloudflare-pages/04_hu_ce7121899eb62817.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Githubの認証ページが表示されるので許可します&lt;br&gt;
+このとき&amp;quot;All repositories&amp;quot;でも良いが、必要なリポジトリのみ許可したいので&amp;quot;Only select repositories&amp;quot;を選択する&lt;br&gt;
+その後、許可するリポジトリを選択します&lt;br&gt;
+下の方にある&amp;quot;Install &amp;amp; Authorize&amp;quot;を押す
+&lt;img src=&#34;../../post/cloudflare-pages/05.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/05_hu_ef0bc16032cc2660.png 480w, ../../post/cloudflare-pages/05_hu_b25d2af7d81c997d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;
+&lt;img src=&#34;../../post/cloudflare-pages/06.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/06_hu_b2a9de2d8305654c.png 480w, ../../post/cloudflare-pages/06_hu_13b28fec60de92d8.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;無事認証が通ったら&amp;quot;セットアップの開始&amp;quot;を押します
+&lt;img src=&#34;../../post/cloudflare-pages/07.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/07_hu_fe2acf005d154cb6.png 480w, ../../post/cloudflare-pages/07_hu_9586e716c2c2a3e6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;ビルドとデプロイ&#34;&gt;ビルドとデプロイ&lt;/h2&gt;
+&lt;p&gt;&amp;ldquo;ビルドとデプロイのセットアップ&amp;quot;の画面になります&lt;br&gt;
+&amp;ldquo;プロジェクト名&amp;quot;と&amp;quot;プロダクションブランチ&amp;quot;を入力・選択します&lt;br&gt;
+下の方のビルドの設定は、今回はHTML等のファイルを直接リポジトリにプッシュしているので特に設定しません&lt;br&gt;
+※HTML等のファイルはAIを用いて作成しました&lt;br&gt;
+&amp;ldquo;保存してデプロイする&amp;quot;を押します
+&lt;img src=&#34;../../post/cloudflare-pages/08.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/08_hu_785b3fda2ec6f74e.png 480w, ../../post/cloudflare-pages/08_hu_cabc8272f83cb736.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;
+&lt;img src=&#34;../../post/cloudflare-pages/09.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/09_hu_84522bb60d55597.png 480w, ../../post/cloudflare-pages/09_hu_b9034a6ad16520af.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;ビルドおよびデプロイを実行しています&amp;quot;と表示されるので待ちます
+&lt;img src=&#34;../../post/cloudflare-pages/10.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/10_hu_bc88a7a249df6f9f.png 480w, ../../post/cloudflare-pages/10_hu_79fd3a050b0f313e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;完了すると&amp;quot;成功しました！&amp;hellip;&amp;ldquo;と表示されます
+&lt;img src=&#34;../../post/cloudflare-pages/11.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/11_hu_2042dd36a17dbfc2.png 480w, ../../post/cloudflare-pages/11_hu_cb2ebcfef5a8b032.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;表示されているURLに行くとデプロイしたサイトが表示されています
+&lt;img src=&#34;../../post/cloudflare-pages/12.png&#34;
+	width=&#34;2746&#34;
+	height=&#34;1854&#34;
+	srcset=&#34;../../post/cloudflare-pages/12_hu_f99c8a4b0ea955ba.png 480w, ../../post/cloudflare-pages/12_hu_c796c2284aebaf53.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Traefikを使ってHarborをHTTPSで通信させる</title>
         <link>https://tiisanamaou.github.io/post/traefik-harbor-ssl/</link>
         <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
