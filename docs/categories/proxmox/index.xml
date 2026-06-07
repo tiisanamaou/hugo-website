@@ -7,7 +7,124 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Fri, 15 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/proxmox/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/proxmox/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Proxmoxでバックアップスケジュールを作成する</title>
+        <link>https://tiisanamaou.github.io/post/proxmox-backup-schedule/</link>
+        <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/post/proxmox-backup-schedule/</guid>
+        <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;proxmox-ve: 9.2.0 (running kernel: 6.14.8-2-pve)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;設定手順&#34;&gt;設定手順&lt;/h2&gt;
+&lt;p&gt;管理画面にログインし、&amp;ldquo;データセンター&amp;rdquo;＞&amp;ldquo;バックアップ&amp;quot;の項目を押します
+&lt;img src=&#34;../../post/proxmox-backup-schedule/01.png&#34;
+	width=&#34;3708&#34;
+	height=&#34;2096&#34;
+	srcset=&#34;../../post/proxmox-backup-schedule/01_hu_8803632897985221.png 480w, ../../post/proxmox-backup-schedule/01_hu_180dd20849bb7cd5.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;176&#34;
+		data-flex-basis=&#34;424px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;追加&amp;quot;を押すと、設定画面が出てきます
+&lt;img src=&#34;../../post/proxmox-backup-schedule/02.png&#34;
+	width=&#34;3708&#34;
+	height=&#34;2096&#34;
+	srcset=&#34;../../post/proxmox-backup-schedule/02_hu_e7c465f77b3f6960.png 480w, ../../post/proxmox-backup-schedule/02_hu_2d884b56144bf09c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;176&#34;
+		data-flex-basis=&#34;424px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;ストレージ&amp;quot;はバックアップの保存先を選択します&lt;br&gt;
+&amp;ldquo;スケジュール&amp;quot;はどのタイミングでバックアップするかを決めます
+&lt;img src=&#34;../../post/proxmox-backup-schedule/03.png&#34;
+	width=&#34;3708&#34;
+	height=&#34;2096&#34;
+	srcset=&#34;../../post/proxmox-backup-schedule/03_hu_fdb5d76d36e67068.png 480w, ../../post/proxmox-backup-schedule/03_hu_869022c176e44c09.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;176&#34;
+		data-flex-basis=&#34;424px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;00:00&amp;rdquo;：毎日00時00分にバックアップを開始する&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;バックアップするVMを選択します
+&lt;img src=&#34;../../post/proxmox-backup-schedule/04.png&#34;
+	width=&#34;3708&#34;
+	height=&#34;2096&#34;
+	srcset=&#34;../../post/proxmox-backup-schedule/04_hu_6a9f8a6eef85db0.png 480w, ../../post/proxmox-backup-schedule/04_hu_12c2cc7d38235ced.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;176&#34;
+		data-flex-basis=&#34;424px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Retention&amp;quot;でバックアップを保持する設定をします
+&lt;img src=&#34;../../post/proxmox-backup-schedule/05.png&#34;
+	width=&#34;3708&#34;
+	height=&#34;2096&#34;
+	srcset=&#34;../../post/proxmox-backup-schedule/05_hu_dc66e44769b96638.png 480w, ../../post/proxmox-backup-schedule/05_hu_52818302121d443d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;176&#34;
+		data-flex-basis=&#34;424px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;3&amp;quot;にして最新のバックアップ3つを残す設定にしています
+&lt;img src=&#34;../../post/proxmox-backup-schedule/06.png&#34;
+	width=&#34;3708&#34;
+	height=&#34;2096&#34;
+	srcset=&#34;../../post/proxmox-backup-schedule/06_hu_e00c7a1a389b2ea1.png 480w, ../../post/proxmox-backup-schedule/06_hu_5b14a250d40a796.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;176&#34;
+		data-flex-basis=&#34;424px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;作成&amp;quot;を押すと作成されます
+&lt;img src=&#34;../../post/proxmox-backup-schedule/07.png&#34;
+	width=&#34;3708&#34;
+	height=&#34;2096&#34;
+	srcset=&#34;../../post/proxmox-backup-schedule/07_hu_5f84d6c225108869.png 480w, ../../post/proxmox-backup-schedule/07_hu_c4290d6acb0aefc4.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;176&#34;
+		data-flex-basis=&#34;424px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;参考url&#34;&gt;参考URL&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Proxmox VE-HDDを増設したので、バックアップ環境を構築する
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.logw.jp/server/10684.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.logw.jp/server/10684.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>Proxmoxを8から9へバージョンアップする</title>
         <link>https://tiisanamaou.github.io/post/proxmox-upgrade-8to9/</link>
         <pubDate>Fri, 15 Aug 2025 00:00:00 +0000</pubDate>
