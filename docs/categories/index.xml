@@ -7,7 +7,23 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 27 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>LLM</title>
+        <link>https://tiisanamaou.github.io/categories/llm/</link>
+        <pubDate>Sat, 27 Jun 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/llm/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>LMStudio</title>
+        <link>https://tiisanamaou.github.io/categories/lmstudio/</link>
+        <pubDate>Sat, 27 Jun 2026 00:00:00 +0000</pubDate>
+        
+        <guid>https://tiisanamaou.github.io/categories/lmstudio/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Proxmox</title>
         <link>https://tiisanamaou.github.io/categories/proxmox/</link>
         <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
