@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='OSの準備 Raspberry 5 8GB Raspberry Pi OS Lite (64bit) GUIなし 書き込みは下記ソフトを使用する
+Raspberry Pi Imager 電源供給の警告がでるので、電源ボタンを押してスキップする
+プログラムはAI（Gemini 3.7 flash,GPT-5.6 Sol）を使用しています
+環境 OS情報 1 2 3 4 5 6 7 8 9 10 11 mao@raspberrypi5:~ $ cat /etc/os-release PRETTY_NAME=&#34;Debian GNU/Linux 13 (trixie)&#34; NAME=&#34;Debian GNU/Linux&#34; VERSION_ID=&#34;13&#34; VERSION=&#34;13 (trixie)&#34; VERSION_CODENAME=trixie DEBIAN_VERSION_FULL=13.6 ID=debian HOME_URL=&#34;https://www.debian.org/&#34; SUPPORT_URL=&#34;https://www.debian.org/support&#34; BUG_REPORT_URL=&#34;https://bugs.debian.org/&#34; Python 3.13.5 uv 0.12.3 (aarch64-unknown-linux-gnu) 初期設定 更新する
+1 2 sudo apt update sudo apt upgrade SSHの有効化をする
+'>
+<title>ラズパイにI2Cで接続したセンサーから情報を取得するAPIサーバーを構築する（1/2）</title>
+
+<link rel='canonical' href='https://tiisanamaou.github.io/post/raspberrypi-sensor-api-server-1/'>
+
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='ラズパイにI2Cで接続したセンサーから情報を取得するAPIサーバーを構築する（1/2）'>
+<meta property='og:description' content='OSの準備 Raspberry 5 8GB Raspberry Pi OS Lite (64bit) GUIなし 書き込みは下記ソフトを使用する
+Raspberry Pi Imager 電源供給の警告がでるので、電源ボタンを押してスキップする
+プログラムはAI（Gemini 3.7 flash,GPT-5.6 Sol）を使用しています
+環境 OS情報 1 2 3 4 5 6 7 8 9 10 11 mao@raspberrypi5:~ $ cat /etc/os-release PRETTY_NAME=&#34;Debian GNU/Linux 13 (trixie)&#34; NAME=&#34;Debian GNU/Linux&#34; VERSION_ID=&#34;13&#34; VERSION=&#34;13 (trixie)&#34; VERSION_CODENAME=trixie DEBIAN_VERSION_FULL=13.6 ID=debian HOME_URL=&#34;https://www.debian.org/&#34; SUPPORT_URL=&#34;https://www.debian.org/support&#34; BUG_REPORT_URL=&#34;https://bugs.debian.org/&#34; Python 3.13.5 uv 0.12.3 (aarch64-unknown-linux-gnu) 初期設定 更新する
+1 2 sudo apt update sudo apt upgrade SSHの有効化をする
+'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/raspberrypi-sensor-api-server-1/'>
+<meta property='og:site_name' content='onodera memo'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-08-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-08-15T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="ラズパイにI2Cで接続したセンサーから情報を取得するAPIサーバーを構築する（1/2）">
+<meta name="twitter:description" content="OSの準備 Raspberry 5 8GB Raspberry Pi OS Lite (64bit) GUIなし 書き込みは下記ソフトを使用する
+Raspberry Pi Imager 電源供給の警告がでるので、電源ボタンを押してスキップする
+プログラムはAI（Gemini 3.7 flash,GPT-5.6 Sol）を使用しています
+環境 OS情報 1 2 3 4 5 6 7 8 9 10 11 mao@raspberrypi5:~ $ cat /etc/os-release PRETTY_NAME=&#34;Debian GNU/Linux 13 (trixie)&#34; NAME=&#34;Debian GNU/Linux&#34; VERSION_ID=&#34;13&#34; VERSION=&#34;13 (trixie)&#34; VERSION_CODENAME=trixie DEBIAN_VERSION_FULL=13.6 ID=debian HOME_URL=&#34;https://www.debian.org/&#34; SUPPORT_URL=&#34;https://www.debian.org/support&#34; BUG_REPORT_URL=&#34;https://bugs.debian.org/&#34; Python 3.13.5 uv 0.12.3 (aarch64-unknown-linux-gnu) 初期設定 更新する
+1 2 sudo apt update sudo apt upgrade SSHの有効化をする
+">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="メニューを開く・閉じる">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="../../">
+                
+                    
+                    
+                    
+                        
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
+            <h2 class="site-description">メモ兼ブログ</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/tiisanamaou'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='../../' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='../../page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+                <li id="i18n-switch">  
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
+                        
+                            <option value="https://tiisanamaou.github.io/" selected></option>
+                        
+                    </select>
+                </li>
+            
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>ダークモード</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="../../categories/raspberrypi/" >
+                RaspberryPi
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="../../post/raspberrypi-sensor-api-server-1/">ラズパイにI2Cで接続したセンサーから情報を取得するAPIサーバーを構築する（1/2）</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2026/08/15</time>
+            </div>
+        
+
+        
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="osの準備">OSの準備</h2>
+<ul>
+<li>Raspberry 5 8GB</li>
+<li>Raspberry Pi OS Lite (64bit)
+<ul>
+<li>GUIなし</li>
+</ul>
+</li>
+</ul>
+<p>書き込みは下記ソフトを使用する</p>
+<ul>
+<li>Raspberry Pi Imager</li>
+</ul>
+<p>電源供給の警告がでるので、電源ボタンを押してスキップする</p>
+<p>プログラムはAI（Gemini 3.7 flash,GPT-5.6 Sol）を使用しています</p>
+<h2 id="環境">環境</h2>
+<ul>
+<li>OS情報</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@raspberrypi5:~ $ cat /etc/os-release
+</span></span><span class="line"><span class="cl">PRETTY_NAME=&#34;Debian GNU/Linux 13 (trixie)&#34;
+</span></span><span class="line"><span class="cl">NAME=&#34;Debian GNU/Linux&#34;
+</span></span><span class="line"><span class="cl">VERSION_ID=&#34;13&#34;
+</span></span><span class="line"><span class="cl">VERSION=&#34;13 (trixie)&#34;
+</span></span><span class="line"><span class="cl">VERSION_CODENAME=trixie
+</span></span><span class="line"><span class="cl">DEBIAN_VERSION_FULL=13.6
+</span></span><span class="line"><span class="cl">ID=debian
+</span></span><span class="line"><span class="cl">HOME_URL=&#34;https://www.debian.org/&#34;
+</span></span><span class="line"><span class="cl">SUPPORT_URL=&#34;https://www.debian.org/support&#34;
+</span></span><span class="line"><span class="cl">BUG_REPORT_URL=&#34;https://bugs.debian.org/&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Python 3.13.5</li>
+<li>uv 0.12.3 (aarch64-unknown-linux-gnu)</li>
+</ul>
+<h2 id="初期設定">初期設定</h2>
+<p>更新する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo apt update
+</span></span><span class="line"><span class="cl">sudo apt upgrade
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>SSHの有効化をする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo systemctl enable ssh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ホスト名を変更する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo hostnamectl set-hostname raspberrypi5
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>ホスト名が変更されたことを確認する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hostnamectl
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>シャットダウンをする</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo systemctl poweroff
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>電源ボタンを押して起動する</p>
+<h2 id="ssh接続をする">SSH接続をする</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ssh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>電源警告の設定を変更する<br>
+下記ファイルを開き、下記を追記する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo nano /boot/firmware/config.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>追記内容（[all]の下に記載する）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">usb_max_current_enable=1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="i2cセンサーを接続する">I2Cセンサーを接続する</h2>
+<p>使用するセンサー</p>
+<ul>
+<li>[114469]BME680使用 温湿度・気圧・ガスセンサーモジュールキット</li>
+<li><a class="link" href="https://akizukidenshi.com/catalog/g/g114469/"  target="_blank" rel="noopener"
+    >https://akizukidenshi.com/catalog/g/g114469/</a></li>
+</ul>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">BME680 端子</th>
+          <th style="text-align: left">Raspberry Pi5 GPIO ピン</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>VCC</strong> (VIN)</td>
+          <td style="text-align: left">Pin 1 (3.3V)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>GND</strong></td>
+          <td style="text-align: left">Pin 6 (GND)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>SDA</strong> (SDI)</td>
+          <td style="text-align: left">Pin 3 (GPIO 2 / SDA)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>SCL</strong> (SCK)</td>
+          <td style="text-align: left">Pin 5 (GPIO 3 / SCL)</td>
+      </tr>
+  </tbody>
+</table></div>
+<h2 id="i2cの有効化">I2Cの有効化</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo raspi-config
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>I2Cツールのインストールと動作確認</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">i2c</span><span class="o">-</span><span class="n">tools</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>&ldquo;3 Interface Options&rdquo;</li>
+<li>&ldquo;I4 I2C&rdquo;</li>
+<li>&ldquo;Would you like the ARM I2C interface to be enabled?&ldquo;と聞かれるので&quot;Yes&quot;を選択する</li>
+</ul>
+<p>I2Cデバイスの認識確認</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo i2cdetect -y 1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mao@raspberrypi5:~ $ sudo i2cdetect -y 1
+</span></span><span class="line"><span class="cl">sudo: unable to resolve host raspberrypi5: Name or service not known
+</span></span><span class="line"><span class="cl">     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+</span></span><span class="line"><span class="cl">00:                         -- -- -- -- -- -- -- -- 
+</span></span><span class="line"><span class="cl">10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+</span></span><span class="line"><span class="cl">20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+</span></span><span class="line"><span class="cl">30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+</span></span><span class="line"><span class="cl">40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+</span></span><span class="line"><span class="cl">50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+</span></span><span class="line"><span class="cl">60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+</span></span><span class="line"><span class="cl">70: -- -- -- -- -- -- -- 77                         
+</span></span><span class="line"><span class="cl">mao@raspberrypi5:~ $ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="uvのインストール">uvのインストール</h2>
+<p>インストールコマンド</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">curl -LsSf https://astral.sh/uv/install.sh | sh
+</span></span><span class="line"><span class="cl">source ~/.bashrc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>バージョン確認</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv --version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv 0.12.3 (aarch64-unknown-linux-gnu)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>依存関係のインストール</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv sync
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">raspberrypi5</span><span class="p">:</span><span class="o">~/</span><span class="n">raspi</span><span class="o">-</span><span class="n">temp</span><span class="o">-</span><span class="n">api</span><span class="o">-</span><span class="n">server</span> <span class="o">$</span> <span class="n">uv</span> <span class="n">sync</span>
+</span></span><span class="line"><span class="cl"><span class="n">Using</span> <span class="n">CPython</span> <span class="mf">3.13</span><span class="o">.</span><span class="mi">5</span> <span class="n">interpreter</span> <span class="n">at</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">python3</span>
+</span></span><span class="line"><span class="cl"><span class="n">Creating</span> <span class="n">virtual</span> <span class="n">environment</span> <span class="n">at</span><span class="p">:</span> <span class="o">.</span><span class="n">venv</span>
+</span></span><span class="line"><span class="cl"><span class="n">Resolved</span> <span class="mi">25</span> <span class="n">packages</span> <span class="ow">in</span> <span class="mi">592</span><span class="n">ms</span>
+</span></span><span class="line"><span class="cl"><span class="n">warning</span><span class="p">:</span> <span class="n">Skipping</span> <span class="n">installation</span> <span class="n">of</span> <span class="n">entry</span> <span class="n">points</span> <span class="p">(</span><span class="err">`</span><span class="n">project</span><span class="o">.</span><span class="n">scripts</span><span class="err">`</span><span class="p">)</span> <span class="k">for</span> <span class="n">package</span> <span class="err">`</span><span class="n">raspberrypi</span><span class="o">-</span><span class="n">temp</span><span class="o">-</span><span class="n">api</span><span class="err">`</span> <span class="n">because</span> <span class="n">this</span> <span class="n">project</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">packaged</span><span class="p">;</span> <span class="n">to</span> <span class="n">install</span> <span class="n">entry</span> <span class="n">points</span><span class="p">,</span> <span class="n">set</span> <span class="err">`</span><span class="k">tool</span><span class="o">.</span><span class="n">uv</span><span class="o">.</span><span class="n">package</span> <span class="o">=</span> <span class="bp">true</span><span class="err">`</span> <span class="ow">or</span> <span class="n">define</span> <span class="n">a</span> <span class="err">`</span><span class="n">build</span><span class="o">-</span><span class="n">system</span><span class="err">`</span>
+</span></span><span class="line"><span class="cl"><span class="n">Prepared</span> <span class="mi">15</span> <span class="n">packages</span> <span class="ow">in</span> <span class="mi">192</span><span class="n">ms</span>
+</span></span><span class="line"><span class="cl"><span class="n">Installed</span> <span class="mi">15</span> <span class="n">packages</span> <span class="ow">in</span> <span class="mi">7</span><span class="n">ms</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">annotated</span><span class="o">-</span><span class="n">doc</span><span class="o">==</span><span class="mf">0.0</span><span class="o">.</span><span class="mi">5</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">annotated</span><span class="o">-</span><span class="n">types</span><span class="o">==</span><span class="mf">0.8</span><span class="o">.</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">anyio</span><span class="o">==</span><span class="mf">4.14</span><span class="o">.</span><span class="mi">2</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">bme680</span><span class="o">==</span><span class="mf">2.0</span><span class="o">.</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">click</span><span class="o">==</span><span class="mf">8.4</span><span class="o">.</span><span class="mi">2</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">fastapi</span><span class="o">==</span><span class="mf">0.141</span><span class="o">.</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">h11</span><span class="o">==</span><span class="mf">0.16</span><span class="o">.</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">idna</span><span class="o">==</span><span class="mf">3.18</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">pydantic</span><span class="o">==</span><span class="mf">2.13</span><span class="o">.</span><span class="mi">4</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">pydantic</span><span class="o">-</span><span class="n">core</span><span class="o">==</span><span class="mf">2.46</span><span class="o">.</span><span class="mi">4</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">smbus2</span><span class="o">==</span><span class="mf">0.6</span><span class="o">.</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">starlette</span><span class="o">==</span><span class="mf">1.6</span><span class="o">.</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">typing</span><span class="o">-</span><span class="n">extensions</span><span class="o">==</span><span class="mf">4.16</span><span class="o">.</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">typing</span><span class="o">-</span><span class="n">inspection</span><span class="o">==</span><span class="mf">0.4</span><span class="o">.</span><span class="mi">4</span>
+</span></span><span class="line"><span class="cl"> <span class="o">+</span> <span class="n">uvicorn</span><span class="o">==</span><span class="mf">0.52</span><span class="o">.</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">mao</span><span class="err">@</span><span class="n">raspberrypi5</span><span class="p">:</span><span class="o">~/</span><span class="n">raspi</span><span class="o">-</span><span class="n">temp</span><span class="o">-</span><span class="n">api</span><span class="o">-</span><span class="n">server</span> <span class="o">$</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="apiサーバーの起動">APIサーバーの起動</h2>
+<p>実行コマンド</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">uv run python main.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Swagger UI ドキュメントのURL</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">http://192.168.10.9:8000/docs
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="../../post/raspberrypi-sensor-api-server-1/01.png"
+	width="2624"
+	height="2032"
+	srcset="../../post/raspberrypi-sensor-api-server-1/01_hu_b80e8672752e0393.png 480w, ../../post/raspberrypi-sensor-api-server-1/01_hu_58eb7a46937da9d4.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="129"
+		data-flex-basis="309px"
+	
+></p>
+<h2 id="コード">コード</h2>
+<p>main.py</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">import</span> <span class="n">os</span>
+</span></span><span class="line"><span class="cl"><span class="n">from</span> <span class="n">datetime</span> <span class="n">import</span> <span class="n">datetime</span>
+</span></span><span class="line"><span class="cl"><span class="n">from</span> <span class="n">typing</span> <span class="n">import</span> <span class="n">Optional</span>
+</span></span><span class="line"><span class="cl"><span class="n">from</span> <span class="n">fastapi</span> <span class="n">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">HTTPException</span>
+</span></span><span class="line"><span class="cl"><span class="n">from</span> <span class="n">pydantic</span> <span class="n">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+</span></span><span class="line"><span class="cl"><span class="n">from</span> <span class="n">contextlib</span> <span class="n">import</span> <span class="n">asynccontextmanager</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">from</span> <span class="n">sensor</span> <span class="n">import</span> <span class="n">BME680Sensor</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 環境変数による設定変更対応</span>
+</span></span><span class="line"><span class="cl"><span class="n">I2C_ADDRESS</span> <span class="o">=</span> <span class="ne">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;I2C_ADDRESS&#34;</span><span class="p">,</span> <span class="s2">&#34;0x77&#34;</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">MOCK_MODE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;MOCK_MODE&#34;</span><span class="p">,</span> <span class="s2">&#34;false&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&#34;true&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;yes&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">sensor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">BME680Sensor</span><span class="p">]</span> <span class="o">=</span> <span class="n">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">asynccontextmanager</span>
+</span></span><span class="line"><span class="cl"><span class="n">async</span> <span class="k">def</span> <span class="nf">lifespan</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">FastAPI</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">global</span> <span class="n">sensor</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 起動時処理：センサーの初期化</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sensor</span> <span class="o">=</span> <span class="n">BME680Sensor</span><span class="p">(</span><span class="n">i2c_addr</span><span class="o">=</span><span class="n">I2C_ADDRESS</span><span class="p">,</span> <span class="n">mock</span><span class="o">=</span><span class="n">MOCK_MODE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">yield</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 終了時処理：リソース解放</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">sensor</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sensor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">title</span><span class="o">=</span><span class="s2">&#34;Raspberry Pi BME680 Environment API&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">description</span><span class="o">=</span><span class="s2">&#34;ラズパイにI2C接続したBME680センサーから温度・湿度・気圧・ガス抵抗値を取得するWeb APIサービス&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">version</span><span class="o">=</span><span class="s2">&#34;2.0.0&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lifespan</span><span class="o">=</span><span class="n">lifespan</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># --- レスポンスモデル ---</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">EnvironmentResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;success&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">temperature</span><span class="p">:</span> <span class="ne">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="mf">24.5</span><span class="p">],</span> <span class="n">description</span><span class="o">=</span><span class="s2">&#34;温度 (℃)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">humidity</span><span class="p">:</span> <span class="ne">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="mf">55.3</span><span class="p">],</span> <span class="n">description</span><span class="o">=</span><span class="s2">&#34;相対湿度 (%)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pressure</span><span class="p">:</span> <span class="ne">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="mf">1013.25</span><span class="p">],</span> <span class="n">description</span><span class="o">=</span><span class="s2">&#34;気圧 (hPa)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gas_resistance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">None</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="mf">120000.0</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="n">description</span><span class="o">=</span><span class="s2">&#34;ガス抵抗値 (Ω)。ヒーターが安定していない場合は null&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;2026-08-13T11:00:00.000000&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="n">description</span><span class="o">=</span><span class="s2">&#34;取得時刻 (ISO 8601)&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_mock</span><span class="p">:</span> <span class="ne">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="n">False</span><span class="p">],</span> <span class="n">description</span><span class="o">=</span><span class="s2">&#34;モックデータフラグ&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="n">ErrorResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s2">&#34;error&#34;</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;error&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">examples</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;BME680通信エラーが発生しました&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># --- エンドポイント ---</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;/api/environment&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">response_model</span><span class="o">=</span><span class="n">EnvironmentResponse</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">responses</span><span class="o">=</span><span class="p">{</span><span class="mi">500</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;model&#34;</span><span class="p">:</span> <span class="n">ErrorResponse</span><span class="p">}},</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">async</span> <span class="k">def</span> <span class="nf">get_environment</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    BME680センサーから温度・湿度・気圧・ガス抵抗値を取得して返します。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">sensor</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">raise</span> <span class="n">HTTPException</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">status_code</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&#34;BME680 sensor is not initialized.&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">reading</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">EnvironmentResponse</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">status</span><span class="o">=</span><span class="s2">&#34;success&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temperature</span><span class="o">=</span><span class="n">reading</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">humidity</span><span class="o">=</span><span class="n">reading</span><span class="o">.</span><span class="n">humidity</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pressure</span><span class="o">=</span><span class="n">reading</span><span class="o">.</span><span class="n">pressure</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">gas_resistance</span><span class="o">=</span><span class="n">reading</span><span class="o">.</span><span class="n">gas_resistance</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">is_mock</span><span class="o">=</span><span class="n">sensor</span><span class="o">.</span><span class="n">mock</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">except</span> <span class="n">Exception</span> <span class="n">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;/api/temperature&#34;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">EnvironmentResponse</span><span class="p">,</span> <span class="n">include_in_schema</span><span class="o">=</span><span class="n">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">async</span> <span class="k">def</span> <span class="nf">get_temperature</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;後方互換用: /api/environment と同一の結果を返します。&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">await</span> <span class="n">get_environment</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">@</span><span class="n">app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;/health&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">async</span> <span class="k">def</span> <span class="nf">health_check</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    サーバー状態確認用のヘルスチェックエンドポイント
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;status&#34;</span><span class="p">:</span> <span class="s2">&#34;healthy&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;sensor_mock_mode&#34;</span><span class="p">:</span> <span class="n">sensor</span><span class="o">.</span><span class="n">mock</span> <span class="k">if</span> <span class="n">sensor</span> <span class="k">else</span> <span class="n">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">import</span> <span class="n">uvicorn</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 開発用単体実行時の設定（ポート: 8000）</span>
+</span></span><span class="line"><span class="cl">    <span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&#34;main:app&#34;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">,</span> <span class="n">reload</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>sensor.py</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">import random
+</span></span><span class="line"><span class="cl">import logging
+</span></span><span class="line"><span class="cl">from dataclasses import dataclass
+</span></span><span class="line"><span class="cl">from typing import Optional
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">logger = logging.getLogger(__name__)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">@dataclass
+</span></span><span class="line"><span class="cl">class BME680Reading:
+</span></span><span class="line"><span class="cl">    &#34;&#34;&#34;BME680センサーの測定結果を保持するデータクラス&#34;&#34;&#34;
+</span></span><span class="line"><span class="cl">    temperature: float   # 温度 (℃)
+</span></span><span class="line"><span class="cl">    humidity: float      # 相対湿度 (%)
+</span></span><span class="line"><span class="cl">    pressure: float      # 気圧 (hPa)
+</span></span><span class="line"><span class="cl">    gas_resistance: Optional[float]  # ガス抵抗値 (Ω)、未安定時はNone
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class BME680Sensor:
+</span></span><span class="line"><span class="cl">    &#34;&#34;&#34;
+</span></span><span class="line"><span class="cl">    BME680 環境センサー制御クラス
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    Pimoroni の bme680 ライブラリを使用して I2C 経由で
+</span></span><span class="line"><span class="cl">    温度・湿度・気圧・ガス抵抗値を取得します。
+</span></span><span class="line"><span class="cl">    ライブラリが利用できない環境ではモックモードにフォールバックします。
+</span></span><span class="line"><span class="cl">    &#34;&#34;&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def __init__(self, i2c_addr: int = 0x77, mock: bool = False):
+</span></span><span class="line"><span class="cl">        self.i2c_addr = i2c_addr
+</span></span><span class="line"><span class="cl">        self.mock = mock
+</span></span><span class="line"><span class="cl">        self._device = None
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        if not self.mock:
+</span></span><span class="line"><span class="cl">            try:
+</span></span><span class="line"><span class="cl">                import bme680
+</span></span><span class="line"><span class="cl">                self._device = bme680.BME680(i2c_addr=self.i2c_addr)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                # オーバーサンプリング設定
+</span></span><span class="line"><span class="cl">                self._device.set_humidity_oversample(bme680.OS_2X)
+</span></span><span class="line"><span class="cl">                self._device.set_pressure_oversample(bme680.OS_4X)
+</span></span><span class="line"><span class="cl">                self._device.set_temperature_oversample(bme680.OS_8X)
+</span></span><span class="line"><span class="cl">                self._device.set_filter(bme680.FILTER_SIZE_3)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                # ガスセンサー設定
+</span></span><span class="line"><span class="cl">                self._device.set_gas_status(bme680.ENABLE_GAS_MEAS)
+</span></span><span class="line"><span class="cl">                self._device.set_gas_heater_temperature(320)
+</span></span><span class="line"><span class="cl">                self._device.set_gas_heater_duration(150)
+</span></span><span class="line"><span class="cl">                self._device.select_gas_heater_profile(0)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                logger.info(
+</span></span><span class="line"><span class="cl">                    f&#34;BME680 initialized (address: 0x{self.i2c_addr:02x})&#34;
+</span></span><span class="line"><span class="cl">                )
+</span></span><span class="line"><span class="cl">            except Exception as e:
+</span></span><span class="line"><span class="cl">                logger.warning(
+</span></span><span class="line"><span class="cl">                    f&#34;Failed to initialize BME680: {e}. Falling back to mock mode.&#34;
+</span></span><span class="line"><span class="cl">                )
+</span></span><span class="line"><span class="cl">                self.mock = True
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def read(self) -&gt; BME680Reading:
+</span></span><span class="line"><span class="cl">        &#34;&#34;&#34;
+</span></span><span class="line"><span class="cl">        センサーから全測定値を一括取得します。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        Returns:
+</span></span><span class="line"><span class="cl">            BME680Reading: 温度・湿度・気圧・ガス抵抗値を格納したオブジェクト
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        Raises:
+</span></span><span class="line"><span class="cl">            RuntimeError: センサーからのデータ取得に失敗した場合
+</span></span><span class="line"><span class="cl">        &#34;&#34;&#34;
+</span></span><span class="line"><span class="cl">        if self.mock or self._device is None:
+</span></span><span class="line"><span class="cl">            return BME680Reading(
+</span></span><span class="line"><span class="cl">                temperature=round(20.0 + random.uniform(0.0, 10.0), 2),
+</span></span><span class="line"><span class="cl">                humidity=round(40.0 + random.uniform(0.0, 30.0), 2),
+</span></span><span class="line"><span class="cl">                pressure=round(1000.0 + random.uniform(0.0, 30.0), 2),
+</span></span><span class="line"><span class="cl">                gas_resistance=round(50000.0 + random.uniform(0.0, 200000.0), 0),
+</span></span><span class="line"><span class="cl">            )
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        try:
+</span></span><span class="line"><span class="cl">            if not self._device.get_sensor_data():
+</span></span><span class="line"><span class="cl">                raise RuntimeError(&#34;BME680: get_sensor_data() returned False&#34;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            gas = None
+</span></span><span class="line"><span class="cl">            if self._device.data.heat_stable:
+</span></span><span class="line"><span class="cl">                gas = round(self._device.data.gas_resistance, 0)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            return BME680Reading(
+</span></span><span class="line"><span class="cl">                temperature=round(self._device.data.temperature, 2),
+</span></span><span class="line"><span class="cl">                humidity=round(self._device.data.humidity, 2),
+</span></span><span class="line"><span class="cl">                pressure=round(self._device.data.pressure, 2),
+</span></span><span class="line"><span class="cl">                gas_resistance=gas,
+</span></span><span class="line"><span class="cl">            )
+</span></span><span class="line"><span class="cl">        except Exception as e:
+</span></span><span class="line"><span class="cl">            logger.error(f&#34;BME680 read error: {e}&#34;)
+</span></span><span class="line"><span class="cl">            raise RuntimeError(f&#34;BME680 Read Error: {e}&#34;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def close(self):
+</span></span><span class="line"><span class="cl">        &#34;&#34;&#34;リソースの解放（bme680ライブラリは明示的なcloseは不要だが互換性のため残す）&#34;&#34;&#34;
+</span></span><span class="line"><span class="cl">        self._device = None
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>pyproject.toml</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[project]
+</span></span><span class="line"><span class="cl">name = &#34;raspberrypi-temp-api&#34;
+</span></span><span class="line"><span class="cl">version = &#34;1.0.0&#34;
+</span></span><span class="line"><span class="cl">description = &#34;ラズパイにI2C接続した温度センサーから温度情報を取得するREST APIサーバー&#34;
+</span></span><span class="line"><span class="cl">requires-python = &#34;&gt;=3.9&#34;
+</span></span><span class="line"><span class="cl">dependencies = [
+</span></span><span class="line"><span class="cl">    &#34;fastapi&gt;=0.100.0&#34;,
+</span></span><span class="line"><span class="cl">    &#34;uvicorn&gt;=0.22.0&#34;,
+</span></span><span class="line"><span class="cl">    &#34;bme680&gt;=1.0.5&#34;,
+</span></span><span class="line"><span class="cl">    &#34;pydantic&gt;=2.0.0&#34;,
+</span></span><span class="line"><span class="cl">]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[project.scripts]
+</span></span><span class="line"><span class="cl">temp-api = &#34;main:start&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>temp-api.service</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[Unit]
+</span></span><span class="line"><span class="cl">Description=Raspberry Pi I2C Temperature API Server
+</span></span><span class="line"><span class="cl">After=network.target
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Service]
+</span></span><span class="line"><span class="cl">Type=simple
+</span></span><span class="line"><span class="cl">User=mao
+</span></span><span class="line"><span class="cl">WorkingDirectory=/home/mao/raspi-temp-api-server
+</span></span><span class="line"><span class="cl">Environment=PATH=/home/mao/.local/bin:/usr/local/bin:/usr/bin:/bin
+</span></span><span class="line"><span class="cl">ExecStart=/home/mao/.local/bin/uv run uvicorn main:app --host 0.0.0.0 --port 8000
+</span></span><span class="line"><span class="cl">Restart=always
+</span></span><span class="line"><span class="cl">RestartSec=5
+</span></span><span class="line"><span class="cl">Environment=I2C_ADDRESS=0x77
+</span></span><span class="line"><span class="cl">Environment=MOCK_MODE=false
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Install]
+</span></span><span class="line"><span class="cl">WantedBy=multi-user.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="自動起動させる方法">自動起動させる方法</h2>
+<p>サーバーが起動したときに自動で起動できるように設定する</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">cp</span> <span class="n">temp</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">service</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">temp</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">service</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">temp</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">service</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">status</span> <span class="n">temp</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">service</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>サービスを削除するとき</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">stop</span> <span class="n">temp</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">service</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">disable</span> <span class="n">temp</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">service</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">rm</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">temp</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">service</span>
+</span></span><span class="line"><span class="cl"><span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>これでAPIを叩くと現在の温度湿度気圧を返すAPIサーバーが構築できた</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+
+    
+</footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">関連するコンテンツ</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="../../post/windows11-on-proxmox-usb-passthrough/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Proxmox上のWindows11にUSBパススルーをしてラズパイピコにプログラムを書き込む</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/raspberrypi5-usb-boot/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="../../post/cloudflare-tunnel-raspberrypi3b/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2026 onodera
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        テーマ <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> は <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> によって設計されています。
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
