@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>RaspberryPi on onodera memo</title>
-        <link>https://tiisanamaou.github.io/hugo-website/categories/raspberrypi/</link>
+        <link>https://tiisanamaou.github.io/categories/raspberrypi/</link>
         <description>Recent content in RaspberryPi on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 16 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/raspberrypi/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 16 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/raspberrypi/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>ラズパイにI2Cで接続したセンサーから情報を取得するAPIサーバーを構築する（2/2）</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/raspberrypi-sensor-api-server-2/</link>
+        <link>https://tiisanamaou.github.io/post/raspberrypi-sensor-api-server-2/</link>
         <pubDate>Sun, 16 Aug 2026 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/raspberrypi-sensor-api-server-2/</guid>
+        <guid>https://tiisanamaou.github.io/post/raspberrypi-sensor-api-server-2/</guid>
         <description>&lt;h2 id=&#34;sqliteにデータを保存する&#34;&gt;SQLiteにデータを保存する&lt;/h2&gt;
 &lt;p&gt;APIサーバーのプログラムを実行したあとに実行するとlocalhostを叩いて、SQLiteにデータを保存するプログラム&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1051,10 +1051,10 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://192.168.10.9:8001/docs
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/raspberrypi-sensor-api-server-2/01.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/raspberrypi-sensor-api-server-2/01.png&#34;
 	width=&#34;2624&#34;
 	height=&#34;2032&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi-sensor-api-server-2/01_hu_5c2ef4abd0fd7fda.png 480w, ../../hugo-website/post/raspberrypi-sensor-api-server-2/01_hu_a1b5ed38f1d2accf.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi-sensor-api-server-2/01_hu_5c2ef4abd0fd7fda.png 480w, ../../post/raspberrypi-sensor-api-server-2/01_hu_a1b5ed38f1d2accf.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1888,10 +1888,10 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://192.168.10.9:8002
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/raspberrypi-sensor-api-server-2/02.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/raspberrypi-sensor-api-server-2/02.png&#34;
 	width=&#34;2624&#34;
 	height=&#34;2032&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi-sensor-api-server-2/02_hu_787ae3bb6be8b38b.png 480w, ../../hugo-website/post/raspberrypi-sensor-api-server-2/02_hu_ed1bf78dad6c175.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi-sensor-api-server-2/02_hu_787ae3bb6be8b38b.png 480w, ../../post/raspberrypi-sensor-api-server-2/02_hu_ed1bf78dad6c175.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2010,10 +2010,10 @@
         </item>
         <item>
         <title>ラズパイにI2Cで接続したセンサーから情報を取得するAPIサーバーを構築する（1/2）</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/raspberrypi-sensor-api-server-1/</link>
+        <link>https://tiisanamaou.github.io/post/raspberrypi-sensor-api-server-1/</link>
         <pubDate>Sat, 15 Aug 2026 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/raspberrypi-sensor-api-server-1/</guid>
+        <guid>https://tiisanamaou.github.io/post/raspberrypi-sensor-api-server-1/</guid>
         <description>&lt;h2 id=&#34;osの準備&#34;&gt;OSの準備&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Raspberry 5 8GB&lt;/li&gt;
@@ -2348,10 +2348,10 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http://192.168.10.9:8000/docs
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/raspberrypi-sensor-api-server-1/01.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/raspberrypi-sensor-api-server-1/01.png&#34;
 	width=&#34;2624&#34;
 	height=&#34;2032&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi-sensor-api-server-1/01_hu_b80e8672752e0393.png 480w, ../../hugo-website/post/raspberrypi-sensor-api-server-1/01_hu_58eb7a46937da9d4.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi-sensor-api-server-1/01_hu_b80e8672752e0393.png 480w, ../../post/raspberrypi-sensor-api-server-1/01_hu_58eb7a46937da9d4.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2901,10 +2901,10 @@
         </item>
         <item>
         <title>Proxmox上のWindows11にUSBパススルーをしてラズパイピコにプログラムを書き込む</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/windows11-on-proxmox-usb-passthrough/</link>
+        <link>https://tiisanamaou.github.io/post/windows11-on-proxmox-usb-passthrough/</link>
         <pubDate>Tue, 06 May 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/windows11-on-proxmox-usb-passthrough/</guid>
+        <guid>https://tiisanamaou.github.io/post/windows11-on-proxmox-usb-passthrough/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;ファームウェア
@@ -2920,10 +2920,10 @@
 &lt;p&gt;本体のUSBに差し込みます&lt;/p&gt;
 &lt;p&gt;対象のVMの「ハードウェア」に「追加」＞「USBデバイス」＞「USBポートを使用」から製造者が「Raspberry Pi」になっているポートを選択します
 「追加」を押します
-&lt;img src=&#34;../../hugo-website/post/windows11-on-proxmox-usb-passthrough/01.png&#34;
+&lt;img src=&#34;../../post/windows11-on-proxmox-usb-passthrough/01.png&#34;
 	width=&#34;1324&#34;
 	height=&#34;689&#34;
-	srcset=&#34;../../hugo-website/post/windows11-on-proxmox-usb-passthrough/01_hu_46f781b9781f983f.png 480w, ../../hugo-website/post/windows11-on-proxmox-usb-passthrough/01_hu_2c2c47be5150a0a2.png 1024w&#34;
+	srcset=&#34;../../post/windows11-on-proxmox-usb-passthrough/01_hu_46f781b9781f983f.png 480w, ../../post/windows11-on-proxmox-usb-passthrough/01_hu_2c2c47be5150a0a2.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2935,10 +2935,10 @@
 &lt;p&gt;すると一覧にUSBデバイスが追加されます&lt;/p&gt;
 &lt;h2 id=&#34;windows11上から接続されているか確認する&#34;&gt;WIndows11上から接続されているか確認する&lt;/h2&gt;
 &lt;p&gt;Windows11上でデバイスマネージャーを開き「ほかのデバイス」に「RP2 Boot」が表示されていれば認識されています
-&lt;img src=&#34;../../hugo-website/post/windows11-on-proxmox-usb-passthrough/02.png&#34;
+&lt;img src=&#34;../../post/windows11-on-proxmox-usb-passthrough/02.png&#34;
 	width=&#34;2322&#34;
 	height=&#34;1322&#34;
-	srcset=&#34;../../hugo-website/post/windows11-on-proxmox-usb-passthrough/02_hu_7108510cfb7ea3ab.png 480w, ../../hugo-website/post/windows11-on-proxmox-usb-passthrough/02_hu_b07871748ab8508e.png 1024w&#34;
+	srcset=&#34;../../post/windows11-on-proxmox-usb-passthrough/02_hu_7108510cfb7ea3ab.png 480w, ../../post/windows11-on-proxmox-usb-passthrough/02_hu_b07871748ab8508e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2948,10 +2948,10 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;エクスプローラー側からUSBメモリ等と同じように「RPI-RP2」として認識されているかを確認する
-&lt;img src=&#34;../../hugo-website/post/windows11-on-proxmox-usb-passthrough/03.png&#34;
+&lt;img src=&#34;../../post/windows11-on-proxmox-usb-passthrough/03.png&#34;
 	width=&#34;2322&#34;
 	height=&#34;1322&#34;
-	srcset=&#34;../../hugo-website/post/windows11-on-proxmox-usb-passthrough/03_hu_3efd458f5999aa93.png 480w, ../../hugo-website/post/windows11-on-proxmox-usb-passthrough/03_hu_68236ca9e80a3444.png 1024w&#34;
+	srcset=&#34;../../post/windows11-on-proxmox-usb-passthrough/03_hu_3efd458f5999aa93.png 480w, ../../post/windows11-on-proxmox-usb-passthrough/03_hu_68236ca9e80a3444.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2983,10 +2983,10 @@
 すると自動的に再認識されます&lt;/p&gt;
 &lt;p&gt;thonny上の右下から「Raspberry Pi Pico」を選択します&lt;br&gt;
 これでプログラムが書き込めるようになりました
-&lt;img src=&#34;../../hugo-website/post/windows11-on-proxmox-usb-passthrough/04.png&#34;
+&lt;img src=&#34;../../post/windows11-on-proxmox-usb-passthrough/04.png&#34;
 	width=&#34;2322&#34;
 	height=&#34;1322&#34;
-	srcset=&#34;../../hugo-website/post/windows11-on-proxmox-usb-passthrough/04_hu_33ebe72849648c10.png 480w, ../../hugo-website/post/windows11-on-proxmox-usb-passthrough/04_hu_3181e6039c7be56f.png 1024w&#34;
+	srcset=&#34;../../post/windows11-on-proxmox-usb-passthrough/04_hu_33ebe72849648c10.png 480w, ../../post/windows11-on-proxmox-usb-passthrough/04_hu_3181e6039c7be56f.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3029,17 +3029,17 @@
         </item>
         <item>
         <title>ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/</link>
+        <link>https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/</link>
         <pubDate>Sun, 02 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/</guid>
+        <guid>https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Raspberry Pi 5 Model B 8GB（この記事では&amp;quot;ラズパイ5&amp;quot;と記載）
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101.jpeg&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/IMG_3101.jpeg&#34;
 	width=&#34;3033&#34;
 	height=&#34;1706&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101_hu_2ac96a9e5a331f1f.jpeg 480w, ../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101_hu_7135f1399c7fc0b5.jpeg 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/IMG_3101_hu_2ac96a9e5a331f1f.jpeg 480w, ../../post/raspberrypi5-usb-boot/IMG_3101_hu_7135f1399c7fc0b5.jpeg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3055,10 +3055,10 @@
 &lt;/ul&gt;
 &lt;h2 id=&#34;ラズパイ5を起動する準備&#34;&gt;ラズパイ5を起動する準備&lt;/h2&gt;
 &lt;p&gt;&amp;ldquo;Raspberry Pi Imager&amp;quot;を使用して、SSDにOSイメージを書き込みます
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/01.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/01.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/01_hu_627c24bdfb487799.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/01_hu_9d0e788f036c0ea6.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/01_hu_627c24bdfb487799.png 480w, ../../post/raspberrypi5-usb-boot/01_hu_9d0e788f036c0ea6.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3067,10 +3067,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/02.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/02.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/02_hu_f9cd50ac9b5d66ed.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/02_hu_9ad21a9defba921c.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/02_hu_f9cd50ac9b5d66ed.png 480w, ../../post/raspberrypi5-usb-boot/02_hu_9ad21a9defba921c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3079,10 +3079,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/03.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/03.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/03_hu_61ce3d895bc9e91a.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/03_hu_d62c8d712ecc85ea.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/03_hu_61ce3d895bc9e91a.png 480w, ../../post/raspberrypi5-usb-boot/03_hu_d62c8d712ecc85ea.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3091,10 +3091,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/04.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/04.png&#34;
 	width=&#34;1090&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/04_hu_f5fa33bd0cc12748.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/04_hu_ab950da47ed048c.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/04_hu_f5fa33bd0cc12748.png 480w, ../../post/raspberrypi5-usb-boot/04_hu_ab950da47ed048c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3103,10 +3103,10 @@
 		data-flex-basis=&#34;198px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/05.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/05.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/05_hu_408dbf76e86d63eb.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/05_hu_aaf423fb08c24506.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/05_hu_408dbf76e86d63eb.png 480w, ../../post/raspberrypi5-usb-boot/05_hu_aaf423fb08c24506.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3115,10 +3115,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/06.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/06.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/06_hu_99a9e83746f741c6.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/06_hu_d50cdc3311d2ac9a.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/06_hu_99a9e83746f741c6.png 480w, ../../post/raspberrypi5-usb-boot/06_hu_d50cdc3311d2ac9a.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3127,10 +3127,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/07.png&#34;
+&lt;img src=&#34;../../post/raspberrypi5-usb-boot/07.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/07_hu_4330ef57ebcaa16d.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/07_hu_63469dc7decd9ad0.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/07_hu_4330ef57ebcaa16d.png 480w, ../../post/raspberrypi5-usb-boot/07_hu_63469dc7decd9ad0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3178,10 +3178,10 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /boot/firmware/config.txt
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/09.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/raspberrypi5-usb-boot/09.png&#34;
 	width=&#34;1732&#34;
 	height=&#34;1258&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/09_hu_94e54a2436a02ef9.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/09_hu_b61b855f3ec7a46.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/09_hu_94e54a2436a02ef9.png 480w, ../../post/raspberrypi5-usb-boot/09_hu_b61b855f3ec7a46.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3243,10 +3243,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mao@raspberrypi5:~$
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/08.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/raspberrypi5-usb-boot/08.png&#34;
 	width=&#34;1732&#34;
 	height=&#34;1258&#34;
-	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/08_hu_36176642d6d1a735.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/08_hu_ae2157135b16ac3d.png 1024w&#34;
+	srcset=&#34;../../post/raspberrypi5-usb-boot/08_hu_36176642d6d1a735.png 480w, ../../post/raspberrypi5-usb-boot/08_hu_ae2157135b16ac3d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3361,10 +3361,10 @@
         </item>
         <item>
         <title>CloudflareTunnelとDockerComposeを使用してラズパイ上に構築したサイトにアクセスできるようにする</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/cloudflare-tunnel-raspberrypi3b/</link>
+        <link>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</link>
         <pubDate>Mon, 07 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/cloudflare-tunnel-raspberrypi3b/</guid>
+        <guid>https://tiisanamaou.github.io/post/cloudflare-tunnel-raspberrypi3b/</guid>
         <description>&lt;h2 id=&#34;ubuntuにスワップを作成するラズパイ&#34;&gt;Ubuntuにスワップを作成する（ラズパイ）&lt;/h2&gt;
 &lt;p&gt;ラズパイのスペックは下記の通りです&lt;/p&gt;
 &lt;ul&gt;
@@ -3566,10 +3566,10 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;すると&amp;quot;Configure&amp;quot;ｔ表示された画面になります
-&lt;img src=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/01.png&#34;
+&lt;img src=&#34;../../post/cloudflare-tunnel-raspberrypi3b/01.png&#34;
 	width=&#34;2746&#34;
 	height=&#34;1854&#34;
-	srcset=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/01_hu_763b0185d6cbc960.png 480w, ../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/01_hu_574d8cfcbd7e1ae1.png 1024w&#34;
+	srcset=&#34;../../post/cloudflare-tunnel-raspberrypi3b/01_hu_763b0185d6cbc960.png 480w, ../../post/cloudflare-tunnel-raspberrypi3b/01_hu_574d8cfcbd7e1ae1.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3586,10 +3586,10 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&amp;ldquo;Add public hostname for TunnelName&amp;quot;と表示された画面になります
-&lt;img src=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/02.png&#34;
+&lt;img src=&#34;../../post/cloudflare-tunnel-raspberrypi3b/02.png&#34;
 	width=&#34;3032&#34;
 	height=&#34;1854&#34;
-	srcset=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/02_hu_ff2bbfd1c1c0a6df.png 480w, ../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/02_hu_51be6a9760a47cf8.png 1024w&#34;
+	srcset=&#34;../../post/cloudflare-tunnel-raspberrypi3b/02_hu_ff2bbfd1c1c0a6df.png 480w, ../../post/cloudflare-tunnel-raspberrypi3b/02_hu_51be6a9760a47cf8.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -3658,10 +3658,10 @@
 下記の画像は&amp;quot;raspberrypi3b&amp;quot;をサブドメインとして設定した&lt;br&gt;
 503等がでると、cloudflaredは起動しているがdocker compose内での接続が上手く行っていない可能性がある&lt;br&gt;
 ※コンテナ名やポート番号が異なるなど
-&lt;img src=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/03.png&#34;
+&lt;img src=&#34;../../post/cloudflare-tunnel-raspberrypi3b/03.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/03_hu_6cc9ab873021ece9.png 480w, ../../hugo-website/post/cloudflare-tunnel-raspberrypi3b/03_hu_f179f62cf054b9a4.png 1024w&#34;
+	srcset=&#34;../../post/cloudflare-tunnel-raspberrypi3b/03_hu_6cc9ab873021ece9.png 480w, ../../post/cloudflare-tunnel-raspberrypi3b/03_hu_f179f62cf054b9a4.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	

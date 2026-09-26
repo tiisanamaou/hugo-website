@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Let&#39;s-Encrypt on onodera memo</title>
-        <link>https://tiisanamaou.github.io/hugo-website/categories/lets-encrypt/</link>
+        <link>https://tiisanamaou.github.io/categories/lets-encrypt/</link>
         <description>Recent content in Let&#39;s-Encrypt on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Tue, 17 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/lets-encrypt/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 17 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/lets-encrypt/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>証明書発行手順（Let&#39;s Encrypt）</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/certbot-lets-encrypt/</link>
+        <link>https://tiisanamaou.github.io/post/certbot-lets-encrypt/</link>
         <pubDate>Tue, 17 Dec 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/certbot-lets-encrypt/</guid>
+        <guid>https://tiisanamaou.github.io/post/certbot-lets-encrypt/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する&lt;/p&gt;
 &lt;h2 id=&#34;証明書の発行準備&#34;&gt;証明書の発行準備&lt;/h2&gt;

@@ -9,16 +9,16 @@
 '>
 <title>ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/'>
 
-<link rel="stylesheet" href="../../hugo-website/scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）'>
 <meta property='og:description' content='環境 Raspberry Pi 5 Model B 8GB（この記事では&quot;ラズパイ5&quot;と記載） KIOXIA SATA SSD 480GB Ubuntu 24.04.1 LTS aarch64 USB-SATA変換アダプタ Raspberry Pi Imager v1.8.5 ラズパイ5を起動する準備 &ldquo;Raspberry Pi Imager&quot;を使用して、SSDにOSイメージを書き込みます 書き込みが完了
 ラズパイ5にUSB-SSDとLANケーブル、電源ケーブルを接続します
 電源を入れて30秒程たったら電源ボタンを押します（電源容量不足の警告が出るため）
 すると、bootが始まります
 別のPCからsshでログインします
 '>
-<meta property='og:url' content='https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-02T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）">
@@ -67,13 +67,13 @@
         
             
             <figure class="site-avatar">
-                <a href="../../hugo-website/">
+                <a href="../../">
                 
                     
                     
                     
                         
-                        <img src="../../hugo-website/img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -84,7 +84,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="../../hugo-website">onodera memo</a></h1>
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
             <h2 class="site-description">メモ兼ブログ</h2>
         </div>
     </header><ol class="social-menu">
@@ -114,7 +114,7 @@
         
         
         <li >
-            <a href='../../hugo-website/' >
+            <a href='../../' >
                 
                 
                 
@@ -134,7 +134,7 @@
         
         
         <li >
-            <a href='../../hugo-website/page/about/' >
+            <a href='../../page/about/' >
                 
                 
                 
@@ -153,7 +153,7 @@
         
         
         <li >
-            <a href='../../hugo-website/page/archives/' >
+            <a href='../../page/archives/' >
                 
                 
                 
@@ -173,7 +173,7 @@
         
         
         <li >
-            <a href='../../hugo-website/page/search/' >
+            <a href='../../page/search/' >
                 
                 
                 
@@ -206,7 +206,7 @@
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://tiisanamaou.github.io/hugo-website/" selected></option>
+                            <option value="https://tiisanamaou.github.io/" selected></option>
                         
                     </select>
                 </li>
@@ -247,11 +247,11 @@
     
     <header class="article-category">
         
-            <a href="../../hugo-website/categories/raspberrypi/" >
+            <a href="../../categories/raspberrypi/" >
                 RaspberryPi
             </a>
         
-            <a href="../../hugo-website/categories/ubuntu/" >
+            <a href="../../categories/ubuntu/" >
                 Ubuntu
             </a>
         
@@ -260,7 +260,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../hugo-website/post/raspberrypi5-usb-boot/">ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）</a>
+            <a href="../../post/raspberrypi5-usb-boot/">ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）</a>
         </h2>
     
         
@@ -302,10 +302,10 @@
     <h2 id="環境">環境</h2>
 <ul>
 <li>Raspberry Pi 5 Model B 8GB（この記事では&quot;ラズパイ5&quot;と記載）
-<img src="../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101.jpeg"
+<img src="../../post/raspberrypi5-usb-boot/IMG_3101.jpeg"
 	width="3033"
 	height="1706"
-	srcset="../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101_hu_2ac96a9e5a331f1f.jpeg 480w, ../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101_hu_7135f1399c7fc0b5.jpeg 1024w"
+	srcset="../../post/raspberrypi5-usb-boot/IMG_3101_hu_2ac96a9e5a331f1f.jpeg 480w, ../../post/raspberrypi5-usb-boot/IMG_3101_hu_7135f1399c7fc0b5.jpeg 1024w"
 	loading="lazy"
 	
 	
@@ -321,10 +321,10 @@
 </ul>
 <h2 id="ラズパイ5を起動する準備">ラズパイ5を起動する準備</h2>
 <p>&ldquo;Raspberry Pi Imager&quot;を使用して、SSDにOSイメージを書き込みます
-<img src="../../hugo-website/post/raspberrypi5-usb-boot/01.png"
+<img src="../../post/raspberrypi5-usb-boot/01.png"
 	width="1372"
 	height="966"
-	srcset="../../hugo-website/post/raspberrypi5-usb-boot/01_hu_627c24bdfb487799.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/01_hu_9d0e788f036c0ea6.png 1024w"
+	srcset="../../post/raspberrypi5-usb-boot/01_hu_627c24bdfb487799.png 480w, ../../post/raspberrypi5-usb-boot/01_hu_9d0e788f036c0ea6.png 1024w"
 	loading="lazy"
 	
 	
@@ -333,10 +333,10 @@
 		data-flex-basis="340px"
 	
 >
-<img src="../../hugo-website/post/raspberrypi5-usb-boot/02.png"
+<img src="../../post/raspberrypi5-usb-boot/02.png"
 	width="1372"
 	height="966"
-	srcset="../../hugo-website/post/raspberrypi5-usb-boot/02_hu_f9cd50ac9b5d66ed.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/02_hu_9ad21a9defba921c.png 1024w"
+	srcset="../../post/raspberrypi5-usb-boot/02_hu_f9cd50ac9b5d66ed.png 480w, ../../post/raspberrypi5-usb-boot/02_hu_9ad21a9defba921c.png 1024w"
 	loading="lazy"
 	
 	
@@ -345,10 +345,10 @@
 		data-flex-basis="340px"
 	
 >
-<img src="../../hugo-website/post/raspberrypi5-usb-boot/03.png"
+<img src="../../post/raspberrypi5-usb-boot/03.png"
 	width="1372"
 	height="966"
-	srcset="../../hugo-website/post/raspberrypi5-usb-boot/03_hu_61ce3d895bc9e91a.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/03_hu_d62c8d712ecc85ea.png 1024w"
+	srcset="../../post/raspberrypi5-usb-boot/03_hu_61ce3d895bc9e91a.png 480w, ../../post/raspberrypi5-usb-boot/03_hu_d62c8d712ecc85ea.png 1024w"
 	loading="lazy"
 	
 	
@@ -357,10 +357,10 @@
 		data-flex-basis="340px"
 	
 >
-<img src="../../hugo-website/post/raspberrypi5-usb-boot/04.png"
+<img src="../../post/raspberrypi5-usb-boot/04.png"
 	width="1090"
 	height="1318"
-	srcset="../../hugo-website/post/raspberrypi5-usb-boot/04_hu_f5fa33bd0cc12748.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/04_hu_ab950da47ed048c.png 1024w"
+	srcset="../../post/raspberrypi5-usb-boot/04_hu_f5fa33bd0cc12748.png 480w, ../../post/raspberrypi5-usb-boot/04_hu_ab950da47ed048c.png 1024w"
 	loading="lazy"
 	
 	
@@ -369,10 +369,10 @@
 		data-flex-basis="198px"
 	
 >
-<img src="../../hugo-website/post/raspberrypi5-usb-boot/05.png"
+<img src="../../post/raspberrypi5-usb-boot/05.png"
 	width="1372"
 	height="966"
-	srcset="../../hugo-website/post/raspberrypi5-usb-boot/05_hu_408dbf76e86d63eb.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/05_hu_aaf423fb08c24506.png 1024w"
+	srcset="../../post/raspberrypi5-usb-boot/05_hu_408dbf76e86d63eb.png 480w, ../../post/raspberrypi5-usb-boot/05_hu_aaf423fb08c24506.png 1024w"
 	loading="lazy"
 	
 	
@@ -381,10 +381,10 @@
 		data-flex-basis="340px"
 	
 >
-<img src="../../hugo-website/post/raspberrypi5-usb-boot/06.png"
+<img src="../../post/raspberrypi5-usb-boot/06.png"
 	width="1372"
 	height="966"
-	srcset="../../hugo-website/post/raspberrypi5-usb-boot/06_hu_99a9e83746f741c6.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/06_hu_d50cdc3311d2ac9a.png 1024w"
+	srcset="../../post/raspberrypi5-usb-boot/06_hu_99a9e83746f741c6.png 480w, ../../post/raspberrypi5-usb-boot/06_hu_d50cdc3311d2ac9a.png 1024w"
 	loading="lazy"
 	
 	
@@ -393,10 +393,10 @@
 		data-flex-basis="340px"
 	
 >
-<img src="../../hugo-website/post/raspberrypi5-usb-boot/07.png"
+<img src="../../post/raspberrypi5-usb-boot/07.png"
 	width="1372"
 	height="966"
-	srcset="../../hugo-website/post/raspberrypi5-usb-boot/07_hu_4330ef57ebcaa16d.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/07_hu_63469dc7decd9ad0.png 1024w"
+	srcset="../../post/raspberrypi5-usb-boot/07_hu_4330ef57ebcaa16d.png 480w, ../../post/raspberrypi5-usb-boot/07_hu_63469dc7decd9ad0.png 1024w"
 	loading="lazy"
 	
 	
@@ -444,10 +444,10 @@
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo nano /boot/firmware/config.txt
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="../../hugo-website/post/raspberrypi5-usb-boot/09.png"
+</div><p><img src="../../post/raspberrypi5-usb-boot/09.png"
 	width="1732"
 	height="1258"
-	srcset="../../hugo-website/post/raspberrypi5-usb-boot/09_hu_94e54a2436a02ef9.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/09_hu_b61b855f3ec7a46.png 1024w"
+	srcset="../../post/raspberrypi5-usb-boot/09_hu_94e54a2436a02ef9.png 480w, ../../post/raspberrypi5-usb-boot/09_hu_b61b855f3ec7a46.png 1024w"
 	loading="lazy"
 	
 	
@@ -509,10 +509,10 @@
 </span></span><span class="line"><span class="cl">mao@raspberrypi5:~$
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="../../hugo-website/post/raspberrypi5-usb-boot/08.png"
+</div><p><img src="../../post/raspberrypi5-usb-boot/08.png"
 	width="1732"
 	height="1258"
-	srcset="../../hugo-website/post/raspberrypi5-usb-boot/08_hu_36176642d6d1a735.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/08_hu_ae2157135b16ac3d.png 1024w"
+	srcset="../../post/raspberrypi5-usb-boot/08_hu_36176642d6d1a735.png 480w, ../../post/raspberrypi5-usb-boot/08_hu_ae2157135b16ac3d.png 1024w"
 	loading="lazy"
 	
 	
@@ -650,7 +650,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/raspberrypi-sensor-api-server-2/">
+    <a href="../../post/raspberrypi-sensor-api-server-2/">
         
         
 
@@ -663,7 +663,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/raspberrypi-sensor-api-server-1/">
+    <a href="../../post/raspberrypi-sensor-api-server-1/">
         
         
 
@@ -676,7 +676,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/ubuntu-obs-install/">
+    <a href="../../post/ubuntu-obs-install/">
         
         
 
@@ -689,7 +689,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/windows11-on-proxmox-usb-passthrough/">
+    <a href="../../post/windows11-on-proxmox-usb-passthrough/">
         
         
 
@@ -702,7 +702,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/secondary-dns/">
+    <a href="../../post/secondary-dns/">
         
         
 
@@ -820,7 +820,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="../../hugo-website/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

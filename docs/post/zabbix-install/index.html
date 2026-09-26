@@ -6,13 +6,13 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 '>
 <title>Zbbix7.0LTSをUbuntuにインストールする</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/hugo-website/post/zabbix-install/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/zabbix-install/'>
 
-<link rel="stylesheet" href="../../hugo-website/scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Zbbix7.0LTSをUbuntuにインストールする'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Zbbix7.0LTSをUbuntuにインストールする'>
 <meta property='og:description' content='環境 Ubuntu 24.04 Zbbix 7.0 Ubuntu MySQL Nginx 手順 このページの通りにインストールをしていく(&ldquo;https://www.zabbix.com/jp/download?zabbix=7.0&os_distribution=ubuntu&os_version=24.04&components=server_frontend_agent&db=mysql&ws=nginx&#34;) ただし、MySQLは別でインストールをする必要がある 以下に公式手順をコピペしたものを記載しています
 Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1&#43;ubuntu24.04_all.deb dpkg -i zabbix-release_7.0-1&#43;ubuntu24.04_all.deb apt update Zabbixサーバー、フロントエンド、エージェントをインストールする 1 apt install zabbix-server-mysql zabbix-frontend-php zabbix-nginx-conf zabbix-sql-scripts zabbix-agent MySQLをインストールする 1 sudo apt install mysql-server 初期データベースを作成する 1 2 mysql -uroot -p password 1 2 3 4 5 mysql&gt; create database zabbix character set utf8mb4 collate utf8mb4_bin; mysql&gt; create user zabbix@localhost identified by &#39;password&#39;; mysql&gt; grant all privileges on zabbix.* to zabbix@localhost; mysql&gt; set global log_bin_trust_function_creators = 1; mysql&gt; quit; Zabbix サーバー ホストで初期スキーマとデータをインポートします。新しく作成したパスワードを入力するよう求められます。 1 zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix データベース スキーマをインポートした後、log_bin_trust_function_creators オプションを無効にします。
 '>
-<meta property='og:url' content='https://tiisanamaou.github.io/hugo-website/post/zabbix-install/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/zabbix-install/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-06-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-22T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Zbbix7.0LTSをUbuntuにインストールする">
@@ -58,13 +58,13 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
         
             
             <figure class="site-avatar">
-                <a href="../../hugo-website/">
+                <a href="../../">
                 
                     
                     
                     
                         
-                        <img src="../../hugo-website/img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -75,7 +75,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="../../hugo-website">onodera memo</a></h1>
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
             <h2 class="site-description">メモ兼ブログ</h2>
         </div>
     </header><ol class="social-menu">
@@ -105,7 +105,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
         
         
         <li >
-            <a href='../../hugo-website/' >
+            <a href='../../' >
                 
                 
                 
@@ -125,7 +125,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
         
         
         <li >
-            <a href='../../hugo-website/page/about/' >
+            <a href='../../page/about/' >
                 
                 
                 
@@ -144,7 +144,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
         
         
         <li >
-            <a href='../../hugo-website/page/archives/' >
+            <a href='../../page/archives/' >
                 
                 
                 
@@ -164,7 +164,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
         
         
         <li >
-            <a href='../../hugo-website/page/search/' >
+            <a href='../../page/search/' >
                 
                 
                 
@@ -197,7 +197,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://tiisanamaou.github.io/hugo-website/" selected></option>
+                            <option value="https://tiisanamaou.github.io/" selected></option>
                         
                     </select>
                 </li>
@@ -238,11 +238,11 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
     
     <header class="article-category">
         
-            <a href="../../hugo-website/categories/zbbix/" >
+            <a href="../../categories/zbbix/" >
                 Zbbix
             </a>
         
-            <a href="../../hugo-website/categories/mysql/" >
+            <a href="../../categories/mysql/" >
                 MySQL
             </a>
         
@@ -251,7 +251,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../hugo-website/post/zabbix-install/">Zbbix7.0LTSをUbuntuにインストールする</a>
+            <a href="../../post/zabbix-install/">Zbbix7.0LTSをUbuntuにインストールする</a>
         </h2>
     
         
@@ -442,10 +442,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 </div><p>初期設定をします</p>
 <ul>
 <li>ブラウザの画面
-<img src="../../hugo-website/post/zabbix-install/01.png"
+<img src="../../post/zabbix-install/01.png"
 	width="1635"
 	height="871"
-	srcset="../../hugo-website/post/zabbix-install/01_hu_6a902bae895641f.png 480w, ../../hugo-website/post/zabbix-install/01_hu_2c97eaeb56a50ccb.png 1024w"
+	srcset="../../post/zabbix-install/01_hu_6a902bae895641f.png 480w, ../../post/zabbix-install/01_hu_2c97eaeb56a50ccb.png 1024w"
 	loading="lazy"
 	
 	
@@ -454,10 +454,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="450px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/02.png"
+<img src="../../post/zabbix-install/02.png"
 	width="1635"
 	height="873"
-	srcset="../../hugo-website/post/zabbix-install/02_hu_b9e5b8eefd50a2ed.png 480w, ../../hugo-website/post/zabbix-install/02_hu_95a4731ab673eab5.png 1024w"
+	srcset="../../post/zabbix-install/02_hu_b9e5b8eefd50a2ed.png 480w, ../../post/zabbix-install/02_hu_95a4731ab673eab5.png 1024w"
 	loading="lazy"
 	
 	
@@ -466,10 +466,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="449px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/03.png"
+<img src="../../post/zabbix-install/03.png"
 	width="1635"
 	height="869"
-	srcset="../../hugo-website/post/zabbix-install/03_hu_7a2d60d3183ca973.png 480w, ../../hugo-website/post/zabbix-install/03_hu_973b547fedb85aa4.png 1024w"
+	srcset="../../post/zabbix-install/03_hu_7a2d60d3183ca973.png 480w, ../../post/zabbix-install/03_hu_973b547fedb85aa4.png 1024w"
 	loading="lazy"
 	
 	
@@ -478,10 +478,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="451px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/04.png"
+<img src="../../post/zabbix-install/04.png"
 	width="1635"
 	height="872"
-	srcset="../../hugo-website/post/zabbix-install/04_hu_50dea837b83f145c.png 480w, ../../hugo-website/post/zabbix-install/04_hu_5196f03b604ee78a.png 1024w"
+	srcset="../../post/zabbix-install/04_hu_50dea837b83f145c.png 480w, ../../post/zabbix-install/04_hu_5196f03b604ee78a.png 1024w"
 	loading="lazy"
 	
 	
@@ -490,10 +490,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="450px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/05.png"
+<img src="../../post/zabbix-install/05.png"
 	width="1635"
 	height="867"
-	srcset="../../hugo-website/post/zabbix-install/05_hu_fe7de9f76bc8acf7.png 480w, ../../hugo-website/post/zabbix-install/05_hu_12aa98b0ab7a29b4.png 1024w"
+	srcset="../../post/zabbix-install/05_hu_fe7de9f76bc8acf7.png 480w, ../../post/zabbix-install/05_hu_12aa98b0ab7a29b4.png 1024w"
 	loading="lazy"
 	
 	
@@ -502,10 +502,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="452px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/06.png"
+<img src="../../post/zabbix-install/06.png"
 	width="1635"
 	height="869"
-	srcset="../../hugo-website/post/zabbix-install/06_hu_fa7b57c8994aaa4f.png 480w, ../../hugo-website/post/zabbix-install/06_hu_2939d9cdcaf30f54.png 1024w"
+	srcset="../../post/zabbix-install/06_hu_fa7b57c8994aaa4f.png 480w, ../../post/zabbix-install/06_hu_2939d9cdcaf30f54.png 1024w"
 	loading="lazy"
 	
 	
@@ -514,10 +514,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="451px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/07.png"
+<img src="../../post/zabbix-install/07.png"
 	width="1635"
 	height="865"
-	srcset="../../hugo-website/post/zabbix-install/07_hu_757d3f345e0f2e4a.png 480w, ../../hugo-website/post/zabbix-install/07_hu_28afa259e1bcf05a.png 1024w"
+	srcset="../../post/zabbix-install/07_hu_757d3f345e0f2e4a.png 480w, ../../post/zabbix-install/07_hu_28afa259e1bcf05a.png 1024w"
 	loading="lazy"
 	
 	
@@ -526,10 +526,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="453px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/08.png"
+<img src="../../post/zabbix-install/08.png"
 	width="1635"
 	height="862"
-	srcset="../../hugo-website/post/zabbix-install/08_hu_fb1f3712c94c2a06.png 480w, ../../hugo-website/post/zabbix-install/08_hu_ac6779626b931ded.png 1024w"
+	srcset="../../post/zabbix-install/08_hu_fb1f3712c94c2a06.png 480w, ../../post/zabbix-install/08_hu_ac6779626b931ded.png 1024w"
 	loading="lazy"
 	
 	
@@ -538,10 +538,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="455px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/09.png"
+<img src="../../post/zabbix-install/09.png"
 	width="1635"
 	height="865"
-	srcset="../../hugo-website/post/zabbix-install/09_hu_cc12d57c5dc559b3.png 480w, ../../hugo-website/post/zabbix-install/09_hu_16859eb93dc7fddd.png 1024w"
+	srcset="../../post/zabbix-install/09_hu_cc12d57c5dc559b3.png 480w, ../../post/zabbix-install/09_hu_16859eb93dc7fddd.png 1024w"
 	loading="lazy"
 	
 	
@@ -550,10 +550,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="453px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/10.png"
+<img src="../../post/zabbix-install/10.png"
 	width="1635"
 	height="863"
-	srcset="../../hugo-website/post/zabbix-install/10_hu_6f9d37099ace5b4d.png 480w, ../../hugo-website/post/zabbix-install/10_hu_f1d2a2eb0a77a933.png 1024w"
+	srcset="../../post/zabbix-install/10_hu_6f9d37099ace5b4d.png 480w, ../../post/zabbix-install/10_hu_f1d2a2eb0a77a933.png 1024w"
 	loading="lazy"
 	
 	
@@ -562,10 +562,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="454px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/11.png"
+<img src="../../post/zabbix-install/11.png"
 	width="1635"
 	height="867"
-	srcset="../../hugo-website/post/zabbix-install/11_hu_fc1085f2f5fb8b00.png 480w, ../../hugo-website/post/zabbix-install/11_hu_8dc8838de0ccc181.png 1024w"
+	srcset="../../post/zabbix-install/11_hu_fc1085f2f5fb8b00.png 480w, ../../post/zabbix-install/11_hu_8dc8838de0ccc181.png 1024w"
 	loading="lazy"
 	
 	
@@ -574,10 +574,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 		data-flex-basis="452px"
 	
 >
-<img src="../../hugo-website/post/zabbix-install/12.png"
+<img src="../../post/zabbix-install/12.png"
 	width="1635"
 	height="872"
-	srcset="../../hugo-website/post/zabbix-install/12_hu_2b3938cb5ff8bf2e.png 480w, ../../hugo-website/post/zabbix-install/12_hu_42c69e9f6a6dd866.png 1024w"
+	srcset="../../post/zabbix-install/12_hu_2b3938cb5ff8bf2e.png 480w, ../../post/zabbix-install/12_hu_42c69e9f6a6dd866.png 1024w"
 	loading="lazy"
 	
 	
@@ -592,10 +592,10 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
 <li>Username：Admin</li>
 <li>Password：zabbix</li>
 </ul>
-<p><img src="../../hugo-website/post/zabbix-install/13.png"
+<p><img src="../../post/zabbix-install/13.png"
 	width="1635"
 	height="869"
-	srcset="../../hugo-website/post/zabbix-install/13_hu_ae5eab7fc87b3631.png 480w, ../../hugo-website/post/zabbix-install/13_hu_892b04f5702ab91e.png 1024w"
+	srcset="../../post/zabbix-install/13_hu_ae5eab7fc87b3631.png 480w, ../../post/zabbix-install/13_hu_892b04f5702ab91e.png 1024w"
 	loading="lazy"
 	
 	
@@ -672,7 +672,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
             
                 
 <article class="">
-    <a href="../../hugo-website/post/docker-compose-mysql-log/">
+    <a href="../../post/docker-compose-mysql-log/">
         
         
 
@@ -790,7 +790,7 @@ Zabbixリポジトリをインストールする 1 2 3 wget https://repo.zabbix.
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="../../hugo-website/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

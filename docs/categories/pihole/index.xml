@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Pihole on onodera memo</title>
-        <link>https://tiisanamaou.github.io/hugo-website/categories/pihole/</link>
+        <link>https://tiisanamaou.github.io/categories/pihole/</link>
         <description>Recent content in Pihole on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sat, 22 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/pihole/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 22 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/pihole/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Pi-holeをdocker-composeで起動する</title>
-        <link>https://tiisanamaou.github.io/hugo-website/post/pihole-docker-compose/</link>
+        <link>https://tiisanamaou.github.io/post/pihole-docker-compose/</link>
         <pubDate>Sat, 22 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/hugo-website/post/pihole-docker-compose/</guid>
+        <guid>https://tiisanamaou.github.io/post/pihole-docker-compose/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;pihole:2025.03.0&lt;/li&gt;
@@ -251,10 +251,10 @@
 &lt;li&gt;https://192.168.10.18/admin/&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;ログインパスワードはcompose.yamlの&amp;quot;WEBPASSWORD:&amp;ldquo;で指定したものを入力する
-&lt;img src=&#34;../../hugo-website/post/pihole-docker-compose/03.png&#34;
+&lt;img src=&#34;../../post/pihole-docker-compose/03.png&#34;
 	width=&#34;2230&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../hugo-website/post/pihole-docker-compose/03_hu_133e8bc166751cd0.png 480w, ../../hugo-website/post/pihole-docker-compose/03_hu_9d0447c474275089.png 1024w&#34;
+	srcset=&#34;../../post/pihole-docker-compose/03_hu_133e8bc166751cd0.png 480w, ../../post/pihole-docker-compose/03_hu_9d0447c474275089.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -276,10 +276,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7b85e233c38e   pihole/pihole:2025.03.0   &amp;#34;start.sh&amp;#34;   12 days ago   Up 12 days (healthy)   0.0.0.0:53-&amp;gt;53/tcp, [::]:53-&amp;gt;53/tcp, 67/udp, 0.0.0.0:80-&amp;gt;80/tcp, [::]:80-&amp;gt;80/tcp, 0.0.0.0:443-&amp;gt;443/tcp, 0.0.0.0:53-&amp;gt;53/udp, [::]:443-&amp;gt;443/tcp, [::]:53-&amp;gt;53/udp, 123/udp   pihole
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/pihole-docker-compose/01.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/pihole-docker-compose/01.png&#34;
 	width=&#34;2230&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../hugo-website/post/pihole-docker-compose/01_hu_5949a728e8812d1f.png 480w, ../../hugo-website/post/pihole-docker-compose/01_hu_18d6e1e1a72c2e2a.png 1024w&#34;
+	srcset=&#34;../../post/pihole-docker-compose/01_hu_5949a728e8812d1f.png 480w, ../../post/pihole-docker-compose/01_hu_18d6e1e1a72c2e2a.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -290,10 +290,10 @@
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;ローカルdnsとして使う&#34;&gt;ローカルDNSとして使う&lt;/h2&gt;
 &lt;p&gt;DNSレコードは&amp;quot;SYSTEM&amp;rdquo;&amp;gt;&amp;ldquo;Setting&amp;rdquo;&amp;gt;&amp;ldquo;Local DNS Records&amp;quot;に記載できる
-&lt;img src=&#34;../../hugo-website/post/pihole-docker-compose/02.png&#34;
+&lt;img src=&#34;../../post/pihole-docker-compose/02.png&#34;
 	width=&#34;2230&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../hugo-website/post/pihole-docker-compose/02_hu_8723db8cf6d92565.png 480w, ../../hugo-website/post/pihole-docker-compose/02_hu_eb720189d6109c77.png 1024w&#34;
+	srcset=&#34;../../post/pihole-docker-compose/02_hu_8723db8cf6d92565.png 480w, ../../post/pihole-docker-compose/02_hu_eb720189d6109c77.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	

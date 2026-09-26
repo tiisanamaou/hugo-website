@@ -11,9 +11,9 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
 '>
 <title>Harborにhttpsでアクセスしてdocker pullできるようにする</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/hugo-website/post/harbor-https-docker-pull/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/harbor-https-docker-pull/'>
 
-<link rel="stylesheet" href="../../hugo-website/scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Harborにhttpsでアクセスしてdocker pullできるようにする'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Harborにhttpsでアクセスしてdocker pullできるようにする'>
 <meta property='og:description' content='環境 Harbor Version v2.11.1-6b7ecba1 Let&rsquo;s Encrypt Unbound 1.19.2 Docker Engine Community 28.0.1 証明書の発行 証明書発行手順（Let&#39;s Encrypt） を参照
 Harborの設定 証明書ファイルをサーバーにアップロードする
 設定ファイルを編集する
@@ -22,7 +22,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
 1 sudo docker compose up -d DNS設定 DNS（Unbound）に追加する キャッシュされるまで時間がかかる？
 900s? 1 2 sudo systemctl restart unbound sudo unbound-control reload DNSに登録されているか確認する
 '>
-<meta property='og:url' content='https://tiisanamaou.github.io/hugo-website/post/harbor-https-docker-pull/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/harbor-https-docker-pull/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-14T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Harborにhttpsでアクセスしてdocker pullできるようにする">
@@ -73,13 +73,13 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
         
             
             <figure class="site-avatar">
-                <a href="../../hugo-website/">
+                <a href="../../">
                 
                     
                     
                     
                         
-                        <img src="../../hugo-website/img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -90,7 +90,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="../../hugo-website">onodera memo</a></h1>
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
             <h2 class="site-description">メモ兼ブログ</h2>
         </div>
     </header><ol class="social-menu">
@@ -120,7 +120,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
         
         
         <li >
-            <a href='../../hugo-website/' >
+            <a href='../../' >
                 
                 
                 
@@ -140,7 +140,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
         
         
         <li >
-            <a href='../../hugo-website/page/about/' >
+            <a href='../../page/about/' >
                 
                 
                 
@@ -159,7 +159,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
         
         
         <li >
-            <a href='../../hugo-website/page/archives/' >
+            <a href='../../page/archives/' >
                 
                 
                 
@@ -179,7 +179,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
         
         
         <li >
-            <a href='../../hugo-website/page/search/' >
+            <a href='../../page/search/' >
                 
                 
                 
@@ -212,7 +212,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://tiisanamaou.github.io/hugo-website/" selected></option>
+                            <option value="https://tiisanamaou.github.io/" selected></option>
                         
                     </select>
                 </li>
@@ -253,11 +253,11 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
     
     <header class="article-category">
         
-            <a href="../../hugo-website/categories/harbor/" >
+            <a href="../../categories/harbor/" >
                 Harbor
             </a>
         
-            <a href="../../hugo-website/categories/docker/" >
+            <a href="../../categories/docker/" >
                 Docker
             </a>
         
@@ -266,7 +266,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../hugo-website/post/harbor-https-docker-pull/">Harborにhttpsでアクセスしてdocker pullできるようにする</a>
+            <a href="../../post/harbor-https-docker-pull/">Harborにhttpsでアクセスしてdocker pullできるようにする</a>
         </h2>
     
         
@@ -313,7 +313,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
 <li>Docker Engine Community 28.0.1</li>
 </ul>
 <h2 id="証明書の発行">証明書の発行</h2>
-<p><a title="証明書発行手順（Let&#39;s Encrypt）" href="https://tiisanamaou.github.io/hugo-website/post/certbot-lets-encrypt/">証明書発行手順（Let&#39;s Encrypt）</a> を参照</p>
+<p><a title="証明書発行手順（Let&#39;s Encrypt）" href="https://tiisanamaou.github.io/post/certbot-lets-encrypt/">証明書発行手順（Let&#39;s Encrypt）</a> を参照</p>
 <h2 id="harborの設定">Harborの設定</h2>
 <p>証明書ファイルをサーバーにアップロードする</p>
 <p>設定ファイルを編集する</p>
@@ -615,7 +615,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
             
                 
 <article class="">
-    <a href="../../hugo-website/post/harbor-install/">
+    <a href="../../post/harbor-install/">
         
         
 
@@ -628,7 +628,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
             
                 
 <article class="">
-    <a href="../../hugo-website/post/immich-docker-compose/">
+    <a href="../../post/immich-docker-compose/">
         
         
 
@@ -641,7 +641,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
             
                 
 <article class="">
-    <a href="../../hugo-website/post/portainer-docker-compose/">
+    <a href="../../post/portainer-docker-compose/">
         
         
 
@@ -654,7 +654,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
             
                 
 <article class="">
-    <a href="../../hugo-website/post/traefik-harbor-ssl/">
+    <a href="../../post/traefik-harbor-ssl/">
         
         
 
@@ -667,7 +667,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
             
                 
 <article class="">
-    <a href="../../hugo-website/post/pihole-docker-compose/">
+    <a href="../../post/pihole-docker-compose/">
         
         
 
@@ -785,7 +785,7 @@ harbor.yml 1 2 3 4 5 6 7 8 9 hostname: harbor.yourdomain.dev http: port: 80 http
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="../../hugo-website/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

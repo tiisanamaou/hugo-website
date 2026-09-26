@@ -10,9 +10,9 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
 '>
 <title>ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/hugo-website/post/internal-https-domain/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/internal-https-domain/'>
 
-<link rel="stylesheet" href="../../hugo-website/scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする'>
 <meta property='og:description' content='背景 ローカルの開発環境をHTTPSでアクセスしたいが、自己署名証明書だと警告が出たりと問題があるので、正規の証明書を発行して使用する
 前回の記事で証明書を発行したので、今回はnginxに証明書をコピーし、HTTPSでアクセスできるようにする
 環境 2VM
@@ -20,7 +20,7 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
 1 2 3 4 sudo apt install nano sudo apt install nginx sudo systemctl start nginx sudo systemctl status nginx &ldquo;Active&quot;が&quot;active (running)&ldquo;になっていればOK
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 mao@internal-domain:~$ sudo systemctl status nginx ● nginx.service - A high performance web server and a reverse proxy server Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: enabled) Active: active (running) since Sun 2024-12-15 01:33:08 UTC; 46s ago Docs: man:nginx(8) Process: 17202 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS) Process: 17204 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS) Main PID: 17205 (nginx) Tasks: 5 (limit: 9445) Memory: 3.6M (peak: 3.9M) CPU: 9ms CGroup: /system.slice/nginx.service ├─17205 &#34;nginx: master process /usr/sbin/nginx -g daemon on; master_process on;&#34; ├─17206 &#34;nginx: worker process&#34; ├─17207 &#34;nginx: worker process&#34; ├─17208 &#34;nginx: worker process&#34; └─17209 &#34;nginx: worker process&#34; Dec 15 01:33:08 internal-domain systemd[1]: Starting nginx.service - A high performance web server and a reverse proxy server... Dec 15 01:33:08 internal-domain systemd[1]: Started nginx.service - A high performance web server and a reverse proxy server. IPアドレスにアクセスしてnginxのスタートページが表示されることを確認する
 '>
-<meta property='og:url' content='https://tiisanamaou.github.io/hugo-website/post/internal-https-domain/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/internal-https-domain/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-12-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-12-18T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする">
@@ -70,13 +70,13 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
         
             
             <figure class="site-avatar">
-                <a href="../../hugo-website/">
+                <a href="../../">
                 
                     
                     
                     
                         
-                        <img src="../../hugo-website/img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -87,7 +87,7 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="../../hugo-website">onodera memo</a></h1>
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
             <h2 class="site-description">メモ兼ブログ</h2>
         </div>
     </header><ol class="social-menu">
@@ -117,7 +117,7 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
         
         
         <li >
-            <a href='../../hugo-website/' >
+            <a href='../../' >
                 
                 
                 
@@ -137,7 +137,7 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
         
         
         <li >
-            <a href='../../hugo-website/page/about/' >
+            <a href='../../page/about/' >
                 
                 
                 
@@ -156,7 +156,7 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
         
         
         <li >
-            <a href='../../hugo-website/page/archives/' >
+            <a href='../../page/archives/' >
                 
                 
                 
@@ -176,7 +176,7 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
         
         
         <li >
-            <a href='../../hugo-website/page/search/' >
+            <a href='../../page/search/' >
                 
                 
                 
@@ -209,7 +209,7 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://tiisanamaou.github.io/hugo-website/" selected></option>
+                            <option value="https://tiisanamaou.github.io/" selected></option>
                         
                     </select>
                 </li>
@@ -250,11 +250,11 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
     
     <header class="article-category">
         
-            <a href="../../hugo-website/categories/ssl/" >
+            <a href="../../categories/ssl/" >
                 SSL
             </a>
         
-            <a href="../../hugo-website/categories/unbound/" >
+            <a href="../../categories/unbound/" >
                 Unbound
             </a>
         
@@ -263,7 +263,7 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../hugo-website/post/internal-https-domain/">ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする</a>
+            <a href="../../post/internal-https-domain/">ローカル内で自己署名証明書を使わずにドメイン名＋HTTPSでアクセスする</a>
         </h2>
     
         
@@ -518,10 +518,10 @@ Unbound(DNS) unbound 1.19.2. Nginx nginx version: nginx/1.24.0 (Ubuntu) nginxの
     >https://internal.onodera-program.com</a>&rdquo;</li>
 </ul>
 <p>証明書の警告等が表示されずにアクセスできればOK
-<img src="../../hugo-website/post/internal-https-domain/01.png"
+<img src="../../post/internal-https-domain/01.png"
 	width="2228"
 	height="2148"
-	srcset="../../hugo-website/post/internal-https-domain/01_hu_84acf61322144573.png 480w, ../../hugo-website/post/internal-https-domain/01_hu_a69ed42ba0db5dd4.png 1024w"
+	srcset="../../post/internal-https-domain/01_hu_84acf61322144573.png 480w, ../../post/internal-https-domain/01_hu_a69ed42ba0db5dd4.png 1024w"
 	loading="lazy"
 	
 	
@@ -581,7 +581,7 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
             
                 
 <article class="">
-    <a href="../../hugo-website/post/certbot-lets-encrypt/">
+    <a href="../../post/certbot-lets-encrypt/">
         
         
 
@@ -699,7 +699,7 @@ k8sのIngressに登録すれば、ローカル内でHTTPS＋ドメイン名で�
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="../../hugo-website/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

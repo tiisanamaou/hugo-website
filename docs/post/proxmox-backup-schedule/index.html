@@ -5,12 +5,12 @@
 &ldquo;スケジュール&quot;はどのタイミングでバックアップするかを決めます &ldquo;00:00&rdquo;：毎日00時00分にバックアップを開始する バックアップするVMを選択します &ldquo;Retention&quot;でバックアップを保持する設定をします &ldquo;3&quot;にして最新のバックアップ3つを残す設定にしています &ldquo;作成&quot;を押すと作成されます 参考URL Proxmox VE-HDDを増設したので、バックアップ環境を構築する https://www.logw.jp/server/10684.html '>
 <title>Proxmoxでバックアップスケジュールを作成する</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/hugo-website/post/proxmox-backup-schedule/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/proxmox-backup-schedule/'>
 
-<link rel="stylesheet" href="../../hugo-website/scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Proxmoxでバックアップスケジュールを作成する'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Proxmoxでバックアップスケジュールを作成する'>
 <meta property='og:description' content='環境 proxmox-ve: 9.2.0 (running kernel: 6.14.8-2-pve) 設定手順 管理画面にログインし、&ldquo;データセンター&rdquo;＞&ldquo;バックアップ&quot;の項目を押します &ldquo;追加&quot;を押すと、設定画面が出てきます &ldquo;ストレージ&quot;はバックアップの保存先を選択します
 &ldquo;スケジュール&quot;はどのタイミングでバックアップするかを決めます &ldquo;00:00&rdquo;：毎日00時00分にバックアップを開始する バックアップするVMを選択します &ldquo;Retention&quot;でバックアップを保持する設定をします &ldquo;3&quot;にして最新のバックアップ3つを残す設定にしています &ldquo;作成&quot;を押すと作成されます 参考URL Proxmox VE-HDDを増設したので、バックアップ環境を構築する https://www.logw.jp/server/10684.html '>
-<meta property='og:url' content='https://tiisanamaou.github.io/hugo-website/post/proxmox-backup-schedule/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/proxmox-backup-schedule/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-06-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-06-07T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Proxmoxでバックアップスケジュールを作成する">
@@ -55,13 +55,13 @@
         
             
             <figure class="site-avatar">
-                <a href="../../hugo-website/">
+                <a href="../../">
                 
                     
                     
                     
                         
-                        <img src="../../hugo-website/img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -72,7 +72,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="../../hugo-website">onodera memo</a></h1>
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
             <h2 class="site-description">メモ兼ブログ</h2>
         </div>
     </header><ol class="social-menu">
@@ -102,7 +102,7 @@
         
         
         <li >
-            <a href='../../hugo-website/' >
+            <a href='../../' >
                 
                 
                 
@@ -122,7 +122,7 @@
         
         
         <li >
-            <a href='../../hugo-website/page/about/' >
+            <a href='../../page/about/' >
                 
                 
                 
@@ -141,7 +141,7 @@
         
         
         <li >
-            <a href='../../hugo-website/page/archives/' >
+            <a href='../../page/archives/' >
                 
                 
                 
@@ -161,7 +161,7 @@
         
         
         <li >
-            <a href='../../hugo-website/page/search/' >
+            <a href='../../page/search/' >
                 
                 
                 
@@ -194,7 +194,7 @@
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://tiisanamaou.github.io/hugo-website/" selected></option>
+                            <option value="https://tiisanamaou.github.io/" selected></option>
                         
                     </select>
                 </li>
@@ -235,7 +235,7 @@
     
     <header class="article-category">
         
-            <a href="../../hugo-website/categories/proxmox/" >
+            <a href="../../categories/proxmox/" >
                 Proxmox
             </a>
         
@@ -244,7 +244,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../hugo-website/post/proxmox-backup-schedule/">Proxmoxでバックアップスケジュールを作成する</a>
+            <a href="../../post/proxmox-backup-schedule/">Proxmoxでバックアップスケジュールを作成する</a>
         </h2>
     
         
@@ -289,10 +289,10 @@
 </ul>
 <h2 id="設定手順">設定手順</h2>
 <p>管理画面にログインし、&ldquo;データセンター&rdquo;＞&ldquo;バックアップ&quot;の項目を押します
-<img src="../../hugo-website/post/proxmox-backup-schedule/01.png"
+<img src="../../post/proxmox-backup-schedule/01.png"
 	width="3708"
 	height="2096"
-	srcset="../../hugo-website/post/proxmox-backup-schedule/01_hu_8803632897985221.png 480w, ../../hugo-website/post/proxmox-backup-schedule/01_hu_180dd20849bb7cd5.png 1024w"
+	srcset="../../post/proxmox-backup-schedule/01_hu_8803632897985221.png 480w, ../../post/proxmox-backup-schedule/01_hu_180dd20849bb7cd5.png 1024w"
 	loading="lazy"
 	
 	
@@ -302,10 +302,10 @@
 	
 ></p>
 <p>&ldquo;追加&quot;を押すと、設定画面が出てきます
-<img src="../../hugo-website/post/proxmox-backup-schedule/02.png"
+<img src="../../post/proxmox-backup-schedule/02.png"
 	width="3708"
 	height="2096"
-	srcset="../../hugo-website/post/proxmox-backup-schedule/02_hu_e7c465f77b3f6960.png 480w, ../../hugo-website/post/proxmox-backup-schedule/02_hu_2d884b56144bf09c.png 1024w"
+	srcset="../../post/proxmox-backup-schedule/02_hu_e7c465f77b3f6960.png 480w, ../../post/proxmox-backup-schedule/02_hu_2d884b56144bf09c.png 1024w"
 	loading="lazy"
 	
 	
@@ -316,10 +316,10 @@
 ></p>
 <p>&ldquo;ストレージ&quot;はバックアップの保存先を選択します<br>
 &ldquo;スケジュール&quot;はどのタイミングでバックアップするかを決めます
-<img src="../../hugo-website/post/proxmox-backup-schedule/03.png"
+<img src="../../post/proxmox-backup-schedule/03.png"
 	width="3708"
 	height="2096"
-	srcset="../../hugo-website/post/proxmox-backup-schedule/03_hu_fdb5d76d36e67068.png 480w, ../../hugo-website/post/proxmox-backup-schedule/03_hu_869022c176e44c09.png 1024w"
+	srcset="../../post/proxmox-backup-schedule/03_hu_fdb5d76d36e67068.png 480w, ../../post/proxmox-backup-schedule/03_hu_869022c176e44c09.png 1024w"
 	loading="lazy"
 	
 	
@@ -332,10 +332,10 @@
 <li>&ldquo;00:00&rdquo;：毎日00時00分にバックアップを開始する</li>
 </ul>
 <p>バックアップするVMを選択します
-<img src="../../hugo-website/post/proxmox-backup-schedule/04.png"
+<img src="../../post/proxmox-backup-schedule/04.png"
 	width="3708"
 	height="2096"
-	srcset="../../hugo-website/post/proxmox-backup-schedule/04_hu_6a9f8a6eef85db0.png 480w, ../../hugo-website/post/proxmox-backup-schedule/04_hu_12c2cc7d38235ced.png 1024w"
+	srcset="../../post/proxmox-backup-schedule/04_hu_6a9f8a6eef85db0.png 480w, ../../post/proxmox-backup-schedule/04_hu_12c2cc7d38235ced.png 1024w"
 	loading="lazy"
 	
 	
@@ -345,10 +345,10 @@
 	
 ></p>
 <p>&ldquo;Retention&quot;でバックアップを保持する設定をします
-<img src="../../hugo-website/post/proxmox-backup-schedule/05.png"
+<img src="../../post/proxmox-backup-schedule/05.png"
 	width="3708"
 	height="2096"
-	srcset="../../hugo-website/post/proxmox-backup-schedule/05_hu_dc66e44769b96638.png 480w, ../../hugo-website/post/proxmox-backup-schedule/05_hu_52818302121d443d.png 1024w"
+	srcset="../../post/proxmox-backup-schedule/05_hu_dc66e44769b96638.png 480w, ../../post/proxmox-backup-schedule/05_hu_52818302121d443d.png 1024w"
 	loading="lazy"
 	
 	
@@ -358,10 +358,10 @@
 	
 ></p>
 <p>&ldquo;3&quot;にして最新のバックアップ3つを残す設定にしています
-<img src="../../hugo-website/post/proxmox-backup-schedule/06.png"
+<img src="../../post/proxmox-backup-schedule/06.png"
 	width="3708"
 	height="2096"
-	srcset="../../hugo-website/post/proxmox-backup-schedule/06_hu_e00c7a1a389b2ea1.png 480w, ../../hugo-website/post/proxmox-backup-schedule/06_hu_5b14a250d40a796.png 1024w"
+	srcset="../../post/proxmox-backup-schedule/06_hu_e00c7a1a389b2ea1.png 480w, ../../post/proxmox-backup-schedule/06_hu_5b14a250d40a796.png 1024w"
 	loading="lazy"
 	
 	
@@ -371,10 +371,10 @@
 	
 ></p>
 <p>&ldquo;作成&quot;を押すと作成されます
-<img src="../../hugo-website/post/proxmox-backup-schedule/07.png"
+<img src="../../post/proxmox-backup-schedule/07.png"
 	width="3708"
 	height="2096"
-	srcset="../../hugo-website/post/proxmox-backup-schedule/07_hu_5f84d6c225108869.png 480w, ../../hugo-website/post/proxmox-backup-schedule/07_hu_c4290d6acb0aefc4.png 1024w"
+	srcset="../../post/proxmox-backup-schedule/07_hu_5f84d6c225108869.png 480w, ../../post/proxmox-backup-schedule/07_hu_c4290d6acb0aefc4.png 1024w"
 	loading="lazy"
 	
 	
@@ -419,7 +419,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/proxmox-upgrade-8to9/">
+    <a href="../../post/proxmox-upgrade-8to9/">
         
         
 
@@ -432,7 +432,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/apt-update-inrelease-version-up/">
+    <a href="../../post/apt-update-inrelease-version-up/">
         
         
 
@@ -445,7 +445,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/proxmox-delete-storage-webui/">
+    <a href="../../post/proxmox-delete-storage-webui/">
         
         
 
@@ -458,7 +458,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/proxmox-windows11-hyper-v-2/">
+    <a href="../../post/proxmox-windows11-hyper-v-2/">
         
         
 
@@ -471,7 +471,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/proxmox-windows11-hyper-v-1/">
+    <a href="../../post/proxmox-windows11-hyper-v-1/">
         
         
 
@@ -589,7 +589,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="../../hugo-website/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

@@ -10,9 +10,9 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
 '>
 <title>Harborのインストールしてpushとpullをしてみる</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/hugo-website/post/harbor-install/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/harbor-install/'>
 
-<link rel="stylesheet" href="../../hugo-website/scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Harborのインストールしてpushとpullをしてみる'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Harborのインストールしてpushとpullをしてみる'>
 <meta property='og:description' content='環境 harbor v2.11.1 docker version 27.3.1 Docker Compose version v2.29.7 OpenSSL 3.0.13 インストール要件確認
 https://goharbor.io/docs/2.11.0/install-config/installation-prereqs/ harborのオフラインインストーラーとdocker,docker compose,OpenSSLが必要なのでダウンロードとインストールをしていきます
 offlineインストーラーをダウンロードする 最新版を確認しダウンロードする
@@ -20,7 +20,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
 1 wget https://github.com/goharbor/harbor/releases/download/v2.11.1/harbor-offline-installer-v2.11.1.tgz ダウンロードしたファイルを解凍して設定ファイルをコピーする
 1 2 3 tar xvzf harbor-offline-installer-v2.11.1.tgz cd harbor cp harbor.yml.tmpl harbor.yml 1 2 3 4 5 6 7 8 9 10 mao@harbor-server:~$ tar xvzf harbor-offline-installer-v2.11.1.tgz harbor/harbor.v2.11.1.tar.gz harbor/prepare harbor/LICENSE harbor/install.sh harbor/common.sh harbor/harbor.yml.tmpl mao@harbor-server:~$ cd harbor mao@harbor-server:~/harbor$ cp harbor.yml.tmpl harbor.yml mao@harbor-server:~/harbor$ 設定ファイルを編集する
 '>
-<meta property='og:url' content='https://tiisanamaou.github.io/hugo-website/post/harbor-install/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/harbor-install/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-10-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-10-15T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Harborのインストールしてpushとpullをしてみる">
@@ -70,13 +70,13 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
         
             
             <figure class="site-avatar">
-                <a href="../../hugo-website/">
+                <a href="../../">
                 
                     
                     
                     
                         
-                        <img src="../../hugo-website/img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -87,7 +87,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="../../hugo-website">onodera memo</a></h1>
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
             <h2 class="site-description">メモ兼ブログ</h2>
         </div>
     </header><ol class="social-menu">
@@ -117,7 +117,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
         
         
         <li >
-            <a href='../../hugo-website/' >
+            <a href='../../' >
                 
                 
                 
@@ -137,7 +137,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
         
         
         <li >
-            <a href='../../hugo-website/page/about/' >
+            <a href='../../page/about/' >
                 
                 
                 
@@ -156,7 +156,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
         
         
         <li >
-            <a href='../../hugo-website/page/archives/' >
+            <a href='../../page/archives/' >
                 
                 
                 
@@ -176,7 +176,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
         
         
         <li >
-            <a href='../../hugo-website/page/search/' >
+            <a href='../../page/search/' >
                 
                 
                 
@@ -209,7 +209,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://tiisanamaou.github.io/hugo-website/" selected></option>
+                            <option value="https://tiisanamaou.github.io/" selected></option>
                         
                     </select>
                 </li>
@@ -250,11 +250,11 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
     
     <header class="article-category">
         
-            <a href="../../hugo-website/categories/harbor/" >
+            <a href="../../categories/harbor/" >
                 Harbor
             </a>
         
-            <a href="../../hugo-website/categories/docker/" >
+            <a href="../../categories/docker/" >
                 Docker
             </a>
         
@@ -263,7 +263,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../hugo-website/post/harbor-install/">Harborのインストールしてpushとpullをしてみる</a>
+            <a href="../../post/harbor-install/">Harborのインストールしてpushとpullをしてみる</a>
         </h2>
     
         
@@ -976,10 +976,10 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
 <li>&ldquo;Project Name&quot;を今回は&quot;homelab&quot;にする</li>
 <li>&ldquo;Public&quot;にチェックを入れておく
 &ldquo;OK&quot;を押すとプロジェクトを作成される
-<img src="../../hugo-website/post/harbor-install/01.png"
+<img src="../../post/harbor-install/01.png"
 	width="2228"
 	height="2148"
-	srcset="../../hugo-website/post/harbor-install/01_hu_941afda4b3a91e2f.png 480w, ../../hugo-website/post/harbor-install/01_hu_7d4cc6daa3410d9a.png 1024w"
+	srcset="../../post/harbor-install/01_hu_941afda4b3a91e2f.png 480w, ../../post/harbor-install/01_hu_7d4cc6daa3410d9a.png 1024w"
 	loading="lazy"
 	
 	
@@ -988,10 +988,10 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
 		data-flex-basis="248px"
 	
 >
-<img src="../../hugo-website/post/harbor-install/02.png"
+<img src="../../post/harbor-install/02.png"
 	width="2228"
 	height="2148"
-	srcset="../../hugo-website/post/harbor-install/02_hu_776fe1167cc18283.png 480w, ../../hugo-website/post/harbor-install/02_hu_9788bd85d99c59cd.png 1024w"
+	srcset="../../post/harbor-install/02_hu_776fe1167cc18283.png 480w, ../../post/harbor-install/02_hu_9788bd85d99c59cd.png 1024w"
 	loading="lazy"
 	
 	
@@ -1296,10 +1296,10 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>WebUI上でもイメージがpushされているか確認する
-<img src="../../hugo-website/post/harbor-install/03.png"
+<img src="../../post/harbor-install/03.png"
 	width="2228"
 	height="2148"
-	srcset="../../hugo-website/post/harbor-install/03_hu_dee3e99707a6d2a5.png 480w, ../../hugo-website/post/harbor-install/03_hu_1240d768c6b2746d.png 1024w"
+	srcset="../../post/harbor-install/03_hu_dee3e99707a6d2a5.png 480w, ../../post/harbor-install/03_hu_1240d768c6b2746d.png 1024w"
 	loading="lazy"
 	
 	
@@ -1490,7 +1490,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
             
                 
 <article class="">
-    <a href="../../hugo-website/post/harbor-https-docker-pull/">
+    <a href="../../post/harbor-https-docker-pull/">
         
         
 
@@ -1503,7 +1503,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
             
                 
 <article class="">
-    <a href="../../hugo-website/post/immich-docker-compose/">
+    <a href="../../post/immich-docker-compose/">
         
         
 
@@ -1516,7 +1516,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
             
                 
 <article class="">
-    <a href="../../hugo-website/post/portainer-docker-compose/">
+    <a href="../../post/portainer-docker-compose/">
         
         
 
@@ -1529,7 +1529,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
             
                 
 <article class="">
-    <a href="../../hugo-website/post/traefik-harbor-ssl/">
+    <a href="../../post/traefik-harbor-ssl/">
         
         
 
@@ -1542,7 +1542,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
             
                 
 <article class="">
-    <a href="../../hugo-website/post/pihole-docker-compose/">
+    <a href="../../post/pihole-docker-compose/">
         
         
 
@@ -1660,7 +1660,7 @@ https://github.com/goharbor/harbor/releases 2024年10月13日時点での最新�
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="../../hugo-website/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

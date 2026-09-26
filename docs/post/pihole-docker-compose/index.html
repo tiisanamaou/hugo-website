@@ -5,12 +5,12 @@
 '>
 <title>Pi-holeをdocker-composeで起動する</title>
 
-<link rel='canonical' href='https://tiisanamaou.github.io/hugo-website/post/pihole-docker-compose/'>
+<link rel='canonical' href='https://tiisanamaou.github.io/post/pihole-docker-compose/'>
 
-<link rel="stylesheet" href="../../hugo-website/scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Pi-holeをdocker-composeで起動する'>
+<link rel="stylesheet" href="../../scss/style.min.3cc4d7a82c8711339fbb1520be238d125f9bcfc90417fca29405641adab3d346.css"><meta property='og:title' content='Pi-holeをdocker-composeで起動する'>
 <meta property='og:description' content='環境 pihole:2025.03.0 Ubuntu 24.04.2 Docker Engine 28.0.1 Docker Compose version v2.33.1 dockerとdocker-composeのインストール 1 2 3 4 5 6 7 8 9 10 11 12 13 # Add Docker&#39;s official GPG key: sudo apt-get update sudo apt-get install ca-certificates curl sudo install -m 0755 -d /etc/apt/keyrings sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc sudo chmod a&#43;r /etc/apt/keyrings/docker.asc # Add the repository to Apt sources: echo \ &#34;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \ $(. /etc/os-release &amp;&amp; echo &#34;${UBUNTU_CODENAME:-$VERSION_CODENAME}&#34;) stable&#34; | \ sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null sudo apt-get update 1 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin ポート53を開放する ポート53が使用されているか確認する
 '>
-<meta property='og:url' content='https://tiisanamaou.github.io/hugo-website/post/pihole-docker-compose/'>
+<meta property='og:url' content='https://tiisanamaou.github.io/post/pihole-docker-compose/'>
 <meta property='og:site_name' content='onodera memo'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-22T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Pi-holeをdocker-composeで起動する">
@@ -55,13 +55,13 @@
         
             
             <figure class="site-avatar">
-                <a href="../../hugo-website/">
+                <a href="../../">
                 
                     
                     
                     
                         
-                        <img src="../../hugo-website/img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
+                        <img src="../../img/avatar_hu_80c96b8ab0a3a9d3.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -72,7 +72,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="../../hugo-website">onodera memo</a></h1>
+            <h1 class="site-name"><a href="../../">onodera memo</a></h1>
             <h2 class="site-description">メモ兼ブログ</h2>
         </div>
     </header><ol class="social-menu">
@@ -102,7 +102,7 @@
         
         
         <li >
-            <a href='../../hugo-website/' >
+            <a href='../../' >
                 
                 
                 
@@ -122,7 +122,7 @@
         
         
         <li >
-            <a href='../../hugo-website/page/about/' >
+            <a href='../../page/about/' >
                 
                 
                 
@@ -141,7 +141,7 @@
         
         
         <li >
-            <a href='../../hugo-website/page/archives/' >
+            <a href='../../page/archives/' >
                 
                 
                 
@@ -161,7 +161,7 @@
         
         
         <li >
-            <a href='../../hugo-website/page/search/' >
+            <a href='../../page/search/' >
                 
                 
                 
@@ -194,7 +194,7 @@
 
                     <select name="language" onchange="window.location.href = this.selectedOptions[0].value">
                         
-                            <option value="https://tiisanamaou.github.io/hugo-website/" selected></option>
+                            <option value="https://tiisanamaou.github.io/" selected></option>
                         
                     </select>
                 </li>
@@ -235,11 +235,11 @@
     
     <header class="article-category">
         
-            <a href="../../hugo-website/categories/pihole/" >
+            <a href="../../categories/pihole/" >
                 Pihole
             </a>
         
-            <a href="../../hugo-website/categories/docker/" >
+            <a href="../../categories/docker/" >
                 Docker
             </a>
         
@@ -248,7 +248,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="../../hugo-website/post/pihole-docker-compose/">Pi-holeをdocker-composeで起動する</a>
+            <a href="../../post/pihole-docker-compose/">Pi-holeをdocker-composeで起動する</a>
         </h2>
     
         
@@ -525,10 +525,10 @@
 <li>https://192.168.10.18/admin/</li>
 </ul>
 <p>ログインパスワードはcompose.yamlの&quot;WEBPASSWORD:&ldquo;で指定したものを入力する
-<img src="../../hugo-website/post/pihole-docker-compose/03.png"
+<img src="../../post/pihole-docker-compose/03.png"
 	width="2230"
 	height="2148"
-	srcset="../../hugo-website/post/pihole-docker-compose/03_hu_133e8bc166751cd0.png 480w, ../../hugo-website/post/pihole-docker-compose/03_hu_9d0447c474275089.png 1024w"
+	srcset="../../post/pihole-docker-compose/03_hu_133e8bc166751cd0.png 480w, ../../post/pihole-docker-compose/03_hu_9d0447c474275089.png 1024w"
 	loading="lazy"
 	
 	
@@ -550,10 +550,10 @@
 </span></span><span class="line"><span class="cl">7b85e233c38e   pihole/pihole:2025.03.0   &#34;start.sh&#34;   12 days ago   Up 12 days (healthy)   0.0.0.0:53-&gt;53/tcp, [::]:53-&gt;53/tcp, 67/udp, 0.0.0.0:80-&gt;80/tcp, [::]:80-&gt;80/tcp, 0.0.0.0:443-&gt;443/tcp, 0.0.0.0:53-&gt;53/udp, [::]:443-&gt;443/tcp, [::]:53-&gt;53/udp, 123/udp   pihole
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="../../hugo-website/post/pihole-docker-compose/01.png"
+</div><p><img src="../../post/pihole-docker-compose/01.png"
 	width="2230"
 	height="2148"
-	srcset="../../hugo-website/post/pihole-docker-compose/01_hu_5949a728e8812d1f.png 480w, ../../hugo-website/post/pihole-docker-compose/01_hu_18d6e1e1a72c2e2a.png 1024w"
+	srcset="../../post/pihole-docker-compose/01_hu_5949a728e8812d1f.png 480w, ../../post/pihole-docker-compose/01_hu_18d6e1e1a72c2e2a.png 1024w"
 	loading="lazy"
 	
 	
@@ -564,10 +564,10 @@
 ></p>
 <h2 id="ローカルdnsとして使う">ローカルDNSとして使う</h2>
 <p>DNSレコードは&quot;SYSTEM&rdquo;&gt;&ldquo;Setting&rdquo;&gt;&ldquo;Local DNS Records&quot;に記載できる
-<img src="../../hugo-website/post/pihole-docker-compose/02.png"
+<img src="../../post/pihole-docker-compose/02.png"
 	width="2230"
 	height="2148"
-	srcset="../../hugo-website/post/pihole-docker-compose/02_hu_8723db8cf6d92565.png 480w, ../../hugo-website/post/pihole-docker-compose/02_hu_eb720189d6109c77.png 1024w"
+	srcset="../../post/pihole-docker-compose/02_hu_8723db8cf6d92565.png 480w, ../../post/pihole-docker-compose/02_hu_eb720189d6109c77.png 1024w"
 	loading="lazy"
 	
 	
@@ -610,7 +610,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/immich-docker-compose/">
+    <a href="../../post/immich-docker-compose/">
         
         
 
@@ -623,7 +623,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/portainer-docker-compose/">
+    <a href="../../post/portainer-docker-compose/">
         
         
 
@@ -636,7 +636,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/harbor-https-docker-pull/">
+    <a href="../../post/harbor-https-docker-pull/">
         
         
 
@@ -649,7 +649,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/dockerhub-mirror-gcr/">
+    <a href="../../post/dockerhub-mirror-gcr/">
         
         
 
@@ -662,7 +662,7 @@
             
                 
 <article class="">
-    <a href="../../hugo-website/post/harbor-install/">
+    <a href="../../post/harbor-install/">
         
         
 
@@ -780,7 +780,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="../../hugo-website/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="../../ts/main.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
