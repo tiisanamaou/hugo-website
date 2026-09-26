@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Docker on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/docker/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/categories/docker/</link>
         <description>Recent content in Docker on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 03 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 03 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/docker/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Immichをdocker-composeで実行する</title>
-        <link>https://tiisanamaou.github.io/post/immich-docker-compose/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/immich-docker-compose/</link>
         <pubDate>Sun, 03 May 2026 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/immich-docker-compose/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/immich-docker-compose/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 24.04.1 LTS&lt;/li&gt;
@@ -71,10 +71,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;初期設定&#34;&gt;初期設定&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/immich-docker-compose/01.png&#34;
+&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/01.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/01_hu_df7d9d82b7e65eeb.png 480w, ../../post/immich-docker-compose/01_hu_3eaead685fd61fbd.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/01_hu_df7d9d82b7e65eeb.png 480w, ../../hugo-website/post/immich-docker-compose/01_hu_3eaead685fd61fbd.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -83,10 +83,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/immich-docker-compose/02.png&#34;
+&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/02.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/02_hu_70b7defbf010d4db.png 480w, ../../post/immich-docker-compose/02_hu_583b0d18eaa1d3e8.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/02_hu_70b7defbf010d4db.png 480w, ../../hugo-website/post/immich-docker-compose/02_hu_583b0d18eaa1d3e8.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -95,10 +95,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/immich-docker-compose/03.png&#34;
+&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/03.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/03_hu_18d7c2c691fd89c.png 480w, ../../post/immich-docker-compose/03_hu_deda777968543a5e.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/03_hu_18d7c2c691fd89c.png 480w, ../../hugo-website/post/immich-docker-compose/03_hu_deda777968543a5e.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -107,10 +107,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/immich-docker-compose/04.png&#34;
+&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/04.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/04_hu_ff9b5b369db0b6e2.png 480w, ../../post/immich-docker-compose/04_hu_e9f3e8fd7882e9d1.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/04_hu_ff9b5b369db0b6e2.png 480w, ../../hugo-website/post/immich-docker-compose/04_hu_e9f3e8fd7882e9d1.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -119,10 +119,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/immich-docker-compose/05.png&#34;
+&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/05.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/05_hu_d3b2beda8554abfb.png 480w, ../../post/immich-docker-compose/05_hu_d9c6f94654dfd1f4.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/05_hu_d3b2beda8554abfb.png 480w, ../../hugo-website/post/immich-docker-compose/05_hu_d9c6f94654dfd1f4.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -131,10 +131,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/immich-docker-compose/06.png&#34;
+&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/06.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/06_hu_272094504d0069ac.png 480w, ../../post/immich-docker-compose/06_hu_3129317d785422cc.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/06_hu_272094504d0069ac.png 480w, ../../hugo-website/post/immich-docker-compose/06_hu_3129317d785422cc.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -143,10 +143,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/immich-docker-compose/07.png&#34;
+&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/07.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/07_hu_c6e8598ede5c9a05.png 480w, ../../post/immich-docker-compose/07_hu_ce70721fe93ac990.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/07_hu_c6e8598ede5c9a05.png 480w, ../../hugo-website/post/immich-docker-compose/07_hu_ce70721fe93ac990.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -155,10 +155,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/immich-docker-compose/08.png&#34;
+&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/08.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/08_hu_86ff1d1fdf4c6cdc.png 480w, ../../post/immich-docker-compose/08_hu_9691229037a4615b.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/08_hu_86ff1d1fdf4c6cdc.png 480w, ../../hugo-website/post/immich-docker-compose/08_hu_9691229037a4615b.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -167,10 +167,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/immich-docker-compose/09.png&#34;
+&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/09.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/09_hu_4202b31a8e9c5f17.png 480w, ../../post/immich-docker-compose/09_hu_299fc2be98f794f0.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/09_hu_4202b31a8e9c5f17.png 480w, ../../hugo-website/post/immich-docker-compose/09_hu_299fc2be98f794f0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -179,10 +179,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/immich-docker-compose/10.png&#34;
+&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/10.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/10_hu_3d34ab2ec5ff242a.png 480w, ../../post/immich-docker-compose/10_hu_9a24d67e05cc87e2.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/10_hu_3d34ab2ec5ff242a.png 480w, ../../hugo-website/post/immich-docker-compose/10_hu_9a24d67e05cc87e2.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -191,10 +191,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/immich-docker-compose/11.png&#34;
+&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/11.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/11_hu_102a33a4a08568ca.png 480w, ../../post/immich-docker-compose/11_hu_a09636260bd1fb4b.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/11_hu_102a33a4a08568ca.png 480w, ../../hugo-website/post/immich-docker-compose/11_hu_a09636260bd1fb4b.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -203,10 +203,10 @@
 		data-flex-basis=&#34;254px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/immich-docker-compose/12.png&#34;
+&lt;img src=&#34;../../hugo-website/post/immich-docker-compose/12.png&#34;
 	width=&#34;2272&#34;
 	height=&#34;2142&#34;
-	srcset=&#34;../../post/immich-docker-compose/12_hu_41374d6941f6083a.png 480w, ../../post/immich-docker-compose/12_hu_44c4969382a5eaec.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/immich-docker-compose/12_hu_41374d6941f6083a.png 480w, ../../hugo-website/post/immich-docker-compose/12_hu_44c4969382a5eaec.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -233,10 +233,10 @@
         </item>
         <item>
         <title>Portainerをdocker-composeで実行する</title>
-        <link>https://tiisanamaou.github.io/post/portainer-docker-compose/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/portainer-docker-compose/</link>
         <pubDate>Mon, 06 Apr 2026 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/portainer-docker-compose/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/portainer-docker-compose/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 24.04.1 LTS&lt;/li&gt;
@@ -311,10 +311,10 @@
 &lt;li&gt;https://IPアドレス:9443/&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;初回はパスワードを設定する
-&lt;img src=&#34;../../post/portainer-docker-compose/01.png&#34;
+&lt;img src=&#34;../../hugo-website/post/portainer-docker-compose/01.png&#34;
 	width=&#34;2208&#34;
 	height=&#34;1457&#34;
-	srcset=&#34;../../post/portainer-docker-compose/01_hu_748b5b1baec8196d.png 480w, ../../post/portainer-docker-compose/01_hu_b0ec3e7f26eba825.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/portainer-docker-compose/01_hu_748b5b1baec8196d.png 480w, ../../hugo-website/post/portainer-docker-compose/01_hu_b0ec3e7f26eba825.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -324,10 +324,10 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;イメージやコンテナをWebUI上から管理できる
-&lt;img src=&#34;../../post/portainer-docker-compose/02.png&#34;
+&lt;img src=&#34;../../hugo-website/post/portainer-docker-compose/02.png&#34;
 	width=&#34;2208&#34;
 	height=&#34;1457&#34;
-	srcset=&#34;../../post/portainer-docker-compose/02_hu_74e93a450a140569.png 480w, ../../post/portainer-docker-compose/02_hu_178d322ce69ca5a.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/portainer-docker-compose/02_hu_74e93a450a140569.png 480w, ../../hugo-website/post/portainer-docker-compose/02_hu_178d322ce69ca5a.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -336,10 +336,10 @@
 		data-flex-basis=&#34;363px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/portainer-docker-compose/03.png&#34;
+&lt;img src=&#34;../../hugo-website/post/portainer-docker-compose/03.png&#34;
 	width=&#34;2208&#34;
 	height=&#34;1457&#34;
-	srcset=&#34;../../post/portainer-docker-compose/03_hu_14b8e9295baade44.png 480w, ../../post/portainer-docker-compose/03_hu_79b4e61a43d7e351.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/portainer-docker-compose/03_hu_14b8e9295baade44.png 480w, ../../hugo-website/post/portainer-docker-compose/03_hu_79b4e61a43d7e351.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -348,10 +348,10 @@
 		data-flex-basis=&#34;363px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/portainer-docker-compose/04.png&#34;
+&lt;img src=&#34;../../hugo-website/post/portainer-docker-compose/04.png&#34;
 	width=&#34;2211&#34;
 	height=&#34;1555&#34;
-	srcset=&#34;../../post/portainer-docker-compose/04_hu_139688cdc5767ce4.png 480w, ../../post/portainer-docker-compose/04_hu_4f29b6797802c4bf.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/portainer-docker-compose/04_hu_139688cdc5767ce4.png 480w, ../../hugo-website/post/portainer-docker-compose/04_hu_4f29b6797802c4bf.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -369,10 +369,10 @@
         </item>
         <item>
         <title>Pi-holeをdocker-composeで起動する</title>
-        <link>https://tiisanamaou.github.io/post/pihole-docker-compose/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/pihole-docker-compose/</link>
         <pubDate>Sat, 22 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/pihole-docker-compose/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/pihole-docker-compose/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;pihole:2025.03.0&lt;/li&gt;
@@ -611,10 +611,10 @@
 &lt;li&gt;https://192.168.10.18/admin/&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;ログインパスワードはcompose.yamlの&amp;quot;WEBPASSWORD:&amp;ldquo;で指定したものを入力する
-&lt;img src=&#34;../../post/pihole-docker-compose/03.png&#34;
+&lt;img src=&#34;../../hugo-website/post/pihole-docker-compose/03.png&#34;
 	width=&#34;2230&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../post/pihole-docker-compose/03_hu_133e8bc166751cd0.png 480w, ../../post/pihole-docker-compose/03_hu_9d0447c474275089.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/pihole-docker-compose/03_hu_133e8bc166751cd0.png 480w, ../../hugo-website/post/pihole-docker-compose/03_hu_9d0447c474275089.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -636,10 +636,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7b85e233c38e   pihole/pihole:2025.03.0   &amp;#34;start.sh&amp;#34;   12 days ago   Up 12 days (healthy)   0.0.0.0:53-&amp;gt;53/tcp, [::]:53-&amp;gt;53/tcp, 67/udp, 0.0.0.0:80-&amp;gt;80/tcp, [::]:80-&amp;gt;80/tcp, 0.0.0.0:443-&amp;gt;443/tcp, 0.0.0.0:53-&amp;gt;53/udp, [::]:443-&amp;gt;443/tcp, [::]:53-&amp;gt;53/udp, 123/udp   pihole
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/pihole-docker-compose/01.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/pihole-docker-compose/01.png&#34;
 	width=&#34;2230&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../post/pihole-docker-compose/01_hu_5949a728e8812d1f.png 480w, ../../post/pihole-docker-compose/01_hu_18d6e1e1a72c2e2a.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/pihole-docker-compose/01_hu_5949a728e8812d1f.png 480w, ../../hugo-website/post/pihole-docker-compose/01_hu_18d6e1e1a72c2e2a.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -650,10 +650,10 @@
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;ローカルdnsとして使う&#34;&gt;ローカルDNSとして使う&lt;/h2&gt;
 &lt;p&gt;DNSレコードは&amp;quot;SYSTEM&amp;rdquo;&amp;gt;&amp;ldquo;Setting&amp;rdquo;&amp;gt;&amp;ldquo;Local DNS Records&amp;quot;に記載できる
-&lt;img src=&#34;../../post/pihole-docker-compose/02.png&#34;
+&lt;img src=&#34;../../hugo-website/post/pihole-docker-compose/02.png&#34;
 	width=&#34;2230&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../post/pihole-docker-compose/02_hu_8723db8cf6d92565.png 480w, ../../post/pihole-docker-compose/02_hu_eb720189d6109c77.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/pihole-docker-compose/02_hu_8723db8cf6d92565.png 480w, ../../hugo-website/post/pihole-docker-compose/02_hu_eb720189d6109c77.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -673,10 +673,10 @@
         </item>
         <item>
         <title>Harborにhttpsでアクセスしてdocker pullできるようにする</title>
-        <link>https://tiisanamaou.github.io/post/harbor-https-docker-pull/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/harbor-https-docker-pull/</link>
         <pubDate>Fri, 14 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/harbor-https-docker-pull/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/harbor-https-docker-pull/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Harbor Version v2.11.1-6b7ecba1&lt;/li&gt;
@@ -685,7 +685,7 @@
 &lt;li&gt;Docker Engine Community 28.0.1&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;証明書の発行&#34;&gt;証明書の発行&lt;/h2&gt;
-&lt;p&gt;&lt;a title=&#34;証明書発行手順（Let&amp;#39;s Encrypt）&#34; href=&#34;https://tiisanamaou.github.io/post/certbot-lets-encrypt/&#34;&gt;証明書発行手順（Let&amp;#39;s Encrypt）&lt;/a&gt; を参照&lt;/p&gt;
+&lt;p&gt;&lt;a title=&#34;証明書発行手順（Let&amp;#39;s Encrypt）&#34; href=&#34;https://tiisanamaou.github.io/hugo-website/post/certbot-lets-encrypt/&#34;&gt;証明書発行手順（Let&amp;#39;s Encrypt）&lt;/a&gt; を参照&lt;/p&gt;
 &lt;h2 id=&#34;harborの設定&#34;&gt;Harborの設定&lt;/h2&gt;
 &lt;p&gt;証明書ファイルをサーバーにアップロードする&lt;/p&gt;
 &lt;p&gt;設定ファイルを編集する&lt;/p&gt;
@@ -964,10 +964,10 @@
         </item>
         <item>
         <title>DockerHubのミラーを設定する</title>
-        <link>https://tiisanamaou.github.io/post/dockerhub-mirror-gcr/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/dockerhub-mirror-gcr/</link>
         <pubDate>Sat, 08 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/dockerhub-mirror-gcr/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/dockerhub-mirror-gcr/</guid>
         <description>&lt;h2 id=&#34;理由&#34;&gt;理由&lt;/h2&gt;
 &lt;p&gt;2025年4月1日から認証されていないユーザーは、1時間あたり10pullに制限されるみたいなので回避策を試してみる&lt;/p&gt;
 &lt;ul&gt;
@@ -1232,10 +1232,10 @@
         </item>
         <item>
         <title>Harborのインストールしてpushとpullをしてみる</title>
-        <link>https://tiisanamaou.github.io/post/harbor-install/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/harbor-install/</link>
         <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/harbor-install/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/harbor-install/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;harbor v2.11.1&lt;/li&gt;
@@ -1910,10 +1910,10 @@
 &lt;li&gt;&amp;ldquo;Project Name&amp;quot;を今回は&amp;quot;homelab&amp;quot;にする&lt;/li&gt;
 &lt;li&gt;&amp;ldquo;Public&amp;quot;にチェックを入れておく
 &amp;ldquo;OK&amp;quot;を押すとプロジェクトを作成される
-&lt;img src=&#34;../../post/harbor-install/01.png&#34;
+&lt;img src=&#34;../../hugo-website/post/harbor-install/01.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../post/harbor-install/01_hu_941afda4b3a91e2f.png 480w, ../../post/harbor-install/01_hu_7d4cc6daa3410d9a.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/harbor-install/01_hu_941afda4b3a91e2f.png 480w, ../../hugo-website/post/harbor-install/01_hu_7d4cc6daa3410d9a.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -1922,10 +1922,10 @@
 		data-flex-basis=&#34;248px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/harbor-install/02.png&#34;
+&lt;img src=&#34;../../hugo-website/post/harbor-install/02.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../post/harbor-install/02_hu_776fe1167cc18283.png 480w, ../../post/harbor-install/02_hu_9788bd85d99c59cd.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/harbor-install/02_hu_776fe1167cc18283.png 480w, ../../hugo-website/post/harbor-install/02_hu_9788bd85d99c59cd.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2230,10 +2230,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;WebUI上でもイメージがpushされているか確認する
-&lt;img src=&#34;../../post/harbor-install/03.png&#34;
+&lt;img src=&#34;../../hugo-website/post/harbor-install/03.png&#34;
 	width=&#34;2228&#34;
 	height=&#34;2148&#34;
-	srcset=&#34;../../post/harbor-install/03_hu_dee3e99707a6d2a5.png 480w, ../../post/harbor-install/03_hu_1240d768c6b2746d.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/harbor-install/03_hu_dee3e99707a6d2a5.png 480w, ../../hugo-website/post/harbor-install/03_hu_1240d768c6b2746d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -2401,10 +2401,10 @@
         </item>
         <item>
         <title>docker-composeで構築したMySQLのログをローカルに保存する</title>
-        <link>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/docker-compose-mysql-log/</link>
         <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/docker-compose-mysql-log/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/docker-compose-mysql-log/</guid>
         <description>&lt;h2 id=&#34;ファイルフォルダ構成&#34;&gt;ファイル・フォルダ構成&lt;/h2&gt;
 &lt;p&gt;以下のような構成になっています&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;

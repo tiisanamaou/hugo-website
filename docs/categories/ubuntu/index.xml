@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Ubuntu on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/ubuntu/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/categories/ubuntu/</link>
         <description>Recent content in Ubuntu on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 25 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/ubuntu/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 25 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/ubuntu/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Ubuntu24.04.2LTSにOBSをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/ubuntu-obs-install/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/ubuntu-obs-install/</link>
         <pubDate>Sun, 25 May 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ubuntu-obs-install/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/ubuntu-obs-install/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 24.04.2 LTS&lt;/li&gt;
@@ -73,10 +73,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;設定の変更&#34;&gt;設定の変更&lt;/h2&gt;
 &lt;p&gt;&amp;ldquo;Settings&amp;quot;をクリックして、&amp;ldquo;Output&amp;quot;の&amp;quot;Output Mode&amp;quot;を&amp;quot;Advanced&amp;quot;にする
-&lt;img src=&#34;../../post/ubuntu-obs-install/01.png&#34;
+&lt;img src=&#34;../../hugo-website/post/ubuntu-obs-install/01.png&#34;
 	width=&#34;1974&#34;
 	height=&#34;1526&#34;
-	srcset=&#34;../../post/ubuntu-obs-install/01_hu_7f363539c57eafac.png 480w, ../../post/ubuntu-obs-install/01_hu_a465704d4e67db18.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/ubuntu-obs-install/01_hu_7f363539c57eafac.png 480w, ../../hugo-website/post/ubuntu-obs-install/01_hu_a465704d4e67db18.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -112,10 +112,10 @@
         </item>
         <item>
         <title>セカンダリDNSの追加</title>
-        <link>https://tiisanamaou.github.io/post/secondary-dns/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/secondary-dns/</link>
         <pubDate>Thu, 13 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/secondary-dns/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/secondary-dns/</guid>
         <description>&lt;h2 id=&#34;理由&#34;&gt;理由&lt;/h2&gt;
 &lt;p&gt;ローカル内にあるDNSで名前解決して、そのDNSが落ちているときは別のDNSで通信自体はできるようにしたかった&lt;br&gt;
 そこでセカンダリDNSをどのように追加したら良いのか調べた&lt;/p&gt;
@@ -262,17 +262,17 @@
         </item>
         <item>
         <title>ラズパイ5をUSBのSSDで起動する（USBブート,USB-Boot）</title>
-        <link>https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/</link>
         <pubDate>Sun, 02 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/raspberrypi5-usb-boot/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/raspberrypi5-usb-boot/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Raspberry Pi 5 Model B 8GB（この記事では&amp;quot;ラズパイ5&amp;quot;と記載）
-&lt;img src=&#34;../../post/raspberrypi5-usb-boot/IMG_3101.jpeg&#34;
+&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101.jpeg&#34;
 	width=&#34;3033&#34;
 	height=&#34;1706&#34;
-	srcset=&#34;../../post/raspberrypi5-usb-boot/IMG_3101_hu_2ac96a9e5a331f1f.jpeg 480w, ../../post/raspberrypi5-usb-boot/IMG_3101_hu_7135f1399c7fc0b5.jpeg 1024w&#34;
+	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101_hu_2ac96a9e5a331f1f.jpeg 480w, ../../hugo-website/post/raspberrypi5-usb-boot/IMG_3101_hu_7135f1399c7fc0b5.jpeg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -288,10 +288,10 @@
 &lt;/ul&gt;
 &lt;h2 id=&#34;ラズパイ5を起動する準備&#34;&gt;ラズパイ5を起動する準備&lt;/h2&gt;
 &lt;p&gt;&amp;ldquo;Raspberry Pi Imager&amp;quot;を使用して、SSDにOSイメージを書き込みます
-&lt;img src=&#34;../../post/raspberrypi5-usb-boot/01.png&#34;
+&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/01.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../post/raspberrypi5-usb-boot/01_hu_627c24bdfb487799.png 480w, ../../post/raspberrypi5-usb-boot/01_hu_9d0e788f036c0ea6.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/01_hu_627c24bdfb487799.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/01_hu_9d0e788f036c0ea6.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -300,10 +300,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/raspberrypi5-usb-boot/02.png&#34;
+&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/02.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../post/raspberrypi5-usb-boot/02_hu_f9cd50ac9b5d66ed.png 480w, ../../post/raspberrypi5-usb-boot/02_hu_9ad21a9defba921c.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/02_hu_f9cd50ac9b5d66ed.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/02_hu_9ad21a9defba921c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -312,10 +312,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/raspberrypi5-usb-boot/03.png&#34;
+&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/03.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../post/raspberrypi5-usb-boot/03_hu_61ce3d895bc9e91a.png 480w, ../../post/raspberrypi5-usb-boot/03_hu_d62c8d712ecc85ea.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/03_hu_61ce3d895bc9e91a.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/03_hu_d62c8d712ecc85ea.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -324,10 +324,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/raspberrypi5-usb-boot/04.png&#34;
+&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/04.png&#34;
 	width=&#34;1090&#34;
 	height=&#34;1318&#34;
-	srcset=&#34;../../post/raspberrypi5-usb-boot/04_hu_f5fa33bd0cc12748.png 480w, ../../post/raspberrypi5-usb-boot/04_hu_ab950da47ed048c.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/04_hu_f5fa33bd0cc12748.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/04_hu_ab950da47ed048c.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -336,10 +336,10 @@
 		data-flex-basis=&#34;198px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/raspberrypi5-usb-boot/05.png&#34;
+&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/05.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../post/raspberrypi5-usb-boot/05_hu_408dbf76e86d63eb.png 480w, ../../post/raspberrypi5-usb-boot/05_hu_aaf423fb08c24506.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/05_hu_408dbf76e86d63eb.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/05_hu_aaf423fb08c24506.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -348,10 +348,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/raspberrypi5-usb-boot/06.png&#34;
+&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/06.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../post/raspberrypi5-usb-boot/06_hu_99a9e83746f741c6.png 480w, ../../post/raspberrypi5-usb-boot/06_hu_d50cdc3311d2ac9a.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/06_hu_99a9e83746f741c6.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/06_hu_d50cdc3311d2ac9a.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -360,10 +360,10 @@
 		data-flex-basis=&#34;340px&#34;
 	
 &gt;
-&lt;img src=&#34;../../post/raspberrypi5-usb-boot/07.png&#34;
+&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/07.png&#34;
 	width=&#34;1372&#34;
 	height=&#34;966&#34;
-	srcset=&#34;../../post/raspberrypi5-usb-boot/07_hu_4330ef57ebcaa16d.png 480w, ../../post/raspberrypi5-usb-boot/07_hu_63469dc7decd9ad0.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/07_hu_4330ef57ebcaa16d.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/07_hu_63469dc7decd9ad0.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -411,10 +411,10 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /boot/firmware/config.txt
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/raspberrypi5-usb-boot/09.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/09.png&#34;
 	width=&#34;1732&#34;
 	height=&#34;1258&#34;
-	srcset=&#34;../../post/raspberrypi5-usb-boot/09_hu_94e54a2436a02ef9.png 480w, ../../post/raspberrypi5-usb-boot/09_hu_b61b855f3ec7a46.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/09_hu_94e54a2436a02ef9.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/09_hu_b61b855f3ec7a46.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -476,10 +476,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mao@raspberrypi5:~$
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../post/raspberrypi5-usb-boot/08.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;../../hugo-website/post/raspberrypi5-usb-boot/08.png&#34;
 	width=&#34;1732&#34;
 	height=&#34;1258&#34;
-	srcset=&#34;../../post/raspberrypi5-usb-boot/08_hu_36176642d6d1a735.png 480w, ../../post/raspberrypi5-usb-boot/08_hu_ae2157135b16ac3d.png 1024w&#34;
+	srcset=&#34;../../hugo-website/post/raspberrypi5-usb-boot/08_hu_36176642d6d1a735.png 480w, ../../hugo-website/post/raspberrypi5-usb-boot/08_hu_ae2157135b16ac3d.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -594,10 +594,10 @@
         </item>
         <item>
         <title>スタティックルーティング（Static-Routing、静的ルーティング）を設定して別のサブネットと通信できるようにする</title>
-        <link>https://tiisanamaou.github.io/post/static-routing/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/static-routing/</link>
         <pubDate>Thu, 02 Jan 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/static-routing/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/static-routing/</guid>
         <description>&lt;h2 id=&#34;なんのために&#34;&gt;なんのために？&lt;/h2&gt;
 &lt;p&gt;家庭内で普段使っているサブネットと、サーバー等のサブネットを分けてようと思ったため。&lt;br&gt;
 しかし、そのままだと家庭内で使用しているサブネットからサーバーにアクセスできないので、サブネットを越えて通信させたかったので設定方法を調べた結果、スタティックルーティングという方法でルーティングさせて通信させることにした。&lt;/p&gt;
@@ -605,10 +605,10 @@
 &lt;ul&gt;
 &lt;li&gt;Ubuntu Server 24.04.1&lt;/li&gt;
 &lt;li&gt;ネットワーク図
-&lt;img src=&#34;../../post/static-routing/01.jpg&#34;
+&lt;img src=&#34;../../hugo-website/post/static-routing/01.jpg&#34;
 	width=&#34;1272&#34;
 	height=&#34;940&#34;
-	srcset=&#34;../../post/static-routing/01_hu_4e85095b3b6c1249.jpg 480w, ../../post/static-routing/01_hu_b5f2197545d9dc28.jpg 1024w&#34;
+	srcset=&#34;../../hugo-website/post/static-routing/01_hu_4e85095b3b6c1249.jpg 480w, ../../hugo-website/post/static-routing/01_hu_b5f2197545d9dc28.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -901,10 +901,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;問題なければ、サブネットを越えて通信ができた&lt;/p&gt;
 &lt;p&gt;ネットワーク図
-&lt;img src=&#34;../../post/static-routing/01.jpg&#34;
+&lt;img src=&#34;../../hugo-website/post/static-routing/01.jpg&#34;
 	width=&#34;1272&#34;
 	height=&#34;940&#34;
-	srcset=&#34;../../post/static-routing/01_hu_4e85095b3b6c1249.jpg 480w, ../../post/static-routing/01_hu_b5f2197545d9dc28.jpg 1024w&#34;
+	srcset=&#34;../../hugo-website/post/static-routing/01_hu_4e85095b3b6c1249.jpg 480w, ../../hugo-website/post/static-routing/01_hu_b5f2197545d9dc28.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
@@ -974,10 +974,10 @@
         </item>
         <item>
         <title>仮想マシン上のDiskの拡張手順</title>
-        <link>https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/ubuntu-server-disk-expansion/</link>
         <pubDate>Sat, 09 Nov 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ubuntu-server-disk-expansion/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/ubuntu-server-disk-expansion/</guid>
         <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;Proxmox上に作成した仮想マシンの容量を10GBで作成したが、足りなくなり、20GBへ容量アップした際の手順です&lt;/p&gt;
 &lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
@@ -1413,10 +1413,10 @@
         </item>
         <item>
         <title>UbuntuにHugoをインストールする</title>
-        <link>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/ubuntu-install-hugo/</link>
         <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/ubuntu-install-hugo/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/ubuntu-install-hugo/</guid>
         <description>&lt;h2&gt;&lt;/h2&gt;
 &lt;p&gt;WindowsノートPCを売却するに当たり、データや開発環境をUbuntuへと移行しました&lt;br&gt;
 その中でこのサイトの作成に使用しているHugoのインストール方法をメモしました&lt;/p&gt;

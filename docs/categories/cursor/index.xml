@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Cursor on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/cursor/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/categories/cursor/</link>
         <description>Recent content in Cursor on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 06 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/cursor/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 06 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/cursor/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Cursorのインストール方法のメモ</title>
-        <link>https://tiisanamaou.github.io/post/cursor-install/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/cursor-install/</link>
         <pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/cursor-install/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/cursor-install/</guid>
         <description>&lt;h2 id=&#34;hpからappimageをダウンロードする&#34;&gt;HPからAppImageをダウンロードする&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.cursor.com/ja&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;

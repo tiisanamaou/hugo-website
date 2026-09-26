@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Traefik on onodera memo</title>
-        <link>https://tiisanamaou.github.io/categories/traefik/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/categories/traefik/</link>
         <description>Recent content in Traefik on onodera memo</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja</language>
         <copyright>onodera</copyright>
-        <lastBuildDate>Sun, 08 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/categories/traefik/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 08 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tiisanamaou.github.io/hugo-website/categories/traefik/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Traefikを使ってHarborをHTTPSで通信させる</title>
-        <link>https://tiisanamaou.github.io/post/traefik-harbor-ssl/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/traefik-harbor-ssl/</link>
         <pubDate>Sun, 08 Mar 2026 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/traefik-harbor-ssl/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/traefik-harbor-ssl/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 24.04.1 LTS&lt;/li&gt;
@@ -419,10 +419,10 @@
         </item>
         <item>
         <title>TraefikとCloudflareでワイルドカードSSL証明書を発行する</title>
-        <link>https://tiisanamaou.github.io/post/traefik-cloudflare-ssl/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/traefik-cloudflare-ssl/</link>
         <pubDate>Fri, 30 Jan 2026 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/traefik-cloudflare-ssl/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/traefik-cloudflare-ssl/</guid>
         <description>&lt;h2 id=&#34;vm準備&#34;&gt;VM準備&lt;/h2&gt;
 &lt;p&gt;&amp;ldquo;qemu-guest-agent&amp;quot;と&amp;quot;nano&amp;quot;をインストールする&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -1266,10 +1266,10 @@ SSL証明書を使用するアプリケーションを追加した際に記載�
         </item>
         <item>
         <title>KubernetesでTraefikを使用してIngressを使えるようにする</title>
-        <link>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</link>
+        <link>https://tiisanamaou.github.io/hugo-website/post/kubernetes-ingress-traefik/</link>
         <pubDate>Wed, 21 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://tiisanamaou.github.io/post/kubernetes-ingress-traefik/</guid>
+        <guid>https://tiisanamaou.github.io/hugo-website/post/kubernetes-ingress-traefik/</guid>
         <description>&lt;h2 id=&#34;環境&#34;&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Kubernetes 1.31.0&lt;/li&gt;
